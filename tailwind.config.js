@@ -10,6 +10,11 @@ export default {
         './resources/js/**/*.{vue,js,ts,jsx,tsx}',
     ],
     theme: {
+        // 自訂義rwd斷點
+        screens: {
+            'sm': '600px', // 平板版到600px時，切換到手機版
+            'xl': '1270px', //電腦版到1270px時，切換到平板版
+          },
         extend: {
             fontFamily: {
                 sans: ['Instrument Sans', ...defaultTheme.fontFamily.sans],

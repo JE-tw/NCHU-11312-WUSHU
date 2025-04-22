@@ -39,7 +39,7 @@ const toggleDescription = () => {
           <!-- 標題 -->
           <p class="text-[32px]/[42px] font-bold text-gray-800">{{ item.title }}</p>
           <!-- 價格 -->
-          <p v-if="item.price" class="text-[24px]/[32px] text-bluegreen">
+          <p v-if="item.price" class="text-[24px]/[32px] text-blueGreen">
             NT$ {{ item.price.toLocaleString() }}
           </p>
         </div>
