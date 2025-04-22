@@ -30,7 +30,7 @@ defineProps({
         <p class="text-[24px] text-gray-500 ">{{ course.description }}</p>
       </div>
       <div>
-        <p class="text-[24px] text-blue-500 my-2 flex justify-end">
+        <p class="text-[24px] text-bluegreen my-2 flex justify-end">
           NT$ {{ course.price.toLocaleString() }}
         </p>
         <div class="flex justify-between">
