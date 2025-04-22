@@ -14,18 +14,14 @@ Route::get('dashboard', function () {
 
 
 
-Route::prefix('whshu')->group(function(){
+Route::prefix('wushu')->group(function () {
     // 首頁
     Route::get('/', function () {
         return Inertia::render('frontend/Home'); // vue檔案路徑
     });
     // 服務與課程
-        // 首頁
-        Route::get('/ServiceCourse', function () {
-            return Inertia::render('frontend/ServiceCourse'); // vue檔案路徑
-        });
-
+    // 首頁
+    Route::get('/ServiceCourse', function () {
+        return Inertia::render('frontend/ServiceCourse'); // vue檔案路徑
+    });
 });
-
-
-
