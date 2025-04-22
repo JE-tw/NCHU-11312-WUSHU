@@ -19,9 +19,12 @@ Route::prefix('wushu')->group(function () {
     Route::get('/', function () {
         return Inertia::render('frontend/Home'); // vue檔案路徑
     });
-    // 服務與課程
-    // 首頁
+    // 服務與課程頁
     Route::get('/ServiceCourse', function () {
-        return Inertia::render('frontend/ServiceCourse'); // vue檔案路徑
+        return Inertia::render('frontend/ServiceCourse'); 
+    });
+    // 付款與退款政策頁
+    Route::get('/Policy', function () {
+        return Inertia::render('frontend/Policy'); 
     });
 });
