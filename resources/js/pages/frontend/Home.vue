@@ -1,12 +1,16 @@
 <script setup>
-import Header from '../../Header.vue'
-import Footer from '../../Footer.vue'
-import imgSrc from '../../../images/藥材aocax-ufyt5.webp'
+import Header from '../../components/Header.vue'
+import Footer from '../../components/Footer.vue'
 
+import imgSrc from '@/images/藥材aocax-ufyt5.webp'
+import courseImg1 from '@/images/主打課程1a2axq-d0uqq.webp'
+import courseImg2 from '@/images/主打課程2a1t2a-q5lk4.webp'
+import masterImg1 from '@/images/關於站主a8k69-ybprq.webp'
+import masterImg2 from '@/images/學會創立研革ay2gj-8gn6h.webp'
 
+const bgImage = imgSrc;
 </script>
 
-<!-- 首頁 -->
 <template>
     <div>
         <Header />
@@ -14,45 +18,60 @@ import imgSrc from '../../../images/藥材aocax-ufyt5.webp'
         <main>
             <!-- banner -->
             <section class="bg-cover bg-center bg-no-repeat w-[1903px] h-[920px]"
-                :style="`background-image: url(${bgImage})`">
-            </section>
+                :style="`background-image: url(${bgImage})`"></section>
 
             <!-- IntroSection -->
             <section id="intro" class="bg-white py-20">
                 <div class="max-w-7xl mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-12">
                     <!-- Text Content -->
                     <div class="md:w-1/2 text-center md:text-left">
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-                            吠陀占星課程
-                        </h2>
-                        <p class="text-gray-700 text-lg leading-relaxed mb-6">
-                            吠陀占星為印度古老智慧之一，透過星體與靈魂結構的對應，理解命運、業力與修行方向。本課程將由實務入手，逐步引導你掌握分析星盤的核心技巧。
-                        </p>
-                        <a href="/courses/vedic-astrology"
-                            class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition">
-                            課程介紹
-                        </a>
+                        <h2 class="text-3xl md:text-4xl font-bold text-black mb-6">主打課程</h2>
+                        <div>
+                            <img :src="courseImg1" alt="蔣氏玄空風水執業班" class="rounded-xl shadow-lg" />
+                            <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                                蔣氏玄空風水執業班
+                            </p>
+                        </div>
+                        <div>
+                            <img :src="courseImg2" alt="康治本傷寒論" class="rounded-xl shadow-lg" />
+                            <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                                康治本傷寒論
+                            </p>
+                        </div>
                     </div>
 
-                    <!-- Image -->
-                    <div class="md:w-1/2">
-                        <img src="/resources/js/imgages/主打課程1a2axq-d0uqq.webp" alt="吠陀占星課程"
-                            class="rounded-xl shadow-lg" />
-                    </div>
+                    
                 </div>
             </section>
 
-            <!-- CourseCategoryTab -->
+            <!-- Courses offered -->
+            <section class="relative w-[1903px] h-[858px] overflow-hidden">
+                <!-- 背景圖片（可換成你實際的圖片） -->
+                <div class="absolute inset-0 bg-cover bg-center"
+                    style="background-image: url('/images/courses-bg.jpg')"></div>
+
+                <!-- 遮罩 -->
+                <div class="absolute inset-0 bg-black"></div>
+
+                <!-- 課程內容 -->
+                <div class="relative z-10 flex flex-col items-center justify-center text-white h-full px-8">
+                    <h2 class="text-4xl font-bold font-['Microsoft_JhengHei'] mb-6">課程介紹</h2>
+
+                    <!-- 可以在這裡加上按鈕或卡片清單 -->
+                </div>
+            </section>
 
 
             <!-- AboutMaster -->
-            <section id="about" class="py-16 bg-white font-['Microsoft_JhengHei'] text-[#0b0b0b]">
-                <div class="max-w-6xl mx-auto px-4 md:px-6 space-y-24">
+            <section class="py-16 bg-white font-['Microsoft_JhengHei'] text-[#0b0b0b]">
 
+                <div class="max-w-6xl mx-auto px-4 md:px-6 space-y-24">
                     <!-- 標題 -->
-                    <h2 class="text-3xl font-bold text-center border-b-2 border-gray-400 inline-block pb-2 mx-auto">
+                    <h2
+                        class="text-[64px] leading-[100%] font-bold text-center font-['Microsoft_JhengHei'] border-b-2 border-gray-400 inline-block pb-2 mx-auto">
                         關於站主
                     </h2>
+
 
                     <!-- 第一段：右圖左文 -->
                     <div class="flex flex-col md:flex-row items-center gap-10">
@@ -69,43 +88,34 @@ import imgSrc from '../../../images/藥材aocax-ufyt5.webp'
                             </p>
                         </div>
                         <div class="md:w-1/2">
-                            <img src="@/assets/img/關於站主a8k69-ybprq.webp" alt="禪石圖"
-                                class="rounded-xl shadow-lg object-cover w-full" />
+                            <img :src="masterImg1" alt="禪石圖" class=" shadow-lg object-cover w-full" />
                         </div>
                     </div>
 
                     <!-- 第二段：左圖右文 -->
                     <div class="flex flex-col md:flex-row-reverse items-center gap-10">
                         <div class="md:w-1/2 space-y-4 text-lg leading-8 text-gray-800">
-                            <h3 class="text-2xl font-bold border-b-2 border-gray-400 inline-block pb-1 mb-2">
-                                學會創立沿革
-                            </h3>
-                            <p>
-                                2008
-                                年，當時文老師在內湖擔中醫主課，部分同學和學生期望文老師傳承自己的命理術，從而成立學員課程。但老師尚無意大量授課，另一方面藉機重整自身教學邏輯，重新吸納中西派系，建立五術研究社並建議書籍寫作規劃。
-                            </p>
-                            <p>
-                                直到 2014 在讀河洛書中找到科學研究所，同時納入命理文字與修煉路系，加上傳授技巧與理論皆受學生的回饋重整，文老師才開始決定開展完整課程。
-                            </p>
+                            <h3 class="text-2xl font-bold border-b-2 border-black inline-block pb-1 mb-2">學會創立沿革</h3>
+                            <div class="w-[487px] h-[975px] bg-lightGray">
+                                <p>
+                                    2008年，當時文老師在內湖高中任教，部分同事和學生知曉文老師傳承自古老的醫術，便欲向其學習，但老師當時並未想開課授徒，一方面是其老師們尚在世，二方面是覺得自己尚未成熟，故以五術研究社這種讀書會模式帶領眾人學習，不收學費為眾人解惑。
+
+                                </p>
+                                <p>
+                                    直到2014在湖南攻讀中醫內科學研究所，同儕紛紛希望向文老師學習師承，加上傳授針灸和內科給文老師的老師們都過世了，文老師才開始決定開課陸續至今。
+                                </p>
+                            </div>
                         </div>
-                        <div class="md:w-1/2">
-                            <img src="@/assets/img/學會創立研革ay2gj-8gn6h.webp" alt="中藥櫃"
-                                class="rounded-xl shadow-lg object-cover w-full" />
+                        <div class="md:w-1/2 ">
+                            <img :src="masterImg2" alt="中藥櫃" class=" shadow-lg object-cover w-full" />
                         </div>
                     </div>
 
-                    <!-- 結尾金句 -->
-                    <p class="text-center text-gray-500 mt-12 italic text-sm">
-                        「由內而外修煉，從知識走向智慧，讓靈魂回到自然之道。」
-                    </p>
+
                 </div>
             </section>
-
-
         </main>
 
         <Footer />
     </div>
-
-
 </template>
