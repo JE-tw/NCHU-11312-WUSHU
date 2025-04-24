@@ -11,9 +11,10 @@ class UserInfoSeeder extends Seeder
 {
     public function run(): void
     {
+        // 生成10筆假資料
         $faker = FakerFactory::create('zh_TW');
         User::factory()
-            ->count(10)
+            ->count(20)
             ->create()
             ->each(function ($user) use ($faker) {
                 UserInfo::create([

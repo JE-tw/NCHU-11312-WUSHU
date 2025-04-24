@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Course;
+use App\Models\Order;
+use App\Models\Service;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\UserInfo;
@@ -24,6 +27,14 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserInfoSeeder::class,
+            ContactRecordSeeder::class,
+            ServiceSeeder::class,
+            CategorySeeder::class,
+            CourseSeeder::class,
+            ChapterSeeder::class,
+            OrderSeeder::class,
+
+            
         ]);
     }
 }

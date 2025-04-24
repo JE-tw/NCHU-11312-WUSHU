@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id()->comment('服務編號');
 
-            $table->string('name', 12)->comment('服務名稱');
+            $table->string('name', 50)->comment('服務名稱');
             $table->integer('price')->comment('金額');
             $table->string('introduction', 100)->comment('介紹');
 

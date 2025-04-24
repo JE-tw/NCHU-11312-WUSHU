@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Service;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ServiceSeeder extends Seeder
 {
@@ -13,5 +14,41 @@ class ServiceSeeder extends Seeder
     public function run(): void
     {
         //
+        $services = [
+            [
+                'name' => '印度占星論命:本命、大命',
+                'price' => '36000',
+                'introduction' => '此符是法師運用秘法，開通過祭煉，使得靈符靈奇，特別適用於經商、各類偏財。 ... 招財符超靈驗法師開光靈符買家見證有效開財庫聚財開運桃花五方貴人文昌破小人護身符。招財符超靈驗法師開光靈符買家見證有效。'
+            ],
+            [
+                'name' => '印度占星論命:本命、大命',
+                'price' => '36000',
+                'introduction' => '此符是法師運用秘法，開通過祭煉，使得靈符靈奇，特別適用於經商、各類偏財。 ... 招財符超靈驗法師開光靈符買家見證有效開財庫聚財開運桃花五方貴人文昌破小人護身符。招財符超靈驗法師開光靈符買家見證有效。'
+            ],
+            [
+                'name' => '印度占星論命:本命、大命',
+                'price' => '36000',
+                'introduction' => '此符是法師運用秘法，開通過祭煉，使得靈符靈奇，特別適用於經商、各類偏財。 ... 招財符超靈驗法師開光靈符買家見證有效開財庫聚財開運桃花五方貴人文昌破小人護身符。招財符超靈驗法師開光靈符買家見證有效。'
+            ],
+            [
+                'name' => '印度占星論命:本命、大命',
+                'price' => '36000',
+                'introduction' => '此符是法師運用秘法，開通過祭煉，使得靈符靈奇，特別適用於經商、各類偏財。 ... 招財符超靈驗法師開光靈符買家見證有效開財庫聚財開運桃花五方貴人文昌破小人護身符。招財符超靈驗法師開光靈符買家見證有效。'
+            ],
+            [
+                'name' => '印度占星論命:本命、大命',
+                'price' => '36000',
+                'introduction' => '此符是法師運用秘法，開通過祭煉，使得靈符靈奇，特別適用於經商、各類偏財。 ... 招財符超靈驗法師開光靈符買家見證有效開財庫聚財開運桃花五方貴人文昌破小人護身符。招財符超靈驗法師開光靈符買家見證有效。'
+            ],
+            [
+                'name' => '印度占星論命:本命、大命',
+                'price' => '36000',
+                'introduction' => '此符是法師運用秘法，開通過祭煉，使得靈符靈奇，特別適用於經商、各類偏財。 ... 招財符超靈驗法師開光靈符買家見證有效開財庫聚財開運桃花五方貴人文昌破小人護身符。招財符超靈驗法師開光靈符買家見證有效。'
+            ],
+        ];
+
+        foreach ($services as $service) {
+            Service::create($service);
+        }
     }
 }

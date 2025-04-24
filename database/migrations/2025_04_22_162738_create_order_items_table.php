@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('product_type')->comment('商品類型'); // （App\\Models\\Course 或 App\\Models\\Service）
 
             $table->integer('price_at_order_time')->comment('訂購當下價格');
-            $table->boolean('is_accessible')->default(false)->comment('權限狀態：false=未開啟，true=已開啟');
+            $table->boolean('is_accessible')->default(0)->comment('權限狀態：false=未開啟，true=已開啟');
 
             $table->timestamps(); // 建立時間 / 更新時間
         });
