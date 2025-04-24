@@ -21,10 +21,14 @@ Route::prefix('wushu')->group(function () {
     });
     // 服務與課程頁
     Route::get('/ServiceCourse', function () {
-        return Inertia::render('frontend/ServiceCourse'); 
+        return Inertia::render('frontend/ServiceCourse');
     });
     // 付款與退款政策頁
     Route::get('/Policy', function () {
-        return Inertia::render('frontend/Policy'); 
+        return Inertia::render('frontend/Policy');
+    });
+    // 聯絡我們頁
+    Route::get('/ContactUs', function () {
+        return Inertia::render('frontend/ContactUs');
     });
 });
