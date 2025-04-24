@@ -31,4 +31,8 @@ Route::prefix('wushu')->group(function () {
     Route::get('/ContactUs', function () {
         return Inertia::render('frontend/ContactUs');
     });
+    // 課程介紹頁
+    Route::get('/CourseIntro', function () {
+        return Inertia::render('frontend/CourseIntro');
+    });
 });

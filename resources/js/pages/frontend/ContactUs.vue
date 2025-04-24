@@ -1,3 +1,4 @@
+<!-- 聯絡我們頁 -->
 <script setup>
 import { ref } from 'vue';
 
@@ -112,7 +113,7 @@ const subject = ref(''); // 輸入時label往上方移動
             <textarea
               name="content"
               id="content"
-              class="mb-[24px] h-[113px] w-full rounded-sm border border-mediumGray text-[18px]/[24px] outline-none text-black"
+              class="mb-[24px] h-[113px] w-full rounded-sm border border-mediumGray text-[18px]/[24px] text-black outline-none"
             ></textarea>
           </div>
           <p class="mb-[24px] w-[360px] text-[12px]/[16px] text-darkGray sm:w-[438px] sm:text-[18px]/[24px]">

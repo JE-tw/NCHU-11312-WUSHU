@@ -1,3 +1,4 @@
+<!-- 服務與課程頁 -->
 <script setup>
 import CourseCard from '@/components/CourseCard.vue';
 import ServiceCard from '@/components/ServiceCard.vue';
@@ -28,7 +29,7 @@ import service from '@/images/service-bg.png';
       </div>
     </div>
     <!-- 服務卡片 -->
-    <div class="pt-[30px] px-[4.5%] pb-[44px] xl:px-[19%] xl:pb-[96px] xl:pt-[60px] bg-gray-100">
+    <div class="bg-gray-100 px-[4.5%] pb-[44px] pt-[30px] xl:px-[19%] xl:pb-[96px] xl:pt-[60px]">
       <ServiceCard v-for="(item, index) in serviceItems" :key="index" :item="item" />
     </div>
 

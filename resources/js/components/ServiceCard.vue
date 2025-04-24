@@ -1,3 +1,4 @@
+<!-- 服務與課程頁 服務卡片 -->
 <script setup>
 import dashIcon from '@/images/f-dash.png';
 import plusIcon from '@/images/f-plus.png';
@@ -12,6 +13,7 @@ defineProps({
   },
 });
 
+// 展開/收合卡片
 const showDescription = ref(false);
 const toggleDescription = () => {
   showDescription.value = !showDescription.value;
@@ -30,14 +32,15 @@ const toggleDescription = () => {
         <button @click.stop="toggleDescription" class="h-8 w-8">
           <img :src="showDescription ? dashIcon : plusIcon" alt="toggle" class="cursor-pointer object-contain" />
         </button>
-        <!--  -->
+        <!-- 卡片內容 -->
         <div class="ml-6">
           <!-- 標題 -->
           <p class="text-[20px] font-bold text-gray-800 sm:text-[32px]/[42px]">{{ item.title }}</p>
           <!-- 價格 -->
-          <p v-if="item.price" class="font-bold text-blueGreen text-[16px] sm:text-[24px]/[32px]">NT$ {{ item.price.toLocaleString() }}</p>
+          <p v-if="item.price" class="text-[16px] font-bold text-blueGreen sm:text-[24px]/[32px]">NT$ {{ item.price.toLocaleString() }}</p>
         </div>
       </div>
+      <!-- 購物車按鈕 -->
       <CartButton />
     </div>
 

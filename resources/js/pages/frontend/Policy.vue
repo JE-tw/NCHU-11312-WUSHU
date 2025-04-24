@@ -1,18 +1,19 @@
+<!-- 款與退款政策頁 -->
 <template>
   <div class="bg-softGray">
     <!-- header -->
     <header class="flex h-[234px] flex-col items-center bg-black sm:h-[303px] xl:h-[444px]">
       <p
-        class="text-grayWhite pt-[120px] font-serif text-[32px]/[46px] font-bold sm:pt-[160px] sm:text-[52px]/[75px] xl:pt-[224px] xl:text-[64px]/[92px]"
+        class="pt-[120px] font-serif text-[32px]/[46px] font-bold text-grayWhite sm:pt-[160px] sm:text-[52px]/[75px] xl:pt-[224px] xl:text-[64px]/[92px]"
       >
         付款與退款政策
       </p>
-      <span class="border-grayWhite w-[120px] border-b-2 sm:w-[300px]"></span>
+      <span class="w-[120px] border-b-2 border-grayWhite sm:w-[300px]"></span>
     </header>
     <main class="bg-softGray px-[24px] sm:px-[48px]">
       <div class="mx-auto mb-[60px] mt-[30px] max-w-2xl xl:w-[672px]">
         <div class="pb-[24px]">
-          <p class="text-blueGreen mb-[24px] text-[20px]/[27px] font-bold sm:text-[28px]/[37px] xl:text-[32px]/[43px]">付款政策：</p>
+          <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[28px]/[37px] xl:text-[32px]/[43px]">付款政策：</p>
           <ul class="text-[16px]/[28px] tracking-[0.02em] text-black sm:text-[24px]/[40px]">
             <li>1. 所有課程及服務費用均以新台幣計算。</li>
             <li>2. 最終售價將以下單時的顯示為準。</li>
@@ -26,7 +27,7 @@
           </ul>
         </div>
         <div>
-          <p class="text-blueGreen mb-[24px] text-[20px]/[27px] font-bold sm:text-[28px]/[37px] xl:text-[32px]/[43px]">退款政策：</p>
+          <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[28px]/[37px] xl:text-[32px]/[43px]">退款政策：</p>
           <ul class="text-[16px]/[28px] tracking-[0.02em] text-black sm:text-[24px]/[40px]">
             <li>
               1. 實體或線上直播課程，於開課日前申請退款，將全額退還該課程您所支付之金額；開課日後，則不接受退款申請，該課程您所支付之金額將不予退還。
