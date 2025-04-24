@@ -16,6 +16,7 @@ const subject = ref(''); // 輸入時label往上方移動
       >
         聯絡我們
       </p>
+      <span class="w-[120px] border-b-2 border-grayWhite sm:w-[300px]"></span>
       <p class="mt-4 text-[18px]/[23.94px] sm:mt-[40px] sm:text-[32px]">請如實填寫</p>
     </header>
     <main>
