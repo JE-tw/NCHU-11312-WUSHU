@@ -18,6 +18,8 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Instrument Sans', ...defaultTheme.fontFamily.sans],
+                serif: ['"Noto Serif CJK TC"', 'serif'],
+                sans: ['"Microsoft JhengHei"', '微軟正黑體', 'Helvetica', 'Arial', 'sans-serif'],
             },
             borderRadius: {
                 lg: 'var(--radius)',
