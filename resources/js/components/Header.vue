@@ -14,27 +14,27 @@
     >
       <router-link
         to="/about"
-        class="px-3 py-2 hover:text-[#1f9c95] hover:underline whitespace-nowrap"
+        class="px-3 py-2 hover:text-[#1f9c95]  whitespace-nowrap"
       >
         關於站主
       </router-link>
       <router-link
         to="/services"
-        class="px-3 py-2 hover:text-[#1f9c95] hover:underline whitespace-nowrap"
+        class="px-3 py-2 hover:text-[#1f9c95]  whitespace-nowrap"
       >
         服務與課程
       </router-link>
     </nav>
 
     <!-- Icon 區域 -->
-    <div class="flex items-center gap-4 text-gray-700">
-      <button aria-label="搜尋" class="hover:text-indigo-600">
+    <div class="flex items-center gap-4 text-black">
+      <button aria-label="搜尋" class="hover:text-[#1f9c95]">
         <img src="@/images/search.png" alt="搜尋" class="w-8 h-8" />
       </button>
-      <button aria-label="購物車" class="hover:text-indigo-600">
-        <img src="@/images/cart.png" alt="購物車" class="w-8 h-8" />
+      <button aria-label="購物車" class="hover:text-[#1f9c95]">
+        <img src="@/images/cart.png" alt="購物車" class="w-8 h-8 hover:text-[#1f9c95]" />
       </button>
-      <router-link to="/login" class="hover:text-indigo-600 flex items-center gap-1">
+      <router-link to="/login" class="hover:text-[#1f9c95] flex items-center gap-1">
         <img src="@/images/user.png" alt="登入" class="w-8 h-8" />
         <span
           class="font-['Microsoft_JhengHei'] font-normal text-[18px] leading-8 tracking-normal whitespace-nowrap"

@@ -11,9 +11,9 @@
 
             <!-- 中間：連結 -->
             <div class="flex flex-wrap justify-center gap-6 font-bold text-[24px] leading-[100%] tracking-[0]">
-                <a href="/contact" class="hover:text-gray-300 border-r border-white pr-6">聯絡我們</a>
-                <a href="/policy/refund" class="hover:text-gray-300 border-r border-white pr-6">付款與退款政策</a>
-                <a href="/policy/privacy" class="hover:text-gray-300">隱私權政策</a>
+                <a href="/contact" class="hover:text-blueGreen hover:underline border-r border-white pr-6">聯絡我們</a>
+                <a href="/policy/refund" class="hover:text-blueGreen hover:underline border-r border-white pr-6">付款與退款政策</a>
+                <a href="/policy/privacy" class="hover:text-blueGreen hover:underline">隱私權政策</a>
             </div>
 
             <!-- 右側：社群 icon -->

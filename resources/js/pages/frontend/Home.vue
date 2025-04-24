@@ -25,16 +25,16 @@ const bgImage = imgSrc;
                 <div class="max-w-7xl mx-auto px-4 flex flex-col-reverse md:flex-row items-center gap-12">
                     <!-- Text Content -->
                     <div class="md:w-1/2 text-center md:text-left">
-                        <h2 class="text-3xl md:text-4xl font-bold text-black mb-6">主打課程</h2>
-                        <div>
-                            <img :src="courseImg1" alt="蔣氏玄空風水執業班" class="rounded-xl shadow-lg" />
-                            <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                        <h2 class="text-6xl md:text-4xl font-bold text-black mb-6">主打課程</h2>
+                        <div >
+                            <img :src="courseImg1" alt="蔣氏玄空風水執業班" class="w-[640px] h-[360px]  shadow-lg" />
+                            <p class="text-black text-lg leading-relaxed mb-6">
                                 蔣氏玄空風水執業班
                             </p>
                         </div>
                         <div>
-                            <img :src="courseImg2" alt="康治本傷寒論" class="rounded-xl shadow-lg" />
-                            <p class="text-gray-700 text-lg leading-relaxed mb-6">
+                            <img :src="courseImg2" alt="康治本傷寒論" class=" w-[640px] h-[360px] shadow-lg" />
+                            <p class="text-black text-lg leading-relaxed mb-6">
                                 康治本傷寒論
                             </p>
                         </div>
