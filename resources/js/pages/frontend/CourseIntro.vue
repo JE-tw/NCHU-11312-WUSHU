@@ -2,27 +2,8 @@
 <script setup>
 import CartButton from '@/components/CartButton.vue';
 
-// test
-import CourseVideoList from '@/components/CourseVideoList.vue';
-import { ref } from 'vue';
-
-// 假資料：你實際上可能是從 API 拿來
-const course = ref({
-  title: '金融占星進階班',
-  description: '這門課會帶你探索星象與市場週期的神秘關聯。',
-  videos: [
-    { id: 1, title: '第1堂：市場與行星週期', locked: true },
-    { id: 2, title: '第2堂：金融事件案例解析', locked: true },
-    // ...
-  ],
-});
-
-const isPurchased = ref(false);
-
-function addToCart() {
-  console.log('加入購物車！');
-  // 實際上應該呼叫購物車邏輯
-}
+// TEST
+import ExpandCard from '@/components/ExpandCard.vue';
 </script>
 
 <template>
@@ -60,16 +41,7 @@ function addToCart() {
         付費課程，將於購買後解鎖。
       </p>
       <!-- 課程列表 -->
+      <ExpandCard />
     </main>
-
-    <!-- 課程列表test -->
-    <div class="mx-auto max-w-4xl px-4 py-8">
-
-      <!-- 課程影片列表 -->
-      <section>
-        <h2 class="mb-4 text-2xl font-semibold">課程影片</h2>
-        <CourseVideoList :videos="course.videos" :purchased="isPurchased" />
-      </section>
-    </div>
   </div>
 </template>
