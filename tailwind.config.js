@@ -37,7 +37,7 @@ export default {
                 charcoal:'#363636',// 暗灰 #363636
                 black:'#0B0B0B',// 黑色 #0B0B0B
                 blueGreen: '#3e99a3', // 木 (湖泊綠)
-                deepTeal:'#0518C95',// 深木 (藍綠) #0518C95
+                deepTeal:'#518C95',// 深木 (藍綠) #0518C95
                 alertRed:'#E37D73',// 紅 (標籤/警示) #E37D73
                 tagBlue:'#687CA6',// 藍 (標籤) #687CA6
                 tagGreen:'#749B91',// 綠 (標籤) #749B91
