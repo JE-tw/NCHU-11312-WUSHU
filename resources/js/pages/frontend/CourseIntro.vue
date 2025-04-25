@@ -1,9 +1,20 @@
 <!-- 課程介紹頁 -->
 <script setup>
 import CartButton from '@/components/CartButton.vue';
+import lock from '@/images/f-lock.png';
 
 // TEST
 import ExpandCard from '@/components/ExpandCard.vue';
+// 課程卡假資料
+const courses = [
+  { title: '1-1(29:00)', description: '1-1' },
+  { title: '1-2(20:31)', description: '1-2' },
+  { title: '1-3(29:00)', description: '1-3' },
+  { title: '1-4(23:18)', description: '1-4' },
+];
+
+//
+import LockButton from '@/components/CardButton.vue';
 </script>
 
 <template>
@@ -27,7 +38,6 @@ import ExpandCard from '@/components/ExpandCard.vue';
           NT$ 40000
         </p>
         <!-- 加入購物車案紐 -->
-        <div></div>
         <CartButton :hideText="false" :cartShorter="false" class="h-[32px] w-[120px]" />
       </div>
       <p class="mb-[24px] mt-[32px] text-[20px]/[26.6px] font-bold text-blueGreen sm:my-[24px] sm:text-[36px]/[44px]">課程介紹:</p>
@@ -41,7 +51,20 @@ import ExpandCard from '@/components/ExpandCard.vue';
         付費課程，將於購買後解鎖。
       </p>
       <!-- 課程列表 -->
-      <ExpandCard />
+      <!-- 傳入插槽 ExpandCard.vue 並傳入插槽中的插槽CardBtn-->
+      <ExpandCard v-for="(item, index) in courses" :key="index" :item="item">
+        <!-- 傳入插槽 CardButton 插槽放 -->
+        <LockButton :hideText="false" :cartShorter="false">
+          <!-- 按鈕icon -->
+          <template #icon>
+            <img :src="lock" alt="lock" class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
+          </template>
+          <!-- 按鈕文字 -->
+          <template #text>
+            <span :class="hideText ? 'hidden text-[18px] text-white sm:block' : 'text-[12px] text-white sm:text-[18px]'">課程影片</span>
+          </template>
+        </LockButton>
+      </ExpandCard>
     </main>
   </div>
 </template>

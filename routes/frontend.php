@@ -35,6 +35,10 @@ Route::prefix('wushu')->group(function () {
     Route::get('/LoginRegister', function () {
         return Inertia::render('frontend/LoginRegister');
     });
+    //課程介紹頁
+    Route::get('/CourseIntro', function () {
+        return Inertia::render('frontend/CourseIntro');
+    });
 
     // 隱私權政策
     Route::get('/Privacy', function () {

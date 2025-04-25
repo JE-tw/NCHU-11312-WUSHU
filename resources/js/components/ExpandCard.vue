@@ -1,19 +1,22 @@
 <!-- 可展開的卡片 -->
+<!-- 用於 課程與服務頁 以及 課程介紹頁 -->
+<!-- 卡片按鈕使用插槽傳入 -->
+
 <script setup>
+import { ref } from 'vue';
 import dashIcon from '@/images/f-dash.png';
 import plusIcon from '@/images/f-plus.png';
-import { ref } from 'vue';
+import LockButton from '@/components/CardButton.vue';
 
-import CartButton from './CartButton.vue';
-
-defineProps({
+// 傳入 item 物件
+const props = defineProps({
   item: {
     type: Object,
     required: true,
   },
 });
 
-// 展開/卡片
+// 控制展開狀態
 const showDescription = ref(false);
 const toggleDescription = () => {
   showDescription.value = !showDescription.value;
@@ -32,21 +35,22 @@ const toggleDescription = () => {
         <button @click.stop="toggleDescription" class="h-8 w-8">
           <img :src="showDescription ? dashIcon : plusIcon" alt="toggle" class="cursor-pointer object-contain" />
         </button>
-        <!-- 卡片內容 -->
+        <!-- 標題內容 -->
         <div class="ml-6">
-          <!-- 標題 -->
-          <p class="text-[20px] font-bold text-gray-800 sm:text-[32px]/[42px]"></p>
+          <p class="text-[16px]/[21px] font-bold  text-gray-800 sm:text-[32px]/[42px]">
+            {{ item.title }}
+          </p>
         </div>
       </div>
-      <!-- 購物車按鈕 -->
-      <CartButton />
+      <!-- 課程影片按鈕 插槽要插入CardButton.vue -->
+      <slot></slot>
     </div>
 
     <!-- 描述文字 -->
     <div v-if="showDescription" class="whitespace-pre-line px-[16px]">
       <hr />
       <p class="py-[16px] font-['Microsoft_JhengHei'] text-[16px] text-black sm:text-[24px]">
-        
+        {{ item.description }}
       </p>
     </div>
   </div>
