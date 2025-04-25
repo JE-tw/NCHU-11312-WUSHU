@@ -19,7 +19,7 @@ const policyPoints = ref([
         <Header />
         <main class="w-full h-[1611px]">
             <div class="h-[444px] bg-black flex items-center justify-center">
-                <h1 class="text-white text-[4rem] text-center font-serif font-normal leading-[40px]
+                <h1 class="text-white text-[4rem] text-center font-serif font-semibold leading-[40px] mt-24
            underline underline-offset-[18px] decoration-[2px]">
                     隱私權政策
                 </h1>
@@ -35,8 +35,8 @@ const policyPoints = ref([
 
                 <!-- 內文區塊（符合 24px + 40px 行距 + 2% 字距） -->
                 <div class="bg-white p-6 md:p-8 max-w-5xl mx-auto ">
-                    <div class="text-left space-y-6 text-black font-['Microsoft_JhengHei']
-              font-normal text-[24px] leading-[55px] tracking-[0.02em]">
+                    <div class="text-left space-y-6 text-black font-['Microsoft_JhengHei'] 
+              font-medium text-[24px] leading-[55px] tracking-[0.02em]">
                         <p v-for="(point, index) in policyPoints" :key="index">
                             {{ point }}
                         </p>
