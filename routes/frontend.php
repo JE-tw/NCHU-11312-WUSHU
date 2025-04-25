@@ -36,4 +36,8 @@ Route::prefix('wushu')->group(function () {
         return Inertia::render('frontend/LoginRegister');
     });
 
+    // 隱私權政策
+    Route::get('/Privacy', function () {
+        return Inertia::render('frontend/Privacy');
+    });
 });
