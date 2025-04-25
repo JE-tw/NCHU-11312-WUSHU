@@ -1,5 +1,7 @@
 <script setup>
-import { ref, defineComponent } from 'vue'
+import { ref, defineComponent } from 'vue';
+import BackendHeader from '../../components/BackendHeader.vue';
+
 
 const tab = ref('signup')
 
@@ -14,18 +16,19 @@ const InputWithIcon = defineComponent({
     type: String,
   },
   template: `
-    <div class="relative">
-      <input :type="type" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pl-10" :placeholder="placeholder" />
-      <i :class="'fas fa-' + icon + ' absolute left-3 top-3 text-gray-400'"></i>
+  <div class="relative">
+    <input :type="type" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pl-10" :placeholder="placeholder" />
+    <i :class="'fas fa-' + icon + ' absolute left-3 top-3 text-gray-400'"></i>
     </div>
-  `
-})
+    `
+  })
 </script>
 
 
 <template>
-  <div class="bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 min-h-screen flex items-center justify-center">
+  <div class="bg-white min-h-screen flex items-center justify-center">
     <div class="container mx-auto px-4">
+      <BackendHeader/>
       <div
         class="max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
         <!-- Header -->
