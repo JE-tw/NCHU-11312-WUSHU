@@ -1,20 +1,28 @@
 <!-- 課程介紹頁 -->
 <script setup>
+import CardButton from '@/components/CardButton.vue';
 import CartButton from '@/components/CartButton.vue';
+import play from '@/images/f-play.png';
 import lock from '@/images/f-lock.png';
 
-// TEST
+// 引入展開卡片 - 影片卡片
 import ExpandCard from '@/components/ExpandCard.vue';
-// 課程卡假資料
+
+// 假資料：課程卡
 const courses = [
   { title: '1-1(29:00)', description: '1-1' },
   { title: '1-2(20:31)', description: '1-2' },
   { title: '1-3(29:00)', description: '1-3' },
   { title: '1-4(23:18)', description: '1-4' },
 ];
+// 判斷是否購買了，假資料：實際上會由後端提供
+const hasPurchased = true;
 
-//
-import LockButton from '@/components/CardButton.vue';
+// 按鈕點擊功能 CardButton
+function handleClick(item) {
+  if (!hasPurchased) return; // 沒買就直接什麼都不做！
+  console.log('✅ 播放影片：', item.title); // 有買，才執行下面功能
+}
 </script>
 
 <template>
@@ -29,8 +37,8 @@ import LockButton from '@/components/CardButton.vue';
       </p>
       <span class="mb-[60px] w-[120px] border-b-2 border-grayWhite sm:mb-[80px] sm:w-[300px] xl:mb-[120px]"></span>
     </header>
-    <main class="h-auto px-[24px] xl:w-[997px] xl:m-auto">
-      <div class="flex flex-col items-end">
+    <main class="h-auto px-[24px] xl:m-auto xl:w-[997px]">
+      <div v-if="!hasPurchased" class="flex flex-col items-end">
         <!-- 價錢 -->
         <p
           class="mb-[12px] mt-[30px] text-[20px]/[26.6px] font-bold text-blueGreen sm:mb-[16px] sm:mt-[60px] sm:text-[28px]/[37px] xl:mb-[12px] xl:text-[32px]/[43px]"
@@ -54,16 +62,19 @@ import LockButton from '@/components/CardButton.vue';
       <!-- 傳入插槽 ExpandCard.vue 並傳入插槽中的插槽CardBtn-->
       <ExpandCard v-for="(item, index) in courses" :key="index" :item="item">
         <!-- 傳入插槽 CardButton 插槽放 -->
-        <LockButton :hideText="false" :cartShorter="false">
-          <!-- 按鈕icon -->
-          <template #icon>
-            <img :src="lock" alt="lock" class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
-          </template>
-          <!-- 按鈕文字 -->
-          <template #text>
-            <span :class="hideText ? 'hidden text-[18px] text-white sm:block' : 'text-[12px] text-white sm:text-[18px]'">課程影片</span>
-          </template>
-        </LockButton>
+        <div @click="handleClick(item)" class="rounded-full" :class="hasPurchased ? 'bg-blueGreen' : 'bg-darkGray'">
+          <CardButton :hideText="false" :cartShorter="false">
+            <!-- 按鈕icon -->
+            <template #icon>
+              <img v-if="hasPurchased" :src="play" alt="play" class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
+              <img v-if="!hasPurchased" :src="lock" alt="lock" class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
+            </template>
+            <!-- 按鈕文字 -->
+            <!-- <template #text>
+              <span :class="hideText ? 'hidden text-[18px] text-white sm:block' : 'text-[12px] text-white sm:text-[18px]'">課程影片</span>
+            </template> -->
+          </CardButton>
+        </div>
       </ExpandCard>
     </main>
   </div>

@@ -27,9 +27,10 @@ const toggleDescription = () => {
   <div
     @click="toggleDescription"
     class="duration-800 mb-4 cursor-pointer shadow-[0_0_5px_rgba(0,0,0,0.2)] transition-colors"
-    :class="showDescription ? 'bg-gray-200' : 'bg-white'"
+    :class="showDescription ? 'bg-lightGray' : 'bg-white'"
   >
     <div class="flex items-center justify-between p-4">
+
       <div class="flex items-center">
         <!-- 展開/收合圖示 -->
         <button @click.stop="toggleDescription" class="h-8 w-8">
@@ -37,19 +38,19 @@ const toggleDescription = () => {
         </button>
         <!-- 標題內容 -->
         <div class="ml-6">
-          <p class="text-[16px]/[21px] font-bold  text-gray-800 sm:text-[32px]/[42px]">
+          <p class="text-[16px]/[21px] sm:text-[24px]/[32px] font-bold  text-gray-800 ">
             {{ item.title }}
           </p>
         </div>
       </div>
       <!-- 課程影片按鈕 插槽要插入CardButton.vue -->
-      <slot></slot>
+      <slot ></slot>
     </div>
 
     <!-- 描述文字 -->
     <div v-if="showDescription" class="whitespace-pre-line px-[16px]">
       <hr />
-      <p class="py-[16px] font-['Microsoft_JhengHei'] text-[16px] text-black sm:text-[24px]">
+      <p class="text-[16px]/[21px] sm:text-[24px]/[32px] py-[16px] font-['Microsoft_JhengHei']  text-black sm:text-[24px]">
         {{ item.description }}
       </p>
     </div>

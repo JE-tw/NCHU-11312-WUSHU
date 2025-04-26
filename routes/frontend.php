@@ -40,6 +40,11 @@ Route::prefix('wushu')->group(function () {
         return Inertia::render('frontend/CourseIntro');
     });
 
+    //課程介紹頁(解鎖)
+    Route::get('/CourseUnlock', function () {
+        return Inertia::render('frontend/CourseUnlock');
+    });
+
     // 隱私權政策
     Route::get('/Privacy', function () {
         return Inertia::render('frontend/Privacy');

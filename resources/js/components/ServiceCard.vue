@@ -24,7 +24,7 @@ const toggleDescription = () => {
   <div
     @click="toggleDescription"
     class="duration-800 mb-4 cursor-pointer shadow-[0_0_5px_rgba(0,0,0,0.2)] transition-colors"
-    :class="showDescription ? 'bg-gray-200' : 'bg-white'"
+    :class="showDescription ? 'bg-lightGray' : 'bg-white'"
   >
     <div class="flex items-center justify-between p-4">
       <div class="flex items-center">

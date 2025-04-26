@@ -19,13 +19,15 @@ defineProps({
   <button
     type="button"
     :class="[
-      'flex items-center justify-center rounded-full bg-darkGray',
+      'flex items-center justify-center',
       cartShorter ? 'h-[32px] w-[32px] sm:h-[40px] sm:w-[178px]' : 'h-[32px] w-[120px] sm:h-[40px] sm:w-[178px]',
     ]"
   >
     <!-- 按鈕icon圖片插槽 -->
     <slot name="icon"></slot>
     <!-- 按鈕文字插槽 -->
-    <slot name="text"></slot> <!-- 文字：課程影片 -->
+    <!-- <slot name="text"></slot> -->
+    <!-- 文字：課程影片 -->
+    <span :class="hideText ? 'hidden text-[18px] text-white sm:block' : 'text-[12px] text-white sm:text-[18px]'">課程影片</span>
   </button>
 </template>
