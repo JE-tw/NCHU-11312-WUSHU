@@ -1,5 +1,5 @@
 <template>
-  <header class="fixed top-0 left-0 right-0 z-50 shadow-md px-4 sm:px-6">
+  <header class="fixed top-0 left-0 right-0 z-50 shadow-md px-4 sm:px-6 ">
     <div :class="[
       'flex items-center justify-between px-4 sm:px-6 w-full',
       isMobile ? 'h-[60px]' : 'h-[80px]',
@@ -7,7 +7,7 @@
       isDesktop ? 'max-w-[1800px] mx-auto rounded-full bg-white/75' : 'w-full bg-white'
     ]">
       <!-- Logo 區塊 -->
-      <div class="flex items-center space-x-2">
+      <div class="flex items-center space-x-2 cursor-pointer">
         <img src="@/images/logo.svg" alt="Logo" :class="[isMobile ? 'h-[30px] w-[30px]' : 'h-[40px] w-[40px]']" />
         <span :class="[isMobile ? 'text-xl' : 'text-2xl sm:text-4xl', 'font-bold text-[#0b0b0b]']">五術研究社</span>
       </div>
@@ -43,7 +43,7 @@
 
       <!-- 電腦版選單 -->
       <div v-if="!isTablet && !isMobile" class="flex-1 flex justify-center">
-        <nav class="flex items-center gap-6 font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[24px] leading-[1] tracking-normal">
+        <nav class="flex items-center gap-4 font-['Microsoft_JhengHei'] font-bold text-black text-[24px] leading-[1] tracking-normal cursor-pointer">
           <router-link to="/about" class="px-3 py-2 hover:text-[#1f9c95] whitespace-nowrap">
             關於站主
           </router-link>
@@ -62,8 +62,8 @@
           <img src="@/images/cart.svg" alt="購物車" class="w-8 h-8" />
         </button>
         <router-link to="/login" class="hover:text-[#1f9c95] flex items-center gap-1">
-          <img src="@/images/user.svg" alt="登入" class="w-8 h-8" />
-          <span class="font-['Microsoft_JhengHei'] font-normal text-[18px] leading-8 tracking-normal whitespace-nowrap">
+          <img src="@/images/user.svg" alt="登入" class="w-8 h-8 " />
+          <span class="font-['Microsoft_JhengHei'] font-normal text-[18px] leading-8 tracking-normal whitespace-nowrap cursor-pointer">
             登入註冊
           </span>
         </router-link>
