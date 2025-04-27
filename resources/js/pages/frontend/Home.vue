@@ -4,72 +4,79 @@ import { ref, computed } from 'vue'
 import Header from '../../components/Header.vue'
 import Footer from '../../components/Footer.vue'
 
+// ====== 載入圖片資源 ======
 import imgSrc from '@/images/藥材aocax-ufyt5.webp'
 import courseImg1 from '@/images/主打課程1a2axq-d0uqq.webp'
 import courseImg2 from '@/images/主打課程2a1t2a-q5lk4.webp'
 import masterImg1 from '@/images/關於站主a8k69-ybprq.webp'
 import masterImg2 from '@/images/學會創立研革ay2gj-8gn6h.webp'
+import tarotImg from '@/images/a1tgu3-dqrfv.webp'
+import tcmImg from '@/images/ay1lo-pmcep.webp'
+import magicImg from '@/images/a1tgu3-dqrfv.webp'
+import othersImg from '@/images/a1tgu3-dqrfv.webp'
 
+// ====== 基本設定 ======
 // 背景圖
 const bgImage = imgSrc
 
 // Tabs 資料
 const tabs = ref([
-  { name: 'tarot', label: '吠陀占星', image: '/images/tarot-bg.jpg' },
-  { name: 'tcm', label: '中醫', image: '/images/tcm-bg.jpg' },
-  { name: 'magic', label: '古典魔法', image: '/images/magic-bg.jpg' },
-  { name: 'others', label: '其它術數', image: '/images/others-bg.jpg' }
+    { name: 'tarot', label: '吠陀占星', image: tarotImg },
+    { name: 'tcm', label: '中醫', image: tcmImg },
+    { name: 'magic', label: '古典魔法', image: magicImg },
+    { name: 'others', label: '其它術數', image: othersImg }
 ])
 
 // 預設選中的 tab
 const activeTab = ref('tarot')
 
-// 依照 activeTab 計算對應的背景圖片
+// 動態切換背景圖片
 const currentImage = computed(() => {
-  const tab = tabs.value.find(t => t.name === activeTab.value)
-  return tab ? tab.image : ''
+    const tab = tabs.value.find(t => t.name === activeTab.value)
+    return tab ? tab.image : ''
 })
 
-// 課程資料
+// ====== 課程資料 ======
 const courses = ref({
-  tarot: [
-    { name: '', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
-    { name: '', lessons: '16', duration: '3小時/堂', price: 'NT$28,000' },
-    { name: '', lessons: '20', duration: '2小時/堂', price: 'NT$36,000' },
-    { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
-    { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
-    { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' }
-  ],
-  tcm: [
-    { name: '古典針灸基礎班', lessons: '12', duration: '3小時/堂', price: 'NT$36,000' },
-    { name: '康治本傷寒論', lessons: '12', duration: '2小時/堂', price: 'NT$36,000' },
-    { name: '金匱要略', lessons: '20', duration: '2小時/堂', price: 'NT$40,000' },
-    { name: '伏氣溫病學', lessons: '20', duration: '2小時/堂', price: 'NT$52,000' }
-  ],
-  magic: [
-    { name: '蔣氏玄空風水執業班', lessons: '24', duration: '2小時/堂', price: 'NT$36,000' }
-  ],
-  others: [
-    { name: '蔣氏玄空風水執業班', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
-    { name: '', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
-    { name: '', lessons: '16', duration: '3小時/堂', price: 'NT$28,000' },
-    { name: '', lessons: '20', duration: '2小時/堂', price: 'NT$36,000' },
-    { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
-    { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
-    { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' }
-  ]
+    tarot: [
+        { name: '', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
+        { name: '', lessons: '16', duration: '3小時/堂', price: 'NT$28,000' },
+        { name: '', lessons: '20', duration: '2小時/堂', price: 'NT$36,000' },
+        { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
+        { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
+        { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' }
+    ],
+    tcm: [
+        { name: '古典針灸基礎班', lessons: '12', duration: '3小時/堂', price: 'NT$36,000' },
+        { name: '康治本傷寒論', lessons: '12', duration: '2小時/堂', price: 'NT$36,000' },
+        { name: '金匱要略', lessons: '20', duration: '2小時/堂', price: 'NT$40,000' },
+        { name: '伏氣溫病學', lessons: '20', duration: '2小時/堂', price: 'NT$52,000' }
+    ],
+    magic: [
+        { name: '蔣氏玄空風水執業班', lessons: '24', duration: '2小時/堂', price: 'NT$36,000' }
+    ],
+    others: [
+        { name: '蔣氏玄空風水執業班', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
+        { name: '', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
+        { name: '', lessons: '16', duration: '3小時/堂', price: 'NT$28,000' },
+        { name: '', lessons: '20', duration: '2小時/堂', price: 'NT$36,000' },
+        { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
+        { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
+        { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' }
+    ]
 })
 
-// 取得某個 tab 對應的課程清單
+// 取得對應 tab 的課程
 const getCoursesForTab = (tabName) => {
-  return courses.value[tabName] || []
+    return courses.value[tabName] || []
 }
 
-// 切換 activeTab
+// 切換 tab
 const changeTab = (tabName) => {
-  activeTab.value = tabName
+    activeTab.value = tabName
 }
 </script>
+
 
 
 <template>
@@ -138,77 +145,53 @@ const changeTab = (tabName) => {
 
             <!-- Courses offered -->
             <section class="relative w-full h-auto md:h-[858px] bg-black text-white overflow-hidden">
-                <!-- Background with pentagram symbol overlay -->
-                <div class="absolute inset-0 bg-black opacity-70"></div>
-                <div class="absolute inset-0 bg-left-bottom bg-no-repeat"
-                    style="background-image: url('/images/pentagram-bg.jpg'); opacity: 0.3; background-size: 50%;">
-                </div>
+                <div class="container mx-auto h-full flex relative z-10">
 
-                <div class="container mx-auto h-full flex flex-col relative z-10">
-                    <!-- Title section - 修改為左對齊 -->
-                    <div class="text-left pt-10 pb-6">
+                  
+                    <div class="w-full md:w-1/2 flex flex-col justify-start pt-10 pl-6 relative">
                         <h2 class="text-5xl font-serif font-bold">開立課程</h2>
-                        <div class="h-0.5 bg-deepTeal mt-2 w-32"></div>
+                        <div class="h-0.5 bg-deepTeal mt-2 w-44"></div>
                         <button
-                            class="mt-6 px-8 py-2 bg-deepTeal text-white rounded text-lg hover:bg-teal-700 transition duration-300">
+                            class="w-[146px] h-[56px] mt-6 px-8 py-2 bg-deepTeal text-white rounded text-lg hover:bg-teal-700 transition duration-300">
                             了解更多
                         </button>
+
+                        
+                        <img :src="currentImage" alt="課程背景"
+                            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-10 max-w-none h-full pointer-events-none" />
                     </div>
 
-                    <!-- Tabs navigation -->
-                    <div class="flex justify-start space-x-6 pb-2 border-b border-gray-700">
-                        <button v-for="tab in tabs" :key="tab.name"
-                            class="py-2.5 px-6 font-medium transition duration-200 text-lg"
-                            :class="{ 'text-blueGreen border-b-2 border-blueGreen': activeTab === tab.name, 'text-gray-300 hover:text-white': activeTab !== tab.name }"
-                            @click="changeTab(tab.name)">
-                            {{ tab.label }}
-                        </button>
-                    </div>
+                    <!-- 右邊：tabs和課程列表 -->
+                    <div class="w-full md:w-1/2 flex flex-col justify-start pt-10 pr-6">
 
-                    <!-- Course listings -->
-                    <div class="flex-1 overflow-y-auto py-6">
-                        <div v-for="tab in tabs" :key="tab.name" v-show="activeTab === tab.name">
-                            <div class="space-y-1">
-                                <div v-for="(course, index) in getCoursesForTab(tab.name)" :key="index"
-                                    class="flex flex-col md:flex-row justify-between items-start md:items-center py-4 border-b border-dotted border-gray-600">
-                                    <div class="text-xl font-medium md:w-1/3">{{ course.name }}</div>
-                                    <div class="flex items-center space-x-8 md:w-2/3 justify-end">
-                                        <span class="bg-deepTeal text-white px-5 py-1.5 rounded-full">
-                                            {{ course.lessons }}堂課
-                                        </span>
-                                        <span class="text-gray-300">{{ course.duration }}</span>
-                                        <span class="text-deepTeal font-bold text-xl">{{ course.price }}</span>
-                                    </div>
-                                </div>
-                            </div>
+                        <!-- Tabs -->
+                        <div class="flex justify-start space-x-6 pb-4 border-b border-gray-700">
+                            <button v-for="tab in tabs" :key="tab.name"
+                                class="py-2.5 px-6 font-medium transition duration-200 text-lg"
+                                :class="{ 'text-blueGreen border-b-2 border-blueGreen': activeTab === tab.name, 'text-gray-300 hover:text-white': activeTab !== tab.name }"
+                                @click="changeTab(tab.name)">
+                                {{ tab.label }}
+                            </button>
+                        </div>
 
-                            <!-- Pagination -->
-                            <div class="flex justify-start mt-12">
-                                <div class="flex space-x-2">
-                                    <button
-                                    class="w-8 h-8 flex items-center justify-center rounded text-gray-300 hover:bg-gray-700"><</button>
-                                    <button
-                                        class="w-8 h-8 flex items-center justify-center rounded bg-deepTeal text-white">1</button>
-                                    <button
-                                        class="w-8 h-8 flex items-center justify-center rounded text-gray-300 hover:bg-gray-700">2</button>
-                                    <button
-                                        class="w-8 h-8 flex items-center justify-center rounded text-gray-300 hover:bg-gray-700">3</button>
-                                    <button
-                                        class="w-8 h-8 flex items-center justify-center rounded text-gray-300 hover:bg-gray-700">4</button>
-                                    <button
-                                        class="w-8 h-8 flex items-center justify-center rounded text-gray-300 hover:bg-gray-700">›</button>
+                        <!-- 課程列表 -->
+                        <div class="flex-1 overflow-y-auto py-6 space-y-6">
+                            <div v-for="course in getCoursesForTab(activeTab)" :key="course.name"
+                                class="flex flex-col md:flex-row justify-between items-start md:items-center py-4 border-b border-dotted border-gray-600">
+                                <div class="text-xl font-medium md:w-1/2">{{ course.name || '課程名稱待補充' }}</div>
+                                <div class="flex items-center space-x-8 md:w-1/2 justify-end">
+                                    <span class="bg-deepTeal text-white px-5 py-1.5 rounded-full">{{ course.lessons
+                                        }}堂課</span>
+                                    <span class="text-gray-300">{{ course.duration }}</span>
+                                    <span class="text-deepTeal font-bold text-xl">{{ course.price }}</span>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
-
-                <!-- Dynamic background image (shows on desktop) -->
-                <div class="hidden md:block absolute top-0 left-0 w-1/2 h-full z-0">
-                    <img :src="currentImage" alt="課程背景"
-                        class="hidden md:block absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 opacity-10 max-w-none h-full">
-                </div>
             </section>
+
 
 
             <!-- AboutMaster -->
@@ -217,7 +200,7 @@ const changeTab = (tabName) => {
                     <!-- 標題 -->
                     <div class="text-center">
                         <h2
-                            class="text-[48px] xl:text-[64px] leading-[100%] font-bold border-b-2 border-black inline-block pb-2">
+                            class="text-[48px] xl:text-[64px] leading-[100%] font-bold font-serif border-b-2 border-black inline-block pb-2">
                             關於站主
                         </h2>
                     </div>
@@ -245,7 +228,7 @@ const changeTab = (tabName) => {
                     <div class="flex flex-col xl:flex-row-reverse items-center gap-12">
                         <div class="xl:w-1/2 space-y-6 text-lg leading-relaxed text-gray-800">
                             <h3
-                                class="text-[48px] xl:text-[64px] font-bold border-b-2 border-black inline-block pb-1 mb-4">
+                                class="text-[48px] xl:text-[64px] font-bold font-serif border-b-2 border-black inline-block pb-1 mb-4">
                                 學會創立沿革</h3>
                             <div class="bg-lightGray p-6 ">
                                 <p>
