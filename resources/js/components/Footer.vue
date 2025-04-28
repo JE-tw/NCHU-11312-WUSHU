@@ -46,9 +46,9 @@
         </div>
   
         <div class="flex flex-wrap justify-center gap-6 font-bold text-[24px] leading-[100%] tracking-[0] links">
-          <a href="/contact" class="hover:text-blueGreen hover:underline border-r border-white pr-6">聯絡我們</a>
-          <a href="/policy/refund" class="hover:text-blueGreen hover:underline border-r border-white pr-6">付款與退款政策</a>
-          <a href="/policy/privacy" class="hover:text-blueGreen hover:underline">隱私權政策</a>
+          <a href="http://127.0.0.1:8000/wushu/ContactUs" class="hover:text-blueGreen hover:underline border-r border-white pr-6">聯絡我們</a>
+          <a href="http://127.0.0.1:8000/wushu/Policy" class="hover:text-blueGreen hover:underline border-r border-white pr-6">付款與退款政策</a>
+          <a href="http://127.0.0.1:8000/wushu/Privacy" class="hover:text-blueGreen hover:underline">隱私權政策</a>
         </div>
   
         <div class="w-[220px] flex items-center justify-end social-icons gap-2">
