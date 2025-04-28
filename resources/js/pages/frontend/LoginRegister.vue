@@ -1,14 +1,13 @@
 <script setup>
-import { ref, defineComponent } from 'vue';
+import { ref } from 'vue';
 import Header from '../../components/Header.vue';
-
 
 const tab = ref('signup')
 
-const activeTabClass = 'bg-blue-500 text-white'
-const inactiveTabClass = 'bg-gray-200 text-gray-700'
-
-
+// 選到的按鈕樣式
+const activeTabClass = 'bg-[#1F9C95] text-white border border-[#1F9C95]'
+// 沒選到的按鈕樣式
+const inactiveTabClass = 'bg-white text-[#1F9C95] border border-[#1F9C95]'
 </script>
 
 
@@ -29,27 +28,132 @@ const inactiveTabClass = 'bg-gray-200 text-gray-700'
       <div class="flex flex-col items-center gap-4">
         <!-- Tabs 在卡片上方，左右對齊 -->
         <div class="flex justify-between items-center w-full max-w-md">
-          <button @click="tab = 'signup'" :class="tab === 'signup' ? activeTabClass : inactiveTabClass"
-            class="text-2xl px-16 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap"
-            style="background-color: #1F9C95; color: white;">
+          <button @click="tab = 'login'" :class="tab === 'login' ? activeTabClass : inactiveTabClass"
+            class="text-2xl px-16 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap">
             登入
           </button>
 
-          <!-- 這裡的中間線條保持顯示 -->
           <div class="w-px h-12 bg-gray-300"></div>
 
-          <button @click="tab = 'login'" :class="tab === 'login' ? activeTabClass : inactiveTabClass"
+          <button @click="tab = 'signup'" :class="tab === 'signup' ? activeTabClass : inactiveTabClass"
             class="text-2xl px-16 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap">
             註冊
           </button>
         </div>
-
         <div
           class="w-full max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
           <!-- Content -->
           <div class="p-8">
             <!-- Signup Form -->
             <form v-if="tab === 'signup'" class="space-y-6">
+              <h2 class="text-3xl font-bold mb-6">個人資料</h2>
+
+              <!-- 姓名 -->
+              <div class="relative">
+                <input type="text" id="name" placeholder=" "
+                  class="peer w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1F9C95]" />
+                <label for="name"
+                  class="absolute left-3 top-3 text-gray-400 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-[-8px] peer-focus:text-xs peer-focus:text-[#1F9C95] bg-white px-1">
+                  姓名
+                </label>
+              </div>
+
+              <!-- 手機號碼 -->
+              <div class="relative">
+                <input type="tel" id="phone" placeholder=" "
+                  class="peer w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1F9C95]" />
+                <label for="phone"
+                  class="absolute left-3 top-3 text-gray-400 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-[-8px] peer-focus:text-xs peer-focus:text-[#1F9C95] bg-white px-1">
+                  手機號碼
+                </label>
+              </div>
+
+              <!-- 出生日期和出生時間 -->
+              <div class="flex flex-col sm:flex-row sm:space-x-4">
+                <!-- 出生日期 -->
+                <div class="relative flex-1">
+                  <input type="date" id="birth-date" placeholder=" "
+                    class="peer w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1F9C95]" />
+                  <label for="birth-date"
+                    class="absolute left-3 top-3 text-gray-400 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-[-8px] peer-focus:text-xs peer-focus:text-[#1F9C95] bg-white px-1">
+                    出生日期
+                  </label>
+                </div>
+
+                <!-- 出生時間 -->
+                <div class="relative flex-1 mt-4 sm:mt-0">
+                  <input type="time" id="birth-time" placeholder=" "
+                    class="peer w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1F9C95]" />
+                  <label for="birth-time"
+                    class="absolute left-3 top-3 text-gray-400 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-[-8px] peer-focus:text-xs peer-focus:text-[#1F9C95] bg-white px-1">
+                    出生時間
+                  </label>
+                </div>
+              </div>
+
+
+              <!-- 出生城市 -->
+              <div class="relative">
+                <input type="text" id="birth-city" placeholder=" "
+                  class="peer w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1F9C95]" />
+                <label for="birth-city"
+                  class="absolute left-3 top-3 text-gray-400 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-[-8px] peer-focus:text-xs peer-focus:text-[#1F9C95] bg-white px-1">
+                  出生城市
+                </label>
+              </div>
+
+              <!-- 地址 -->
+              <div class="relative">
+                <input type="text" id="address" placeholder=" "
+                  class="peer w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1F9C95]" />
+                <label for="address"
+                  class="absolute left-3 top-3 text-gray-400 text-sm transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-[-8px] peer-focus:text-xs peer-focus:text-[#1F9C95] bg-white px-1">
+                  地址
+                </label>
+              </div>
+
+              <h2 class="text-3xl font-bold mt-8 mb-6">電子郵件</h2>
+              <p class="text-gray-600 mb-4">此信箱同時作為登入帳號使用。</p>
+
+              <!-- 電子郵件 -->
+              <div class="flex flex-col">
+                <label class="text-xl font-semibold text-gray-700 mb-2">電子郵件</label>
+                <input type="email" placeholder="請輸入電子郵件"
+                  class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#1F9C95]" />
+              </div>
+
+              <h2 class="text-3xl font-bold mt-8 mb-6">密碼</h2>
+
+              <!-- 密碼 -->
+              <div class="flex flex-col">
+                <label class="text-xl font-semibold text-gray-700 mb-2">密碼</label>
+                <input type="password" placeholder="密碼/至少6碼/英數混和"
+                  class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#1F9C95]" />
+              </div>
+
+              <!-- 同意條款 -->
+              <div class="flex items-start space-x-2 mt-4">
+                <input type="checkbox" id="terms"
+                  class="w-5 h-5 text-[#1F9C95] focus:ring-[#1F9C95] border-gray-300 rounded mt-1">
+                <label for="terms" class="text-gray-600 text-base">
+                  同意本站的
+                  <a href="http://127.0.0.1:8001/wushu/Policy" target="_blank"
+                    class="text-blue-500 hover:underline">付款退款條款</a> 與
+                  <a href="http://127.0.0.1:8001/wushu/Privacy" target="_blank"
+                    class="text-blue-500 hover:underline">隱私權政策</a>。
+                </label>
+              </div>
+
+              <!-- 註冊按鈕 -->
+              <button
+                class="w-full bg-[#1F9C95] text-white text-xl py-3 rounded-md hover:opacity-90 transition-opacity duration-300 transform hover:scale-105 mt-6">
+                註冊會員
+              </button>
+            </form>
+
+            <!-- Login Form -->
+            <form v-else class="space-y-6">
+              <!-- Email -->
               <div class="flex flex-col">
                 <label class="text-2xl font-semibold text-gray-700 mb-2">帳號</label>
                 <div class="relative">
@@ -95,27 +199,6 @@ const inactiveTabClass = 'bg-gray-200 text-gray-700'
                 登入會員
               </button>
             </form>
-
-            <!-- Login Form -->
-            <form v-else class="space-y-4">
-              <!-- Email -->
-              <div class="relative">
-                <input type="email" placeholder="帳號"
-                  class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pl-10" />
-                <i class="fas fa-envelope absolute left-3 top-3 text-gray-400"></i>
-              </div>
-
-              <!-- Password -->
-              <div class="relative">
-                <input type="password" placeholder="密碼"
-                  class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pl-10" />
-                <i class="fas fa-lock absolute left-3 top-3 text-gray-400"></i>
-              </div>
-              <button
-                class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-md hover:opacity-90 transition-opacity duration-300 transform hover:scale-105">
-                Login
-              </button>
-            </form>
           </div>
         </div>
       </div>
@@ -133,6 +216,14 @@ const inactiveTabClass = 'bg-gray-200 text-gray-700'
 body {
   font-family: 'Poppins', sans-serif;
 }
+
+input[type="date"]::-webkit-datetime-edit {
+  color: transparent;
+}
+input[type="date"]:focus::-webkit-datetime-edit {
+  color: black; /* 聚焦時再顯示正常文字 */
+}
+
 </style>
 
 <!-- External Links (place in index.html or main layout) -->
