@@ -10,13 +10,13 @@ defineProps<Props>();
 
 const isOpen = ref(true);
 
-onMounted(() => {
-  isOpen.value = localStorage.getItem('sidebar') !== 'false';
-});
+// onMounted(() => {
+//   isOpen.value = localStorage.getItem('sidebar') !== 'false';
+// });
 
 const handleSidebarChange = (open: boolean) => {
-  isOpen.value = open;
-  localStorage.setItem('sidebar', String(open));
+  // isOpen.value = open;
+  // localStorage.setItem('sidebar', String(open));
 };
 </script>
 

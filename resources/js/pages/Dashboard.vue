@@ -6,14 +6,14 @@ import PlaceholderPattern from '../components/PlaceholderPattern.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
-    title: 'Dashboard',
+    title: '五術研究社 後臺管理',
     href: '/dashboard',
   },
 ];
 </script>
 
 <template>
-  <Head title="Dashboard" />
+  <Head title="五術研究社-後臺管理" />
 
   <AppLayout :breadcrumbs="breadcrumbs">
     <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
