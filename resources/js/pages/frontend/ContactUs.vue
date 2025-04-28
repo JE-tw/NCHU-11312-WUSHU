@@ -99,7 +99,7 @@ const subject = ref(''); // 輸入時label往上方移動
               required
             />
             <label
-              for="email"
+              for="subject"
               :class="[
                 'absolute left-0 text-darkGray',
                 subject ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
@@ -113,7 +113,7 @@ const subject = ref(''); // 輸入時label往上方移動
             <textarea
               name="content"
               id="content"
-              class="mb-[24px] h-[113px] w-full rounded-sm border border-mediumGray text-[18px]/[24px] text-black outline-none"
+              class="mb-[24px] h-[113px] w-full rounded-sm border border-mediumGray text-[18px]/[24px] text-black outline-none p-4"
             ></textarea>
           </div>
           <p class="mb-[24px] w-[360px] text-[12px]/[16px] text-darkGray sm:w-[438px] sm:text-[18px]/[24px]">
