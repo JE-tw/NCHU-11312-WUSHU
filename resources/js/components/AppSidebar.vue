@@ -14,6 +14,10 @@ const mainNavItems: NavItem[] = [
     href: '/dashboard',
     // icon: LayoutGrid,
   },
+  {
+    title: '聯絡我們列表',
+    href: route('admin.contact.list'),
+  },
 ];
 
 // const footerNavItems: NavItem[] = [
@@ -54,4 +58,5 @@ const mainNavItems: NavItem[] = [
     </SidebarFooter> -->
   </Sidebar>
   <slot />
+  <!-- <router-view /> -->
 </template>

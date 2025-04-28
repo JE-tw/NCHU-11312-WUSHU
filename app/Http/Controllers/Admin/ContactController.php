@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\ContactRecord;
+use App\Http\Controllers\Controller;
 
 class ContactController extends Controller
 {
@@ -13,6 +15,10 @@ class ContactController extends Controller
     public function index()
     {
         //
+        $item = ContactRecord::all();
+        return Inertia::render('backend/contact/ContactList',[
+            'contact'=> $item
+        ]);
     }
 
     /**
