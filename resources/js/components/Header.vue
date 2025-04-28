@@ -1,10 +1,11 @@
 <template>
-  <header class="fixed top-0 left-0 right-0 z-50 shadow-md px-4 sm:px-6 ">
+  <header class="fixed top-0 left-0 right-0 z-50 shadow-md w-full">
     <div :class="[
-      'flex items-center justify-between px-4 sm:px-6 w-full',
+      'flex items-center justify-between w-full',
       isMobile ? 'h-[60px]' : 'h-[80px]',
-      !isTablet && !isMobile ? 'mt-6' : 'mt-0',
-      isDesktop ? 'max-w-[1800px] mx-auto rounded-full bg-white/75' : 'w-full bg-white'
+      !isTablet && !isMobile ? 'mt-6 px-4 sm:px-6' : 'mt-0 px-4',
+      isDesktop ? 'max-w-[1800px] mx-auto rounded-full' : '',
+      'bg-white/75'  
     ]">
       <!-- Logo 區塊 -->
       <div class="flex items-center space-x-2 cursor-pointer">
@@ -43,7 +44,8 @@
 
       <!-- 電腦版選單 -->
       <div v-if="!isTablet && !isMobile" class="flex-1 flex justify-center">
-        <nav class="flex items-center gap-4 font-['Microsoft_JhengHei'] font-bold text-black text-[24px] leading-[1] tracking-normal cursor-pointer">
+        <nav
+          class="flex items-center gap-4 font-['Microsoft_JhengHei'] font-bold text-black text-[24px] leading-[1] tracking-normal cursor-pointer">
           <router-link to="/about" class="px-3 py-2 hover:text-[#1f9c95] whitespace-nowrap">
             關於站主
           </router-link>
@@ -63,7 +65,8 @@
         </button>
         <router-link to="/login" class="hover:text-[#1f9c95] flex items-center gap-1">
           <img src="@/images/user.svg" alt="登入" class="w-8 h-8 " />
-          <span class="font-['Microsoft_JhengHei'] font-normal text-[18px] leading-8 tracking-normal whitespace-nowrap cursor-pointer">
+          <span
+            class="font-['Microsoft_JhengHei'] font-normal text-[18px] leading-8 tracking-normal whitespace-nowrap cursor-pointer">
             登入註冊
           </span>
         </router-link>
@@ -74,9 +77,8 @@
 
   <!-- 展開的選單 (平板和手機版) -->
   <div v-if="(isTablet || isMobile) && isMobileMenuOpen"
-    class="fixed left-0 z-40 w-full bg-[#F2F2F2] shadow-md overflow-hidden transition-all duration-300"
-    :class="isMobile ? 'top-[60px]' : 'top-[80px]'"
-    :style="{ maxHeight: isMobileMenuOpen ? '300px' : '0' }">
+    class="fixed left-0 right-0 z-40 w-full bg-[#F2F2F2] shadow-md overflow-hidden transition-all duration-300"
+    :class="isMobile ? 'top-[60px]' : 'top-[80px]'" :style="{ maxHeight: isMobileMenuOpen ? '300px' : '0' }">
     <nav class="flex flex-col py-2 px-4">
       <!-- 平板版專用搜尋欄 -->
       <div v-if="isTablet && !isMobile" class="relative flex items-center py-3 border-b border-gray-300">
@@ -101,7 +103,6 @@
   </div>
 </template>
 
-
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 
@@ -123,7 +124,7 @@ const toggleMobileMenu = () => {
 // 視窗縮放時更新
 const handleResize = () => {
   windowWidth.value = window.innerWidth;
-  
+
   // 超過平板版，關閉手機選單
   if (windowWidth.value > 1270) {
     isMobileMenuOpen.value = false;
@@ -147,28 +148,23 @@ onMounted(() => {
   window.addEventListener('resize', handleResize);
   document.addEventListener('click', handleClickOutside);
 
-  handleResize(); 
+  handleResize();
 });
 
 onUnmounted(() => {
-  
   window.removeEventListener('resize', handleResize);
   document.removeEventListener('click', handleClickOutside);
 });
-
 
 watch([isMobile, isTablet], () => {
   isMobileMenuOpen.value = false;
 });
 </script>
 
-
-
 <style scoped>
 .font-MicrosoftJhengHei {
   font-family: 'Microsoft JhengHei', sans-serif;
 }
-
 
 .transition-all {
   transition-property: all;

@@ -146,24 +146,22 @@ const changeTab = (tabName) => {
             <!-- Courses offered -->
             <section class="relative w-full h-auto md:h-[858px] bg-black text-white overflow-hidden">
                 <div class="container mx-auto h-full flex relative z-10">
-
-                  
-                    <div class="w-full md:w-1/2 flex flex-col justify-start pt-10 pl-6 relative">
+                    <!-- 左側：標題和按鈕 -->
+                    <div class="w-full md:w-1/3 flex flex-col justify-start pt-10 pl-6 relative">
                         <h2 class="text-5xl font-serif font-bold">開立課程</h2>
                         <div class="h-0.5 bg-deepTeal mt-2 w-44"></div>
                         <button
-                            class="w-[146px] h-[56px] mt-6 px-8 py-2 bg-deepTeal text-white rounded text-lg hover:bg-teal-700 transition duration-300">
+                            class="w-36 h-14 mt-6 px-6 py-2 bg-deepTeal text-white rounded text-2xl hover:bg-teal-700 transition duration-300 overflow-hidden text-ellipsis whitespace-nowrap">
                             了解更多
                         </button>
 
-                        
+                        <!-- 背景符號圖片，調整位置和透明度 -->
                         <img :src="currentImage" alt="課程背景"
-                            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-10 max-w-none h-full pointer-events-none" />
+                            class="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 opacity-8 max-w-none h-full pointer-events-none" />
                     </div>
 
                     <!-- 右邊：tabs和課程列表 -->
-                    <div class="w-full md:w-1/2 flex flex-col justify-start pt-10 pr-6">
-
+                    <div class="w-full md:w-2/3 flex flex-col justify-start pt-10 pr-6">
                         <!-- Tabs -->
                         <div class="flex justify-start space-x-6 pb-4 border-b border-gray-700">
                             <button v-for="tab in tabs" :key="tab.name"
@@ -174,20 +172,43 @@ const changeTab = (tabName) => {
                             </button>
                         </div>
 
-                        <!-- 課程列表 -->
-                        <div class="flex-1 overflow-y-auto py-6 space-y-6">
+                        <!-- 課程列表 - 統一間距和對齊 -->
+                        <div class="flex-1 overflow-y-auto py-6 space-y-0">
                             <div v-for="course in getCoursesForTab(activeTab)" :key="course.name"
-                                class="flex flex-col md:flex-row justify-between items-start md:items-center py-4 border-b border-dotted border-gray-600">
-                                <div class="text-xl font-medium md:w-1/2">{{ course.name || '課程名稱待補充' }}</div>
-                                <div class="flex items-center space-x-8 md:w-1/2 justify-end">
-                                    <span class="bg-deepTeal text-white px-5 py-1.5 rounded-full">{{ course.lessons
-                                        }}堂課</span>
-                                    <span class="text-gray-300">{{ course.duration }}</span>
-                                    <span class="text-deepTeal font-bold text-xl">{{ course.price }}</span>
+                                class="flex flex-col md:flex-row justify-between items-start md:items-center py-3.5 border-b border-dotted border-gray-600">
+                                <!-- 課程名稱 - 固定寬度和對齊 -->
+                                <div class="text-xl font-medium md:w-2/5 pr-4">{{ course.name || '課程名稱待補充' }}</div>
+
+                                <!-- 課程詳情 - 統一大小和間距 -->
+                                <div class="flex items-center md:w-3/5 justify-end">
+                                    <!-- 堂數標籤 - 統一大小 -->
+                                    <span class="bg-deepTeal text-white px-5 py-1.5 rounded-full w-24 text-center">
+                                        {{ course.lessons }}堂課
+                                    </span>
+
+                                    <!-- 時長 - 固定寬度 -->
+                                    <span class="text-gray-300 w-24 text-center">{{ course.duration }}</span>
+
+                                    <!-- 價格 - 固定寬度和對齊 -->
+                                    <span class="text-deepTeal font-bold text-xl w-28 text-right">{{ course.price
+                                        }}</span>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- 分頁導航 -->
+                        <div class="flex space-x-2 mt-4">
+                            <button
+                                class="w-8 h-8 flex items-center justify-center bg-deepTeal text-white rounded">1</button>
+                            <button
+                                class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded">2</button>
+                            <button
+                                class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded">3</button>
+                            <button
+                                class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded">4</button>
+                            <button
+                                class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded">›</button>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -253,7 +274,6 @@ const changeTab = (tabName) => {
 </template>
 
 <style scope>
-/* Ensure smooth transitions when switching tabs */
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.3s;
