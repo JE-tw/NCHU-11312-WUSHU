@@ -49,4 +49,10 @@ Route::prefix('wushu')->group(function () {
     Route::get('/Privacy', function () {
         return Inertia::render('frontend/Privacy');
     });
+
+    // 隱私權政策
+    Route::get('/MemberCenter', function () {
+        return Inertia::render('frontend/MemberCenter');
+     });
+    
 });

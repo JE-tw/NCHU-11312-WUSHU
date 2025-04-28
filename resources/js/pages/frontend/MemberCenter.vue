@@ -5,20 +5,46 @@ import Footer from '../../components/Footer.vue';
 
 const tab = ref('signup')
 
+const activeTopTabClass = 'bg-white border border-white';
+
+const inactiveTopTabClass = 'text-white border border-white';
+
 // 選到的按鈕樣式
-const activeTabClass = 'bg-[#1F9C95] text-white border border-[#1F9C95]'
+const activeTabClass = 'bg-[#1F9C95] text-white border border-[#1F9C95]';
 // 沒選到的按鈕樣式
-const inactiveTabClass = 'bg-white text-[#1F9C95] border border-[#1F9C95]'
+const inactiveTabClass = 'bg-white text-[#1F9C95] border border-[#1F9C95]';
+
+
 </script>
 
 
 <template>
-  <header class="flex h-[234px] w-full flex-col items-center bg-black sm:h-[303px] xl:h-[444px]">
+  <header class="flex h-[234px] w-full flex-col items-center bg-black sm:h-[303px] xl:h-[540px]">
     <p
       class="pt-[120px] font-serif text-[32px]/[46px] font-bold text-grayWhite sm:pt-[160px] sm:text-[52px]/[75px] xl:pt-[224px] xl:text-[64px]/[92px]">
-      登入註冊
+      會員中心
     </p>
     <span class="w-[120px] border-b-2 border-grayWhite sm:w-[300px]"></span>
+
+    <div class="flex items-center gap-4 my-10">
+
+      <button @click="tab = 'personalinfo'":class="[tab === 'personalinfo' ? activeTopTabClass : inactiveTopTabClass,'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
+      個人資料
+      </button>
+
+      <button @click="tab = 'mycourse'":class="[tab === 'mycourse' ? activeTopTabClass : inactiveTopTabClass,'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
+      我的課程
+      </button>
+
+      <button @click="tab = 'purchaserecord'":class="[tab === 'purchaserecord' ? activeTopTabClass : inactiveTopTabClass,'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
+      購買記錄
+      </button>
+
+      <button @click="tab = 'logout'":class="[tab === 'logout' ? activeTopTabClass : inactiveTopTabClass,'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
+      登出
+      </button>
+
+    </div>
   </header>
 
   <div class="bg-white min-h-screen flex justify-center my-20">
@@ -27,26 +53,12 @@ const inactiveTabClass = 'bg-white text-[#1F9C95] border border-[#1F9C95]'
 
       <!-- Flex 容器：包含 Tabs + 卡片 -->
       <div class="flex flex-col items-center gap-4">
-        <!-- Tabs 在卡片上方，左右對齊 -->
-        <div class="flex justify-between items-center w-full max-w-md">
-          <button @click="tab = 'login'" :class="tab === 'login' ? activeTabClass : inactiveTabClass"
-            class="text-2xl px-16 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap">
-            登入
-          </button>
-
-          <div class="w-px h-12 bg-gray-300"></div>
-
-          <button @click="tab = 'signup'" :class="tab === 'signup' ? activeTabClass : inactiveTabClass"
-            class="text-2xl px-16 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap">
-            註冊
-          </button>
-        </div>
 
         <div class="w-full max-w-md mx-auto bg-white rounded-lg overflow-hidden border border-gray-00 shadow-2xl">
           <!-- Content -->
           <div class="p-8">
             <!-- Signup Form -->
-            <form v-if="tab === 'signup'" class="space-y-6">
+            <form v-if="tab === 'personalinfo'" class="space-y-6">
               <h2 class="text-3xl font-bold mb-6">個人資料</h2>
 
               <!-- 姓名 -->
@@ -132,8 +144,7 @@ const inactiveTabClass = 'bg-white text-[#1F9C95] border border-[#1F9C95]'
 
               <!-- 同意條款 -->
               <div class="flex items-start space-x-2 mt-4">
-                <input type="checkbox" id="terms"
-                  class="w-5 h-5 text-[#1F9C95]  border-gray-400 rounded mt-1">
+                <input type="checkbox" id="terms" class="w-5 h-5 text-[#1F9C95]  border-gray-400 rounded mt-1">
                 <label for="terms" class="text-gray-600 text-base">
                   同意本站的
                   <a href="http://127.0.0.1:8001/wushu/Policy" target="_blank"
@@ -203,11 +214,10 @@ const inactiveTabClass = 'bg-white text-[#1F9C95] border border-[#1F9C95]'
       </div>
     </div>
   </div>
-  <Footer/>
+  <Footer />
 </template>
 
 
-<!-- Input component with icon (reusable) -->
 
 <!-- FontAwesome & Tailwind -->
 <style>
@@ -220,10 +230,11 @@ body {
 input[type="date"]::-webkit-datetime-edit {
   color: transparent;
 }
-input[type="date"]:focus::-webkit-datetime-edit {
-  color: black; /* 聚焦時再顯示正常文字 */
-}
 
+input[type="date"]:focus::-webkit-datetime-edit {
+  color: black;
+  /* 聚焦時再顯示正常文字 */
+}
 </style>
 
 <!-- External Links (place in index.html or main layout) -->
