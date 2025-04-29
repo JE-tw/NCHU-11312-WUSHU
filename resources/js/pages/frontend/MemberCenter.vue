@@ -9,39 +9,38 @@ const activeTopTabClass = 'bg-white border border-white';
 
 const inactiveTopTabClass = 'text-white border border-white';
 
-// 選到的按鈕樣式
-const activeTabClass = 'bg-[#1F9C95] text-white border border-[#1F9C95]';
-// 沒選到的按鈕樣式
-const inactiveTabClass = 'bg-white text-[#1F9C95] border border-[#1F9C95]';
-
-
 </script>
 
-
 <template>
+
   <header class="flex h-[234px] w-full flex-col items-center bg-black sm:h-[303px] xl:h-[540px]">
     <p
       class="pt-[120px] font-serif text-[32px]/[46px] font-bold text-grayWhite sm:pt-[160px] sm:text-[52px]/[75px] xl:pt-[224px] xl:text-[64px]/[92px]">
       會員中心
     </p>
+
     <span class="w-[120px] border-b-2 border-grayWhite sm:w-[300px]"></span>
 
     <div class="flex items-center gap-4 my-10">
 
-      <button @click="tab = 'personalinfo'":class="[tab === 'personalinfo' ? activeTopTabClass : inactiveTopTabClass,'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
-      個人資料
+      <button @click="tab = 'personalinfo'"
+        :class="[tab === 'personalinfo' ? activeTopTabClass : inactiveTopTabClass, 'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
+        個人資料
       </button>
 
-      <button @click="tab = 'mycourse'":class="[tab === 'mycourse' ? activeTopTabClass : inactiveTopTabClass,'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
-      我的課程
+      <button @click="tab = 'mycourse'"
+        :class="[tab === 'mycourse' ? activeTopTabClass : inactiveTopTabClass, 'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
+        我的課程
       </button>
 
-      <button @click="tab = 'purchaserecord'":class="[tab === 'purchaserecord' ? activeTopTabClass : inactiveTopTabClass,'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
-      購買記錄
+      <button @click="tab = 'purchaserecord'"
+        :class="[tab === 'purchaserecord' ? activeTopTabClass : inactiveTopTabClass, 'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
+        購買記錄
       </button>
 
-      <button @click="tab = 'logout'":class="[tab === 'logout' ? activeTopTabClass : inactiveTopTabClass,'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
-      登出
+      <button @click="tab = 'logout'"
+        :class="[tab === 'logout' ? activeTopTabClass : inactiveTopTabClass, 'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
+        登出
       </button>
 
     </div>
@@ -51,10 +50,9 @@ const inactiveTabClass = 'bg-white text-[#1F9C95] border border-[#1F9C95]';
     <div class="container mx-auto px-4">
       <Header />
 
-      <!-- Flex 容器：包含 Tabs + 卡片 -->
+      <!-- Flex 容器：含個人資料卡片＋修改密碼卡片 -->
       <div class="flex flex-col items-center gap-4">
-
-        <div class="w-full max-w-md mx-auto bg-white rounded-lg overflow-hidden border border-gray-00 shadow-2xl">
+        <div class="w-full max-w-md mx-auto bg-white rounded-lg overflow-hidden border border-gray-00 shadow-lg">
           <!-- Content -->
           <div class="p-8">
             <!-- Signup Form -->
@@ -125,88 +123,44 @@ const inactiveTabClass = 'bg-white text-[#1F9C95] border border-[#1F9C95]';
                 </label>
               </div>
 
-              <h2 class="text-3xl font-bold mt-8 mb-6">電子郵件</h2>
-              <p class="text-gray-600 mb-4">此信箱同時作為登入帳號使用。</p>
-
-              <!-- 電子郵件 -->
-              <div class="flex flex-col">
-                <input type="email" placeholder="請輸入電子郵件"
-                  class="w-full px-4 py-3 border rounded-md focus:outline-none  " />
-              </div>
-
-              <h2 class="text-3xl font-bold mt-8 mb-6">密碼</h2>
-
-              <!-- 密碼 -->
-              <div class="flex flex-col">
-                <input type="password" placeholder="密碼/至少6碼/英數混和"
-                  class="w-full px-4 py-3 border rounded-md focus:outline-none  " />
-              </div>
-
-              <!-- 同意條款 -->
-              <div class="flex items-start space-x-2 mt-4">
-                <input type="checkbox" id="terms" class="w-5 h-5 text-[#1F9C95]  border-gray-400 rounded mt-1">
-                <label for="terms" class="text-gray-600 text-base">
-                  同意本站的
-                  <a href="http://127.0.0.1:8001/wushu/Policy" target="_blank"
-                    class="text-blue-500 hover:underline">付款退款條款</a> 與
-                  <a href="http://127.0.0.1:8001/wushu/Privacy" target="_blank"
-                    class="text-blue-500 hover:underline">隱私權政策</a>。
-                </label>
-              </div>
-
-              <!-- 註冊按鈕 -->
+              
+              <!-- 儲存按鈕 -->
               <button
-                class="w-full bg-[#1F9C95] text-white text-xl py-3 rounded-md hover:opacity-90 transition-opacity duration-300 transform hover:scale-105 mt-6">
-                註冊會員
-              </button>
-            </form>
-
-            <!-- Login Form -->
-            <form v-else class="space-y-6">
-              <!-- Email -->
+              class="w-full bg-[#518C95] text-white text-xl py-3 rounded-md hover:opacity-90 transition-opacity duration-300 transform hover:scale-105 mt-6">
+              儲存
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- 修改密碼卡片 -->
+      <div class="w-full max-w-md mx-auto bg-white rounded-lg overflow-hidden border border-gray-00 shadow-lg">
+        <div class="p-8">
+          <form class="space-y-2">
+            <!-- Email -->
+            <h2 class="text-3xl font-bold mt-0 mb-6">修改密碼</h2>
+            <p class="text-gray-600 mb-4">至少6個字元，不可有空白與特殊符號，需英數混合</p>
+      
               <div class="flex flex-col">
-                <label class="text-2xl font-semibold text-gray-700 mb-2">帳號</label>
                 <div class="relative">
-                  <input type="text" placeholder="帳號"
+                  <input type="text" placeholder="輸入新密碼"
                     class="w-full px-4 py-2 border rounded-md focus:outline-none   pl-10" />
                   <i class="fas fa-user absolute left-3 top-3 text-gray-400"></i>
                 </div>
               </div>
 
               <div class="flex flex-col">
-                <label class="text-2xl font-semibold text-gray-700 mb-2">密碼</label>
                 <div class="relative">
-                  <input type="password" placeholder="密碼"
+                  <input type="password" placeholder="再次輸入新密碼"
                     class="w-full px-4 py-2 border rounded-md focus:outline-none   pl-10" />
                   <i class="fas fa-lock absolute left-3 top-3 text-gray-400"></i>
                 </div>
               </div>
 
-              <!-- 同意條款 Checkbox -->
-              <div class="flex items-start space-x-2 mt-2">
-                <input type="checkbox" id="terms"
-                  class="w-5 h-5 text-[#518C95] focus:ring-[#518C95] border-gray-400 rounded mt-1">
-                <label for="terms" class="text-gray-600 text-base">
-                  同意本站的
-                  <a href="http://127.0.0.1:8001/wushu/Policy" target="_blank" class="text-blue-500 hover:underline">
-                    付款與退款政策
-                  </a>
-                  與
-                  <a href="http://127.0.0.1:8001/wushu/Privacy" target="_blank" class="text-blue-500 hover:underline">
-                    隱私權政策
-                  </a>
-                </label>
-              </div>
-
-              <!-- 忘記密碼 -->
-              <div class="flex justify-start">
-                <a href="#" class="text-gray-400 text-lg hover:underline">忘記密碼？</a>
-              </div>
-
               <!-- 登入按鈕 -->
               <button
                 class="w-full bg-[#518C95] text-white text-lg py-3 rounded-md hover:opacity-90 transition-opacity duration-300 transform hover:scale-105">
-                登入會員
+                確定修改
               </button>
             </form>
           </div>
@@ -236,4 +190,3 @@ input[type="date"]:focus::-webkit-datetime-edit {
   /* 聚焦時再顯示正常文字 */
 }
 </style>
-
