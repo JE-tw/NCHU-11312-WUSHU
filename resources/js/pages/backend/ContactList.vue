@@ -3,8 +3,8 @@ import { ref } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { usePage, router } from '@inertiajs/vue3';
 import type { PageProps } from '@/types'; // 如果有 type 設定，依照情況調整
-import ContactDetailModal from '@/Components/ContactDetailModal.vue'
-
+import ContactDetailModal from '@/Components/ContactDetailModal.vue';
+import { useConfirmDialog } from '@/composables/useConfirmDialog';
 
 const page = usePage<{ contacts: any[] }>();
 
@@ -18,12 +18,17 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 // 個別查看詳細內容
 const selectedContact = ref(null);
-function openDetail(contact){
+function openDetail(contact) {
   selectedContact.value = contact;
 }
 
 // 按鈕事件
-const deleteBtn = (id) => router.get(route('admin.contact.delete', id));
+const deleteBtn = async (id) => {
+  const confirmed = await useConfirmDialog();
+  if (confirmed) {
+    router.get(route('admin.contact.delete', id));
+  }
+};
 </script>
 
 <template>
