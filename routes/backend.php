@@ -26,6 +26,9 @@ Route::prefix('wushu/admin/user')->group(function(){
 Route::prefix('wushu/admin/contact')->group(function(){
     Route::get('/',[ContactController::class,'index'])->name('admin.contact.list');
 
+    // 刪除
+    Route::get('/delete/{id}',[ContactController::class,'delete'])->name('admin.contact.delete');
+
 });
 
 // 服務內容管理

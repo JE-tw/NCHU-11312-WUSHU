@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, router } from '@inertiajs/vue3';
 import type { PageProps } from '@/types'; // 如果有 type 設定，依照情況調整
+import ContactDetailModal from '@/Components/ContactDetailModal.vue'
+
 
 const page = usePage<{ contacts: any[] }>();
 
@@ -12,12 +15,21 @@ const breadcrumbs: BreadcrumbItem[] = [
     href: '/dashboard',
   },
 ];
+
+// 個別查看詳細內容
+const selectedContact = ref(null);
+function openDetail(contact){
+  selectedContact.value = contact;
+}
+
+// 按鈕事件
+const deleteBtn = (id) => router.get(route('admin.contact.delete', id));
 </script>
 
 <template>
   <AppLayout :breadcrumbs="breadcrumbs">
     <div>
-      <h1 class="mb-4 text-2xl font-bold">聯絡我們列表</h1>
+      <h1 class="mb-4 text-2xl font-bold">聯絡我們紀錄</h1>
       <table class="min-w-full bg-white">
         <thead>
           <tr>
@@ -37,12 +49,13 @@ const breadcrumbs: BreadcrumbItem[] = [
             <td class="border px-4 py-2">{{ contact.title }}</td>
             <td class="border px-4 py-2">{{ contact.content }}</td>
             <td class="border px-4 py-2">
-              <button type="button">刪除</button>
-              <button type="button">查看</button>
+              <button type="button" @click="deleteBtn(contact.id)">刪除</button>
+              <button type="button" @click="openDetail(contact)">查看</button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
   </AppLayout>
+  <ContactDetailModal :contact="selectedContact" @close="selectedContact = null" />
 </template>

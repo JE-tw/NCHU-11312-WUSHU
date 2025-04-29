@@ -1,8 +1,10 @@
+// courseItems.js
+
 export const courseItems = [
   {
     categoryId: 1,
-    category: '吠陀占星',
-    en_category: 'Vedic Astrology',
+    title: '吠陀占星',
+    enTitle: 'Vedic Astrology',
     course: [
       {
         courseId: 1,
@@ -61,25 +63,29 @@ export const courseItems = [
   },
   {
     categoryId: 2,
-    category: '中醫',
-    en_category: 'Traditional Chinese Medicine',
+    title: '中醫',
+    enTitle: 'Traditional Chinese Medicine',
     course: [
       {
+        courseId: 1,
         title: '古典針灸基礎班',
         price: 36000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
+        courseId: 2,
         title: '康治本傷寒論',
         price: 36000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
+        courseId: 3,
         title: '金匱要略',
         price: 36000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
+        courseId: 4,
         title: '伏氣溫病學',
         price: 36000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
@@ -88,20 +94,23 @@ export const courseItems = [
   },
   {
     categoryId: 3,
-    category: '古典魔法',
-    en_category: 'Classical Magic',
+    title: '古典魔法',
+    enTitle: 'Classical Magic',
     course: [
       {
+        courseId: 1,
         title: '初階班',
         price: 36000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
+        courseId: 2,
         title: '中階班',
         price: 36000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
+        courseId: 3,
         title: '高階班',
         price: 36000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
@@ -111,15 +120,17 @@ export const courseItems = [
 
   {
     categoryId: 4,
-    category: '其他術數',
-    en_category: '其他術數',
+    title: '其他術數',
+    enTitle: 'Others',
     course: [
       {
+        courseId: 1,
         title: '蔣氏玄空風水執業班',
         price: 36000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
+        courseId: 2,
         title: '風水',
         price: 36000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
