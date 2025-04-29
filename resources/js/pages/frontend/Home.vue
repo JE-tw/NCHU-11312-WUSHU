@@ -258,7 +258,7 @@ const changeTab = (tabName) => {
 
 
             <!-- AboutMaster -->
-            <section class="py-12 sm:py-16 md:py-24 bg-white font-serif text-black overflow-hidden">
+            <section id="about-section" class="py-12 sm:py-16 md:py-24 bg-white font-serif text-black overflow-hidden">
                 <div class="max-w-7xl mx-auto px-4 xl:pr-8 xl:pl-0 space-y-16 md:space-y-24">
                     <div class="text-center mt-3">
                         <h2
@@ -269,7 +269,7 @@ const changeTab = (tabName) => {
 
                     <div class="flex flex-col xl:flex-row items-center gap-12">
                         <div
-                            class="xl:w-1/2 space-y-6 text-lg md:text-xl xl:text-2xl leading-relaxed text-black mt-[-330px]">
+                            class="xl:w-1/2 space-y-6 text-lg md:text-xl xl:text-2xl leading-relaxed text-black xl:mt-[-330px] mt-0">
                             <p>
                                 文老師自學生時期便開始學習五術，致力於五術教學十餘年。中醫醫術－針灸傳承自古法針灸、董氏奇穴和山西派鍼法；脈學傳承自萬氏的太素脈學；內科傳承各家如經方、溫病、伏氣學派等多位老師；祝由傳承自西河派和軒轅派。
                             </p>
@@ -289,18 +289,18 @@ const changeTab = (tabName) => {
 
                     <div
                         class="relative w-full xl:-ml-[calc((100vw-1280px)/2+2rem)] xl:w-[calc(100%+((100vw-1280px)/2+2rem))]">
-                        <div class="flex flex-col xl:flex-row items-stretch w-full">
+                        <div class="flex flex-col xl:flex-row items-center xl:items-stretch w-full">
                             <!-- 圖片區塊 - 左側 -->
-                            <div class="w-full xl:w-1/2 relative">
-                                <img :src="masterImg2" alt="中藥櫃" class="w-full xl:w-[1023px] h-auto xl:h-[760px] object-cover" />
+                            <div class="w-full xl:w-[1023.36px] relative">
+                                <img :src="masterImg2" alt="中藥櫃" class="w-full h-auto xl:h-[760px] object-cover" />
                             </div>
 
-
                             <!-- 文字區塊 - 右側 -->
-                            <div class="w-full xl:w-1/2 bg-gray-200 flex flex-col">
+                            <div
+                                class="absolute top-[675px] left-[928px] w-[487px] h-[975px] bg-gray-200 flex flex-col">
                                 <div class="p-6 xl:p-8 h-full flex flex-col">
                                     <h3
-                                        class="text-3xl md:text-4xl xl:text-5xl font-bold font-serif border-b-2 border-black inline-block pb-1 mb-6">
+                                        class="text-[64px] md:text-4xl xl:text-5xl font-bold font-serif border-b-2 border-black inline-block pb-1 mb-6 whitespace-nowrap">
                                         學會創立沿革
                                     </h3>
                                     <div class="text-lg md:text-xl xl:text-[22px] leading-relaxed">
@@ -313,9 +313,9 @@ const changeTab = (tabName) => {
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
-
 
                 </div>
             </section>
