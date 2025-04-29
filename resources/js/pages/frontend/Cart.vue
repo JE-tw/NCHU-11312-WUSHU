@@ -1,0 +1,257 @@
+<!-- 購物車 引入heading作為購買商品列表 -->
+<script setup>
+import { ref } from 'vue';
+import Heading from '@/components/Heading.vue';
+
+// 購物車步驟
+const step = ref(1);
+
+const nextStep = () => {
+  step.value++;
+};
+
+const prevStep = () => {
+  step.value--;
+};
+
+// 付款input
+const paidPrice = ref(''); // 輸入時label往上方移動
+const accountNumber = ref(''); // 輸入時label往上方移動
+
+// 測試假資料-服務
+const fakeServices = [
+  {
+    id: 1,
+    title: '服務服務服務服務服務服務',
+    price: '14,000',
+  },
+  {
+    id: 2,
+    title: '服務服務服務服務服務服務服務服務',
+    price: '36,200',
+  },
+];
+// 測試假資料-課程
+const fakeCourses = [
+  {
+    id: 1,
+    title: '購買課程購買課程購買課程',
+    price: '14,000',
+  },
+  {
+    id: 2,
+    title: '購買課程購買課程購買課程購買課程',
+    price: '36,200',
+  },
+];
+</script>
+
+<template>
+  <div class="bg-softGray text-black">
+    <!-- 購物車 step1 -->
+    <div v-if="step === 1" class="flex flex-col items-center">
+      <header class="flex h-[234px] flex-col items-center sm:h-[400px]  xl:h-[444px]">
+        <p
+          class="pt-[116px] font-serif text-[32px]/[46px] font-semibold text-black sm:pt-[160px] sm:text-[52px]/[75px] xl:pt-[224px] xl:text-[64px]/[92px]"
+        >
+          購物車
+        </p>
+        <span class="w-[100px] border-b-2 border-black sm:w-[150px]"></span>
+      </header>
+      <!-- 會員資料卡 -->
+      <section class="w-[343px] sm:mx-auto sm:mb-[60px] sm:w-full sm:max-w-[720px] sm:px-[24px] xl:max-w-[1020px] xl:px-0">
+        <div class="shadow-custom mb-10 px-[32px] py-[24px] text-[20px]/[26.6px]">
+          <p class="pb-[12px]/[16px] pb-2 text-[20px] font-bold sm:text-[32px]/[42px]">會員資料</p>
+          <hr class="" />
+          <div class="text-[12px] sm:text-[18px]/[24px]">
+            <p class="mt-[12px]">alyson</p>
+            <p class="my-[8px]">0909-123-234</p>
+            <p>He11oWorld@gmail.com</p>
+          </div>
+        </div>
+      </section>
+      <!-- 購物車商品列表 -->
+      <div class="flex w-full flex-col items-center px-[32px] pb-[76px] sm:mx-[216px] sm:px-[48px]">
+        <!-- 服務 -->
+        <div class="mb-8 max-w-[311px] sm:max-w-[672px] xl:w-full xl:max-w-[1020px]">
+          <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[28px]/[37px] xl:text-[32px]/[43px]">服務</p>
+          <!-- 列表title -->
+          <div class="hidden sm:block">
+            <div class="flex justify-between px-[5px] text-[24px]/[32px] font-bold text-darkGray">
+              <div class="flex">
+                <span class="mr-[44px]">項次</span>
+                <span class="mr-[128px] xl:mr-[188px]">品項</span>
+              </div>
+              <div class="mr-[128px] xl:mr-[188px]">金額</div>
+            </div>
+          </div>
+          <!-- 列表 -->
+          <hr class="border-0.5 border-mediumGray" />
+          <div>
+            <!-- 引入Heading 並用測試假資料 -->
+            <div v-for="item in fakeServices" :key="item.id">
+              <Heading :id="item.id" :title="item.title" :price="item.price" />
+            </div>
+          </div>
+        </div>
+        <!-- 課程 -->
+        <div class="max-w-[311px] sm:max-w-[672px] xl:w-full xl:max-w-[1020px]">
+          <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[28px]/[37px] xl:text-[32px]/[43px]">課程</p>
+          <!-- 列表title -->
+          <div class="hidden sm:block">
+            <div class="flex justify-between px-[5px] text-[24px]/[32px] font-bold text-darkGray">
+              <div class="flex">
+                <span class="mr-[44px]">項次</span>
+                <span class="mr-[128px] xl:mr-[188px]">品項</span>
+              </div>
+              <div class="mr-[128px] xl:mr-[188px]">金額</div>
+            </div>
+          </div>
+          <!-- 列表 -->
+          <hr class="border-0.5 border-mediumGray" />
+          <div>
+            <!-- 引入Heading 並用測試假資料 -->
+            <div v-for="item in fakeCourses" :key="item.id">
+              <heading :id="item.id" :title="item.title" :price="item.price" />
+            </div>
+          </div>
+        </div>
+        <!-- 總計 -->
+        <div
+          class="flex w-full max-w-[311px] flex-wrap justify-between px-[10px] py-[16px] text-[16px]/[21px] font-bold sm:max-w-[672px] sm:text-[24px]/[32px] xl:max-w-[1020px] xl:pl-[5px] xl:pr-[110px]"
+        >
+          <div class="text-darkGray">共計 3 項</div>
+          <div>
+            <span class="text-darkGray">合計</span>
+            <span class="ml-[34px] text-blueGreen"> NT$35,000</span>
+          </div>
+        </div>
+      </div>
+      <!-- 按鈕區 -->
+      <div class="sm:w-[100%] sm:max-w-[672px] sm:px-3 xl:max-w-[760px] xl:px-0">
+        <div class="flex flex-wrap justify-center sm:justify-between">
+          <button
+            class="mr-4 h-[44px] w-[147.5px] rounded-sm border border-blueGreen text-[16px]/[28px] text-blueGreen hover:bg-blueGreen hover:text-white sm:mr-0 sm:h-[56px] sm:w-[276px] sm:text-[24px]/[40px] xl:w-[320px]"
+          >
+            繼續看課程
+          </button>
+          <button
+            class="h-[44px] w-[147.5px] rounded-sm border border-blueGreen text-[16px]/[28px] text-blueGreen hover:bg-blueGreen hover:text-white sm:h-[56px] sm:w-[276px] sm:text-[24px]/[40px] xl:w-[320px]"
+            @click="nextStep"
+          >
+            匯款去
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 付款說明畫面 step2 -->
+    <div v-else-if="step === 2" class="flex flex-col items-center">
+      <header class="flex w-full h-[234px] flex-col items-center sm:h-[400px] xl:h-[444px]">
+        <p
+          class="pt-[116px] font-serif text-[32px]/[46px] font-semibold text-black sm:pt-[160px] sm:text-[52px]/[75px] xl:pt-[224px] xl:text-[64px]/[92px]"
+        >
+          付款說明
+        </p>
+        <span class="w-[100px] border-b-2 border-black sm:w-[150px]"></span>
+      </header>
+      <div class="max-w-[311px] px-4 sm:max-w-none sm:px-0">
+        <!-- 付款說明 -->
+        <div class="mb-[60px] text-[20px]/[27px] sm:px-[48px] sm:pt-[127px] xl:w-[1256px] xl:px-0 xl:pt-0">
+          <p class="mb-[24px] font-bold text-blueGreen sm:text-[32px]/[42px]">付款說明</p>
+          <p class="mb-[30px] sm:text-[24px]/[32px] sm:font-bold">我們唯一的付款方式為「轉帳」，恕不提供信用卡的選項。</p>
+          <div class="xl:shadow-custom font-bold sm:text-[28px]/[38px] sm:font-normal xl:bg-white xl:px-[84px] xl:py-[24px] xl:text-[24px]/[40px]">
+            您須匯款的金額為<span class="text-blueGreen xl:text-[32px]/[42px]">NT$48,000 </span>
+            <br />
+            請匯款至台新銀行812（內湖分行0481）
+            <br />
+            戶名：陳奎宇
+            <br />
+            帳號：20481000179199
+            <br />
+            匯款後，請填寫下列表格，告知我們您的匯款帳號後五碼，客服將即刻為您處理。
+          </div>
+        </div>
+        <!-- 填入轉帳資料表單 -->
+        <div class="sm:mb-[60px] sm:px-[48px]">
+          <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[32px]/[42px]">輸入轉帳資料</p>
+          <!-- 匯款日期 -->
+          <div class="relative">
+            <span class="absolute left-0 top-[50%] ml-[16px] -translate-y-[80%] bg-white text-[18px] text-darkGray">匯款日期</span>
+            <input
+              type="date"
+              id="date"
+              name="paid_date"
+              class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white p-4 text-[18px]/[24px] font-normal text-black outline-none sm:w-[300px]"
+              required
+            />
+          </div>
+          <!-- 匯款金額 -->
+          <div class="relative">
+            <input
+              id="price"
+              type="number"
+              name="paid_price"
+              v-model="paidPrice"
+              min="1"
+              class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white p-4 text-[18px]/[24px] font-normal text-black outline-none sm:w-[300px]"
+              required
+            />
+            <label
+              for="price"
+              :class="[
+                'absolute left-0 text-darkGray',
+                price ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
+              ]"
+              >匯款金額</label
+            >
+          </div>
+          <!-- 匯款帳號後五碼  -->
+          <div class="relative">
+            <input
+              id="accountNumber"
+              type="text"
+              name="paid_account"
+              v-model="accountNumber"
+              minlength="5"
+              maxlength="5"
+              class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white p-4 text-[18px]/[24px] font-normal text-black outline-none sm:w-[300px]"
+              required
+            />
+            <label
+              for="accountNumber"
+              :class="[
+                'absolute left-0 text-darkGray',
+                accountNumber ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
+              ]"
+              >匯款帳號後五碼</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- 按鈕區 -->
+      <div class="sm:w-[100%] sm:px-[48px] xl:max-w-[760px] xl:px-0">
+        <div class="r flex flex-wrap justify-center">
+          <button
+            @click="prevStep"
+            class="mr-4 h-[44px] w-[147.5px] rounded-sm border border-blueGreen text-[16px]/[28px] text-blueGreen hover:bg-blueGreen hover:text-white sm:mr-[120px] sm:h-[56px] sm:w-[320px] sm:text-[24px]/[40px]"
+          >
+            返回購物車
+          </button>
+          <button
+            class="h-[44px] w-[147.5px] rounded-sm border border-blueGreen text-[16px]/[28px] text-blueGreen hover:bg-blueGreen hover:text-white sm:h-[56px] sm:w-[320px] sm:text-[24px]/[40px]"
+          >
+            送出匯款資料
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div v-else-if="step === 3">
+      訂單完成畫面
+    </div> -->
+
+    <!-- 控制按鈕 -->
+  </div>
+</template>

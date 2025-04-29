@@ -13,6 +13,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 </script>
 
 <template>
+  
   <Head title="五術研究社-後臺管理" />
 
   <AppLayout :breadcrumbs="breadcrumbs">
