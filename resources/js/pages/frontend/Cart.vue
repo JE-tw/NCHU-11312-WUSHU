@@ -2,6 +2,9 @@
 <script setup>
 import { ref } from 'vue';
 import Heading from '@/components/ProductCard.vue';
+import { router } from '@inertiajs/vue3';
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
 
 // 購物車步驟
 const step = ref(1);
@@ -48,6 +51,8 @@ const fakeCourses = [
 </script>
 
 <template>
+  <Header />
+
   <div class="bg-softGray text-black">
     <!-- 購物車 step1 -->
     <div v-if="step === 1" class="flex flex-col items-center">
@@ -61,7 +66,7 @@ const fakeCourses = [
       </header>
       <!-- 會員資料卡 -->
       <section class="w-[343px] sm:mx-auto sm:mb-[60px] sm:w-full sm:max-w-[720px] sm:px-[24px] xl:max-w-[1020px] xl:px-0">
-        <div class="shadow-custom mb-10 px-[32px] py-[24px] text-[20px]/[26.6px]">
+        <div class="mb-10 px-[32px] py-[24px] text-[20px]/[26.6px] shadow-custom">
           <p class="pb-[12px]/[16px] pb-2 text-[20px] font-bold sm:text-[32px]/[42px]">會員資料</p>
           <hr class="" />
           <div class="text-[12px] sm:text-[18px]/[24px]">
@@ -161,7 +166,7 @@ const fakeCourses = [
         <div class="mb-[60px] text-[20px]/[27px] sm:px-[48px] sm:pt-[127px] xl:w-[1256px] xl:px-0 xl:pt-0">
           <p class="mb-[24px] font-bold text-blueGreen sm:text-[32px]/[42px]">付款說明</p>
           <p class="mb-[30px] sm:text-[24px]/[32px] sm:font-bold">我們唯一的付款方式為「轉帳」，恕不提供信用卡的選項。</p>
-          <div class="xl:shadow-custom font-bold sm:text-[28px]/[38px] sm:font-normal xl:bg-white xl:px-[84px] xl:py-[24px] xl:text-[24px]/[40px]">
+          <div class="font-bold sm:text-[28px]/[38px] sm:font-normal xl:bg-white xl:px-[84px] xl:py-[24px] xl:text-[24px]/[40px] xl:shadow-custom">
             您須匯款的金額為<span class="text-blueGreen xl:text-[32px]/[42px]">NT$48,000 </span>
             <br />
             請匯款至台新銀行812（內湖分行0481）
@@ -260,4 +265,5 @@ const fakeCourses = [
 
     <!-- 控制按鈕 -->
   </div>
+  <Footer />
 </template>

@@ -2,6 +2,8 @@
 <!-- 服務與課程頁 -->
 
 <script setup>
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
 import CourseSection from '@/components/CourseSection.vue';
 import CourseCard from '@/components/CourseCard.vue';
 import ServiceCard from '@/components/ServiceCard.vue';
@@ -17,6 +19,7 @@ const swiperImages = [swiper1, swiper2, swiper3, swiper4];
 </script>
 
 <template>
+  <Header />
   <div>
     <!-- header -->
     <header class="flex justify-center bg-black">
@@ -43,9 +46,6 @@ const swiperImages = [swiper1, swiper2, swiper3, swiper4];
     </div>
 
     <!-- 課程區塊 -->
-    <!-- <div class="">
-      <CourseCard v-for="category in courseItems" :key="category.categoryId" :category="category" />
-    </div> -->
     <CourseSection
       v-for="(category, index) in courseItems"
       :key="category.categoryId"
@@ -55,4 +55,5 @@ const swiperImages = [swiper1, swiper2, swiper3, swiper4];
       :courses="category.course"
     />
   </div>
+  <Footer />
 </template>

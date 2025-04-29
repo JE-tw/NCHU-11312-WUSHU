@@ -19,7 +19,7 @@ defineProps({
 
 <template>
   <!-- 課程卡片 -->
-  <div class="flex gap-[10px] bg-white sm:justify-center xl:justify-start">
+  <div class="flex gap-[10px] bg-white sm:justify-center xl:justify-start cursor-pointer">
     <!-- 內容 -->
     <div class="flex w-[100%] flex-col justify-between p-4 shadow-custom xl:w-[412px]">
       <div>

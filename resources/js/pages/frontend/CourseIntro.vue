@@ -4,6 +4,8 @@ import CardButton from '@/components/CardButton.vue';
 import CartButton from '@/components/CartButton.vue';
 import play from '@/images/f-play.png';
 import lock from '@/images/f-lock.png';
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
 
 // 引入展開卡片 - 影片卡片
 import ExpandCard from '@/components/ExpandCard.vue';
@@ -36,6 +38,8 @@ const courseInfo = {
 </script>
 
 <template>
+  <Header />
+
   <div class="bg-softGray">
     <!-- header -->
     <header class="flex h-[234px] flex-col items-center bg-black sm:h-[323px] xl:h-[444px]">
@@ -83,5 +87,6 @@ const courseInfo = {
         </div>
       </ExpandCard>
     </main>
+    <Footer class="mt-[80px]" />
   </div>
 </template>

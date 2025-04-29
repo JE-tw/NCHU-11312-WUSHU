@@ -1,5 +1,12 @@
+<script>
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
+</script>
+
 <!-- 款與退款政策頁 -->
 <template>
+  <Header />
+
   <div class="bg-softGray">
     <!-- header -->
     <header class="flex h-[234px] flex-col items-center bg-black sm:h-[303px] xl:h-[444px]">
@@ -10,7 +17,7 @@
       </p>
       <span class="w-[120px] border-b-2 border-grayWhite sm:w-[300px]"></span>
     </header>
-    <main class="bg-softGray px-[24px] sm:px-[48px]">
+    <main class="px-[24px] sm:px-[48px]">
       <div class="mx-auto mb-[60px] mt-[30px] max-w-2xl xl:w-[672px]">
         <div class="pb-[24px]">
           <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[28px]/[37px] xl:text-[32px]/[43px]">付款政策：</p>
@@ -38,5 +45,6 @@
         </div>
       </div>
     </main>
+    <Footer />
   </div>
 </template>

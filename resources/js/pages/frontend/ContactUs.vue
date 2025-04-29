@@ -1,6 +1,9 @@
 <!-- 聯絡我們頁 -->
 <script setup>
 import { ref } from 'vue';
+import Header from '../../components/Header.vue'
+import Footer from '../../components/Footer.vue'
+
 
 const name = ref(''); // 輸入時label往上方移動
 const phone = ref(''); // 輸入時label往上方移動
@@ -9,6 +12,8 @@ const subject = ref(''); // 輸入時label往上方移動
 </script>
 
 <template>
+          <Header />
+
   <div class="bg-softGray">
     <!-- header -->
     <header class="flex h-[234px] flex-col items-center bg-black sm:h-[400px]">
@@ -130,4 +135,6 @@ const subject = ref(''); // 輸入時label往上方移動
       </section>
     </main>
   </div>
+  <Footer />
+
 </template>
