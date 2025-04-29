@@ -52,7 +52,7 @@
       <div v-if="!isTablet && !isMobile" class="flex-1 flex justify-center">
         <nav
           class="flex items-center gap-4 font-['Microsoft_JhengHei'] font-bold text-black text-[24px] leading-[1] tracking-normal cursor-pointer">
-          <a href="#about-section" class="px-3 py-2 hover:text-[#1f9c95] whitespace-nowrap">
+          <a href="/wushu#about-section" class="px-3 py-2 hover:text-[#1f9c95] whitespace-nowrap">
             關於站主
           </a>
           <a href="http://127.0.0.1:8000/wushu/ServiceCourse" class="px-3 py-2 hover:text-[#1f9c95] whitespace-nowrap">
@@ -96,10 +96,11 @@
         <img src="@/images/search.png" alt="搜尋" class="absolute left-3 w-5 h-5" />
       </div>
 
-      <router-link to="/about"
+      <a href="/wushu#about-section"
         class="font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 border-b border-gray-300 hover:text-[#1f9c95]">
         關於站主
-      </router-link>
+      </a>
+
       <a href="http://127.0.0.1:8000/wushu/ServiceCourse"
         class="font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 border-b border-gray-300 hover:text-[#1f9c95]">
         服務與課程
