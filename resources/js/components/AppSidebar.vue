@@ -9,54 +9,34 @@ import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
+  // {
+  //   title: '付款記錄管理',
+  //   href: route('admin.contact.list'),
+  // },
   {
-    title: 'Dashboard',
-    href: '/dashboard',
-    // icon: LayoutGrid,
+    title: '會員管理',
+    href: route('admin.contact.list'),
   },
   {
     title: '聯絡我們列表',
     href: route('admin.contact.list'),
   },
+  {
+    title: '服務內容管理',
+    href: route('admin.contact.list'),
+  },
+  {
+    title: '子課程管理',
+    href: route('admin.contact.list'),
+  },
 ];
-
-// const footerNavItems: NavItem[] = [
-//   {
-//     title: 'Github Repo',
-//     href: 'https://github.com/laravel/vue-starter-kit',
-//     icon: Folder,
-//   },
-//   {
-//     title: 'Documentation',
-//     href: 'https://laravel.com/docs/starter-kits',
-//     icon: BookOpen,
-//   },
-// ];
 </script>
 
 <template>
-  <Sidebar collapsible="none" variant="inset" class=" bg-lightGray">
-    <!-- <SidebarHeader>
-      <SidebarMenu>
-        <SidebarMenuItem>
-          <SidebarMenuButton size="lg" as-child>
-            <Link :href="route('dashboard')">
-              <AppLogo />
-            </Link>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-      </SidebarMenu>
-    </SidebarHeader> -->
-
+  <Sidebar collapsible="none" variant="inset" class="bg-lightGray">
     <SidebarContent>
-      <NavMain :items="mainNavItems"/>
+      <NavMain :items="mainNavItems" />
     </SidebarContent>
-
-    <!-- <SidebarFooter>
-      <NavFooter :items="footerNavItems" />
-      <NavUser />
-    </SidebarFooter> -->
   </Sidebar>
   <slot />
-  <!-- <router-view /> -->
 </template>

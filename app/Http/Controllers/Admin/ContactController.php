@@ -16,8 +16,8 @@ class ContactController extends Controller
     {
         //
         $item = ContactRecord::all();
-        return Inertia::render('backend/contact/ContactList',[
-            'contact'=> $item
+        return Inertia::render('backend/ContactList',[
+            'contacts'=> $item
         ]);
     }
 
