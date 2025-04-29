@@ -26,6 +26,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             <th class="border px-4 py-2">Email</th>
             <th class="border px-4 py-2">主旨</th>
             <th class="border px-4 py-2">內容</th>
+            <th class="border px-4 py-2">操作</th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +36,10 @@ const breadcrumbs: BreadcrumbItem[] = [
             <td class="border px-4 py-2">{{ contact.email }}</td>
             <td class="border px-4 py-2">{{ contact.title }}</td>
             <td class="border px-4 py-2">{{ contact.content }}</td>
+            <td class="border px-4 py-2">
+              <button type="button">刪除</button>
+              <button type="button">查看</button>
+            </td>
           </tr>
         </tbody>
       </table>

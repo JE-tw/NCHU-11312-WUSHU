@@ -9,10 +9,10 @@ import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
-  // {
-  //   title: '付款記錄管理',
-  //   href: route('admin.contact.list'),
-  // },
+  {
+    title: '付款記錄管理',
+    href: route('admin.order.list'),
+  },
   {
     title: '會員管理',
     href: route('admin.user.list'),

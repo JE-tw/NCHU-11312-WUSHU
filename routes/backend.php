@@ -2,13 +2,19 @@
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\UserInfoController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\UserInfoController;
 
 
 // 後端頁面
+// 付款紀錄管理
+Route::prefix('wushu/admin/order')->group(function(){
+    Route::get('/',[OrderController::class,'index'])->name('admin.order.list');
+
+});
 
 // 會員管理
 Route::prefix('wushu/admin/user')->group(function(){
