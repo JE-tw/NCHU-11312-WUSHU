@@ -179,7 +179,7 @@ const changeTab = (tabName) => {
                         <!-- 課程列表 - 統一間距和對齊 -->
                         <div class="flex-1 overflow-y-auto py-6 space-y-0">
                             <div v-for="course in getCoursesForTab(activeTab)" :key="course.name"
-                                class="flex items-center justify-between py-3.5 border-b border-dotted border-gray-600">
+                                class="flex items-center justify-between py-3.5 border-b border-dotted border-gray-600 ">
 
                                 <!-- 課程名稱 - 固定寬度且文字省略 -->
                                 <div class="text-[32px] font-medium w-2/5 truncate pr-4">
@@ -264,13 +264,13 @@ const changeTab = (tabName) => {
                         class="relative w-full xl:-ml-[calc((100vw-1280px)/2+2rem)] xl:w-[calc(100%+((100vw-1280px)/2+2rem))]">
                         <div class="flex flex-col xl:flex-row items-stretch w-full">
                             <!-- 圖片區塊 - 左側 -->
-                            <div class="w-full xl:w-3/5 relative">
+                            <div class="w-full xl:w-1/2 relative">
                                 <img :src="masterImg2" alt="中藥櫃" class="w-full h-full object-cover"
                                     style="aspect-ratio: 4/3;" />
                             </div>
 
                             <!-- 文字區塊 - 右側 -->
-                            <div class="w-full xl:w-2/5 bg-gray-200">
+                            <div class="w-full xl:w-1/2 bg-gray-200 flex flex-col">
                                 <div class="p-6 xl:p-8 h-full flex flex-col">
                                     <h3
                                         class="text-3xl md:text-4xl xl:text-5xl font-bold font-serif border-b-2 border-black inline-block pb-1 mb-6">
@@ -288,6 +288,7 @@ const changeTab = (tabName) => {
                             </div>
                         </div>
                     </div>
+
                 </div>
             </section>
 

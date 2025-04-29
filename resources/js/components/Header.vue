@@ -66,17 +66,20 @@
         <button aria-label="搜尋" class="hover:text-[#1f9c95]">
           <img src="@/images/search.png" alt="搜尋" class="w-8 h-8" />
         </button>
-        <button aria-label="購物車" class="hover:text-[#1f9c95]">
+
+        <a href="/cart" aria-label="購物車" class="hover:text-[#1f9c95]">
           <img src="@/images/cart.svg" alt="購物車" class="w-8 h-8" />
-        </button>
-        <router-link to="/login" class="hover:text-[#1f9c95] flex items-center gap-1">
-          <img src="@/images/user.svg" alt="登入" class="w-8 h-8 " />
+        </a>
+
+        <a href="http://127.0.0.1:8000/wushu/MemberCenter" class="hover:text-[#1f9c95] flex items-center gap-1">
+          <img src="@/images/user.svg" alt="登入" class="w-8 h-8" />
           <span
             class="font-['Microsoft_JhengHei'] font-normal text-[18px] leading-8 tracking-normal whitespace-nowrap cursor-pointer">
             登入註冊
           </span>
-        </router-link>
+        </a>
       </div>
+
 
     </div>
   </header>
