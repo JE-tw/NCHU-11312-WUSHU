@@ -49,9 +49,4 @@ Route::prefix('wushu')->group(function () {
     Route::get('/Privacy', function () {
         return Inertia::render('frontend/Privacy');
     });
-
-    // 購物車
-    Route::get('/Cart', function () {
-        return Inertia::render('frontend/Cart');
-    });
 });
