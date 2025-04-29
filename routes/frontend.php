@@ -35,14 +35,15 @@ Route::prefix('wushu')->group(function () {
     Route::get('/LoginSignup', function () {
         return Inertia::render('frontend/LoginSignup');
     });
-    //課程介紹頁
-    // Route::get('/CourseIntro', function () {
-    //     return Inertia::render('frontend/CourseIntro');
-    // });
 
     //課程介紹頁(未解鎖、解鎖)
-    Route::get('/CourseUnlock', function () {
-        return Inertia::render('frontend/CourseUnlock');
+    Route::get('/CourseIntro', function () {
+        return Inertia::render('frontend/CourseIntro');
+    });
+
+    // 購物車
+    Route::get('/Cart', function () {
+        return Inertia::render('frontend/Cart');
     });
 
     // 隱私權政策

@@ -5,46 +5,54 @@ export const courseItems = [
     en_category: 'Vedic Astrology',
     course: [
       {
+        courseId: 1,
         title: '初階班',
         price: 36000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
+        courseId: 2,
         title: '中階班',
         price: 36000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
-        title: '高階班',
+        courseId: 3,
         price: 36000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
+        courseId: 4,
         title: '楊特拉(需有初階班基礎)',
         price: 36000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
+        courseId: 5,
         title: '金融占星(需有中階班基...',
         price: 36000,
         description: '（良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
+        courseId: 6,
         title: '擇日',
         price: 12000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
+        courseId: 7,
         title: '吠陀換置占星',
         price: 10000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
+        courseId: 8,
         title: '客製本命護符',
         price: 30000,
         description: '良好的風水可以使家庭收入增加，人丁健康，在選擇居家風水，實在不可不慎。',
       },
       {
+        courseId: 9,
         title: '奇門遁甲佈陣',
         price: 15000,
         description: '（下訂後助教會和您聯繫）',

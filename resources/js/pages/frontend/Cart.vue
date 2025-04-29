@@ -1,7 +1,7 @@
 <!-- 購物車 引入heading作為購買商品列表 -->
 <script setup>
 import { ref } from 'vue';
-import Heading from '@/components/Heading.vue';
+import Heading from '@/components/ProductCard.vue';
 
 // 購物車步驟
 const step = ref(1);
@@ -18,7 +18,6 @@ const prevStep = () => {
 const paidPrice = ref(''); // 輸入時label往上方移動
 const accountNumber = ref(''); // 輸入時label往上方移動
 const paidDate = ref('');
-
 
 // 測試假資料-服務
 const fakeServices = [
@@ -179,8 +178,11 @@ const fakeCourses = [
           <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[32px]/[42px]">輸入轉帳資料</p>
           <!-- 匯款日期 -->
           <div class="relative">
-            <label for="date" 
-            :class="['absolute left-0 top-[50%] ml-[16px] -translate-y-[80%] bg-white text-[18px] text-darkGray',paidDate ? 'hidden':'block']">匯款日期</label>
+            <label
+              for="date"
+              :class="['absolute left-0 top-[50%] ml-[16px] -translate-y-[80%] bg-white text-[18px] text-darkGray', paidDate ? 'hidden' : 'block']"
+              >匯款日期</label
+            >
             <input
               type="date"
               id="date"
