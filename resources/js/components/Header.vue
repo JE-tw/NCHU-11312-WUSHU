@@ -21,9 +21,10 @@
       <!-- 平板版 -->
       <div v-if="isTablet && !isMobile" class="flex items-center gap-3">
         <div class="flex items-center gap-3">
-          <button aria-label="購物車" class="hover:text-[#1f9c95]">
+          <a href="http://127.0.0.1:8000/wushu/Cart" aria-label="購物車" class="hover:text-[#1f9c95]">
             <img src="@/images/cart.svg" alt="購物車" class="w-7 h-7" />
-          </button>
+          </a>
+
           <button @click="toggleMobileMenu" aria-label="選單" class="hover:text-[#1f9c95]">
             <img src="@/images/menu.svg" alt="選單" class="w-7 h-7" />
           </button>
@@ -38,9 +39,9 @@
           <img src="@/images/search.png" alt="搜尋" class="absolute left-2 w-4 h-4" />
         </div>
         <div class="flex items-center gap-2">
-          <button aria-label="購物車" class="hover:text-[#1f9c95]">
+          <a href="http://127.0.0.1:8000/wushu/Cart" aria-label="購物車" class="hover:text-[#1f9c95]">
             <img src="@/images/cart.svg" alt="購物車" class="w-6 h-6" />
-          </button>
+          </a>
           <button @click="toggleMobileMenu" aria-label="選單" class="hover:text-[#1f9c95]">
             <img src="@/images/menu.svg" alt="選單" class="w-6 h-6" />
           </button>
@@ -67,7 +68,7 @@
           <img src="@/images/search.png" alt="搜尋" class="w-8 h-8" />
         </button>
 
-        <a href="/cart" aria-label="購物車" class="hover:text-[#1f9c95]">
+        <a href="http://127.0.0.1:8000/wushu/Cart" aria-label="購物車" class="hover:text-[#1f9c95]">
           <img src="@/images/cart.svg" alt="購物車" class="w-8 h-8" />
         </a>
 
@@ -99,15 +100,17 @@
         class="font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 border-b border-gray-300 hover:text-[#1f9c95]">
         關於站主
       </router-link>
-      <router-link to="/services"
+      <a href="http://127.0.0.1:8000/wushu/ServiceCourse"
         class="font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 border-b border-gray-300 hover:text-[#1f9c95]">
         服務與課程
-      </router-link>
-      <router-link to="/login"
+      </a>
+
+      <a href="http://127.0.0.1:8000/wushu/MemberCenter"
         class="font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 flex items-center gap-2 hover:text-[#1f9c95]">
         <img src="@/images/user.svg" alt="登入" class="w-6 h-6" />
         登入註冊
-      </router-link>
+      </a>
+
     </nav>
   </div>
 </template>

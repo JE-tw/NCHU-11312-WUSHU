@@ -222,9 +222,9 @@ const changeTab = (tabName) => {
                                         {{ course.lessons }}堂課
                                     </span>
                                     <span class="text-gray-300 w-24 text-[24px] text-center">{{ course.duration
-                                    }}</span>
+                                        }}</span>
                                     <span class="text-deepTeal font-bold text-[24px] w-28 text-right">{{ course.price
-                                    }}</span>
+                                        }}</span>
                                 </div>
                             </div>
                         </div>
@@ -260,7 +260,7 @@ const changeTab = (tabName) => {
             <!-- AboutMaster -->
             <section class="py-12 sm:py-16 md:py-24 bg-white font-serif text-black overflow-hidden">
                 <div class="max-w-7xl mx-auto px-4 xl:pr-8 xl:pl-0 space-y-16 md:space-y-24">
-                    <div class="text-center">
+                    <div class="text-center mt-3">
                         <h2
                             class="text-4xl md:text-[48px] xl:text-[64px] leading-[100%] font-bold font-serif border-b-2 border-black inline-block pb-2">
                             關於站主
@@ -292,9 +292,9 @@ const changeTab = (tabName) => {
                         <div class="flex flex-col xl:flex-row items-stretch w-full">
                             <!-- 圖片區塊 - 左側 -->
                             <div class="w-full xl:w-1/2 relative">
-                                <img :src="masterImg2" alt="中藥櫃" class="w-full h-full object-cover"
-                                    style="aspect-ratio: 4/3;" />
+                                <img :src="masterImg2" alt="中藥櫃" class="w-full xl:w-[1023px] h-auto xl:h-[760px] object-cover" />
                             </div>
+
 
                             <!-- 文字區塊 - 右側 -->
                             <div class="w-full xl:w-1/2 bg-gray-200 flex flex-col">
