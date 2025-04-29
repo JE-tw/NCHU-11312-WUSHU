@@ -2,29 +2,35 @@
 import { ref } from 'vue';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import CourseCard from '@/components/CourseCard.vue';
 
 const tab = ref('personalinfo') // 初始預設在個人資料
 
 const activeTopTabClass = 'bg-white border border-white';
 const inactiveTopTabClass = 'text-white border border-white';
 
-const courses = [
+const courses = ref([
   {
     title: '基礎班',
     description: '良好的風水可以使家庭收入增加，人才健康。在選擇居家風水，實在不可不慎。',
-    tag: '吠陀占星'
+    category: '吠陀占星',
   },
   {
     title: '進階班',
-    description: '深入了解風水佈局，掌握財富與健康的密碼。',
-    tag: '陽宅風水'
+    description: '掌握行星能量與相位的精細解析，深入理解星盤奧秘。',
+    category: '吠陀占星',
   },
   {
-    title: '專業班',
-    description: '專業實務演練，成為風水佈局的專家。',
-    tag: '專業認證'
+    title: '塔羅入門',
+    description: '學習塔羅基礎牌意與解牌技巧，適合初學者。',
+    category: '塔羅牌',
   },
-];
+  {
+    title: '能量療癒課',
+    description: '探索氣場與脈輪，啟動身心靈療癒力。',
+    category: '靈性課程',
+  },
+]);
 
 </script>
 
@@ -65,7 +71,7 @@ const courses = [
 
   <!-- 主要內容區 -->
   <div class="bg-white min-h-screen my-20">
-    <div class="container mx-auto ">
+    <div class="container mx-auto w-full">
       <Header />
 
       <!-- 個人資料 -->
@@ -187,16 +193,18 @@ const courses = [
       </div>
 
       <!-- 我的課程卡 -->
-      <div v-else-if="tab === 'mycourse'" class="w-full px-4 ">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+      <div v-else-if="tab === 'mycourse'" class="w-full px-4 py-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-screen-xl mx-auto">
           <div v-for="(course, index) in courses" :key="index"
             class="border border-gray-200 rounded-lg p-6 shadow-sm bg-white">
             <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-2">{{ course.title }}</h3>
-            <p class="text-sm sm:text-base text-gray-700 leading-relaxed mb-4 whitespace-pre-line">
+            <p class="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
               {{ course.description }}
             </p>
             <div class="flex justify-between items-center">
-              <span class="px-3 py-1 text-sm rounded-full bg-purple-200 text-purple-800">{{ course.tag }}</span>
+              <span class="px-3 py-1 text-sm rounded-full bg-purple-200 text-purple-800">
+                {{ course.category }}
+              </span>
               <button class="bg-teal-600 text-white px-4 py-2 text-sm rounded hover:bg-teal-700 transition">
                 前往課程
               </button>
