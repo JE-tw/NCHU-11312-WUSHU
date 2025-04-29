@@ -1,3 +1,4 @@
+<!-- 引入到Cart.vue -->
 <script setup>
 import deleteIcon from '@/images/f-delete.png';
 
