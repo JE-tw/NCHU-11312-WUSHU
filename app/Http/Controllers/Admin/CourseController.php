@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
+use App\Models\Course;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CourseController extends Controller
 {
@@ -13,6 +15,10 @@ class CourseController extends Controller
     public function index()
     {
         //
+        $item = Course::with('category')->get();
+        return Inertia::render('backend/CourseList',[
+            'courses'=> $item
+        ]);
     }
 
     /**

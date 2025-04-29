@@ -31,14 +31,15 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Order extends Model
 {
+	protected $appends = ['status_text'];
 	protected $table = 'orders';
 
 	protected $casts = [
 		'total_amount' => 'int',
 		'status' => 'int',
-		'remittance_date' => 'datetime',
+		'remittance_date' => 'date:Y-m-d',
 		'remittance_amount' => 'int',
-		'user_id' => 'int'
+		'user_id' => 'int',
 	];
 
 	protected $fillable = [
@@ -51,12 +52,23 @@ class Order extends Model
 		'user_id'
 	];
 
+	public function getStatusTextAttribute(): string
+	{
+		return match ($this->status) {
+			0 => '尚未付款',
+			1 => '等待客服確認款項',
+			2 => '已確認付款',
+			3 => '取消訂單',
+			default => '未知狀態',
+		};
+	}
+
 	public function user()
 	{
 		return $this->belongsTo(User::class);
 	}
 
-	public function order_items()
+	public function orderItems()
 	{
 		return $this->hasMany(OrderItem::class);
 	}

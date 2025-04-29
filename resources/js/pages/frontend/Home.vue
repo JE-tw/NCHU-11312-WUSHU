@@ -33,7 +33,7 @@ const activeTab = ref('tarot')
 // 動態切換背景圖片
 const currentImage = computed(() => {
     const tab = tabs.value.find(t => t.name === activeTab.value)
-    return tab ? tab.image : ''
+    return tab ? tab.image : ''  // 如果找不到，回傳空字串
 })
 
 // ====== 課程資料 ======
@@ -71,10 +71,40 @@ const getCoursesForTab = (tabName) => {
     return courses.value[tabName] || []
 }
 
+// ====== 分頁設定 ======
+// 每頁顯示的課程數量
+const itemsPerPage = 5;
+
+// 當前頁碼
+const currentPage = ref(1);
+
+// 計算總頁數
+const totalPages = computed(() => {
+    const coursesForActiveTab = getCoursesForTab(activeTab.value);
+    return Math.ceil(coursesForActiveTab.length / itemsPerPage); // 計算分頁數
+});
+
+// 當前顯示的課程
+const paginatedCourses = computed(() => {
+    const coursesForActiveTab = getCoursesForTab(activeTab.value);
+    const start = (currentPage.value - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return coursesForActiveTab.slice(start, end); // 根據當前頁顯示課程
+});
+
+// 切換頁面
+const changePage = (page) => {
+    if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page;
+    }
+};
+
 // 切換 tab
 const changeTab = (tabName) => {
-    activeTab.value = tabName
-}
+    activeTab.value = tabName;
+    currentPage.value = 1; // 切換標籤時重置頁碼
+};
+
 </script>
 
 
@@ -146,87 +176,83 @@ const changeTab = (tabName) => {
             <!-- Courses offered -->
             <section class="relative w-full h-[858px] bg-black text-white overflow-hidden">
                 <div class="container mx-auto h-full flex relative z-10">
-                    <!-- 左側：標題和按鈕 -->
-                    <div class="w-full md:w-1/3 flex flex-col justify-start pt-10 pl-6 relative">
-                        <h2 class="text-[64px] font-serif font-bold">開立課程</h2>
-                        <div class="h-0.5 bg-white mt-2 w-60"></div>
-                        <a href="http://127.0.0.1:8000/wushu/ServiceCourse">
-                            <button
-                                class="w-36 h-14 mt-6 px-6 py-2 bg-deepTeal text-white rounded text-[24px] hover:bg-teal-700 transition duration-300 overflow-hidden text-ellipsis whitespace-nowrap">
-                                了解更多
-                            </button>
-                        </a>
 
-                        <!-- 背景符號圖片，調整位置和透明度 -->
+                    <div class="w-[33.33%] relative overflow-hidden bg-black"
+                        style="margin-top: 20px; margin-left: 10px;">
+                        <!-- 背景圖片 -->
                         <img :src="currentImage" alt="課程背景"
-                            class="absolute top-0 left-0 opacity-50 object-contain pointer-events-none"
-                            style="width: 643.5px; height: 858px;" />
-
+                            class="w-[150%] h-auto absolute bottom-0 left-[-25%] opacity-50 pointer-events-none z-0" />
+                        <!-- 內容區 -->
+                        <div class="relative z-10 px-6 pt-10">
+                            <h2 class="text-[64px] font-serif font-bold">開立課程</h2>
+                            <div class="h-0.5 bg-white mt-2 w-60"></div>
+                            <a href="http://127.0.0.1:8000/wushu/ServiceCourse">
+                                <button
+                                    class="w-36 h-14 mt-6 px-6 py-2 bg-deepTeal text-white rounded text-[24px] hover:bg-teal-700 transition duration-300">
+                                    了解更多
+                                </button>
+                            </a>
+                        </div>
                     </div>
 
-                    <!-- 右邊：tabs和課程列表 -->
-                    <div class="w-full md:w-2/3 flex flex-col justify-start pt-10 pr-6">
+
+
+                    <!-- 右區：佔寬 2/3 -->
+                    <div class="w-[66.66%] flex flex-col pt-10 pr-6 pl-10">
+
                         <!-- Tabs -->
-                        <div class="flex justify-start space-x-6 pb-4 border-b border-gray-700">
-                            <button v-for="tab in tabs" :key="tab.name"
-                                class="py-2.5 px-6 font-medium transition duration-200 text-lg"
+                        <div class="flex space-x-6 pb-4 border-b border-gray-700 overflow-x-auto">
+                            <button v-for="tab in tabs" :key="tab.name" class="py-2.5 px-6 font-medium 
+                            font-[Microsoft JhengHei] transition duration-200 whitespace-nowrap text-[32px]"
                                 :class="{ 'text-blueGreen border-b-2 border-blueGreen': activeTab === tab.name, 'text-gray-300 hover:text-white': activeTab !== tab.name }"
                                 @click="changeTab(tab.name)">
                                 {{ tab.label }}
                             </button>
                         </div>
 
-                        <!-- 課程列表 - 統一間距和對齊 -->
-                        <div class="flex-1 overflow-y-auto py-6 space-y-0">
-                            <div v-for="course in getCoursesForTab(activeTab)" :key="course.name"
+                        <!-- 課程清單 -->
+                        <div class="flex-1 py-6 space-y-0">
+                            <div v-for="course in paginatedCourses" :key="course.name"
                                 class="flex items-center justify-between py-3.5 border-b border-dotted border-gray-600">
-
-                                <!-- 課程名稱 - 固定寬度且文字省略 -->
                                 <div class="text-[32px] font-medium w-2/5 truncate pr-4">
                                     {{ course.name || '課程名稱待補充' }}
                                 </div>
-
-                                <!-- 課程詳情 - 堂數、時長、價格 -->
                                 <div class="flex items-center justify-end space-x-4 w-3/5">
-                                    <!-- 堂數 -->
-                                    <span
-                                        class="bg-deepTeal text-white text-[24px] px-5 py-2 rounded-full h-[48px] flex items-center justify-center"
-                                        style="border-radius: 50px;">
+                                    <span class="bg-deepTeal text-white text-[24px] px-5 py-2 rounded-full">
                                         {{ course.lessons }}堂課
                                     </span>
-
-
-                                    <!-- 時長 -->
-                                    <span class="text-gray-300 w-24 text-[24px] text-center">
-                                        {{ course.duration }}
-                                    </span>
-
-                                    <!-- 價格 -->
-                                    <span class="text-deepTeal font-bold text-[24px] w-28 text-right">
-                                        {{ course.price }}
-                                    </span>
+                                    <span class="text-gray-300 w-24 text-[24px] text-center">{{ course.duration
+                                    }}</span>
+                                    <span class="text-deepTeal font-bold text-[24px] w-28 text-right">{{ course.price
+                                    }}</span>
                                 </div>
-
                             </div>
                         </div>
 
+                        <!-- 分頁按鈕 -->
+                        <div class="flex items-center space-x-2 mt-4">
+                            <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
+                                class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded disabled:opacity-50">
+                                ‹
+                            </button>
 
-                        <!-- 分頁導航 -->
-                        <div class="flex space-x-2 mt-4">
-                            <button
-                                class="w-8 h-8 flex items-center justify-center bg-deepTeal text-white rounded">1</button>
-                            <button
-                                class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded">2</button>
-                            <button
-                                class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded">3</button>
-                            <button
-                                class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded">4</button>
-                            <button
-                                class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded">›</button>
+                            <button v-for="page in totalPages" :key="page" @click="changePage(page)" :class="[
+                                'w-8 h-8 flex items-center justify-center rounded',
+                                page === currentPage ? 'bg-deepTeal text-white' : 'text-gray-300 hover:text-white'
+                            ]">
+                                {{ page }}
+                            </button>
+
+                            <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
+                                class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded disabled:opacity-50">
+                                ›
+                            </button>
                         </div>
+
                     </div>
                 </div>
             </section>
+
 
 
 
@@ -242,7 +268,8 @@ const changeTab = (tabName) => {
                     </div>
 
                     <div class="flex flex-col xl:flex-row items-center gap-12">
-                        <div class="xl:w-1/2 space-y-6 text-lg md:text-xl xl:text-2xl leading-relaxed text-black">
+                        <div
+                            class="xl:w-1/2 space-y-6 text-lg md:text-xl xl:text-2xl leading-relaxed text-black mt-[-330px]">
                             <p>
                                 文老師自學生時期便開始學習五術，致力於五術教學十餘年。中醫醫術－針灸傳承自古法針灸、董氏奇穴和山西派鍼法；脈學傳承自萬氏的太素脈學；內科傳承各家如經方、溫病、伏氣學派等多位老師；祝由傳承自西河派和軒轅派。
                             </p>
@@ -254,23 +281,23 @@ const changeTab = (tabName) => {
                                 另外西方之學尚有西洋古典行星護符魔法、北歐魔法等皆是師從大家。
                             </p>
                         </div>
-                        <div class="xl:w-1/2">
-                            <img :src="masterImg1" alt="禪石圖" class="shadow-lg object-cover w-full" />
+                        <div class="xl:w-1/2 flex justify-center items-center">
+                            <img :src="masterImg1" alt="禪石圖" class="shadow-lg object-cover w-full h-auto xl:h-full" />
                         </div>
                     </div>
 
-                    <!-- 沿革區塊 - 使用負邊距實現圖片延伸至左邊 -->
+
                     <div
                         class="relative w-full xl:-ml-[calc((100vw-1280px)/2+2rem)] xl:w-[calc(100%+((100vw-1280px)/2+2rem))]">
                         <div class="flex flex-col xl:flex-row items-stretch w-full">
                             <!-- 圖片區塊 - 左側 -->
-                            <div class="w-full xl:w-3/5 relative">
+                            <div class="w-full xl:w-1/2 relative">
                                 <img :src="masterImg2" alt="中藥櫃" class="w-full h-full object-cover"
                                     style="aspect-ratio: 4/3;" />
                             </div>
 
                             <!-- 文字區塊 - 右側 -->
-                            <div class="w-full xl:w-2/5 bg-gray-200">
+                            <div class="w-full xl:w-1/2 bg-gray-200 flex flex-col">
                                 <div class="p-6 xl:p-8 h-full flex flex-col">
                                     <h3
                                         class="text-3xl md:text-4xl xl:text-5xl font-bold font-serif border-b-2 border-black inline-block pb-1 mb-6">
@@ -288,6 +315,8 @@ const changeTab = (tabName) => {
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </section>
 

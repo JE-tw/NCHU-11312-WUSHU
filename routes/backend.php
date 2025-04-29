@@ -2,29 +2,44 @@
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\UserInfoController;
 
 
 // 後端頁面
+// 付款紀錄管理
+Route::prefix('wushu/admin/order')->group(function(){
+    Route::get('/',[OrderController::class,'index'])->name('admin.order.list');
+
+});
+
+// 會員管理
+Route::prefix('wushu/admin/user')->group(function(){
+    Route::get('/',[UserInfoController::class,'index'])->name('admin.user.list');
+
+});
 
 // 聯絡我們
-Route::prefix('admin/contact')->group(function(){
+Route::prefix('wushu/admin/contact')->group(function(){
     Route::get('/',[ContactController::class,'index'])->name('admin.contact.list');
 
-    // // 新增頁
-    // Route::get('/create', [ContactController::class,'create'])->name('admin.contact.create');
-    
-    // // 新增資料
-    // Route::post('/',[ContactController::class,'store'])->name('admin.contact.store');
-    
-    // // 編輯頁
-    // Route::get('/edit/{id}', [ContactController::class,'edit'])->name('admin.contact.edit');
-    
-    // // 編輯資料
-    // Route::post('/update/{id}', [ContactController::class,'update'])->name('admin.contact.update');
-    
-    // 刪除資料
-    Route::get('/delete/{id}', [ContactController::class,'delete'])->name('admin.contact.delete');
 });
+
+// 服務內容管理
+Route::prefix('wushu/admin/service')->group(function(){
+    Route::get('/',[ServiceController::class,'index'])->name('admin.service.list');
+
+});
+
+// 子課程管理
+Route::prefix('wushu/admin/course')->group(function(){
+    Route::get('/',[CourseController::class,'index'])->name('admin.course.list');
+
+});
+
+
 
 

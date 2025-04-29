@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
+use App\Models\Chapter;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ChapterController extends Controller
 {
@@ -13,6 +15,10 @@ class ChapterController extends Controller
     public function index()
     {
         //
+        $item = Chapter::all();
+        return Inertia::render('backend/ChapterList',[
+            'chapter'=> $item
+        ]);
     }
 
     /**
@@ -53,6 +59,7 @@ class ChapterController extends Controller
     public function update(Request $request, string $id)
     {
         //
+
     }
 
     /**

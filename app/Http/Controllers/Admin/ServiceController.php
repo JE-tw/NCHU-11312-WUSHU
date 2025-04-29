@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Inertia\Inertia;
+use App\Models\Service;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ServiceController extends Controller
 {
@@ -13,6 +15,10 @@ class ServiceController extends Controller
     public function index()
     {
         //
+        $item = Service::all();
+        return Inertia::render('backend/ServiceList',[
+            'services'=> $item
+        ]);
     }
 
     /**

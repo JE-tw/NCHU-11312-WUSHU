@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Heading from '@/components/Heading.vue';
+import Heading from '@/components/ProductCard.vue';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { type NavItem } from '@/types';
@@ -29,8 +29,8 @@ const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.locati
   <div class="px-4 py-6">
     <Heading title="Settings" description="Manage your profile and account settings" />
 
-    <div class="flex flex-col space-y-8 md:space-y-0 lg:flex-row lg:space-x-12 lg:space-y-0">
-      <aside class="w-full max-w-xl lg:w-48">
+    <div class="md:space-y-0 lg:flex-row lg:space-x-12 lg:space-y-0 flex flex-col space-y-8">
+      <aside class="lg:w-48 w-full max-w-xl">
         <nav class="flex flex-col space-x-0 space-y-1">
           <Button
             v-for="item in sidebarNavItems"
@@ -46,9 +46,9 @@ const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.locati
         </nav>
       </aside>
 
-      <Separator class="my-6 md:hidden" />
+      <Separator class="md:hidden my-6" />
 
-      <div class="flex-1 md:max-w-2xl">
+      <div class="md:max-w-2xl flex-1">
         <section class="max-w-xl space-y-12">
           <slot />
         </section>

@@ -21,7 +21,7 @@ class OrderSeeder extends Seeder
         //
         $users = User::all();
         $services = Service::all();
-        $cources = Course::all();
+        $courses = Course::all();
 
         foreach ($users->random(10) as $user) {
             $remitAmount = fake()->optional()->numberBetween(1000, 10000);
@@ -32,7 +32,7 @@ class OrderSeeder extends Seeder
             $order = Order::create([
                 'user_id'=>$user->id,
                 'total_amount'=>0, // 預設為0稍後計算
-                'status'=>fake()->numerify(0,3),
+                'status'=>fake()->numberBetween(0,3),
                 'remittance_date'=>$remitAccount ? fake()->date():null,
                 'remittance_amount'=>$remitAmount,
                 'remittance_account'=>$encryptedAccount,
@@ -41,12 +41,14 @@ class OrderSeeder extends Seeder
 
             $total = 0;
             foreach(range(1,rand(1,5)) as $i){
-                $productType = fake()->randomNumber([1,2]); // 服務或課程
-                if($productType === 1 && $services->isNotEmpty()){
+                $isCourse = fake()->boolean(); // true = Course, false = Service
+                if ($isCourse && $courses->isNotEmpty()) {
+                    $product = $courses->random();
+                    $productType = Course::class;
+                } elseif (!$isCourse && $services->isNotEmpty()) {
                     $product = $services->random();
-                }else if($productType===2&& $cources->isNotEmpty()){
-                    $product=$cources->random();
-                }else{
+                    $productType = Service::class;
+                } else {
                     continue;
                 }
 
