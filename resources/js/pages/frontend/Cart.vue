@@ -17,6 +17,8 @@ const prevStep = () => {
 // 付款input
 const paidPrice = ref(''); // 輸入時label往上方移動
 const accountNumber = ref(''); // 輸入時label往上方移動
+const paidDate = ref('');
+
 
 // 測試假資料-服務
 const fakeServices = [
@@ -50,7 +52,7 @@ const fakeCourses = [
   <div class="bg-softGray text-black">
     <!-- 購物車 step1 -->
     <div v-if="step === 1" class="flex flex-col items-center">
-      <header class="flex h-[234px] flex-col items-center sm:h-[400px]  xl:h-[444px]">
+      <header class="flex h-[234px] flex-col items-center sm:h-[400px] xl:h-[444px]">
         <p
           class="pt-[116px] font-serif text-[32px]/[46px] font-semibold text-black sm:pt-[160px] sm:text-[52px]/[75px] xl:pt-[224px] xl:text-[64px]/[92px]"
         >
@@ -112,7 +114,7 @@ const fakeCourses = [
           <div>
             <!-- 引入Heading 並用測試假資料 -->
             <div v-for="item in fakeCourses" :key="item.id">
-              <heading :id="item.id" :title="item.title" :price="item.price" />
+              <Heading :id="item.id" :title="item.title" :price="item.price" />
             </div>
           </div>
         </div>
@@ -147,7 +149,7 @@ const fakeCourses = [
 
     <!-- 付款說明畫面 step2 -->
     <div v-else-if="step === 2" class="flex flex-col items-center">
-      <header class="flex w-full h-[234px] flex-col items-center sm:h-[400px] xl:h-[444px]">
+      <header class="flex h-[234px] w-full flex-col items-center sm:h-[400px] xl:h-[444px]">
         <p
           class="pt-[116px] font-serif text-[32px]/[46px] font-semibold text-black sm:pt-[160px] sm:text-[52px]/[75px] xl:pt-[224px] xl:text-[64px]/[92px]"
         >
@@ -173,15 +175,17 @@ const fakeCourses = [
           </div>
         </div>
         <!-- 填入轉帳資料表單 -->
-        <div class="sm:mb-[60px] sm:px-[48px]">
+        <div class="sm:mb-[60px] sm:px-[48px] xl:px-0">
           <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[32px]/[42px]">輸入轉帳資料</p>
           <!-- 匯款日期 -->
           <div class="relative">
-            <span class="absolute left-0 top-[50%] ml-[16px] -translate-y-[80%] bg-white text-[18px] text-darkGray">匯款日期</span>
+            <label for="date" 
+            :class="['absolute left-0 top-[50%] ml-[16px] -translate-y-[80%] bg-white text-[18px] text-darkGray',paidDate ? 'hidden':'block']">匯款日期</label>
             <input
               type="date"
               id="date"
               name="paid_date"
+              v-model="paidDate"
               class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white p-4 text-[18px]/[24px] font-normal text-black outline-none sm:w-[300px]"
               required
             />
@@ -201,7 +205,7 @@ const fakeCourses = [
               for="price"
               :class="[
                 'absolute left-0 text-darkGray',
-                price ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
+                paidPrice ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
               ]"
               >匯款金額</label
             >
@@ -232,7 +236,7 @@ const fakeCourses = [
 
       <!-- 按鈕區 -->
       <div class="sm:w-[100%] sm:px-[48px] xl:max-w-[760px] xl:px-0">
-        <div class="r flex flex-wrap justify-center">
+        <div class="box-border flex justify-center xl:justify-between">
           <button
             @click="prevStep"
             class="mr-4 h-[44px] w-[147.5px] rounded-sm border border-blueGreen text-[16px]/[28px] text-blueGreen hover:bg-blueGreen hover:text-white sm:mr-[120px] sm:h-[56px] sm:w-[320px] sm:text-[24px]/[40px]"
