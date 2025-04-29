@@ -65,7 +65,7 @@ const courses = [
 
   <!-- 主要內容區 -->
   <div class="bg-white min-h-screen my-20">
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto ">
       <Header />
 
       <!-- 個人資料 -->
@@ -186,8 +186,8 @@ const courses = [
         <!-- 修改密碼區塊結束 -->
       </div>
 
-      <!-- 我的課程 -->
-      <div v-else-if="tab === 'mycourse'" class="w-full px-4 py-8">
+      <!-- 我的課程卡 -->
+      <div v-else-if="tab === 'mycourse'" class="w-full px-4 ">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
           <div v-for="(course, index) in courses" :key="index"
             class="border border-gray-200 rounded-lg p-6 shadow-sm bg-white">
