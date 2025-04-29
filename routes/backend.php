@@ -2,7 +2,7 @@
 
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\UserInfoController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ServiceController;
@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\ServiceController;
 
 // 會員管理
 Route::prefix('wushu/admin/user')->group(function(){
-    Route::get('/',[UserController::class,'index'])->name('admin.user.list');
+    Route::get('/',[UserInfoController::class,'index'])->name('admin.user.list');
 
 });
 

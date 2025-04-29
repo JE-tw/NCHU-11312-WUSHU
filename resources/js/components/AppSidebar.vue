@@ -15,7 +15,7 @@ const mainNavItems: NavItem[] = [
   // },
   {
     title: '會員管理',
-    href: route('admin.contact.list'),
+    href: route('admin.user.list'),
   },
   {
     title: '聯絡我們列表',
@@ -23,11 +23,11 @@ const mainNavItems: NavItem[] = [
   },
   {
     title: '服務內容管理',
-    href: route('admin.contact.list'),
+    href: route('admin.service.list'),
   },
   {
     title: '子課程管理',
-    href: route('admin.contact.list'),
+    href: route('admin.course.list'),
   },
 ];
 </script>

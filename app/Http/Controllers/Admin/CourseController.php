@@ -15,9 +15,9 @@ class CourseController extends Controller
     public function index()
     {
         //
-        $item = Course::all();
+        $item = Course::with('category')->get();
         return Inertia::render('backend/CourseList',[
-            'course'=> $item
+            'courses'=> $item
         ]);
     }
 

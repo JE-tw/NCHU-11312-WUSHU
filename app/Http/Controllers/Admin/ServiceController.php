@@ -17,7 +17,7 @@ class ServiceController extends Controller
         //
         $item = Service::all();
         return Inertia::render('backend/ServiceList',[
-            'service'=> $item
+            'services'=> $item
         ]);
     }
 
