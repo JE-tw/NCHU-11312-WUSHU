@@ -48,12 +48,19 @@ const fakeCourses = [
     price: '36,200',
   },
 ];
+
+// test
+const props = defineProps({
+  response: Array,
+});
+console.log(props.response);
 </script>
 
 <template>
+  
   <Header />
 
-  <div class="bg-softGray text-black pb-[120px]">
+  <div class="bg-softGray pb-[120px] text-black">
     <!-- step1 購物車 -->
     <div v-if="step === 1" class="flex flex-col items-center">
       <header class="flex h-[234px] flex-col items-center sm:h-[400px] xl:h-[444px]">
@@ -135,7 +142,7 @@ const fakeCourses = [
       </div>
       <!-- 按鈕區 -->
       <div class="sm:w-[100%] sm:max-w-[672px] sm:px-3 xl:max-w-[760px] xl:px-0">
-        <div class="flex flex-wrap justify-center sm:justify-between gap-4">
+        <div class="flex flex-wrap justify-center gap-4 sm:justify-between">
           <button
             class="h-[44px] w-[147.5px] rounded-sm border border-blueGreen text-[16px]/[28px] text-blueGreen hover:bg-blueGreen hover:text-white sm:mr-0 sm:h-[56px] sm:w-[276px] sm:text-[24px]/[40px] xl:w-[320px]"
           >
@@ -243,10 +250,10 @@ const fakeCourses = [
 
       <!-- 按鈕區 -->
       <div class="sm:w-[100%] sm:px-[48px] xl:max-w-[760px] xl:px-0">
-        <div class="box-border flex justify-center xl:justify-between flex-wrap flex-nowrap gap-4">
+        <div class="box-border flex flex-wrap flex-nowrap justify-center gap-4 xl:justify-between">
           <button
             @click="prevStep"
-            class=" h-[44px] w-[147.5px] rounded-sm border border-blueGreen text-[16px]/[28px] text-blueGreen hover:bg-blueGreen hover:text-white sm:mr-[120px] sm:h-[56px] sm:w-[320px] sm:text-[24px]/[40px]"
+            class="h-[44px] w-[147.5px] rounded-sm border border-blueGreen text-[16px]/[28px] text-blueGreen hover:bg-blueGreen hover:text-white sm:mr-[120px] sm:h-[56px] sm:w-[320px] sm:text-[24px]/[40px]"
           >
             返回購物車
           </button>

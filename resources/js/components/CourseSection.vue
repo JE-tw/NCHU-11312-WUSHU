@@ -9,7 +9,6 @@ defineProps({
   courses: Array,
 });
 </script>
-
 <template>
   <section>
     <!-- 課程標題＋背景圖 -->
