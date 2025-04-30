@@ -36,7 +36,7 @@ const handleResize = () => {
 
 // ====== Tabs 資料 ======
 const tabs = ref([
-    { name: 'astrology', label: '咒陀占星', image: tarotImg },
+    { name: 'astrology', label: '吠陀占星', image: tarotImg },
     { name: 'medicine', label: '中醫', image: tcmImg },
     { name: 'magic', label: '古典魔法', image: magicImg },
     { name: 'others', label: '其它術數', image: othersImg }
@@ -190,14 +190,15 @@ onBeforeUnmount(() => {
 
             <!-- Courses offered -->
             <!-- 課程區塊 - RWD實作 -->
-            <section class="relative w-full bg-black text-white overflow-hidden" :class="{ 'h-[858px]': !isMobile }">
-                <!-- 背景图片 - 使用绝对定位并添加渐变遮罩 -->
+            <section class="relative w-full bg-black text-white overflow-hidden min-h-[858px]">
+                <!-- 背景圖片、添加遮罩 -->
                 <div class="absolute inset-0 z-0 overflow-hidden">
                     <transition name="fade" mode="out-in">
                         <img :key="activeTab" :src="currentImage" alt="課程背景"
-                            class="w-full h-full object-cover opacity-50" />
+                            class="w-full h-full object-contain object-left transition-opacity duration-500"
+                            :class="activeTab === 'medicine' ? 'opacity-90' : 'opacity-50'" />
+
                     </transition>
-                    <!-- 添加渐变遮罩 -->
                     <div class="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent"></div>
                 </div>
 
@@ -245,7 +246,7 @@ onBeforeUnmount(() => {
                                                 {{ course.lessons }}堂課
                                             </span>
                                             <span class="text-gray-300 w-24 text-[24px] text-center">{{ course.duration
-                                            }}</span>
+                                                }}</span>
                                             <span class="text-deepTeal font-bold text-[24px] w-28 text-right">{{
                                                 course.price }}</span>
                                         </div>
@@ -312,7 +313,7 @@ onBeforeUnmount(() => {
                                         {{ course.lessons }}堂課
                                     </span>
                                     <span class="text-gray-300 text-xl text-center whitespace-nowrap">{{ course.duration
-                                    }}</span>
+                                        }}</span>
                                     <span class="text-deepTeal font-bold text-xl text-right">{{ course.price }}</span>
                                 </div>
                             </div>
@@ -436,35 +437,37 @@ onBeforeUnmount(() => {
                     </div>
 
 
-                    <div
-                        class="relative w-full xl:-ml-[calc((100vw-1280px)/2+2rem)] xl:w-[calc(100%+((100vw-1280px)/2+2rem))]">
-                        <div class="flex flex-col xl:flex-row items-center xl:items-stretch w-full">
-                            <!-- 圖片區塊 - 左側 -->
-                            <div class="w-full xl:w-[1023.36px] relative">
-                                <img :src="masterImg2" alt="中藥櫃" class="w-full h-auto xl:h-[760px] object-cover" />
-                            </div>
+                    <div class="flex flex-col xl:flex-row items-center xl:items-stretch w-full">
 
-                            <!-- 文字區塊 - 右側 -->
+                        <!-- 左圖 -->
+                        <div class="w-full xl:w-[1023.36px] relative">
+                            <!-- 動態綁定圖片來源，並設定寬度和高度 -->
+                            <img :src="masterImg2" alt="中藥櫃" class=" object-cover" />
+                        </div>
+
+                        <!-- 右側區塊 -->
+                        <div class="w-full xl:w-[500px] flex flex-col justify-start px-8 xl:px-0 py-20">
+                            <h3
+                                class="text-[48px] xl:text-[64px] font-bold font-serif border-b-2 border-black inline-block pb-2 mb-10 whitespace-nowrap">
+                                學會創立沿革
+                            </h3>
+
                             <div
-                                class="absolute top-[675px] left-[928px] w-[487px] h-[975px] bg-gray-200 flex flex-col">
-                                <div class="p-6 xl:p-8 h-full flex flex-col">
-                                    <h3
-                                        class="text-[64px] md:text-4xl xl:text-5xl font-bold font-serif border-b-2 border-black inline-block pb-1 mb-6 whitespace-nowrap">
-                                        學會創立沿革
-                                    </h3>
-                                    <div class="text-lg md:text-xl xl:text-[22px] leading-relaxed">
-                                        <p>
-                                            2008年，當時文老師在內湖高中任教，部分同事和學生知曉文老師傳承自古老的醫術，便欲向其學習，但老師當時並未想開課授徒，一方面是其老師們尚在世，二方面是覺得自己尚未成熟，故以五術研究社這種讀書會模式帶領眾人學習，不收學費為眾人解惑。
-                                        </p>
-                                        <p class="mt-4">
-                                            直到2014在湖南攻讀中醫內科學研究所，同儕紛紛希望向文老師學習師承，加上傳授針灸和內科給文老師的老師們都過世了，文老師才開始決定開課陸續至今。
-                                        </p>
-                                    </div>
-                                </div>
+                                class="bg-gray-200 px-6 xl:px-8 py-6 xl:py-8 text-[20px] xl:text-[22px] leading-[1.9] space-y-4 font-serif">
+                                <p>
+                                    <span
+                                        class="text-[36px] xl:text-[48px] font-bold tracking-wide">2008年</span>，當時文老師在內湖高中任教，部分同事和學生知曉文老師傳承自古老的醫術，便欲向其學習，但老師當時並未想開課授徒，一方面是其老師們尚在世，二方面是覺得自己尚未成熟，故以五術研究社這種讀書會模式帶領眾人學習，不收學費為眾人解惑。
+                                </p>
+                                <p>直到2014在湖南攻讀中醫內科學研究所，同儕紛紛希望向文老師學習師承，加上傳授針灸和內科給文老師的老師們都過世了，文老師才開始決定開課陸續至今。</p>
                             </div>
-
                         </div>
                     </div>
+
+
+
+
+
+
 
                 </div>
             </section>
