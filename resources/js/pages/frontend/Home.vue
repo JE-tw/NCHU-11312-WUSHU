@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 
 import Header from '../../components/Header.vue'
 import Footer from '../../components/Footer.vue'
@@ -15,96 +15,111 @@ import tcmImg from '@/images/ay1lo-pmcep.webp'
 import magicImg from '@/images/a1tgu3-dqrfv.webp'
 import othersImg from '@/images/a1tgu3-dqrfv.webp'
 
-// ====== 基本設定 ======
-// 背景圖
+// ====== 背景圖 ======
 const bgImage = imgSrc
 
-// Tabs 資料
+// ====== 響應式裝置判斷 ======
+const screens = {
+    sm: '600px',
+    xl: '1270px'
+}
+
+const windowWidth = ref(window.innerWidth)
+
+const isDesktop = computed(() => windowWidth.value >= parseInt(screens.xl))
+const isTablet = computed(() => windowWidth.value < parseInt(screens.xl) && windowWidth.value >= parseInt(screens.sm))
+const isMobile = computed(() => windowWidth.value < parseInt(screens.sm))
+
+const handleResize = () => {
+    windowWidth.value = window.innerWidth
+}
+
+// ====== Tabs 資料 ======
 const tabs = ref([
-    { name: 'tarot', label: '吠陀占星', image: tarotImg },
-    { name: 'tcm', label: '中醫', image: tcmImg },
+    { name: 'astrology', label: '咒陀占星', image: tarotImg },
+    { name: 'medicine', label: '中醫', image: tcmImg },
     { name: 'magic', label: '古典魔法', image: magicImg },
     { name: 'others', label: '其它術數', image: othersImg }
 ])
 
-// 預設選中的 tab
-const activeTab = ref('tarot')
+const activeTab = ref('astrology')
 
-// 動態切換背景圖片
 const currentImage = computed(() => {
     const tab = tabs.value.find(t => t.name === activeTab.value)
-    return tab ? tab.image : ''  // 如果找不到，回傳空字串
+    return tab ? tab.image : ''
 })
 
 // ====== 課程資料 ======
 const courses = ref({
-    tarot: [
+    astrology: [
         { name: '初階班', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
         { name: '中階班', lessons: '16', duration: '3小時/堂', price: 'NT$28,000' },
         { name: '高階班', lessons: '20', duration: '2小時/堂', price: 'NT$36,000' },
         { name: '楊特拉(需有初階班基礎)', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
+        { name: '擇日', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
         { name: '金融占星(需有中階班基礎)', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
-        { name: '擇日', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' }
+        { name: '咒陀占星進階班', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' }
     ],
-    tcm: [
-        { name: '古典針灸基礎班', lessons: '12', duration: '3小時/堂', price: 'NT$36,000' },
-        { name: '康治本傷寒論', lessons: '12', duration: '2小時/堂', price: 'NT$36,000' },
-        { name: '金匱要略', lessons: '20', duration: '2小時/堂', price: 'NT$40,000' },
-        { name: '伏氣溫病學', lessons: '20', duration: '2小時/堂', price: 'NT$52,000' }
+    medicine: [
+        { name: '中醫入門', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
+        { name: '中醫進階', lessons: '20', duration: '3小時/堂', price: 'NT$36,000' }
     ],
     magic: [
-        { name: '蔣氏玄空風水執業班', lessons: '24', duration: '2小時/堂', price: 'NT$36,000' }
+        { name: '魔法入門', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
+        { name: '古典儀式魔法', lessons: '20', duration: '3小時/堂', price: 'NT$36,000' }
     ],
     others: [
-        { name: '蔣氏玄空風水執業班', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
-        { name: '', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
-        { name: '', lessons: '16', duration: '3小時/堂', price: 'NT$28,000' },
-        { name: '', lessons: '20', duration: '2小時/堂', price: 'NT$36,000' },
-        { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
-        { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
-        { name: '', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' }
+        { name: '卜卦基礎', lessons: '12', duration: '2小時/堂', price: 'NT$22,000' },
+        { name: '風水學', lessons: '16', duration: '3小時/堂', price: 'NT$28,000' }
     ]
 })
 
-// 取得對應 tab 的課程
+// ====== 分頁設定 ======
+const coursesPerPage = 6
+const currentPage = ref(1)
+
 const getCoursesForTab = (tabName) => {
     return courses.value[tabName] || []
 }
 
-// ====== 分頁設定 ======
-// 每頁顯示的課程數量
-const itemsPerPage = 5;
-
-// 當前頁碼
-const currentPage = ref(1);
-
-// 計算總頁數
 const totalPages = computed(() => {
-    const coursesForActiveTab = getCoursesForTab(activeTab.value);
-    return Math.ceil(coursesForActiveTab.length / itemsPerPage); // 計算分頁數
-});
+    const coursesForActiveTab = getCoursesForTab(activeTab.value)
+    return Math.ceil(coursesForActiveTab.length / coursesPerPage)
+})
 
-// 當前顯示的課程
 const paginatedCourses = computed(() => {
-    const coursesForActiveTab = getCoursesForTab(activeTab.value);
-    const start = (currentPage.value - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    return coursesForActiveTab.slice(start, end); // 根據當前頁顯示課程
-});
+    const coursesForActiveTab = getCoursesForTab(activeTab.value)
+    const start = (currentPage.value - 1) * coursesPerPage
+    const end = start + coursesPerPage
+    return coursesForActiveTab.slice(start, end)
+})
 
-// 切換頁面
 const changePage = (page) => {
     if (page >= 1 && page <= totalPages.value) {
-        currentPage.value = page;
+        currentPage.value = page
     }
-};
+}
 
-// 切換 tab
 const changeTab = (tabName) => {
-    activeTab.value = tabName;
-    currentPage.value = 1; // 切換標籤時重置頁碼
-};
+    activeTab.value = tabName
+    currentPage.value = 1
+}
 
+// ====== LifeCycle Hooks ======
+onMounted(() => {
+    window.addEventListener('resize', handleResize)
+    handleResize()
+
+    // 預載所有圖片
+    tabs.value.forEach(tab => {
+        const img = new Image()
+        img.src = tab.image
+    })
+})
+
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', handleResize)
+})
 </script>
 
 
@@ -174,36 +189,110 @@ const changeTab = (tabName) => {
 
 
             <!-- Courses offered -->
-            <section class="relative w-full h-[858px] bg-black text-white overflow-hidden">
-                <div class="container mx-auto h-full flex relative z-10">
+            <!-- 課程區塊 - RWD實作 -->
+            <section class="relative w-full bg-black text-white overflow-hidden" :class="{ 'h-[858px]': !isMobile }">
+                <!-- 背景图片 - 使用绝对定位并添加渐变遮罩 -->
+                <div class="absolute inset-0 z-0 overflow-hidden">
+                    <transition name="fade" mode="out-in">
+                        <img :key="activeTab" :src="currentImage" alt="課程背景"
+                            class="w-full h-full object-cover opacity-50" />
+                    </transition>
+                    <!-- 添加渐变遮罩 -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent"></div>
+                </div>
 
-                    <div class="w-[33.33%] relative overflow-hidden bg-black"
-                        style="margin-top: 20px; margin-left: 10px;">
-                        <!-- 背景圖片 -->
-                        <img :src="currentImage" alt="課程背景"
-                            class="w-[150%] h-auto absolute bottom-0 left-[-25%] opacity-50 pointer-events-none z-0" />
-                        <!-- 內容區 -->
-                        <div class="relative z-10 px-6 pt-10">
-                            <h2 class="text-[64px] font-serif font-bold">開立課程</h2>
-                            <div class="h-0.5 bg-white mt-2 w-60"></div>
-                            <a href="http://127.0.0.1:8000/wushu/ServiceCourse">
+                <div class="container mx-auto relative z-10">
+                    <!-- 電腦版：兩欄佈局 -->
+                    <template v-if="isDesktop">
+                        <div class="flex">
+                            <!-- 左側：標題和按鈕 -->
+                            <div class="w-1/3 relative overflow-hidden bg-transparent pt-10"
+                                style="margin-top: 20px; margin-left: 10px;">
+                                <!-- 內容區 -->
+                                <div class="relative z-10 px-6">
+                                    <h2 class="text-[64px] font-serif font-bold">開立課程</h2>
+                                    <div class="h-0.5 bg-white mt-2 w-60"></div>
+                                    <a href="http://127.0.0.1:8000/wushu/ServiceCourse">
+                                        <button
+                                            class="w-36 h-14 mt-6 px-6 py-2 bg-deepTeal text-white rounded text-[24px] hover:bg-teal-700 transition duration-300">
+                                            了解更多
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- 右區：課程列表 -->
+                            <div class="w-2/3 flex flex-col pt-10 pr-6 pl-10">
+                                <!-- 課程類型選項卡 -->
+                                <div class="flex space-x-6 pb-4 border-b border-gray-700 overflow-x-auto">
+                                    <button v-for="tab in tabs" :key="tab.name" class="py-2.5 px-6 font-medium 
+                font-[Microsoft JhengHei] transition duration-200 whitespace-nowrap text-[32px]"
+                                        :class="{ 'text-blueGreen border-b-2 border-blueGreen': activeTab === tab.name, 'text-gray-300 hover:text-white': activeTab !== tab.name }"
+                                        @click="changeTab(tab.name)">
+                                        {{ tab.label }}
+                                    </button>
+                                </div>
+
+                                <!-- 課程清單 -->
+                                <div class="flex-1 py-6 space-y-0">
+                                    <div v-for="course in paginatedCourses" :key="course.name"
+                                        class="flex items-center justify-between py-3.5 border-b border-dotted border-gray-600">
+                                        <div class="text-[32px] font-medium w-2/5 truncate pr-4">
+                                            {{ course.name }}
+                                        </div>
+                                        <div class="flex items-center justify-end space-x-4 w-3/5">
+                                            <span class="bg-deepTeal text-white text-[24px] px-5 py-2 rounded-full">
+                                                {{ course.lessons }}堂課
+                                            </span>
+                                            <span class="text-gray-300 w-24 text-[24px] text-center">{{ course.duration
+                                            }}</span>
+                                            <span class="text-deepTeal font-bold text-[24px] w-28 text-right">{{
+                                                course.price }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 分頁按鈕 -->
+                                <div class="flex items-center space-x-2 mt-4">
+                                    <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
+                                        class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded disabled:opacity-50">
+                                        ‹
+                                    </button>
+
+                                    <button v-for="page in totalPages" :key="page" @click="changePage(page)" :class="[
+                                        'w-8 h-8 flex items-center justify-center rounded',
+                                        page === currentPage ? 'bg-deepTeal text-white' : 'text-gray-300 hover:text-white'
+                                    ]">
+                                        {{ page }}
+                                    </button>
+
+                                    <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
+                                        class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded disabled:opacity-50">
+                                        ›
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- 平板版：一欄佈局 -->
+                    <template v-else-if="isTablet">
+                        <!-- 標題區 -->
+                        <div class="text-center pt-10 pb-6">
+                            <h2 class="text-[48px] font-serif font-bold">開立課程</h2>
+                            <div class="h-0.5 bg-white mt-2 w-60 mx-auto"></div>
+                            <a href="http://127.0.0.1:8000/wushu/ServiceCourse" class="block mt-6">
                                 <button
-                                    class="w-36 h-14 mt-6 px-6 py-2 bg-deepTeal text-white rounded text-[24px] hover:bg-teal-700 transition duration-300">
+                                    class="w-36 h-14 px-6 py-2 bg-deepTeal text-white rounded text-[24px] hover:bg-teal-700 transition duration-300">
                                     了解更多
                                 </button>
                             </a>
                         </div>
-                    </div>
 
-
-
-                    <!-- 右區：佔寬 2/3 -->
-                    <div class="w-[66.66%] flex flex-col pt-10 pr-6 pl-10">
-
-                        <!-- Tabs -->
-                        <div class="flex space-x-6 pb-4 border-b border-gray-700 overflow-x-auto">
-                            <button v-for="tab in tabs" :key="tab.name" class="py-2.5 px-6 font-medium 
-                            font-[Microsoft JhengHei] transition duration-200 whitespace-nowrap text-[32px]"
+                        <!-- 課程類型選項卡 -->
+                        <div class="flex justify-center space-x-6 pb-4 border-b border-gray-700 overflow-x-auto px-4">
+                            <button v-for="tab in tabs" :key="tab.name"
+                                class="py-2 px-4 font-medium text-2xl whitespace-nowrap"
                                 :class="{ 'text-blueGreen border-b-2 border-blueGreen': activeTab === tab.name, 'text-gray-300 hover:text-white': activeTab !== tab.name }"
                                 @click="changeTab(tab.name)">
                                 {{ tab.label }}
@@ -211,26 +300,26 @@ const changeTab = (tabName) => {
                         </div>
 
                         <!-- 課程清單 -->
-                        <div class="flex-1 py-6 space-y-0">
+                        <div class="py-6 px-6">
                             <div v-for="course in paginatedCourses" :key="course.name"
                                 class="flex items-center justify-between py-3.5 border-b border-dotted border-gray-600">
-                                <div class="text-[32px] font-medium w-2/5 truncate pr-4">
-                                    {{ course.name || '課程名稱待補充' }}
+                                <div class="text-2xl font-medium w-1/3 truncate pr-2">
+                                    {{ course.name }}
                                 </div>
-                                <div class="flex items-center justify-end space-x-4 w-3/5">
-                                    <span class="bg-deepTeal text-white text-[24px] px-5 py-2 rounded-full">
+                                <div class="flex items-center justify-end gap-2 w-2/3">
+                                    <span
+                                        class="bg-deepTeal text-white text-xl px-4 py-1 rounded-full whitespace-nowrap">
                                         {{ course.lessons }}堂課
                                     </span>
-                                    <span class="text-gray-300 w-24 text-[24px] text-center">{{ course.duration
-                                        }}</span>
-                                    <span class="text-deepTeal font-bold text-[24px] w-28 text-right">{{ course.price
-                                        }}</span>
+                                    <span class="text-gray-300 text-xl text-center whitespace-nowrap">{{ course.duration
+                                    }}</span>
+                                    <span class="text-deepTeal font-bold text-xl text-right">{{ course.price }}</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 分頁按鈕 -->
-                        <div class="flex items-center space-x-2 mt-4">
+                        <div class="flex items-center justify-center space-x-2 mt-4 pb-6">
                             <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
                                 class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded disabled:opacity-50">
                                 ‹
@@ -248,8 +337,68 @@ const changeTab = (tabName) => {
                                 ›
                             </button>
                         </div>
+                    </template>
 
-                    </div>
+                    <!-- 手機版：垂直佈局 -->
+                    <template v-else>
+                        <!-- 標題區 -->
+                        <div class="text-center pt-10 pb-6">
+                            <h2 class="text-4xl font-serif font-bold">開立課程</h2>
+                            <div class="h-0.5 bg-white mt-2 w-40 mx-auto"></div>
+                            <a href="http://127.0.0.1:8000/wushu/ServiceCourse" class="block mt-4">
+                                <button
+                                    class="w-32 h-12 px-5 py-2 bg-deepTeal text-white rounded text-xl hover:bg-teal-700 transition duration-300">
+                                    了解更多
+                                </button>
+                            </a>
+                        </div>
+
+                        <!-- 課程類型選項卡 - 橫向捲動 -->
+                        <div class="flex overflow-x-auto pb-3 border-b border-gray-700 px-4">
+                            <button v-for="tab in tabs" :key="tab.name"
+                                class="py-2 px-4 mr-4 font-medium text-lg whitespace-nowrap flex-shrink-0"
+                                :class="{ 'text-blueGreen border-b-2 border-blueGreen': activeTab === tab.name, 'text-gray-300 hover:text-white': activeTab !== tab.name }"
+                                @click="changeTab(tab.name)">
+                                {{ tab.label }}
+                            </button>
+                        </div>
+
+                        <!-- 課程清單 -->
+                        <div class="px-4 py-4">
+                            <div v-for="course in paginatedCourses" :key="course.name"
+                                class="border-b border-dotted border-gray-600 py-4">
+                                <div class="text-xl font-medium mb-2">{{ course.name }}</div>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center gap-2">
+                                        <span class="bg-deepTeal text-white text-sm px-3 py-1 rounded-full">{{
+                                            course.lessons }}堂課</span>
+                                        <span class="text-gray-300 text-sm">{{ course.duration }}</span>
+                                    </div>
+                                    <span class="text-deepTeal font-bold text-lg">{{ course.price }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 分頁按鈕 -->
+                        <div class="flex items-center justify-center space-x-2 mt-4 pb-6">
+                            <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
+                                class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded disabled:opacity-50">
+                                ‹
+                            </button>
+
+                            <button v-for="page in totalPages" :key="page" @click="changePage(page)" :class="[
+                                'w-8 h-8 flex items-center justify-center rounded',
+                                page === currentPage ? 'bg-deepTeal text-white' : 'text-gray-300 hover:text-white'
+                            ]">
+                                {{ page }}
+                            </button>
+
+                            <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
+                                class="w-8 h-8 flex items-center justify-center text-gray-300 hover:text-white rounded disabled:opacity-50">
+                                ›
+                            </button>
+                        </div>
+                    </template>
                 </div>
             </section>
 
@@ -329,7 +478,7 @@ const changeTab = (tabName) => {
 <style scope>
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.3s;
+    transition: opacity 0.5s ease;
 }
 
 .fade-enter-from,
@@ -337,10 +486,16 @@ const changeTab = (tabName) => {
     opacity: 0;
 }
 
-/* RWD adjustments */
-@media (max-width: 600px) {
-    section {
-        min-height: 600px;
-    }
+
+:deep(.bg-deepTeal) {
+    background-color: #2D8A98;
+}
+
+:deep(.text-blueGreen) {
+    color: #2D8A98;
+}
+
+:deep(.border-blueGreen) {
+    border-color: #2D8A98;
 }
 </style>

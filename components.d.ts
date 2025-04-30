@@ -41,6 +41,7 @@ declare module 'vue' {
     Collapsible: typeof import('./resources/js/Components/ui/collapsible/Collapsible.vue')['default']
     CollapsibleContent: typeof import('./resources/js/Components/ui/collapsible/CollapsibleContent.vue')['default']
     CollapsibleTrigger: typeof import('./resources/js/Components/ui/collapsible/CollapsibleTrigger.vue')['default']
+    ContactDetailModal: typeof import('./resources/js/Components/ContactDetailModal.vue')['default']
     CourseCard: typeof import('./resources/js/Components/CourseCard.vue')['default']
     CourseSection: typeof import('./resources/js/Components/CourseSection.vue')['default']
     CourseVideoCard: typeof import('./resources/js/Components/CourseVideoCard.vue')['default']
