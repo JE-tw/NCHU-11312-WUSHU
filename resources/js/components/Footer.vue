@@ -41,7 +41,7 @@
   
         <div class="w-[313px] text-center md:text-left copyright">
           <p class="font-bold text-[24px] leading-[100%] tracking-[0] whitespace-nowrap">
-            © 2022 五術研究社 版權所有
+            ©2022 五術研究社版權所有
           </p>
         </div>
   

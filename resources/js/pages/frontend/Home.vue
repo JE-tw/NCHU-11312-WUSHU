@@ -133,63 +133,65 @@ onBeforeUnmount(() => {
             <section class="bg-cover bg-center bg-no-repeat w-[1903px] h-[920px]"
                 :style="`background-image: url(${bgImage})`"></section>
 
-            <section id="intro" class="bg-white py-20">
+            <section id="intro" class="bg-white py-12 md:py-16 xl:py-20">
                 <div class="max-w-7xl mx-auto px-4">
                     <!-- 主打課程標題 -->
-                    <div class="text-center mb-12">
-                        <h2 class="text-4xl xl:text-6xl font-bold text-black font-serif inline-block pb-2">
+                    <div class="text-center mb-8 md:mb-10 xl:mb-12">
+                        <h2 class="text-3xl md:text-4xl xl:text-6xl font-bold text-black font-serif inline-block pb-2">
                             主打課程
                         </h2>
-                        <div class="h-0.5 bg-black mt-2 mx-auto w-[220px]"></div>
+                        <div class="h-0.5 bg-black mt-2 mx-auto w-[180px] md:w-[200px] xl:w-[220px]"></div>
                     </div>
 
-                    <!-- Cards container -->
-                    <div class="flex flex-col xl:flex-row gap-8 justify-center items-center">
+                    <!-- Cards container - flex-col for mobile & tablet, flex-row for desktop -->
+                    <div class="flex flex-col xl:flex-row gap-6 md:gap-8 justify-center items-center">
                         <!-- Card 1 -->
                         <div class="bg-white overflow-hidden w-full xl:w-1/2">
-                            <img :src="courseImg1" alt="蔣氏玄空風水執業班" class="w-full h-[360px] object-cover" />
-                            <div class="p-6">
-                                <p class="text-[48px] leading-[100%] font-bold text-black font-serif text-left"
+                            <img :src="courseImg1" alt="蔣氏玄空風水執業班"
+                                class="w-full h-[240px] sm:h-[280px] md:h-[320px] xl:h-[360px] object-cover" />
+                            <div class="p-4 md:p-5 xl:p-6">
+                                <p class="text-2xl sm:text-3xl md:text-4xl xl:text-[48px] leading-tight xl:leading-[100%] font-bold text-black font-serif text-left"
                                     style="letter-spacing: 2%;">
                                     蔣氏玄空風水執業班
                                 </p>
-                                <!-- 價格和按鈕同一行並與上方文字左對齊 -->
-                                <div class="mt-6 flex items-center gap-4">
+
+                                <div
+                                    class="mt-4 md:mt-5 xl:mt-6 flex flex-wrap sm:flex-nowrap items-center gap-3 md:gap-4">
                                     <button
-                                        class="px-6 py-2 bg-alertRed text-white rounded-full text-lg hover:bg-gray-800 transition duration-300">
+                                        class="px-4 md:px-5 xl:px-6 py-1.5 md:py-2 bg-alertRed text-white rounded-full text-base md:text-lg hover:bg-gray-800 transition duration-300">
                                         其他術數
                                     </button>
-                                    <p class="text-3xl font-bold text-black">NT$5000</p>
+                                    <p class="text-xl md:text-2xl xl:text-3xl font-bold text-black">NT$5,000</p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Card 2 -->
-                        <div class="bg-white overflow-hidden w-full xl:w-1/2">
-                            <img :src="courseImg2" alt="康治本傷寒論" class="w-full h-[360px] object-cover" />
-                            <div class="p-6">
-                                <p class="text-[48px] leading-[100%] font-bold text-black font-serif text-left"
+                        <div class="bg-white overflow-hidden w-full xl:w-1/2 mt-6 xl:mt-0">
+                            <img :src="courseImg2" alt="康治本傷寒論"
+                                class="w-full h-[240px] sm:h-[280px] md:h-[320px] xl:h-[360px] object-cover" />
+                            <div class="p-4 md:p-5 xl:p-6">
+                                <p class="text-2xl sm:text-3xl md:text-4xl xl:text-[48px] leading-tight xl:leading-[100%] font-bold text-black font-serif text-left"
                                     style="letter-spacing: 2%;">
                                     康治本傷寒論
                                 </p>
 
-                                <div class="mt-6 flex items-center gap-4">
+                                <div
+                                    class="mt-4 md:mt-5 xl:mt-6 flex flex-wrap sm:flex-nowrap items-center gap-3 md:gap-4">
                                     <button
-                                        class="px-6 py-2 bg-alertRed text-white rounded-full text-lg hover:bg-gray-800 transition duration-300">
+                                        class="px-4 md:px-5 xl:px-6 py-1.5 md:py-2 bg-alertRed text-white rounded-full text-base md:text-lg hover:bg-gray-800 transition duration-300">
                                         中醫
                                     </button>
-                                    <p class="text-3xl font-bold text-black">NT$5000</p>
+                                    <p class="text-xl md:text-2xl xl:text-3xl font-bold text-black">NT$5,000</p>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </section>
 
 
             <!-- Courses offered -->
-            <!-- 課程區塊 - RWD實作 -->
             <section class="relative w-full bg-black text-white overflow-hidden min-h-[858px]">
                 <!-- 背景圖片、添加遮罩 -->
                 <div class="absolute inset-0 z-0 overflow-hidden">
@@ -276,7 +278,7 @@ onBeforeUnmount(() => {
                         </div>
                     </template>
 
-                    <!-- 平板版：一欄佈局 -->
+                    <!-- 平板版 -->
                     <template v-else-if="isTablet">
                         <!-- 標題區 -->
                         <div class="text-center pt-10 pb-6">
@@ -405,80 +407,82 @@ onBeforeUnmount(() => {
 
 
 
-
-
             <!-- AboutMaster -->
-            <section id="about-section" class="py-12 sm:py-16 md:py-24 bg-white font-serif text-black overflow-hidden">
-                <div class="max-w-7xl mx-auto px-4 xl:pr-8 xl:pl-0 space-y-16 md:space-y-24">
-                    <div class="text-center mt-3">
-                        <h2
-                            class="text-4xl md:text-[48px] xl:text-[64px] leading-[100%] font-bold font-serif border-b-2 border-black inline-block pb-2">
-                            關於站主
-                        </h2>
-                    </div>
+            <!-- 關於站主區塊 -->
+            <section id="about-section" class="relative bg-white">
+                <div class="max-w-[1200px] mx-auto px-[30px] py-[60px] xl:px-[20px] xl:py-[50px]">
+                    <h2
+                        class="text-[64px] font-semibold text-center mb-[40px] relative block font-serif after:content-[''] after:absolute after:bottom-[-15px] after:left-1/2 after:-translate-x-1/2 after:w-[80px] after:h-[2px] after:bg-black">
+                        關於站主
+                    </h2>
 
-                    <div class="flex flex-col xl:flex-row items-center gap-12">
-                        <div
-                            class="xl:w-1/2 space-y-6 text-lg md:text-xl xl:text-2xl leading-relaxed text-black xl:mt-[-330px] mt-0">
-                            <p>
+                    <!-- 在桌面版保持文字在左，圖片在右；手機版上下排列 -->
+                    <div class="flex flex-col-reverse xl:flex-row items-center gap-[50px] xl:gap-[30px] sm:gap-[30px]">
+                        <!-- 文字區塊 (左側) -->
+                        <div class="flex-1 text-[24px]">
+                            <p class=" leading-[1.8] mb-[15px]">
                                 文老師自學生時期便開始學習五術，致力於五術教學十餘年。中醫醫術－針灸傳承自古法針灸、董氏奇穴和山西派鍼法；脈學傳承自萬氏的太素脈學；內科傳承各家如經方、溫病、伏氣學派等多位老師；祝由傳承自西河派和軒轅派。
                             </p>
-                            <p>
-                                命學目前以吠陀占星Jyotish為主，師從Komilla、Joni patry、Marc Boney
-                                等國際大家還有十數位印度吠陀占星大師；風水承襲自蔣氏三元玄空風水、吠陀Vastu和龍門八局，亦通道家奇門遁甲、大六壬、太乙神數三式之學、梅花易數，以及是為熊氏太極拳傳人及華佗門第八十代傳人。
+                            <p class=" leading-[1.8] mb-[15px]">
+                                命學目前以吠陀占星 Jyotish 為主，師從 Komilla、Joni Patry、Marc Boney
+                                等國際大家還有十數位印度吠陀占星大師；風水承襲自蔣氏三元玄空風水、吠陀 Vastu
+                                和龍門八局，亦通道家奇門遁甲、大六壬、太乙神數三式之學、梅花易數，以及是為熊氏太極拳傳人及華佗門第八十代傳人。
                             </p>
-                            <p>
+                            <p class=" leading-[1.8] mb-[15px]">
                                 另外西方之學尚有西洋古典行星護符魔法、北歐魔法等皆是師從大家。
                             </p>
                         </div>
-                        <div class="xl:w-1/2 flex justify-center items-center">
-                            <img :src="masterImg1" alt="禪石圖" class="shadow-lg object-cover w-full h-auto xl:h-full" />
+
+                        <!-- 圖片區塊 (右側) -->
+                        <div class="flex-1 rounded overflow-hidden">
+                            <img :src="masterImg1" alt="禪石圖" class="w-full h-auto block" />
                         </div>
                     </div>
-
-
-                    <div class="flex flex-col xl:flex-row items-center xl:items-stretch w-full">
-
-                        <!-- 左圖 -->
-                        <div class="w-full xl:w-[1023.36px] relative">
-                            <!-- 動態綁定圖片來源，並設定寬度和高度 -->
-                            <img :src="masterImg2" alt="中藥櫃" class=" object-cover" />
-                        </div>
-
-                        <!-- 右側區塊 -->
-                        <div class="w-full xl:w-[500px] flex flex-col justify-start px-8 xl:px-0 py-20">
-                            <h3
-                                class="text-[48px] xl:text-[64px] font-bold font-serif border-b-2 border-black inline-block pb-2 mb-10 whitespace-nowrap">
-                                學會創立沿革
-                            </h3>
-
-                            <div
-                                class="bg-gray-200 px-6 xl:px-8 py-6 xl:py-8 text-[20px] xl:text-[22px] leading-[1.9] space-y-4 font-serif">
-                                <p>
-                                    <span
-                                        class="text-[36px] xl:text-[48px] font-bold tracking-wide">2008年</span>，當時文老師在內湖高中任教，部分同事和學生知曉文老師傳承自古老的醫術，便欲向其學習，但老師當時並未想開課授徒，一方面是其老師們尚在世，二方面是覺得自己尚未成熟，故以五術研究社這種讀書會模式帶領眾人學習，不收學費為眾人解惑。
-                                </p>
-                                <p>直到2014在湖南攻讀中醫內科學研究所，同儕紛紛希望向文老師學習師承，加上傳授針灸和內科給文老師的老師們都過世了，文老師才開始決定開課陸續至今。</p>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-
-
-
                 </div>
             </section>
 
+
+            <!-- 學會創立沿革區塊 -->
+            <section id="history-section" class="relative bg-white">
+                <div class="max-w-[1200px] mx-auto px-[30px] py-[60px] xl:px-[20px] xl:py-[50px]">
+                    <!-- 標題 -->
+                    <h2
+                        class="text-[64px] font-semibold text-center mb-[40px] relative block font-serif after:content-[''] after:absolute after:bottom-[-15px] after:left-1/2 after:-translate-x-1/2 after:w-[80px] after:h-[2px] after:bg-[#2D8A98]">
+                        學會創立沿革
+                    </h2>
+
+                    <!-- 內容區域 -->
+                    <div
+                        class="flex xl:flex-row sm:flex-col-reverse items-center gap-[50px] xl:gap-[30px] sm:gap-[30px]">
+                        <!-- 圖片區塊 (左側，桌面版；手機版上下排列) -->
+                        <div class="flex-1 xl:w-2/3 rounded overflow-hidden mb-4 sm:mb-0">
+                            <img :src="masterImg2" alt="中藥櫃" class="w-full h-auto object-cover" />
+                        </div>
+
+                        <!-- 文字區塊 (右側，桌面版；手機版上下排列) -->
+                        <div class="flex-1 xl:w-1/3 bg-[#f5f5f5] px-[30px] py-[20px]">
+                            <div class="max-w-[800px] mx-auto">
+                                <p class="text-base leading-[1.8] mb-[20px]">
+                                    <span
+                                        class="text-[1.2rem] font-bold text-[#2D8A98]">2008</span>年，當時文老師在內湖高中任教，部分同事和學生知曉文老師傳承自古老的醫術，便欲向其學習，但老師當時並未想開課授徒，一方面是其老師們尚在世，二方面是覺得自己尚未成熟，故以五術研究社這種讀書會模式帶領眾人學習，不收學費為眾人解惑。
+                                </p>
+                                <p class="text-base leading-[1.8] mb-[20px]">
+                                    直到
+                                    <span
+                                        class="text-[1.2rem] font-bold text-[#2D8A98]">2014</span>年在湖南攻讀中醫內科學研究所，同儕紛紛希望向文老師學習師承，加上傳授針灸和內科給文老師的老師們都過世了，文老師才開始決定開課陸續至今。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <Footer />
     </div>
 </template>
 
-<style scope>
+<style scoped>
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.5s ease;
@@ -487,18 +491,5 @@ onBeforeUnmount(() => {
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
-}
-
-
-:deep(.bg-deepTeal) {
-    background-color: #2D8A98;
-}
-
-:deep(.text-blueGreen) {
-    color: #2D8A98;
-}
-
-:deep(.border-blueGreen) {
-    border-color: #2D8A98;
 }
 </style>
