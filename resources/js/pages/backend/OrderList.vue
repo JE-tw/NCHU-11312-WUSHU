@@ -45,7 +45,9 @@ const breadcrumbs: BreadcrumbItem[] = [
             <td class="border px-4 py-2">匯款</td>
             <td class="border px-4 py-2">{{ order.status_text }}</td>
             <td class="border px-4 py-2">
-              <button type="button">編輯</button>
+              <div class="flex gap-2 justify-center">
+                <button type="button" class="border px-2 cursor-pointer">編輯</button>
+              </div>
             </td>
           </tr>
         </tbody>

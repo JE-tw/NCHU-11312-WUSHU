@@ -54,8 +54,10 @@ const deleteBtn = async (id) => {
             <td class="border px-4 py-2">{{ contact.title }}</td>
             <td class="border px-4 py-2">{{ contact.content }}</td>
             <td class="border px-4 py-2">
-              <button type="button" @click="deleteBtn(contact.id)">刪除</button>
-              <button type="button" @click="openDetail(contact)">查看</button>
+              <div class="flex gap-2 justify-center">
+                <button type="button" class="border px-2 cursor-pointer" @click="deleteBtn(contact.id)">刪除</button>
+                <button type="button" class="border px-2 cursor-pointer" @click="openDetail(contact)">查看</button>
+              </div>
             </td>
           </tr>
         </tbody>

@@ -39,8 +39,10 @@ const breadcrumbs: BreadcrumbItem[] = [
             <td class="border px-4 py-2">{{ course.category?.name || '未分類' }}</td>
             <td class="border px-4 py-2">{{ course.introduction }}</td>
             <td class="border px-4 py-2">
-                <button type="button">刪除</button>
-                <button type="button">編輯</button>
+              <div class="flex gap-2 justify-center">
+                <button type="button" class="border px-2 cursor-pointer">刪除</button>
+                <button type="button" class="border px-2 cursor-pointer">編輯</button>
+              </div>
             </td>
           </tr>
         </tbody>

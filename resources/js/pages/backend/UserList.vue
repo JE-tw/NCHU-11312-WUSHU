@@ -1,9 +1,16 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import UserCreateModal from '@/Components/UserCreateModal.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, router } from '@inertiajs/vue3';
 import type { PageProps } from '@/types'; // 如果有 type 設定，依照情況調整
+import Swal from 'sweetalert2';
+import { useConfirmDialog } from '@/composables/useConfirmDialog';
+
 
 const page = usePage<{ userInfos: any[] }>();
+
+console.log('Flash:', page.props.flash);
 
 const userInfos = page.props.userInfos;
 const breadcrumbs: BreadcrumbItem[] = [
@@ -12,13 +19,52 @@ const breadcrumbs: BreadcrumbItem[] = [
     href: '/dashboard',
   },
 ];
+
+const showModal = ref(false);
+const openModal = () => {
+  showModal.value = true;
+};
+const closeModal = () => {
+  showModal.value = false;
+};
+
+watchEffect(() => {
+  const success = page.props.flash?.success;
+  const error = page.props.flash?.error;
+  if (success) {
+    Swal.fire({
+      title: success,
+      icon: 'success',
+      confirmButtonText: '確定',
+    }).then(() => {
+      window.location.reload();
+    });
+  }
+
+  if (error) {
+    Swal.fire({
+      title: '錯誤',
+      text: error,
+      icon: 'error',
+      confirmButtonText: '確定',
+    });
+  }
+});
+// 按鈕事件
+const deleteBtn = async (id) => {
+  const confirmed = await useConfirmDialog();
+  if (confirmed) {
+    router.get(route('admin.user.delete', id));
+  }
+};
 </script>
 
 <template>
   <AppLayout :breadcrumbs="breadcrumbs">
     <div>
       <h1 class="mb-4 text-2xl font-bold">會員管理</h1>
-      <button type="button" class="mb-4 border p-2">新增會員</button>
+      <button type="button" class="mb-4 border p-2" @click="openModal">新增會員</button>
+      <UserCreateModal v-if="showModal" @close="closeModal" />
       <table class="min-w-full bg-white">
         <thead>
           <tr>
@@ -38,8 +84,10 @@ const breadcrumbs: BreadcrumbItem[] = [
             <td class="border px-4 py-2">{{ userInfo.birth_city }}</td>
             <td class="border px-4 py-2">{{ userInfo.phone }}</td>
             <td class="border px-4 py-2">
-              <button type="button">刪除</button>
-              <button type="button">編輯</button>
+              <div class="flex justify-center gap-2">
+                <button type="button" class="cursor-pointer border border-red-500 px-2 text-red-500" @click="deleteBtn(userInfo.id)">刪除</button>
+                <button type="button" class="cursor-pointer border bg-deepTeal px-2 text-white">查看/編輯</button>
+              </div>
             </td>
           </tr>
         </tbody>
