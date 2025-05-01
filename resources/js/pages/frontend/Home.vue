@@ -248,7 +248,7 @@ onBeforeUnmount(() => {
                                                 {{ course.lessons }}堂課
                                             </span>
                                             <span class="text-gray-300 w-24 text-[24px] text-center">{{ course.duration
-                                                }}</span>
+                                            }}</span>
                                             <span class="text-deepTeal font-bold text-[24px] w-28 text-right">{{
                                                 course.price }}</span>
                                         </div>
@@ -315,7 +315,7 @@ onBeforeUnmount(() => {
                                         {{ course.lessons }}堂課
                                     </span>
                                     <span class="text-gray-300 text-xl text-center whitespace-nowrap">{{ course.duration
-                                        }}</span>
+                                    }}</span>
                                     <span class="text-deepTeal font-bold text-xl text-right">{{ course.price }}</span>
                                 </div>
                             </div>
@@ -445,42 +445,57 @@ onBeforeUnmount(() => {
 
             <!-- 學會創立沿革區塊 -->
             <section id="history-section" class="relative bg-white">
-                <div
-                    class="max-w-[1200px] mx-auto px-[20px] py-[40px] sm:px-[30px] sm:py-[60px] xl:px-[20px] xl:py-[50px]">
+                <div class="max-w-[1903px] mx-auto px-5 py-10 sm:px-8 sm:py-16 xl:px-0 xl:py-12">
 
-                    <!-- 標題 (在文字區塊上方，桌面版與 RWD 通用) -->
-                    <h2 class="text-[36px] sm:text-[48px] xl:text-[64px] font-semibold text-center mb-[30px] sm:mb-[40px] relative block font-serif
-             after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2
-             after:w-[220px] sm:after:w-[380px] after:h-[2px] after:bg-black">
-                        學會創立沿革
+                    <!--手機 & 平板版專用標題：在最上方 -->
+                    <h2 class="text-3xl sm:text-4xl xl:hidden font-semibold text-center mb-8 font-serif">
+                        <span class="relative inline-block after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:translate-x-1/2
+        after:w-full after:h-[2px] after:bg-black">
+                            學會創立沿革
+                        </span>
                     </h2>
 
                     <!-- 圖文區塊 -->
-                    <div class="flex flex-col xl:flex-row items-start gap-[30px] sm:gap-[50px] xl:gap-[30px]">
+                    <div class="flex flex-col xl:flex-row items-start">
 
-                        <!-- 圖片區塊：左側 (桌面) / 上方 (手機平板) -->
+                        
                         <div class="w-full xl:w-1/2 overflow-hidden">
-                            <img :src="masterImg2" alt="中藥櫃" class="w-full h-auto object-cover" />
+                            <img :src="masterImg2" alt="中藥櫃" class="w-full h-auto object-contain" />
                         </div>
 
-                        <!-- 文字區塊：右側 (桌面) / 下方 (手機平板) -->
-                        <div class="w-full xl:w-1/2 bg-lightGray px-[20px] py-[15px] sm:px-[30px] sm:py-[20px]">
-                            <div class="max-w-[800px] mx-auto">
-                                <p class="text-[18px] sm:text-[20px] xl:text-[24px] leading-[1.8] mb-[20px]">
+                       
+                        <div
+                            class="w-full xl:w-1/2 bg-lightGray px-5 py-8 sm:px-8 flex flex-col items-center mt-8 xl:mt-60">
+                           
+
+                            
+                            <h2 class="hidden xl:block text-5xl font-semibold text-center mb-8 font-serif">
+                                <span class="relative inline-block after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:translate-x-1/2
+            after:w-full after:h-[2px] after:bg-black">
+                                    學會創立沿革
+                                </span>
+                            </h2>
+
+                            
+                            <div class="max-w-[800px] w-full">
+                                <p class="text-lg sm:text-xl xl:text-2xl leading-[1.8] mb-5">
                                     <span
-                                        class="text-[30px] sm:text-[36px] xl:text-[40px] font-bold text-black">2008</span>年，當時文老師在內湖高中任教，
+                                        class="text-3xl sm:text-4xl xl:text-4xl font-bold text-black">2008</span>年，當時文老師在內湖高中任教，
                                     部分同事和學生知曉文老師傳承自古老的醫術，便欲向其學習，但老師當時並未想開課授徒，一方面是其老師們尚在世，
                                     二方面是覺得自己尚未成熟，故以五術研究社這種讀書會模式帶領眾人學習，不收學費為眾人解惑。
                                 </p>
-                                <p class="text-[18px] sm:text-[20px] xl:text-[24px] leading-[1.8] mb-[20px]">
+                                <p class="text-lg sm:text-xl xl:text-2xl leading-[1.8]">
                                     直到2014在湖南攻讀中醫內科學研究所，同儕紛紛希望向文老師學習師承，加上傳授針灸和內科給文老師的老師們都過世了，
                                     文老師才開始決定開課陸續至今。
                                 </p>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </section>
+
+
 
 
 
