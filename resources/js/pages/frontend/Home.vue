@@ -13,7 +13,7 @@ import masterImg2 from '@/images/學會創立研革ay2gj-8gn6h.webp'
 import tarotImg from '@/images/a1tgu3-dqrfv.webp'
 import tcmImg from '@/images/ay1lo-pmcep.webp'
 import magicImg from '@/images/a1tgu3-dqrfv.webp'
-import othersImg from '@/images/a1tgu3-dqrfv.webp'
+import othersImg from '@/images/FengShui.webp'
 
 // ====== 背景圖 ======
 const bgImage = imgSrc
@@ -412,7 +412,7 @@ onBeforeUnmount(() => {
             <section id="about-section" class="relative bg-white">
                 <div class="max-w-[1200px] mx-auto px-[30px] py-[60px] xl:px-[20px] xl:py-[50px]">
                     <h2
-                        class="text-[64px] font-semibold text-center mb-[40px] relative block font-serif after:content-[''] after:absolute after:bottom-[-15px] after:left-1/2 after:-translate-x-1/2 after:w-[80px] after:h-[2px] after:bg-black">
+                        class="text-[64px] font-semibold text-center mb-[40px] relative block font-serif after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-[260px] after:h-[2px] after:bg-black">
                         關於站主
                     </h2>
 
@@ -434,7 +434,7 @@ onBeforeUnmount(() => {
                         </div>
 
                         <!-- 圖片區塊 (右側) -->
-                        <div class="flex-1 rounded overflow-hidden">
+                        <div class="flex-1 overflow-hidden">
                             <img :src="masterImg1" alt="禪石圖" class="w-full h-auto block" />
                         </div>
                     </div>
@@ -447,7 +447,7 @@ onBeforeUnmount(() => {
                 <div class="max-w-[1200px] mx-auto px-[30px] py-[60px] xl:px-[20px] xl:py-[50px]">
                     <!-- 標題 -->
                     <h2
-                        class="text-[64px] font-semibold text-center mb-[40px] relative block font-serif after:content-[''] after:absolute after:bottom-[-15px] after:left-1/2 after:-translate-x-1/2 after:w-[80px] after:h-[2px] after:bg-[#2D8A98]">
+                        class="text-[64px] font-semibold text-center mb-[40px] relative block font-serif after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-[380px] after:h-[2px] after:bg-black">
                         學會創立沿革
                     </h2>
 
@@ -455,21 +455,21 @@ onBeforeUnmount(() => {
                     <div
                         class="flex xl:flex-row sm:flex-col-reverse items-center gap-[50px] xl:gap-[30px] sm:gap-[30px]">
                         <!-- 圖片區塊 (左側，桌面版；手機版上下排列) -->
-                        <div class="flex-1 xl:w-2/3 rounded overflow-hidden mb-4 sm:mb-0">
+                        <div class="flex-1 xl:w-2/3 overflow-hidden mb-4 sm:mb-0">
                             <img :src="masterImg2" alt="中藥櫃" class="w-full h-auto object-cover" />
                         </div>
 
                         <!-- 文字區塊 (右側，桌面版；手機版上下排列) -->
                         <div class="flex-1 xl:w-1/3 bg-[#f5f5f5] px-[30px] py-[20px]">
                             <div class="max-w-[800px] mx-auto">
-                                <p class="text-base leading-[1.8] mb-[20px]">
+                                <p class="text-[24px] leading-[1.8] mb-[20px]">
                                     <span
-                                        class="text-[1.2rem] font-bold text-[#2D8A98]">2008</span>年，當時文老師在內湖高中任教，部分同事和學生知曉文老師傳承自古老的醫術，便欲向其學習，但老師當時並未想開課授徒，一方面是其老師們尚在世，二方面是覺得自己尚未成熟，故以五術研究社這種讀書會模式帶領眾人學習，不收學費為眾人解惑。
+                                        class="text-[40px] font-bold text-black">2008</span>年，當時文老師在內湖高中任教，部分同事和學生知曉文老師傳承自古老的醫術，便欲向其學習，但老師當時並未想開課授徒，一方面是其老師們尚在世，二方面是覺得自己尚未成熟，故以五術研究社這種讀書會模式帶領眾人學習，不收學費為眾人解惑。
                                 </p>
-                                <p class="text-base leading-[1.8] mb-[20px]">
+                                <p class="text-[24px] leading-[1.8] mb-[20px]">
                                     直到
                                     <span
-                                        class="text-[1.2rem] font-bold text-[#2D8A98]">2014</span>年在湖南攻讀中醫內科學研究所，同儕紛紛希望向文老師學習師承，加上傳授針灸和內科給文老師的老師們都過世了，文老師才開始決定開課陸續至今。
+                                        class="text-[24px] font-bold text-black">2014</span>年在湖南攻讀中醫內科學研究所，同儕紛紛希望向文老師學習師承，加上傳授針灸和內科給文老師的老師們都過世了，文老師才開始決定開課陸續至今。
                                 </p>
                             </div>
                         </div>

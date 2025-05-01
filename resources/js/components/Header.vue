@@ -1,11 +1,12 @@
 <template>
   <header class="fixed top-0 left-0 right-0 z-50 shadow-md w-full">
     <div :class="[
-      'flex items-center justify-between w-full',
+      'flex items-center w-full',
       isMobile ? 'h-[60px]' : 'h-[80px]',
       !isTablet && !isMobile ? 'mt-6 px-4 sm:px-6' : 'mt-0 px-4',
       isDesktop ? 'max-w-[1800px] mx-auto rounded-full' : '',
-      'bg-white/75'
+      'bg-white/75',
+      'justify-between xl:justify-around'
     ]">
       <!-- Logo 區塊 -->
       <div class="flex items-center space-x-2 cursor-pointer">
@@ -18,7 +19,7 @@
       </div>
 
       <!-- 電腦版選單 -->
-      <div v-if="!isTablet && !isMobile" class="flex-1 flex justify-center">
+      <div v-if="!isTablet && !isMobile" class="flex justify-center">
         <nav
           class="flex items-center gap-4 font-['Microsoft_JhengHei'] font-bold text-black text-[24px] leading-[1] tracking-normal cursor-pointer">
           <a href="http://127.0.0.1:8000/wushu#about-section" class="px-3 py-2 hover:text-[#1f9c95] whitespace-nowrap">
