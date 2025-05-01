@@ -32,12 +32,66 @@ const courses = ref([
   },
 ]);
 
+const purchaseRecords = ref([
+  {
+    date: '2025-01-01T12:00:00Z',
+    items: ['古典針灸基礎班', '古典針灸進階班'],
+    amount: 360000,
+    payment: 'bank_transfer',
+    status: 'pending',
+  },
+  {
+    date: '2025-03-15T08:00:00Z',
+    items: ['塔羅入門', '風水基礎'],
+    amount: 120000,
+    payment: 'credit_card',
+    status: 'paid',
+  },
+  {
+    date: '2025-04-20T18:30:00Z',
+    items: ['金融占星', '靈性療癒'],
+    amount: 160000,
+    payment: 'bank_transfer',
+    status: 'paid',
+  },
+]);
+
+// 分頁控制
+const currentPage = ref(1);
+const perPage = 2;
+
+const paginatedRecords = computed(() => {
+  const start = (currentPage.value - 1) * perPage;
+  return purchaseRecords.value.slice(start, start + perPage);
+});
+
+const totalPages = computed(() =>
+  Math.ceil(purchaseRecords.value.length / perPage)
+);
+
+// 格式化工具
+function formatDate(dateStr) {
+  return new Date(dateStr).toLocaleDateString('zh-TW');
+}
+
+function formatAmount(num) {
+  return num.toLocaleString();
+}
+
+function formatPayment(method) {
+  return method === 'bank_transfer' ? '匯款' : '信用卡';
+}
+
+function formatStatus(status) {
+  return status === 'paid' ? '收到款項：課程已解鎖' : '待客服確認款項';
+};
+
 </script>
 
 <template>
 
   <!-- 頁首 Banner -->
-  <header class="flex h-[234px] w-full flex-col items-center bg-black sm:h-[303px] xl:h-[540px]">
+  <header class="flex w-full flex-col items-center bg-black py-10 sm:py-16 xl:py-28">
     <p
       class="pt-[120px] font-serif text-[32px]/[46px] font-bold text-grayWhite sm:pt-[160px] sm:text-[52px]/[75px] xl:pt-[224px] xl:text-[64px]/[92px]">
       會員中心
@@ -214,10 +268,62 @@ const courses = ref([
       </div>
 
       <!-- 購買記錄 -->
-      <div v-else-if="tab === 'purchaserecord'" class="w-full px-4 py-8 text-center text-gray-600">
-        <p class="text-lg">（購買記錄功能待開發）</p>
-      </div>
+      <div v-else-if="tab === 'purchaserecord'" class="w-full px-4 py-8 text-gray-800">
+        <div class="max-w-3xl mx-auto border border-gray-400 rounded-md p-6">
+        <div class="flex justify-between">
+          <h2 class="text-2xl font-bold mb-6">購買紀錄</h2>
+          <h1 class="text-md font-bold mb-0 text-gray-500">僅保留6個月內資料</h1>
+        </div>
 
+          <div class="overflow-x-auto">
+            <table class="min-w-full border border-gray-200">
+              <thead class="bg-gray-100">
+                <tr class="text-center text-sm font-medium text-gray-700">
+                  <th class="px-4 py-3 bg-[#518C95]  text-white border">日期</th>
+                  <th class="px-4 py-3 bg-[#518C95]  text-white border">購買項目</th>
+                  <th class="px-4 py-3 bg-[#518C95]  text-white border">價格</th>
+                  <th class="px-4 py-3 bg-[#518C95]  text-white border">付款方式</th>
+                  <th class="px-4 py-3 bg-[rgb(81,140,149)]  text-white border">訂單狀態</th>
+                </tr>
+              </thead>
+              <tbody class="text-sm">
+                <tr v-for="(record, index) in paginatedRecords" :key="index" class="bg-white border-t">
+                  <td class="px-4 py-3 border align-top whitespace-nowrap">
+                    {{ formatDate(record.date) }}
+                  </td>
+                  <td class="px-4 py-3 border">
+                    <div class="flex flex-col gap-1">
+                      <span v-for="(item, i) in record.items" :key="i">{{ item }}</span>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3 border align-top whitespace-nowrap">
+                    {{ formatAmount(record.amount) }}
+                  </td>
+                  <td class="px-4 py-3 border align-top">{{ formatPayment(record.payment) }}</td>
+                  <td class="px-4 py-3 border align-top whitespace-nowrap">
+                    {{ formatStatus(record.status) }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 分頁控制 -->
+          <div class="mt-6 flex justify-center items-center gap-2 text-sm">
+            <button @click="currentPage--" :disabled="currentPage === 1" class="px-3 py-1 border rounded bg-gray-100 hover:bg-gray-200 disabled:opacity-50">
+            </button>
+
+            <!-- 數字分頁 -->
+            <button v-for="page in totalPages" :key="page" @click="currentPage = page" :class="[
+              'px-3 py-1 border rounded',
+              page === currentPage ? 'bg-[#518C95] text-white' : 'bg-gray-100 hover:bg-gray-200'
+            ]">
+              {{ page }}
+            </button>
+
+          </div>
+        </div>
+      </div>
       <!-- 登出 -->
       <div v-else-if="tab === 'logout'" class="flex justify-center items-center py-20">
         <button class="bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 transition">
@@ -225,8 +331,11 @@ const courses = ref([
         </button>
       </div>
 
+
     </div>
   </div>
+
+
 
   <Footer />
 </template>
