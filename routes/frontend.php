@@ -23,17 +23,9 @@ Route::prefix('wushu')->group(function () {
 
     // 服務與課程頁 (代表/ServiceCourse會連到wushuController裡面的list)
     Route::get('/ServiceCourse', [WushuController::class, 'list'])->name('wushu.list');
-    // 服務與課程頁
-    // Route::get('/ServiceCourse', function () {
-    //     return Inertia::render('frontend/ServiceCourse');
-    // });
     
     // 課程介紹頁(未解鎖、解鎖)
     Route::get('/CourseIntro/{id}', [WushuController::class, 'intro'])->name('wushu.intro');
-    // 課程介紹頁(未解鎖、解鎖)
-    // Route::get('/CourseIntro', function () {
-    //     return Inertia::render('frontend/CourseIntro');
-    // });
     
     // 付款與退款政策頁
     Route::get('/Policy', function () {
@@ -47,18 +39,14 @@ Route::prefix('wushu')->group(function () {
     Route::get('/LoginSignup', function () {
         return Inertia::render('frontend/LoginSignup');
     });
-
-
     // 購物車
     Route::get('/Cart', function () {
         return Inertia::render('frontend/Cart');
     });
-
     // 隱私權政策
     Route::get('/Privacy', function () {
         return Inertia::render('frontend/Privacy');
     });
-
     // 會員中心頁
     Route::get('/MemberCenter', function () {
         return Inertia::render('frontend/MemberCenter');

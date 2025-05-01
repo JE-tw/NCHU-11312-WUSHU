@@ -25,8 +25,19 @@ console.log(props.categories);
 // 類別英文名稱陣列
 const enTitles = ['Vedic Astrology', 'Chinese Medicine', 'Classical Magic', 'Other'];
 
-//
+// swiper
+// 引入 Swiper Vue components
+import { Swiper, SwiperSlide } from 'swiper/vue';
 
+// 引入 Swiper 樣式
+import 'swiper/css';
+import 'swiper/css/navigation';
+
+// 引入 Swiper 模組
+import { Navigation } from 'swiper/modules';
+
+// 使用的模組
+const modules = [Navigation];
 </script>
 
 <template>
@@ -40,6 +51,15 @@ const enTitles = ['Vedic Astrology', 'Chinese Medicine', 'Classical Magic', 'Oth
           <span class="mb-20 w-[120px] border-b-2 border-white sm:w-[300px]"></span>
         </div>
         <!-- swiper -->
+        <div class="p-4">
+          <swiper :slidesPerView="3" :spaceBetween="30" :navigation="true" :modules="modules" class="mySwiper h-[201px] w-[80vw]">
+            <swiper-slide><img :src="swiper1" alt="" /></swiper-slide>
+            <swiper-slide><img :src="swiper2" alt="" /></swiper-slide>
+            <swiper-slide><img :src="swiper3" alt="" /></swiper-slide>
+            <swiper-slide><img :src="swiper4" alt="" /></swiper-slide>
+            <swiper-slide><img :src="swiper5" alt="" /></swiper-slide>
+          </swiper>
+        </div>
       </div>
     </header>
 
@@ -72,3 +92,23 @@ const enTitles = ['Vedic Astrology', 'Chinese Medicine', 'Classical Magic', 'Oth
   </div>
   <Footer />
 </template>
+
+<style>
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+</style>
