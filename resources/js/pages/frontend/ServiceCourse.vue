@@ -5,7 +5,6 @@
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import CourseSection from '@/components/CourseSection.vue';
-import CourseCard from '@/components/CourseCard.vue';
 import ServiceCard from '@/components/ServiceCard.vue';
 import { courseItems } from '@/data/courseItems.js'; // course card資料
 import { serviceItems } from '@/data/serviceItems.js'; // service card資料
@@ -16,6 +15,15 @@ import swiper3 from '@/images/swiper3.webp';
 import swiper4 from '@/images/swiper4.webp';
 
 const swiperImages = [swiper1, swiper2, swiper3, swiper4];
+
+const props = defineProps({
+  courses: Array,
+  services: Array,
+
+});
+console.log(props.courses);
+console.log(props.services);
+
 </script>
 
 <template>
@@ -40,6 +48,8 @@ const swiperImages = [swiper1, swiper2, swiper3, swiper4];
         <p class="z-30 font-serif text-[32px] text-white sm:text-[48px]">Service</p>
       </div>
     </div>
+    <!-- test -->
+     
     <!-- 服務卡片 -->
     <div class="bg-gray-100 px-[4.5%] pb-[44px] pt-[30px] xl:px-[19%] xl:pb-[96px] xl:pt-[60px]">
       <ServiceCard v-for="(item, index) in serviceItems" :key="index" :item="item" />

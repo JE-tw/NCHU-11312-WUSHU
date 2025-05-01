@@ -50,15 +50,15 @@ const fakeCourses = [
 ];
 
 // test
-const props = defineProps({
-  response: Array,
-});
-console.log(props.response);
+const goList = () => {
+    router.get('/wushu/ServiceCourse');
+};
 </script>
 
 <template>
   
   <Header />
+
 
   <div class="bg-softGray pb-[120px] text-black">
     <!-- step1 購物車 -->
@@ -144,6 +144,7 @@ console.log(props.response);
       <div class="sm:w-[100%] sm:max-w-[672px] sm:px-3 xl:max-w-[760px] xl:px-0">
         <div class="flex flex-wrap justify-center gap-4 sm:justify-between">
           <button
+          @click="goList"
             class="h-[44px] w-[147.5px] rounded-sm border border-blueGreen text-[16px]/[28px] text-blueGreen hover:bg-blueGreen hover:text-white sm:mr-0 sm:h-[56px] sm:w-[276px] sm:text-[24px]/[40px] xl:w-[320px]"
           >
             繼續看課程

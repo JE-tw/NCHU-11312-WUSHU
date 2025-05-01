@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\WushuController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,10 +20,14 @@ Route::prefix('wushu')->group(function () {
     Route::get('/', function () {
         return Inertia::render('frontend/Home'); // vue檔案路徑
     });
+
+    // 服務與課程頁 (代表/ServiceCourse會連到wushuController裡面的list)
+    Route::get('/ServiceCourse', [WushuController::class, 'list'])->name('wushu.list');
     // 服務與課程頁
-    Route::get('/ServiceCourse', function () {
-        return Inertia::render('frontend/ServiceCourse');
-    });
+    // Route::get('/ServiceCourse', function () {
+    //     return Inertia::render('frontend/ServiceCourse');
+    // });
+
     // 付款與退款政策頁
     Route::get('/Policy', function () {
         return Inertia::render('frontend/Policy');
@@ -55,5 +60,4 @@ Route::prefix('wushu')->group(function () {
     Route::get('/MemberCenter', function () {
         return Inertia::render('frontend/MemberCenter');
     });
-
 });
