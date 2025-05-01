@@ -7,6 +7,12 @@ import { createApp, h } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { initializeTheme } from './composables/useAppearance';
 
+//  Font Awesome 套件引入
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+library.add(faEye, faEyeSlash);
+
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
   interface ImportMetaEnv {
@@ -31,6 +37,7 @@ createInertiaApp({
       .use(ZiggyVue)
       .component('Link', Link)
       .component('Head', Head)
+      .component('font-awesome-icon', FontAwesomeIcon) //  註冊font awesome元件
       .mount(el);
   },
   progress: false,

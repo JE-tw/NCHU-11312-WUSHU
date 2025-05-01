@@ -410,31 +410,31 @@ onBeforeUnmount(() => {
             <!-- AboutMaster -->
             <!-- 關於站主區塊 -->
             <section id="about-section" class="relative bg-white">
-                <div class="max-w-[1200px] mx-auto px-[30px] py-[60px] xl:px-[20px] xl:py-[50px]">
+                <div class="max-w-[1200px] mx-auto px-[20px] py-[40px] sm:px-[30px] sm:py-[60px]">
                     <h2
-                        class="text-[64px] font-semibold text-center mb-[40px] relative block font-serif after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-[260px] after:h-[2px] after:bg-black">
+                        class="text-[36px] sm:text-[48px] xl:text-[64px] font-semibold text-center mb-[30px] sm:mb-[40px] relative block font-serif after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-[180px] sm:after:w-[260px] after:h-[2px] after:bg-black">
                         關於站主
                     </h2>
 
-                    <!-- 在桌面版保持文字在左，圖片在右；手機版上下排列 -->
-                    <div class="flex flex-col-reverse xl:flex-row items-center gap-[50px] xl:gap-[30px] sm:gap-[30px]">
+                    <!-- 在手機版和平板版文字在上，圖片在下；桌面版圖片在右，文字在左 -->
+                    <div class="flex flex-col xl:flex-row items-center gap-[30px] sm:gap-[50px] xl:gap-[40px]">
                         <!-- 文字區塊 (左側) -->
-                        <div class="flex-1 text-[24px]">
-                            <p class=" leading-[1.8] mb-[15px]">
+                        <div class="flex-1 text-[18px] sm:text-[20px] xl:text-[24px]">
+                            <p class="leading-[1.8] mb-[15px]">
                                 文老師自學生時期便開始學習五術，致力於五術教學十餘年。中醫醫術－針灸傳承自古法針灸、董氏奇穴和山西派鍼法；脈學傳承自萬氏的太素脈學；內科傳承各家如經方、溫病、伏氣學派等多位老師；祝由傳承自西河派和軒轅派。
                             </p>
-                            <p class=" leading-[1.8] mb-[15px]">
+                            <p class="leading-[1.8] mb-[15px]">
                                 命學目前以吠陀占星 Jyotish 為主，師從 Komilla、Joni Patry、Marc Boney
                                 等國際大家還有十數位印度吠陀占星大師；風水承襲自蔣氏三元玄空風水、吠陀 Vastu
                                 和龍門八局，亦通道家奇門遁甲、大六壬、太乙神數三式之學、梅花易數，以及是為熊氏太極拳傳人及華佗門第八十代傳人。
                             </p>
-                            <p class=" leading-[1.8] mb-[15px]">
+                            <p class="leading-[1.8] mb-[15px]">
                                 另外西方之學尚有西洋古典行星護符魔法、北歐魔法等皆是師從大家。
                             </p>
                         </div>
 
                         <!-- 圖片區塊 (右側) -->
-                        <div class="flex-1 overflow-hidden">
+                        <div class="flex-1 w-full xl:w-auto overflow-hidden">
                             <img :src="masterImg1" alt="禪石圖" class="w-full h-auto block" />
                         </div>
                     </div>
@@ -442,40 +442,48 @@ onBeforeUnmount(() => {
             </section>
 
 
+
             <!-- 學會創立沿革區塊 -->
             <section id="history-section" class="relative bg-white">
-                <div class="max-w-[1200px] mx-auto px-[30px] py-[60px] xl:px-[20px] xl:py-[50px]">
-                    <!-- 標題 -->
-                    <h2
-                        class="text-[64px] font-semibold text-center mb-[40px] relative block font-serif after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-[380px] after:h-[2px] after:bg-black">
+                <div
+                    class="max-w-[1200px] mx-auto px-[20px] py-[40px] sm:px-[30px] sm:py-[60px] xl:px-[20px] xl:py-[50px]">
+
+                    <!-- 標題 (在文字區塊上方，桌面版與 RWD 通用) -->
+                    <h2 class="text-[36px] sm:text-[48px] xl:text-[64px] font-semibold text-center mb-[30px] sm:mb-[40px] relative block font-serif
+             after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2
+             after:w-[220px] sm:after:w-[380px] after:h-[2px] after:bg-black">
                         學會創立沿革
                     </h2>
 
-                    <!-- 內容區域 -->
-                    <div
-                        class="flex xl:flex-row sm:flex-col-reverse items-center gap-[50px] xl:gap-[30px] sm:gap-[30px]">
-                        <!-- 圖片區塊 (左側，桌面版；手機版上下排列) -->
-                        <div class="flex-1 xl:w-2/3 overflow-hidden mb-4 sm:mb-0">
+                    <!-- 圖文區塊 -->
+                    <div class="flex flex-col xl:flex-row items-start gap-[30px] sm:gap-[50px] xl:gap-[30px]">
+
+                        <!-- 圖片區塊：左側 (桌面) / 上方 (手機平板) -->
+                        <div class="w-full xl:w-1/2 overflow-hidden">
                             <img :src="masterImg2" alt="中藥櫃" class="w-full h-auto object-cover" />
                         </div>
 
-                        <!-- 文字區塊 (右側，桌面版；手機版上下排列) -->
-                        <div class="flex-1 xl:w-1/3 bg-[#f5f5f5] px-[30px] py-[20px]">
+                        <!-- 文字區塊：右側 (桌面) / 下方 (手機平板) -->
+                        <div class="w-full xl:w-1/2 bg-lightGray px-[20px] py-[15px] sm:px-[30px] sm:py-[20px]">
                             <div class="max-w-[800px] mx-auto">
-                                <p class="text-[24px] leading-[1.8] mb-[20px]">
+                                <p class="text-[18px] sm:text-[20px] xl:text-[24px] leading-[1.8] mb-[20px]">
                                     <span
-                                        class="text-[40px] font-bold text-black">2008</span>年，當時文老師在內湖高中任教，部分同事和學生知曉文老師傳承自古老的醫術，便欲向其學習，但老師當時並未想開課授徒，一方面是其老師們尚在世，二方面是覺得自己尚未成熟，故以五術研究社這種讀書會模式帶領眾人學習，不收學費為眾人解惑。
+                                        class="text-[30px] sm:text-[36px] xl:text-[40px] font-bold text-black">2008</span>年，當時文老師在內湖高中任教，
+                                    部分同事和學生知曉文老師傳承自古老的醫術，便欲向其學習，但老師當時並未想開課授徒，一方面是其老師們尚在世，
+                                    二方面是覺得自己尚未成熟，故以五術研究社這種讀書會模式帶領眾人學習，不收學費為眾人解惑。
                                 </p>
-                                <p class="text-[24px] leading-[1.8] mb-[20px]">
-                                    直到
-                                    <span
-                                        class="text-[24px] font-bold text-black">2014</span>年在湖南攻讀中醫內科學研究所，同儕紛紛希望向文老師學習師承，加上傳授針灸和內科給文老師的老師們都過世了，文老師才開始決定開課陸續至今。
+                                <p class="text-[18px] sm:text-[20px] xl:text-[24px] leading-[1.8] mb-[20px]">
+                                    直到2014在湖南攻讀中醫內科學研究所，同儕紛紛希望向文老師學習師承，加上傳授針灸和內科給文老師的老師們都過世了，
+                                    文老師才開始決定開課陸續至今。
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+
+
         </main>
 
         <Footer />

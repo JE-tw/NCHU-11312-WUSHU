@@ -19,6 +19,12 @@ Route::prefix('wushu/admin/order')->group(function(){
 // 會員管理
 Route::prefix('wushu/admin/user')->group(function(){
     Route::get('/',[UserInfoController::class,'index'])->name('admin.user.list');
+    // 新增
+    Route::post('/', [UserInfoController::class, 'store'])->name('admin.user.store');
+
+    // 刪除
+    Route::get('/delete/{id}',[UserInfoController::class,'delete'])->name('admin.user.delete');
+
 
 });
 

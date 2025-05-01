@@ -1,15 +1,10 @@
 <!-- components/CourseCard.vue 課程卡片 -->
 <script setup>
 import CartButton from './CartButton.vue';
-
-// defineProps({
-//   category: {
-//     type: Object,
-//     required: true,
-//   },
-// });
+import { router } from '@inertiajs/vue3';
 
 defineProps({
+  id:Number,
   name: String,
   price: Number,
   introduction: String,
@@ -18,11 +13,17 @@ defineProps({
 
 
 // console.log('課程資料:', name, price, introduction, categoryTitle);
+
+// 點擊跳轉 詳細資訊頁
+function goToIntro(id) {
+  router.visit(route('wushu.intro', id));
+}
 </script>
 
 <template>
   <!-- 課程卡片 -->
-  <div class="flex cursor-pointer gap-[10px] bg-white sm:justify-center xl:justify-start">
+  <div @click="goToIntro(id)"
+   class="flex cursor-pointer gap-[10px] bg-white sm:justify-center xl:justify-start">
     <!-- 內容 -->
     <div class="flex w-[100%] flex-col justify-between p-4 shadow-custom xl:w-[412px]">
       <div>

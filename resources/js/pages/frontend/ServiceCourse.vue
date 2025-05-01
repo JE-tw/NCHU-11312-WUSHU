@@ -6,8 +6,6 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import CourseSection from '@/components/CourseSection.vue';
 import ServiceCard from '@/components/ServiceCard.vue';
-import { courseItems } from '@/data/courseItems.js'; // course card資料
-import { serviceItems } from '@/data/serviceItems.js'; // service card資料
 
 import swiper1 from '@/images/swiper1.webp';
 import swiper2 from '@/images/swiper2.webp';
@@ -23,17 +21,15 @@ const props = defineProps({
 });
 console.log(props.services);
 console.log(props.categories);
+
+// 類別英文名稱陣列
+const enTitles = ['Vedic Astrology', 'Chinese Medicine', 'Classical Magic', 'Other'];
+
+//
+
 </script>
 
 <template>
-  <!-- test -->
-  <!-- <div 
-      v-for="service in props.services"
-      :key="service.id">
-    {{ service.name }}
-    {{ service.price }}
-    {{ service.introduction }}
-    </div> -->
   <Header />
   <div>
     <!-- header -->
@@ -62,22 +58,17 @@ console.log(props.categories);
     </div>
 
     <!-- 課程區塊 -->
-    <!-- <CourseSection
-      v-for="(category, index) in courseItems"
-      :key="category.categoryId"
-      :bgImage="Images[index]"
-      :title="category.title"
-      :enTitle="category.enTitle"
-      :courses="category.course"
-    /> -->
     <CourseSection
       v-for="(category, index) in props.categories"
       :key="category.id"
       :bgImage="Images[index]"
       :name="category.name"
-      :enTitle="category.enTitle"
+      :enTitle="enTitles[index]"
       :courses="category.courses"
-    />
+    >
+      <!-- 類別英文名稱 enTitle 資料庫沒有建到，故用插槽+陣列 -->
+      <p class="z-30 font-serif text-[32px]/[46px] text-white sm:text-[52px]/[75px] xl:text-[48px]/[69px]">{{ enTitles[index] }}</p>
+    </CourseSection>
   </div>
   <Footer />
 </template>
