@@ -18,9 +18,19 @@ const showDescription = ref(false);
 const toggleDescription = () => {
   showDescription.value = !showDescription.value;
 };
+
+
 </script>
 
 <template>
+    <!-- test -->
+  <!-- <div 
+      v-for="service in props.services"
+      :key="service.id">
+    {{ service.name }}
+    {{ service.price }}
+    {{ service.introduction }}
+    </div> -->
   <div
     @click="toggleDescription"
     class="duration-800 mb-4 cursor-pointer shadow-[0_0_5px_rgba(0,0,0,0.2)] transition-colors"
@@ -35,7 +45,7 @@ const toggleDescription = () => {
         <!-- 卡片內容 -->
         <div class="ml-6">
           <!-- 標題 -->
-          <p class="text-[20px] font-bold text-gray-800 sm:text-[32px]/[42px]">{{ item.title }}</p>
+          <p class="text-[20px] font-bold text-gray-800 sm:text-[32px]/[42px]">{{ item.name }}</p>
           <!-- 價格 -->
           <p v-if="item.price" class="text-[16px] font-bold text-blueGreen sm:text-[24px]/[32px]">NT$ {{ item.price.toLocaleString() }}</p>
         </div>
@@ -48,7 +58,7 @@ const toggleDescription = () => {
     <div v-if="showDescription" class="whitespace-pre-line px-[16px]">
       <hr />
       <p class="py-[16px] font-['Microsoft_JhengHei'] text-[16px] text-black sm:text-[24px]">
-        {{ item.description }}
+        {{ item.introduction }}
       </p>
     </div>
   </div>

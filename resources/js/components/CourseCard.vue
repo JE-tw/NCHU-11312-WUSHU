@@ -10,23 +10,26 @@ import CartButton from './CartButton.vue';
 // });
 
 defineProps({
-  title: String,
+  name: String,
   price: Number,
-  description: String,
+  introduction: String,
   categoryTitle: String, // tag
 });
+
+
+// console.log('課程資料:', name, price, introduction, categoryTitle);
 </script>
 
 <template>
   <!-- 課程卡片 -->
-  <div class="flex gap-[10px] bg-white sm:justify-center xl:justify-start cursor-pointer">
+  <div class="flex cursor-pointer gap-[10px] bg-white sm:justify-center xl:justify-start">
     <!-- 內容 -->
     <div class="flex w-[100%] flex-col justify-between p-4 shadow-custom xl:w-[412px]">
       <div>
         <!-- 課程名稱 -->
-        <p class="mb-2 text-[20px] font-semibold text-black sm:text-[32px]">{{ title }}</p>
+        <p class="mb-2 text-[20px] font-semibold text-black sm:text-[32px]">{{ name }}</p>
         <!-- 課程描述 -->
-        <p class="text-[16px] font-normal text-gray-500 sm:text-[24px] sm:font-bold">{{ description }}</p>
+        <p class="text-[16px] font-normal text-gray-500 sm:text-[24px] sm:font-bold">{{ introduction }}</p>
       </div>
       <div>
         <!-- 價錢 -->

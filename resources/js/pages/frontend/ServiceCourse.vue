@@ -13,20 +13,27 @@ import swiper1 from '@/images/swiper1.webp';
 import swiper2 from '@/images/swiper2.webp';
 import swiper3 from '@/images/swiper3.webp';
 import swiper4 from '@/images/swiper4.webp';
+import swiper5 from '@/images/swiper5.webp';
 
-const swiperImages = [swiper1, swiper2, swiper3, swiper4];
+const Images = [swiper2, swiper3, swiper4, swiper5];
 
 const props = defineProps({
-  courses: Array,
   services: Array,
-
+  categories: Array,
 });
-console.log(props.courses);
 console.log(props.services);
-
+console.log(props.categories);
 </script>
 
 <template>
+  <!-- test -->
+  <!-- <div 
+      v-for="service in props.services"
+      :key="service.id">
+    {{ service.name }}
+    {{ service.price }}
+    {{ service.introduction }}
+    </div> -->
   <Header />
   <div>
     <!-- header -->
@@ -48,21 +55,28 @@ console.log(props.services);
         <p class="z-30 font-serif text-[32px] text-white sm:text-[48px]">Service</p>
       </div>
     </div>
-    <!-- test -->
-     
+
     <!-- 服務卡片 -->
     <div class="bg-gray-100 px-[4.5%] pb-[44px] pt-[30px] xl:px-[19%] xl:pb-[96px] xl:pt-[60px]">
-      <ServiceCard v-for="(item, index) in serviceItems" :key="index" :item="item" />
+      <ServiceCard v-for="(item, index) in props.services" :key="index" :item="item" />
     </div>
 
     <!-- 課程區塊 -->
-    <CourseSection
+    <!-- <CourseSection
       v-for="(category, index) in courseItems"
       :key="category.categoryId"
-      :bgImage="swiperImages[index]"
+      :bgImage="Images[index]"
       :title="category.title"
       :enTitle="category.enTitle"
       :courses="category.course"
+    /> -->
+    <CourseSection
+      v-for="(category, index) in props.categories"
+      :key="category.id"
+      :bgImage="Images[index]"
+      :name="category.name"
+      :enTitle="category.enTitle"
+      :courses="category.courses"
     />
   </div>
   <Footer />
