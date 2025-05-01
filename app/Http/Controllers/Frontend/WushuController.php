@@ -22,6 +22,27 @@ class WushuController extends Controller
             'services' => $services,
         ]);
     }
+
+    // 課程介紹頁
+    public function intro($id)
+    {
+        $course = Course::with(['chapters'])->find($id);
+        if ($course == null) return redirect('/wushu/ServiceCourse');
+
+        return Inertia::render('frontend/CourseIntro', [
+            'course' => $course,
+        ]);
+    }
 }
-// $movie = Movie::with(['rating','tags','theaters'])->find($id);
-// if($movie==null)return redirect('/movies');
+// 詳細資訊頁
+// public function detail($id)
+// {
+
+//     $movie = Movie::with(['rating', 'tags', 'theaters'])->find($id);
+//     if ($movie == null) return redirect('/movies');
+
+//     return Inertia::render('frontend/movies/MovieDetail', [
+//         'response' => $movie,
+//     ]);
+//     // dd($movies);
+// }

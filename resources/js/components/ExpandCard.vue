@@ -10,10 +10,8 @@ import LockButton from '@/components/CardButton.vue';
 
 // 傳入 item 物件
 const props = defineProps({
-  item: {
-    type: Object,
-    required: true,
-  },
+  name: String,
+  introduction: String,
 });
 
 // 控制展開狀態
@@ -39,7 +37,7 @@ const toggleDescription = () => {
         <!-- 標題內容 -->
         <div class="ml-6">
           <p class="text-[16px]/[21px] sm:text-[24px]/[32px] font-bold  text-gray-800 ">
-            {{ item.title }}
+            {{ name }}
           </p>
         </div>
       </div>
@@ -51,7 +49,7 @@ const toggleDescription = () => {
     <div v-if="showDescription" class="whitespace-pre-line px-[16px]">
       <hr />
       <p class="text-[16px]/[21px] sm:text-[24px]/[32px] py-[16px] font-['Microsoft_JhengHei']  text-black sm:text-[24px]">
-        {{ item.description }}
+        {{ introduction }}
       </p>
     </div>
   </div>
