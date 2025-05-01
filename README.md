@@ -35,6 +35,8 @@
     ```bash
     php artisan migrate:fresh --seed
     ```
+    第一次建置專案用
+    php artisan migrate --seed
 
 7. 編譯前端資源（開發模式）
     ```bash
