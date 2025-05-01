@@ -134,6 +134,7 @@ declare module 'vue' {
     TooltipContent: typeof import('./resources/js/Components/ui/tooltip/TooltipContent.vue')['default']
     TooltipProvider: typeof import('./resources/js/Components/ui/tooltip/TooltipProvider.vue')['default']
     TooltipTrigger: typeof import('./resources/js/Components/ui/tooltip/TooltipTrigger.vue')['default']
+    UserCreateModal: typeof import('./resources/js/Components/UserCreateModal.vue')['default']
     UserInfo: typeof import('./resources/js/Components/UserInfo.vue')['default']
     UserMenuContent: typeof import('./resources/js/Components/UserMenuContent.vue')['default']
   }
