@@ -65,12 +65,7 @@ const toggleSort = (key) => {
     <table class="w-full table-auto border">
       <thead class="bg-gray-100">
         <tr>
-          <th 
-          v-for="col in columns" 
-          :key="col.key" 
-          class="cursor-pointer border p-2" 
-          @click="col.sortable && toggleSort(col.key)"
-          >
+          <th v-for="col in columns" :key="col.key" class="cursor-pointer border p-2" @click="col.sortable && toggleSort(col.key)">
             {{ col.label }}
             <span v-if="col.sortable">
               <span v-if="currentSortKey === col.key">
@@ -82,13 +77,12 @@ const toggleSort = (key) => {
         </tr>
       </thead>
       <tbody>
+        <tr v-if="!items || items.length === 0">
+          <td :colspan="columns.length" class="border p-4 text-center text-gray-500">查無資料</td>
+        </tr>
         <tr v-for="item in items" :key="item.id">
           <td v-for="col in columns" :key="col.key" class="border p-2">
-            <slot 
-            v-if="$slots[`cell(${col.key})`]" 
-            :name="`cell(${col.key})`" 
-            :item="item" 
-            />
+            <slot v-if="$slots[`cell(${col.key})`]" :name="`cell(${col.key})`" :item="item" />
             <template v-else>
               {{ item[col.key] }}
             </template>
@@ -103,8 +97,7 @@ const toggleSort = (key) => {
         v-for="page in totalPages"
         :key="page"
         @click="changePage(page)"
-        :class="['rounded border px-3 py-1',
-         currentPage === page ? 'bg-blue-500 text-white' : '']"
+        :class="['rounded border px-3 py-1', currentPage === page ? 'bg-blue-500 text-white' : '']"
       >
         {{ page }}
       </button>
