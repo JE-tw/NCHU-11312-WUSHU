@@ -38,6 +38,16 @@ import { Navigation } from 'swiper/modules';
 
 // 使用的模組
 const modules = [Navigation];
+
+const breakpoints = {
+  0: {
+   
+    slidesPerView: 2.5,
+  },
+  1270: {
+    slidesPerView: 4,
+  },
+};
 </script>
 
 <template>
@@ -45,19 +55,41 @@ const modules = [Navigation];
   <div>
     <!-- header -->
     <header class="flex justify-center bg-black">
-      <div class="pb-[60px]sm:pb-[120px] flex flex-col pt-[120px] sm:pt-[224px]">
+      <div class="flex flex-col pb-[60px] pt-[120px] sm:pb-[120px] sm:pt-[224px]">
         <div class="flex flex-col items-center">
           <p class="pb-2 font-serif text-[32px]/[46px] font-bold text-white sm:text-[64px]/[92px]">服務與課程</p>
           <span class="mb-20 w-[120px] border-b-2 border-white sm:w-[300px]"></span>
         </div>
         <!-- swiper -->
-        <div class="p-4">
-          <swiper :slidesPerView="3" :spaceBetween="30" :navigation="true" :modules="modules" class="mySwiper h-[201px] w-[80vw]">
-            <swiper-slide><img :src="swiper1" alt="" /></swiper-slide>
-            <swiper-slide><img :src="swiper2" alt="" /></swiper-slide>
-            <swiper-slide><img :src="swiper3" alt="" /></swiper-slide>
-            <swiper-slide><img :src="swiper4" alt="" /></swiper-slide>
-            <swiper-slide><img :src="swiper5" alt="" /></swiper-slide>
+        <div class="flex items-start">
+          <swiper
+            :slidesPerView="4"
+            :spaceBetween="30"
+            :navigation="true"
+            :modules="modules"
+            :breakpoints="breakpoints"
+            class="mySwiper h-[201px] w-[70vw]"
+          >
+            <swiper-slide class="flex flex-col justify-center">
+              <img :src="swiper1" alt="" class="mb-4 h-[150px] w-[200px]" />
+              <p class="text-[32px]/[43px] font-bold text-white">服務</p>
+            </swiper-slide>
+            <swiper-slide class="flex flex-col justify-center">
+              <img :src="swiper2" alt="" class="mb-4 h-[150px] w-[200px]" />
+              <p class="text-[32px]/[43px] font-bold text-white">吠陀占星</p>
+            </swiper-slide>
+            <swiper-slide class="flex flex-col justify-center">
+              <img :src="swiper3" alt="" class="mb-4 h-[150px] w-[200px]" />
+              <p class="text-[32px]/[43px] font-bold text-white">中醫</p>
+            </swiper-slide>
+            <swiper-slide class="flex flex-col justify-center">
+              <img :src="swiper4" alt="" class="mb-4 h-[150px] w-[200px]" />
+              <p class="text-[32px]/[43px] font-bold text-white">古典魔法</p>
+            </swiper-slide>
+            <swiper-slide class="flex flex-col justify-center">
+              <img :src="swiper5" alt="" class="mb-4 h-[150px] w-[200px]" />
+              <p class="text-[32px]/[43px] font-bold text-white">其他術數</p>
+            </swiper-slide>
           </swiper>
         </div>
       </div>
@@ -97,8 +129,6 @@ const modules = [Navigation];
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-  background: #fff;
-
   /* Center slide text vertically */
   display: flex;
   justify-content: center;
@@ -107,8 +137,45 @@ const modules = [Navigation];
 
 .swiper-slide img {
   display: block;
-  width: 100%;
-  height: 100%;
   object-fit: cover;
+}
+
+.swiper-button-next {
+  display: none;
+}
+.swiper-button-prev {
+  display: none;
+}
+
+@screen xl {
+  /* 1280px 以上適用 */
+  .swiper-button-next {
+    display: block;
+    color: #b5b5b5;
+    width: auto;
+    top: 80px;
+    right: 15px;
+    position: absolute;
+  }
+  .swiper-button-prev {
+    display: block;
+    color: #b5b5b5;
+    width: auto;
+    top: 80px;
+    left: 15px;
+    position: absolute;
+  }
+  .swiper-button-prev:after {
+    background-color: #363636;
+    border-radius: 0 100px 100px 0;
+    width: 40px;
+    height: 80px;
+  }
+  .swiper-button-next:after {
+    background-color: #363636;
+    border-radius: 100px 0 0 100px;
+    width: 40px;
+    height: 80px;
+  }
 }
 </style>
