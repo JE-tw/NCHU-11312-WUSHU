@@ -128,6 +128,7 @@ declare module 'vue' {
     SidebarSeparator: typeof import('./resources/js/Components/ui/sidebar/SidebarSeparator.vue')['default']
     SidebarTrigger: typeof import('./resources/js/Components/ui/sidebar/SidebarTrigger.vue')['default']
     Skeleton: typeof import('./resources/js/Components/ui/skeleton/Skeleton.vue')['default']
+    TableWithPagination: typeof import('./resources/js/Components/TableWithPagination.vue')['default']
     Test123: typeof import('./resources/js/Components/test123.vue')['default']
     TextLink: typeof import('./resources/js/Components/TextLink.vue')['default']
     Tooltip: typeof import('./resources/js/Components/ui/tooltip/Tooltip.vue')['default']

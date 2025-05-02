@@ -36,9 +36,32 @@ const showPasswordConfirmation = ref(false);
 
 const errors = ref({});
 
+// 資料驗證
+const validateForm = () => {
+  const newErrors = {};
+
+  if (!form.name) newErrors.name = '請輸入姓名';
+  if (!form.phone) newErrors.phone = '請輸入手機號碼';
+  if (!form.email) newErrors.email = '請輸入電子郵件';
+  else if (!/^\S+@\S+\.\S+$/.test(form.email)) newErrors.email = '電子郵件格式不正確';
+  if (!form.password) newErrors.password = '請輸入密碼';
+  else if (form.password.length < 6) newErrors.password = '密碼至少 6 碼';
+  if (form.password !== form.password_confirmation) newErrors.password_confirmation = '密碼不一致';
+  errors.value = newErrors;
+
+  console.log(errors);
+  return Object.keys(newErrors).length === 0;
+};
+
+// 送出表單
 const submit = () => {
+  if (!validateForm()) return;
+
   router.post(route('admin.user.store'), form, {
+    preserveScroll: true,
+    preserveState: true,
     onSuccess: () => {
+      errors.value = {};
       emit('close');
     },
     onError: (err) => {
@@ -159,7 +182,9 @@ const submit = () => {
           </label>
         </div>
         <!-- <p class="text-sm text-red-500">此帳號已有人使用，請確認是否輸入錯誤</p> -->
-        <div v-if="errors.email" class="mb-4 text-sm text-red-500">此帳號已有人使用，請確認是否輸入錯誤</div>
+        <!-- <div v-if="errors.email" class="mb-4 text-sm text-red-500">
+          {{ Array.isArray(errors.email) ? errors.email[0] : errors.email }}
+        </div> -->
         <!-- 密碼 -->
         <h2 class="text-2xl font-bold">密碼</h2>
 
@@ -194,6 +219,11 @@ const submit = () => {
           >
             <font-awesome-icon :icon="showPasswordConfirmation ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'" class="h-5 w-5" />
           </button>
+        </div>
+
+        <!-- 錯誤提示 -->
+        <div v-if="Object.keys(errors).length" class="mt-2 px-2 text-sm text-red-500">
+          {{ Object.values(errors)[0] }}
         </div>
       </div>
       <!-- 按鈕區塊 -->
