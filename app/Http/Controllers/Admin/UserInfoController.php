@@ -11,33 +11,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use App\Traits\HandlesTableFilters;
 
 class UserInfoController extends Controller
 {
+    use HandlesTableFilters;
     //
     public function index(Request $request)
     {
-        // 搜尋與排序
-        $search = $request->input('search');
-        $sortKey = $request->input('sort', 'id'); // 預設 id 排序
-        $sortDirection = $request->input('direction', 'asc'); //小到大
+        $query = UserInfo::with('user');
 
-        $allowedSortKeys = ['id', 'birth_date'];  // 允許排序欄位
-        $allowedDirections = ['asc', 'desc'];
-
-        $query = UserInfo::with('user')
-            ->when($search, function ($q) use ($search) {
-                $q->where(function ($subQuery) use ($search) {
-                    $subQuery->where('name', 'like', "%$search%")
-                        ->orWhere('phone', 'like', "%$search%");
-                });
-            });
-
-        if (in_array($sortKey, $allowedSortKeys) && in_array($sortDirection, $allowedDirections)) {
-            $query->orderBy($sortKey, $sortDirection);
-        }
-
-        $userInfos = $query->paginate(10)->withQueryString();
+        $userInfos = $this->applyFiltersAndPaginate($request, $query, [
+            'search' => ['name', 'phone'],        // 支援搜尋的欄位
+            'allowedSorts' => ['id', 'birth_date'],
+            'defaultSort' => 'id',
+            'defaultDirection' => 'asc',
+            'perPage' => 10,
+        ]);
 
         return Inertia::render('backend/UserList', [
             'userInfos' => $userInfos,

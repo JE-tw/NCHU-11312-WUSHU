@@ -11,6 +11,12 @@ import { useTableController } from '@/composables/useTableController';
 // // Inertia 資料
 const page = usePage();
 
+
+// Modal 開關
+const showModal = ref(false);
+const openModal = () => (showModal.value = true);
+const closeModal = () => (showModal.value = false);
+
 const { items, currentPage, totalPages, searchQuery, currentSortKey, currentSortDirection, handleSearch, handlePageChange, handleSortChange } =
   useTableController('userInfos', 'admin.user.list'); // 名稱依照 controller 傳的變數與 route 命名
 
