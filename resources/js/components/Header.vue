@@ -144,24 +144,27 @@
   <div v-if="(isTablet || isMobile) && isMobileMenuOpen"
     class="fixed left-0 right-0 z-40 w-full bg-[#F2F2F2] shadow-md overflow-hidden transition-all duration-300"
     :class="isMobile ? 'top-[60px]' : 'top-[80px]'" :style="{ maxHeight: isMobileMenuOpen ? '300px' : '0' }">
-    <nav class="flex flex-col py-2 px-4">
+    <nav class="flex flex-col py-2">
       <a href="http://127.0.0.1:8000/wushu#about-section"
-        class="font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 border-b border-gray-300 hover:text-[#1f9c95]">
+        class="flex items-center font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 border-b border-gray-300 hover:bg-darkGray hover:text-white px-6 sm:px-10"
+        :class="isMobile ? 'justify-center' : 'justify-start'">
         關於站主
       </a>
 
       <a href="http://127.0.0.1:8000/wushu/ServiceCourse"
-        class="font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 border-b border-gray-300 hover:text-[#1f9c95]">
+        class="flex items-center font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 border-b border-gray-300 hover:bg-darkGray hover:text-white px-6 sm:px-10"
+        :class="isMobile ? 'justify-center' : 'justify-start'">
         服務與課程
       </a>
 
       <a href="http://127.0.0.1:8000/wushu/MemberCenter"
-        class="font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 flex items-center gap-2 hover:text-[#1f9c95]">
-        <img src="@/images/user.svg" alt="登入" class="w-6 h-6" />
+        class="flex items-center font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 gap-2 hover:bg-darkGray hover:text-white px-6 sm:px-10"
+        :class="isMobile ? 'justify-center' : 'justify-start'">
         登入註冊
       </a>
     </nav>
   </div>
+
 </template>
 
 <script setup>
