@@ -8,10 +8,11 @@ const props = defineProps({
   name: String,
   enTitle: String,
   courses: Array,
+  id: String,
 });
 </script>
 <template>
-  <section>
+  <section :id="id">
     <!-- 課程標題＋背景圖 -->
     <div class="relative bg-cover bg-center py-[54px] sm:h-[320px] sm:py-[80px]" :style="{ backgroundImage: `url(${bgImage})` }">
       <div class="absolute inset-0 bg-black/70"></div>
