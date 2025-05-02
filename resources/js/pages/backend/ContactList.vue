@@ -5,91 +5,30 @@ import { usePage, router } from '@inertiajs/vue3';
 import ContactDetailModal from '@/Components/ContactDetailModal.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import TableWithPagination from '@/Components/TableWithPagination.vue';
+import { useTableController } from '@/composables/useTableController';
 
 // const contacts = page.props.contacts;
 
-// Inertia 資料
-const page = usePage();
-const contacts = computed(() => page.props.contacts);
-const items = computed(() => contacts.value.data); // 分頁資料陣列
-const currentPage = computed(() => contacts.value.current_page);
-const totalPages = computed(() => contacts.value.last_page);
+// 
 
-console.log('page.props.contacts', page.props.contacts);
+const {
+  items,
+  currentPage,
+  totalPages,
+  searchQuery,
+  currentSortKey,
+  currentSortDirection,
+  handleSearch,
+  handlePageChange,
+  handleSortChange,
+} = useTableController('contacts', 'admin.contact.list'); // 名稱依照你 controller 傳的變數與 route 命名來
 
-// 表格欄位
 const columns = [
-  { label: '日期', key: 'created_at', sortable: true },
+  { label: '日期', key: 'formatted_date', sortable: true },
   { label: '姓名', key: 'name' },
   { label: '主旨', key: 'title' },
   { label: '操作', key: 'actions' },
 ];
-
-// 麵包屑
-const breadcrumbs = [{ title: '五術研究社 後臺管理', href: '/dashboard' }];
-
-// 排序狀態
-const currentSortKey = ref('id');
-const currentSortDirection = ref('asc');
-
-// Modal 開關
-const showModal = ref(false);
-const openModal = () => (showModal.value = true);
-const closeModal = () => (showModal.value = false);
-
-// 搜尋
-const searchQuery = ref('');
-const handleSearch = (keyword) => {
-  searchQuery.value = keyword;
-  router.get(
-    route('admin.contact.list'),
-    {
-      search: keyword,
-      sort: currentSortKey.value,
-      direction: currentSortDirection.value,
-      page: 1,
-    },
-    {
-      preserveState: true,
-      preserveScroll: true,
-    },
-  );
-};
-// 換頁
-const handlePageChange = (pageNum) => {
-  router.get(
-    route('admin.contact.list'),
-    {
-      page: pageNum,
-      search: searchQuery.value,
-      sort: currentSortKey.value,
-      direction: currentSortDirection.value,
-    },
-    {
-      preserveState: true,
-      preserveScroll: true,
-    },
-  );
-};
-
-// 排序
-const handleSortChange = ({ sortKey, sortDirection }) => {
-  currentSortKey.value = sortKey;
-  currentSortDirection.value = sortDirection;
-  router.get(
-    route('admin.contact.list'),
-    {
-      search: searchQuery.value,
-      page: 1,
-      sort: sortKey,
-      direction: sortDirection,
-    },
-    {
-      preserveState: true,
-      preserveScroll: true,
-    },
-  );
-};
 
 // 個別查看詳細內容
 const selectedContact = ref(null);
@@ -111,21 +50,16 @@ const deleteBtn = async (id) => {
     <div>
       <h1 class="mb-4 text-2xl font-bold">聯絡我們紀錄</h1>
       <TableWithPagination
-        :columns="[
-          { label: '日期', key: 'formatted_date', sortable: true },
-          { label: '姓名', key: 'name' },
-          { label: '主旨', key: 'title' },
-          { label: '操作', key: 'actions' },
-        ]"
+        :columns="columns"
         :items="items"
-        :totalPages="totalPages"
-        :currentPage="currentPage"
+        :current-page="currentPage"
+        :total-pages="totalPages"
+        :sort-key="currentSortKey"
+        :sort-direction="currentSortDirection"
         :showSearch="true"
         @search="handleSearch"
-        @pageChange="handlePageChange"
-        @sortChange="handleSortChange"
-        :sortKey="currentSortKey"
-        :sortDirection="currentSortDirection"
+        @page-change="handlePageChange"
+        @sort-change="handleSortChange"
       >
         <!-- Slot: actions 按鈕 -->
         <template #cell(actions)="{ item }">
