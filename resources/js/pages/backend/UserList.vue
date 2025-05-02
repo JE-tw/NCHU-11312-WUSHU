@@ -1,4 +1,4 @@
-<script setup >
+<script setup>
 import { ref, computed, watchEffect } from 'vue';
 import UserCreateModal from '@/Components/UserCreateModal.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
@@ -6,91 +6,23 @@ import { usePage, router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
 import TableWithPagination from '@/Components/TableWithPagination.vue';
+import { useTableController } from '@/composables/useTableController';
 
-// Inertia 資料
+// // Inertia 資料
 const page = usePage();
-const userInfos = computed(() => page.props.userInfos);
-const items = computed(() => userInfos.value.data); // 分頁資料陣列
-const currentPage = computed(() => userInfos.value.current_page);
-const totalPages = computed(() => userInfos.value.last_page);
 
-// 排序狀態
-const currentSortKey = ref('id');
-const currentSortDirection = ref('asc');
+const { items, currentPage, totalPages, searchQuery, currentSortKey, currentSortDirection, handleSearch, handlePageChange, handleSortChange } =
+  useTableController('userInfos', 'admin.user.list'); // 名稱依照 controller 傳的變數與 route 命名
 
-// Modal 開關
-const showModal = ref(false);
-const openModal = () => (showModal.value = true);
-const closeModal = () => (showModal.value = false);
-
-// 麵包屑
-const breadcrumbs = [
-  { title: '五術研究社 後臺管理', href: '/dashboard' },
-];
-
-// 表格欄位設定
 const columns = [
-  { key: 'id', label: '會員編號', sortable: true },
-  { key: 'name', label: '姓名' },
-  { key: 'birth_date', label: '出生日期', sortable: true },
-  { key: 'birth_city', label: '出生城市' },
-  { key: 'phone', label: '電話號碼' },
-  { key: 'actions', label: '操作' },
+  { label: '會員編號', key: 'id', sortable: true },
+  { label: '姓名', key: 'name' },
+  { label: '出生日期', key: 'birth_date', sortable: true },
+  { label: '出生城市', key: 'birth_city' },
+  { label: '電話號碼', key: 'phone' },
+  { label: '操作', key: 'actions' },
 ];
 
-// 搜尋
-const searchQuery = ref('');
-const handleSearch = (keyword) => {
-  searchQuery.value = keyword;
-  router.get(
-    route('admin.user.list'),
-    {
-      search: keyword,
-      sort: currentSortKey.value,
-      direction: currentSortDirection.value,
-      page: 1,
-    },
-    {
-      preserveState: true,
-      preserveScroll: true,
-    }
-  );
-};
-// 換頁
-const handlePageChange = (pageNum) => {
-  router.get(
-    route('admin.user.list'),
-    {
-      page: pageNum,
-      search: searchQuery.value,
-      sort: currentSortKey.value,
-      direction: currentSortDirection.value,
-    },
-    {
-      preserveState: true,
-      preserveScroll: true,
-    }
-  );
-};
-
-// 排序
-const handleSortChange = ({ sortKey, sortDirection }) => {
-  currentSortKey.value = sortKey;
-  currentSortDirection.value = sortDirection;
-  router.get(
-    route('admin.user.list'),
-    {
-      search: searchQuery.value,
-      page: 1,
-      sort: sortKey,
-      direction: sortDirection,
-    },
-    {
-      preserveState: true,
-      preserveScroll: true,
-    }
-  );
-};
 // 刪除按鈕
 const deleteBtn = async (id) => {
   const confirmed = await useConfirmDialog();
@@ -121,7 +53,6 @@ watchEffect(() => {
     });
   }
 });
-
 </script>
 
 <template>
@@ -132,23 +63,16 @@ watchEffect(() => {
       <UserCreateModal v-if="showModal" @close="closeModal" />
       <!-- 表格 -->
       <TableWithPagination
-        :columns="[
-          { label: '會員編號', key: 'id', sortable: true },
-          { label: '姓名', key: 'name' },
-          { label: '出生日期', key: 'birth_date', sortable: true },
-          { label: '出生城市', key: 'birth_city' },
-          { label: '電話號碼', key: 'phone' },
-          { label: '操作', key: 'actions' },
-        ]"
-        :items="userInfos.data"
-        :totalPages="userInfos.last_page"
-        :currentPage="userInfos.current_page"
+        :columns="columns"
+        :items="items"
+        :current-page="currentPage"
+        :total-pages="totalPages"
+        :sort-key="currentSortKey"
+        :sort-direction="currentSortDirection"
         :showSearch="true"
         @search="handleSearch"
-        @pageChange="handlePageChange"
-        @sortChange="handleSortChange"
-        :sortKey="currentSortKey"
-        :sortDirection="currentSortDirection"
+        @page-change="handlePageChange"
+        @sort-change="handleSortChange"
       >
         <!-- Slot: actions 按鈕 -->
         <template #cell(actions)="{ item }">

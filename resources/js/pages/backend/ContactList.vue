@@ -69,34 +69,6 @@ const deleteBtn = async (id) => {
           </div>
         </template>
       </TableWithPagination>
-
-      <!-- <table class="min-w-full bg-white">
-        <thead>
-          <tr>
-            <th class="border px-4 py-2">姓名</th>
-            <th class="border px-4 py-2">電話</th>
-            <th class="border px-4 py-2">Email</th>
-            <th class="border px-4 py-2">主旨</th>
-            <th class="border px-4 py-2">內容</th>
-            <th class="border px-4 py-2">操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="contact in contacts" :key="contact.id">
-            <td class="border px-4 py-2">{{ contact.name }}</td>
-            <td class="border px-4 py-2">{{ contact.phone }}</td>
-            <td class="border px-4 py-2">{{ contact.email }}</td>
-            <td class="border px-4 py-2">{{ contact.title }}</td>
-            <td class="border px-4 py-2">{{ contact.content }}</td>
-            <td class="border px-4 py-2">
-              <div class="flex justify-center gap-2">
-                <button type="button" class="cursor-pointer border px-2" @click="deleteBtn(contact.id)">刪除</button>
-                <button type="button" class="cursor-pointer border px-2" @click="openDetail(contact)">查看</button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
     </div>
   </AppLayout>
   <ContactDetailModal :contact="selectedContact" @close="selectedContact = null" />
