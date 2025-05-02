@@ -1,33 +1,36 @@
-<script setup lang="ts">
-import { ref } from 'vue';
+<script setup>
+import { ref, computed, watchEffect } from 'vue';
 import UserCreateModal from '@/Components/UserCreateModal.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { usePage, router } from '@inertiajs/vue3';
-import type { PageProps } from '@/types'; // 如果有 type 設定，依照情況調整
 import Swal from 'sweetalert2';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
+import TableWithPagination from '@/Components/TableWithPagination.vue';
+import { useTableController } from '@/composables/useTableController';
 
+// // Inertia 資料
+const page = usePage();
 
-const page = usePage<{ userInfos: any[] }>();
+const { items, currentPage, totalPages, searchQuery, currentSortKey, currentSortDirection, handleSearch, handlePageChange, handleSortChange } =
+  useTableController('userInfos', 'admin.user.list'); // 名稱依照 controller 傳的變數與 route 命名
 
-console.log('Flash:', page.props.flash);
-
-const userInfos = page.props.userInfos;
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: '五術研究社 後臺管理',
-    href: '/dashboard',
-  },
+const columns = [
+  { label: '會員編號', key: 'id', sortable: true },
+  { label: '姓名', key: 'name' },
+  { label: '出生日期', key: 'birth_date', sortable: true },
+  { label: '出生城市', key: 'birth_city' },
+  { label: '電話號碼', key: 'phone' },
+  { label: '操作', key: 'actions' },
 ];
 
-const showModal = ref(false);
-const openModal = () => {
-  showModal.value = true;
+// 刪除按鈕
+const deleteBtn = async (id) => {
+  const confirmed = await useConfirmDialog();
+  if (confirmed) {
+    router.get(route('admin.user.delete', id));
+  }
 };
-const closeModal = () => {
-  showModal.value = false;
-};
-
+// 顯示 flash 訊息
 watchEffect(() => {
   const success = page.props.flash?.success;
   const error = page.props.flash?.error;
@@ -50,13 +53,6 @@ watchEffect(() => {
     });
   }
 });
-// 按鈕事件
-const deleteBtn = async (id) => {
-  const confirmed = await useConfirmDialog();
-  if (confirmed) {
-    router.get(route('admin.user.delete', id));
-  }
-};
 </script>
 
 <template>
@@ -65,7 +61,28 @@ const deleteBtn = async (id) => {
       <h1 class="mb-4 text-2xl font-bold">會員管理</h1>
       <button type="button" class="mb-4 border p-2" @click="openModal">新增會員</button>
       <UserCreateModal v-if="showModal" @close="closeModal" />
-      <table class="min-w-full bg-white">
+      <!-- 表格 -->
+      <TableWithPagination
+        :columns="columns"
+        :items="items"
+        :current-page="currentPage"
+        :total-pages="totalPages"
+        :sort-key="currentSortKey"
+        :sort-direction="currentSortDirection"
+        :showSearch="true"
+        @search="handleSearch"
+        @page-change="handlePageChange"
+        @sort-change="handleSortChange"
+      >
+        <!-- Slot: actions 按鈕 -->
+        <template #cell(actions)="{ item }">
+          <div class="flex justify-center gap-2">
+            <button type="button" class="cursor-pointer border border-red-500 px-2 text-red-500" @click="deleteBtn(item.id)">刪除</button>
+            <button type="button" class="cursor-pointer border bg-deepTeal px-2 text-white">查看/編輯</button>
+          </div>
+        </template>
+      </TableWithPagination>
+      <!-- <table class="min-w-full bg-white">
         <thead>
           <tr>
             <th class="border px-4 py-2">會員編號</th>
@@ -91,7 +108,7 @@ const deleteBtn = async (id) => {
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
     </div>
   </AppLayout>
 </template>

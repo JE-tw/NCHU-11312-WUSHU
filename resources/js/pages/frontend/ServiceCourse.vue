@@ -19,8 +19,8 @@ const props = defineProps({
   services: Array,
   categories: Array,
 });
-console.log(props.services);
-console.log(props.categories);
+// console.log(props.services);
+// console.log(props.categories);
 
 // 類別英文名稱陣列
 const enTitles = ['Vedic Astrology', 'Chinese Medicine', 'Classical Magic', 'Other'];
@@ -38,6 +38,38 @@ import { Navigation } from 'swiper/modules';
 
 // 使用的模組
 const modules = [Navigation];
+
+// swiper圖片張數
+const breakpoints = {
+  0: {
+    slidesPerView: 2.5,
+  },
+  1270: {
+    slidesPerView: 4,
+  },
+};
+
+// //
+// function scrollTo(index) {
+//   const el = document.getElementById(`section-${index}`);
+//   if (el) {
+//     el.scrollIntoView({ behavior: 'smooth' });
+//   }
+// }
+
+const sections = [
+  { id: 'vedic', title: '吠陀占星', img: swiper2 },
+  { id: 'chinese', title: '中醫', img: swiper3 },
+  { id: 'magic', title: '魔法', img: swiper4 },
+  { id: 'other', title: '其他', img: swiper5 },
+];
+
+function scrollTo(targetId) {
+  const el = document.getElementById(targetId);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 </script>
 
 <template>
@@ -45,26 +77,42 @@ const modules = [Navigation];
   <div>
     <!-- header -->
     <header class="flex justify-center bg-black">
-      <div class="pb-[60px]sm:pb-[120px] flex flex-col pt-[120px] sm:pt-[224px]">
+      <div class="flex flex-col pb-[60px] pt-[120px] sm:pb-[120px] sm:pt-[224px]">
         <div class="flex flex-col items-center">
           <p class="pb-2 font-serif text-[32px]/[46px] font-bold text-white sm:text-[64px]/[92px]">服務與課程</p>
           <span class="mb-20 w-[120px] border-b-2 border-white sm:w-[300px]"></span>
         </div>
         <!-- swiper -->
-        <div class="p-4">
-          <swiper :slidesPerView="3" :spaceBetween="30" :navigation="true" :modules="modules" class="mySwiper h-[201px] w-[80vw]">
-            <swiper-slide><img :src="swiper1" alt="" /></swiper-slide>
-            <swiper-slide><img :src="swiper2" alt="" /></swiper-slide>
-            <swiper-slide><img :src="swiper3" alt="" /></swiper-slide>
-            <swiper-slide><img :src="swiper4" alt="" /></swiper-slide>
-            <swiper-slide><img :src="swiper5" alt="" /></swiper-slide>
+        <div class="flex items-start">
+          <swiper
+            :slidesPerView="4"
+            :spaceBetween="30"
+            :navigation="true"
+            :modules="modules"
+            :breakpoints="breakpoints"
+            class="mySwiper h-auto w-[324px] sm:w-[584px] xl:w-[70vw]"
+          >
+            <!-- 服務 swiper -->
+            <swiper-slide @click="scrollTo('service-section')">
+              <div class="cursor-pointer text-center">
+                <img :src="swiper1" alt="" class="mb-2 aspect-[4/3] h-[90px] sm:mb-4 sm:h-[150px]" />
+                <p class="text-[20px] font-bold text-white sm:text-[28px]/[37px] xl:text-[32px]/[43px]">服務</p>
+              </div>
+            </swiper-slide>
+            <!-- 課程 swiper -->
+            <swiper-slide v-for="(item, index) in sections" :key="index">
+              <div @click="scrollTo(`section-${index}`)" class="cursor-pointer text-center">
+                <img :src="item.img" class="mb-2 aspect-[4/3] h-[90px] sm:mb-4 sm:h-[150px]" />
+                <p class="text-[20px] font-bold text-white sm:text-[28px]/[37px] xl:text-[32px]/[43px]">{{ item.title }}</p>
+              </div>
+            </swiper-slide>
           </swiper>
         </div>
       </div>
     </header>
 
     <!-- 服務 -->
-    <div class="relative bg-cover bg-center py-[54px] sm:h-[320px] sm:py-[80px]" :style="{ backgroundImage: `url(${swiper1})` }">
+    <div id="service-section" class="relative bg-cover bg-center py-[54px] sm:h-[320px] sm:py-[80px]" :style="{ backgroundImage: `url(${swiper1})` }">
       <div class="absolute inset-0 bg-black/80"></div>
       <div class="flex flex-col items-center">
         <p class="z-30 font-serif text-[32px] font-bold text-white sm:text-[64px]">服務</p>
@@ -85,6 +133,7 @@ const modules = [Navigation];
       :name="category.name"
       :enTitle="enTitles[index]"
       :courses="category.courses"
+      :id="`section-${index}`"
     >
       <!-- 類別英文名稱 enTitle 資料庫沒有建到，故用插槽+陣列 -->
       <p class="z-30 font-serif text-[32px]/[46px] text-white sm:text-[52px]/[75px] xl:text-[48px]/[69px]">{{ enTitles[index] }}</p>
@@ -97,8 +146,6 @@ const modules = [Navigation];
 .swiper-slide {
   text-align: center;
   font-size: 18px;
-  background: #fff;
-
   /* Center slide text vertically */
   display: flex;
   justify-content: center;
@@ -107,8 +154,50 @@ const modules = [Navigation];
 
 .swiper-slide img {
   display: block;
-  width: 100%;
-  height: 100%;
   object-fit: cover;
+}
+
+.swiper-button-next {
+  display: none;
+}
+.swiper-button-prev {
+  display: none;
+}
+
+@screen xl {
+  /* 1280px 以上適用 */
+  .swiper-button-next {
+    position: absolute;
+    display: block;
+    top: 30%;
+    right: 15px;
+    color: #b5b5b5;
+    width: auto;
+  }
+  .swiper-button-next:after {
+    display: flex;
+    background-color: #363636;
+    border-radius: 100px 0 0 100px;
+    width: 40px;
+    height: 80px;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .swiper-button-prev {
+    display: block;
+    color: #b5b5b5;
+    width: auto;
+    top: 30%;
+    left: 15px;
+    position: absolute;
+  }
+  .swiper-button-prev:after {
+    display: flex;
+    background-color: #363636;
+    border-radius: 0 100px 100px 0;
+    width: 40px;
+    height: 80px;
+    align-items: center;
+  }
 }
 </style>

@@ -9,7 +9,7 @@
       'justify-between xl:justify-around'
     ]">
       <!-- Logo 區塊 -->
-      <div class="flex items-center space-x-2 cursor-pointer">
+      <div class="flex items-center space-x-1 cursor-pointer">
         <img src="@/images/logo.svg" alt="Logo" :class="[isMobile ? 'h-[30px] w-[30px]' : 'h-[40px] w-[40px]']" />
         <a href="http://127.0.0.1:8000/wushu" class="px-3 py-2 hover:text-[#1f9c95] whitespace-nowrap">
           <span :class="[isMobile ? 'text-xl' : 'text-2xl sm:text-4xl', 'font-bold text-[#0b0b0b]']">
@@ -34,67 +34,82 @@
       <!-- 電腦版右側 -->
       <div v-if="!isTablet && !isMobile" class="flex items-center gap-4 text-black">
         <!-- 搜尋功能 -->
-        <div class="relative flex items-center h-8">
+        <div class="relative flex items-center h-8 group">
           <button v-if="!isSearchActive" @click="toggleSearch" aria-label="搜尋"
-            class="hover:text-[#1f9c95] flex items-center justify-center h-8">
-            <img src="@/images/search.png" alt="搜尋" class="w-8 h-8" />
+            class="flex items-center justify-center h-8 w-8 relative">
+            <img src="@/images/search.png" alt="搜尋" class="absolute inset-0 w-8 h-8 group-hover:hidden" />
+            <img src="@/images/g1search.svg" alt="搜尋懸停" class="absolute inset-0 w-8 h-8 hidden group-hover:block" />
           </button>
+
           <!-- 搜尋列 -->
           <div v-if="isSearchActive"
             class="absolute right-0 top-1/2 -translate-y-1/2 flex items-center bg-white rounded-full shadow-md">
             <input type="text" placeholder="關鍵字" class="bg-white rounded-full pl-8 pr-3 py-2 w-[200px] outline-none" />
-            <img src="@/images/search.png" alt="搜尋" class="absolute left-2 w-5 h-5" />
+            <img src="@/images/g2search.svg" alt="搜尋" class="absolute left-2 w-5 h-5" />
             <button @click="toggleSearch" class="px-3 hover:text-[#1f9c95]">
               <span class="text-lg">×</span>
             </button>
           </div>
         </div>
 
+        <!-- 購物車 -->
         <a href="http://127.0.0.1:8000/wushu/Cart" aria-label="購物車"
-          class="hover:text-[#1f9c95] flex items-center justify-center h-8">
-          <img src="@/images/cart.svg" alt="購物車" class="w-8 h-8" />
+          class="group relative w-8 h-8 flex items-center justify-center">
+          <img src="@/images/cart.svg" alt="購物車" class="absolute inset-0 w-8 h-8 group-hover:hidden" />
+          <img src="@/images/gcart.svg" alt="購物車懸停" class="absolute inset-0 w-8 h-8 hidden group-hover:block" />
         </a>
 
-        <a href="http://127.0.0.1:8000/wushu/MemberCenter" class="hover:text-[#1f9c95] flex items-center gap-1 h-8">
-          <div class="flex items-center justify-center h-8">
-            <img src="@/images/user.svg" alt="登入" class="w-8 h-8" />
+        <!-- 登入註冊 -->
+        <a href="http://127.0.0.1:8000/wushu/MemberCenter" class="group flex items-center gap-1 h-8">
+          <div class="relative w-8 h-8">
+            <img src="@/images/user.svg" alt="登入" class="absolute inset-0 w-8 h-8 group-hover:hidden" />
+            <img src="@/images/guser.svg" alt="登入懸停" class="absolute inset-0 w-8 h-8 hidden group-hover:block" />
           </div>
           <span
-            class="font-['Microsoft_JhengHei'] font-normal text-[18px] leading-8 tracking-normal whitespace-nowrap cursor-pointer">
+            class="font-['Microsoft_JhengHei'] font-normal text-[18px] leading-8 tracking-normal whitespace-nowrap cursor-pointer group-hover:text-[#1f9c95]">
             登入註冊
           </span>
         </a>
       </div>
 
+
       <!-- 平板版 -->
       <div v-if="isTablet && !isMobile" class="flex items-center gap-3">
         <div class="flex items-center gap-3">
-          <div class="relative flex items-center h-7">
+
+          <!-- 搜尋 -->
+          <div class="relative flex items-center h-7 group">
             <button v-if="!isSearchActive" @click="toggleSearch" aria-label="搜尋"
-              class="hover:text-[#1f9c95] flex items-center justify-center h-7">
-              <img src="@/images/search.png" alt="搜尋" class="w-7 h-7" />
+              class="flex items-center justify-center h-7 w-7 relative">
+              <img src="@/images/search.png" alt="搜尋" class="absolute inset-0 w-7 h-7 group-hover:hidden" />
+              <img src="@/images/g1search.svg" alt="搜尋懸停" class="absolute inset-0 w-7 h-7 hidden group-hover:block" />
             </button>
+
             <!-- 平板搜尋列 -->
             <div v-if="isSearchActive"
               class="absolute right-0 top-1/2 -translate-y-1/2 flex items-center bg-white rounded-full shadow-md">
               <input type="text" placeholder="關鍵字"
                 class="bg-white rounded-full pl-8 pr-3 py-2 w-[200px] outline-none" />
-              <img src="@/images/search.png" alt="搜尋" class="absolute left-2 w-5 h-5" />
+              <img src="@/images/g2search.svg" alt="搜尋" class="absolute left-2 w-5 h-5" />
               <button @click="toggleSearch" class="px-3 hover:text-[#1f9c95]">
                 <span class="text-lg">×</span>
               </button>
             </div>
           </div>
 
+          <!-- 購物車 -->
           <a href="http://127.0.0.1:8000/wushu/Cart" aria-label="購物車"
-            class="hover:text-[#1f9c95] flex items-center justify-center h-7">
-            <img src="@/images/cart.svg" alt="購物車" class="w-7 h-7" />
+            class="group relative w-7 h-7 flex items-center justify-center">
+            <img src="@/images/cart.svg" alt="購物車" class="absolute inset-0 w-7 h-7 group-hover:hidden" />
+            <img src="@/images/gcart.svg" alt="購物車懸停" class="absolute inset-0 w-7 h-7 hidden group-hover:block" />
           </a>
 
+          <!-- 選單 -->
           <button @click="toggleMobileMenu" aria-label="選單"
             class="hover:text-[#1f9c95] flex items-center justify-center h-7">
             <img src="@/images/menu.svg" alt="選單" class="w-7 h-7" />
           </button>
+
         </div>
       </div>
 
@@ -103,19 +118,25 @@
         <div class="relative flex items-center">
           <input type="text" placeholder="關鍵字"
             class="bg-white rounded-full pl-8 pr-3 py-1 w-[160px] text-sm outline-none" />
-          <img src="@/images/search.png" alt="搜尋" class="absolute left-2 w-4 h-4" />
+          <img src="@/images/g2search.svg" alt="搜尋" class="absolute left-2 w-4 h-4" />
         </div>
         <div class="flex items-center gap-2">
+
+          <!-- 購物車 -->
           <a href="http://127.0.0.1:8000/wushu/Cart" aria-label="購物車"
-            class="hover:text-[#1f9c95] flex items-center justify-center h-6">
-            <img src="@/images/cart.svg" alt="購物車" class="w-6 h-6" />
+            class="relative group w-6 h-6 flex items-center justify-center">
+            <img src="@/images/cart.svg" alt="購物車" class="absolute inset-0 w-6 h-6 group-hover:hidden" />
+            <img src="@/images/gcart.svg" alt="購物車懸停" class="absolute inset-0 w-6 h-6 hidden group-hover:block" />
           </a>
+
+          <!-- 選單 -->
           <button @click="toggleMobileMenu" aria-label="選單"
             class="hover:text-[#1f9c95] flex items-center justify-center h-6">
             <img src="@/images/menu.svg" alt="選單" class="w-6 h-6" />
           </button>
         </div>
       </div>
+
     </div>
   </header>
 
@@ -123,24 +144,27 @@
   <div v-if="(isTablet || isMobile) && isMobileMenuOpen"
     class="fixed left-0 right-0 z-40 w-full bg-[#F2F2F2] shadow-md overflow-hidden transition-all duration-300"
     :class="isMobile ? 'top-[60px]' : 'top-[80px]'" :style="{ maxHeight: isMobileMenuOpen ? '300px' : '0' }">
-    <nav class="flex flex-col py-2 px-4">
+    <nav class="flex flex-col py-2">
       <a href="http://127.0.0.1:8000/wushu#about-section"
-        class="font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 border-b border-gray-300 hover:text-[#1f9c95]">
+        class="flex items-center font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 border-b border-gray-300 hover:bg-darkGray hover:text-white px-6 sm:px-10"
+        :class="isMobile ? 'justify-center' : 'justify-start'">
         關於站主
       </a>
 
       <a href="http://127.0.0.1:8000/wushu/ServiceCourse"
-        class="font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 border-b border-gray-300 hover:text-[#1f9c95]">
+        class="flex items-center font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 border-b border-gray-300 hover:bg-darkGray hover:text-white px-6 sm:px-10"
+        :class="isMobile ? 'justify-center' : 'justify-start'">
         服務與課程
       </a>
 
       <a href="http://127.0.0.1:8000/wushu/MemberCenter"
-        class="font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 flex items-center gap-2 hover:text-[#1f9c95]">
-        <img src="@/images/user.svg" alt="登入" class="w-6 h-6" />
+        class="flex items-center font-['Microsoft_JhengHei'] font-bold text-[#0b0b0b] text-[18px] sm:text-[22px] py-3 gap-2 hover:bg-darkGray hover:text-white px-6 sm:px-10"
+        :class="isMobile ? 'justify-center' : 'justify-start'">
         登入註冊
       </a>
     </nav>
   </div>
+
 </template>
 
 <script setup>

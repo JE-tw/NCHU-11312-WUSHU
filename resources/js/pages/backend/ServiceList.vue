@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, router } from '@inertiajs/vue3';
 import type { PageProps } from '@/types'; // 如果有 type 設定，依照情況調整
+import Swal from 'sweetalert2';
+import { useConfirmDialog } from '@/composables/useConfirmDialog';
 
 const page = usePage<{ services: any[] }>();
 
@@ -12,6 +14,37 @@ const breadcrumbs: BreadcrumbItem[] = [
     href: '/dashboard',
   },
 ];
+
+watchEffect(() => {
+  const success = page.props.flash?.success;
+  const error = page.props.flash?.error;
+  if (success) {
+    Swal.fire({
+      title: success,
+      icon: 'success',
+      confirmButtonText: '確定',
+    }).then(() => {
+      window.location.reload();
+    });
+  }
+
+  if (error) {
+    Swal.fire({
+      title: '錯誤',
+      text: error,
+      icon: 'error',
+      confirmButtonText: '確定',
+    });
+  }
+});
+
+// 按鈕事件
+const deleteBtn = async (id) => {
+  const confirmed = await useConfirmDialog();
+  if (confirmed) {
+    router.get(route('admin.service.delete', id));
+  }
+};
 </script>
 
 <template>
@@ -34,7 +67,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             <td class="border px-4 py-2">{{ service.introduction }}</td>
             <td class="border px-4 py-2">
               <div class="flex gap-2 justify-center">
-                <button type="button" class="border px-2 cursor-pointer">刪除</button>
+                <button type="button" class="border px-2 cursor-pointer" @click="deleteBtn(service.id)">刪除</button>
                 <button type="button" class="border px-2 cursor-pointer">編輯</button>
               </div>
             </td>

@@ -34,6 +34,7 @@ class ContactRecord extends Model
 		'phone',
 		'email',
 		'title',
-		'content'
+		'content',
+		'created_at'
 	];
 }

@@ -7,7 +7,9 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  breadcrumbs: () => [],
+  breadcrumbs: () => [
+    { title: '五術研究社 後臺管理', href: '/dashboard' }
+  ],
 });
 </script>
 

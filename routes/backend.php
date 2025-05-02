@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\UserInfoController;
-
+use App\Models\Service;
 
 // 後端頁面
 // 付款紀錄管理
@@ -40,6 +40,9 @@ Route::prefix('wushu/admin/contact')->group(function(){
 // 服務內容管理
 Route::prefix('wushu/admin/service')->group(function(){
     Route::get('/',[ServiceController::class,'index'])->name('admin.service.list');
+
+    // 刪除
+    Route::get('/delete/{id}',[ServiceController::class,'delete'])->name('admin.service.delete');
 
 });
 
