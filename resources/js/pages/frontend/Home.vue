@@ -3,6 +3,7 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 
 import Header from '../../components/Header.vue'
 import Footer from '../../components/Footer.vue'
+import BackToTop from '../../components/BackToTop.vue'
 
 // ====== 載入圖片資源 ======
 import imgSrc from '@/images/藥材aocax-ufyt5.webp'
@@ -503,6 +504,7 @@ onBeforeUnmount(() => {
         </main>
 
         <Footer />
+        <BackToTop />
     </div>
 </template>
 
