@@ -248,7 +248,7 @@ onBeforeUnmount(() => {
                                                 {{ course.lessons }}堂課
                                             </span>
                                             <span class="text-gray-300 w-24 text-[24px] text-center">{{ course.duration
-                                            }}</span>
+                                                }}</span>
                                             <span class="text-deepTeal font-bold text-[24px] w-28 text-right">{{
                                                 course.price }}</span>
                                         </div>
@@ -315,7 +315,7 @@ onBeforeUnmount(() => {
                                         {{ course.lessons }}堂課
                                     </span>
                                     <span class="text-gray-300 text-xl text-center whitespace-nowrap">{{ course.duration
-                                    }}</span>
+                                        }}</span>
                                     <span class="text-deepTeal font-bold text-xl text-right">{{ course.price }}</span>
                                 </div>
                             </div>
@@ -412,7 +412,7 @@ onBeforeUnmount(() => {
             <section id="about-section" class="relative bg-white">
                 <div class="max-w-[1200px] mx-auto px-[20px] py-[40px] sm:px-[30px] sm:py-[60px]">
                     <h2
-                        class="text-[36px] sm:text-[48px] xl:text-[64px] font-semibold text-center mb-[30px] sm:mb-[40px] relative block font-serif after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-[180px] sm:after:w-[260px] after:h-[2px] after:bg-black">
+                        class="text-[36px] sm:text-[48px] xl:text-[64px] font-bold text-center mb-[30px] sm:mb-[40px] relative block font-serif after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:-translate-x-1/2 after:w-[180px] sm:after:w-[260px] after:h-[2px] after:bg-black">
                         關於站主
                     </h2>
 
@@ -420,22 +420,22 @@ onBeforeUnmount(() => {
                     <div class="flex flex-col xl:flex-row items-center gap-[30px] sm:gap-[50px] xl:gap-[40px]">
                         <!-- 文字區塊 (左側) -->
                         <div class="flex-1 text-[18px] sm:text-[20px] xl:text-[24px]">
-                            <p class="leading-[1.8] mb-[15px]">
+                            <p class="leading-[1.8] mb-[40px]">
                                 文老師自學生時期便開始學習五術，致力於五術教學十餘年。中醫醫術－針灸傳承自古法針灸、董氏奇穴和山西派鍼法；脈學傳承自萬氏的太素脈學；內科傳承各家如經方、溫病、伏氣學派等多位老師；祝由傳承自西河派和軒轅派。
                             </p>
-                            <p class="leading-[1.8] mb-[15px]">
+                            <p class="leading-[1.8] mb-[40px]">
                                 命學目前以吠陀占星 Jyotish 為主，師從 Komilla、Joni Patry、Marc Boney
                                 等國際大家還有十數位印度吠陀占星大師；風水承襲自蔣氏三元玄空風水、吠陀 Vastu
                                 和龍門八局，亦通道家奇門遁甲、大六壬、太乙神數三式之學、梅花易數，以及是為熊氏太極拳傳人及華佗門第八十代傳人。
                             </p>
-                            <p class="leading-[1.8] mb-[15px]">
+                            <p class="leading-[1.8] mb-[40px]">
                                 另外西方之學尚有西洋古典行星護符魔法、北歐魔法等皆是師從大家。
                             </p>
                         </div>
 
                         <!-- 圖片區塊 (右側) -->
-                        <div class="flex-1 w-full xl:w-auto overflow-hidden">
-                            <img :src="masterImg1" alt="禪石圖" class="w-full h-auto block" />
+                        <div class="flex-1 w-full xl:w-auto overflow-hidden mt-14">
+                            <img :src="masterImg1" alt="禪石圖" class="w-full h-auto block xl:max-w-[741px]" />
                         </div>
                     </div>
                 </div>
@@ -444,13 +444,13 @@ onBeforeUnmount(() => {
 
 
             <!-- 學會創立沿革區塊 -->
-            <section id="history-section" class="relative bg-white">
+            <section id="history-section" class="relative bg-white pb-14">
                 <div class="max-w-[1903px] mx-auto px-5 py-10 sm:px-8 sm:py-16 xl:px-0 xl:py-12">
 
                     <!--手機 & 平板版專用標題：在最上方 -->
-                    <h2 class="text-3xl sm:text-4xl xl:hidden font-semibold text-center mb-8 font-serif">
-                        <span class="relative inline-block after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:translate-x-1/2
-        after:w-full after:h-[2px] after:bg-black">
+                    <h2 class="text-3xl sm:text-4xl xl:hidden font-bold text-center mb-8 font-serif">
+                        <span
+                            class="relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-full after:h-[2px] after:bg-black">
                             學會創立沿革
                         </span>
                     </h2>
@@ -458,25 +458,26 @@ onBeforeUnmount(() => {
                     <!-- 圖文區塊 -->
                     <div class="flex flex-col xl:flex-row items-start">
 
-                        
+
                         <div class="w-full xl:w-1/2 overflow-hidden">
                             <img :src="masterImg2" alt="中藥櫃" class="w-full h-auto object-contain" />
                         </div>
 
-                       
-                        <div
-                            class="w-full xl:w-1/2 bg-lightGray px-5 py-8 sm:px-8 flex flex-col items-center mt-8 xl:mt-60">
-                           
 
-                            
-                            <h2 class="hidden xl:block text-5xl font-semibold text-center mb-8 font-serif">
-                                <span class="relative inline-block after:content-[''] after:absolute after:bottom-[-6px] after:left-1/2 after:translate-x-1/2
-            after:w-full after:h-[2px] after:bg-black">
+                        <div
+                            class="w-full xl:w-1/2 bg-transparent sm:bg-lightGray px-5 py-8 sm:px-8 flex flex-col items-center mt-8 xl:mt-60 relative">
+
+
+                            <h2
+                                class="hidden xl:block absolute -top-36 left-0 xl:left-[60px] text-[64px] font-bold text-left mb-8 font-serif">
+                                <span
+                                    class="relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-full after:h-[2px] after:bg-black">
                                     學會創立沿革
                                 </span>
                             </h2>
 
-                            
+
+
                             <div class="max-w-[800px] w-full">
                                 <p class="text-lg sm:text-xl xl:text-2xl leading-[1.8] mb-5">
                                     <span
