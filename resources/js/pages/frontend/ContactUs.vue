@@ -21,9 +21,13 @@ const title = ref(''); // 輸入時label往上方移動
 console.log(item.value);
 
 // 送出
+const submit = () => {
+    router.post(route('wushu.store'),item.value); // 從這裡開始
+    console.log('成功送出');
+};
+
 // const submit = () => {
-//     router.post(route('wushu.store'),item.value); // 從這裡開始
-//     console.log('成功送出');
+//   console.log('成功');
 // };
 </script>
 
@@ -114,6 +118,7 @@ console.log(item.value);
               id="title"
               type="text"
               name="title"
+              maxlength="20"
               v-model="item.title"
               class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white pl-4 text-[18px]/[24px] font-normal text-black outline-none"
               required
@@ -135,6 +140,7 @@ console.log(item.value);
               v-model="item.content"
               id="content"
               class="mb-[24px] h-[113px] w-full rounded-sm border border-mediumGray p-4 text-[18px]/[24px] text-black outline-none"
+              required
             ></textarea>
           </div>
           <p class="mb-[24px] w-[360px] text-[12px]/[16px] text-darkGray sm:w-[438px] sm:text-[18px]/[24px]">

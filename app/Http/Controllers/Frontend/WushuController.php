@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Service;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\ContactRecord;
 use App\Http\Controllers\Controller;
 
 class WushuController extends Controller
@@ -34,23 +35,25 @@ class WushuController extends Controller
         ]);
     }
 
-    // // 🔺聯絡我們頁 ContactUs
-    // function contact(){
-    //     return Inertia::render('frontend/ContactUs');
-    // }
+    // 🔺聯絡我們頁 ContactUs
+    function contact()
+    {
+        return Inertia::render('frontend/ContactUs');
+    }
 
-    // // 🔺新增聯絡我們資料
-    // function store(Request $request){
-    //     $item = $request->all();
-    //     // 1. 資料個別填寫
-    //     // dd($item);
-    //     ContactRecord::create([
-    //     "name" => $item['name'],
-    //     "phone" => $item['phone'],
-    //     "email" => $item['email'],
-    //     "title" => $item['title'],
-    //     "content" => $item['content'],
-    //     ]);
-    //     return redirect(route('frontend.list'));
-    // }
+    // 🔺新增 聯絡我們資料
+    function store(Request $request)
+    {
+        $item = $request->all();
+        // 1. 資料個別填寫
+        // dd($item);
+        ContactRecord::create([
+            "name" => $item['name'],
+            "phone" => $item['phone'],
+            "email" => $item['email'],
+            "title" => $item['title'],
+            "content" => $item['content'],
+        ]);
+        return redirect(route('frontend.list'));
+    }
 }

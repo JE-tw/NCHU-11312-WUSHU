@@ -36,10 +36,10 @@ Route::prefix('wushu')->group(function () {
         return Inertia::render('frontend/ContactUs');
     });
     // 🔺新增頁 TidingCrete
-    // Route::get('/ContactUs',[WushuController::class,'contact'])->name('wushu.contact');
+    Route::get('/ContactUs',[WushuController::class,'contact'])->name('wushu.contact');
     
-    // // 🔺新增資料 新增要帶值的方法
-    // Route::post('/ContactUs',[WushuController::class,'store'])->name('wushu.store');
+    // 🔺新增資料 新增要帶值的方法
+    Route::post('/ContactUs',[WushuController::class,'store'])->name('wushu.store');
 
 
     // 登入註冊頁
