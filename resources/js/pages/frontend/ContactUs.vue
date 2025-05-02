@@ -1,18 +1,34 @@
 <!-- 聯絡我們頁 -->
 <script setup>
+import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import Header from '../../components/Header.vue'
-import Footer from '../../components/Footer.vue'
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
 
+const item = ref({
+  name: '',
+  phone: '',
+  email: '',
+  title: '',
+  content: '',
+});
 
 const name = ref(''); // 輸入時label往上方移動
 const phone = ref(''); // 輸入時label往上方移動
 const email = ref(''); // 輸入時label往上方移動
-const subject = ref(''); // 輸入時label往上方移動
+const title = ref(''); // 輸入時label往上方移動
+
+console.log(item.value);
+
+// 送出
+// const submit = () => {
+//     router.post(route('wushu.store'),item.value); // 從這裡開始
+//     console.log('成功送出');
+// };
 </script>
 
 <template>
-          <Header />
+  <Header />
 
   <div class="bg-softGray">
     <!-- header -->
@@ -35,18 +51,15 @@ const subject = ref(''); // 輸入時label往上方移動
               id="name"
               type="text"
               name="name"
-              v-model="name"
+              v-model="item.name"
               class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white pl-4 text-[18px]/[24px] font-normal text-black outline-none"
               required
             />
-
-            <!-- 
-            <label for="name" class="absolute left-0 py-[11.5px] pl-[18px] text-[18px] text-darkGray">姓名</label> -->
             <label
               for="name"
               :class="[
                 'absolute left-0 text-darkGray',
-                name ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
+                item.name ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
               ]"
             >
               姓名
@@ -59,7 +72,9 @@ const subject = ref(''); // 輸入時label往上方移動
               id="phone"
               type="text"
               name="phone"
-              v-model="phone"
+              v-model="item.phone"
+              minlength="10"
+              maxlength="10"
               class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white pl-4 text-[18px]/[24px] font-normal text-black outline-none"
               required
             />
@@ -67,7 +82,7 @@ const subject = ref(''); // 輸入時label往上方移動
               for="phone"
               :class="[
                 'absolute left-0 text-darkGray',
-                phone ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
+                item.phone ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
               ]"
               >手機號碼</label
             >
@@ -78,7 +93,7 @@ const subject = ref(''); // 輸入時label往上方移動
               id="email"
               type="text"
               name="email"
-              v-model="email"
+              v-model="item.email"
               class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white pl-4 text-[18px]/[24px] font-normal text-black outline-none"
               required
             />
@@ -86,28 +101,28 @@ const subject = ref(''); // 輸入時label往上方移動
               for="email"
               :class="[
                 'absolute left-0 text-darkGray',
-                email ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
+                item.email ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
               ]"
               >電子郵件</label
             >
           </div>
 
-          <!-- 主旨 subject -->
+          <!-- 主旨 title -->
           <div class="relative w-[360px] sm:w-[438px]">
             <p class="mb-2 text-[20px]/[27px] font-bold text-black sm:text-[32px]/[43px]">主旨</p>
             <input
-              id="subject"
+              id="title"
               type="text"
-              name="subject"
-              v-model="subject"
+              name="title"
+              v-model="item.title"
               class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white pl-4 text-[18px]/[24px] font-normal text-black outline-none"
               required
             />
             <label
-              for="subject"
+              for="title"
               :class="[
                 'absolute left-0 text-darkGray',
-                subject ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
+                item.title ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
               ]"
               >主旨(限20字內)</label
             >
@@ -117,8 +132,9 @@ const subject = ref(''); // 輸入時label往上方移動
             <p class="mb-2 text-[20px]/[27px] font-bold text-black sm:text-[32px]/[43px]">內容</p>
             <textarea
               name="content"
+              v-model="item.content"
               id="content"
-              class="mb-[24px] h-[113px] w-full rounded-sm border border-mediumGray text-[18px]/[24px] text-black outline-none p-4"
+              class="mb-[24px] h-[113px] w-full rounded-sm border border-mediumGray p-4 text-[18px]/[24px] text-black outline-none"
             ></textarea>
           </div>
           <p class="mb-[24px] w-[360px] text-[12px]/[16px] text-darkGray sm:w-[438px] sm:text-[18px]/[24px]">
@@ -127,6 +143,7 @@ const subject = ref(''); // 輸入時label往上方移動
           <!-- 送出按鈕 -->
           <button
             type=""
+            @click="submit"
             class="h-[36px] w-[360px] rounded-sm bg-blueGreen text-[16px]/[28px] tracking-tight text-white sm:h-[48px] sm:w-[438px] sm:text-[24px]/[40px]"
           >
             送出
@@ -136,5 +153,4 @@ const subject = ref(''); // 輸入時label往上方移動
     </main>
   </div>
   <Footer />
-
 </template>
