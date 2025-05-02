@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import CourseCard from '@/components/CourseCard.vue';
@@ -102,30 +102,30 @@ function formatStatus(status) {
     <!-- 上方 Tabs -->
     <div class="flex items-center gap-4 my-10">
       <button @click="tab = 'personalinfo'"
-        :class="[tab === 'personalinfo' ? activeTopTabClass : inactiveTopTabClass, 'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
+        :class="[tab === 'personalinfo' ? activeTopTabClass : inactiveTopTabClass, 'tab-button text-2xl px-12 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
         個人資料
       </button>
 
       <button @click="tab = 'mycourse'"
-        :class="[tab === 'mycourse' ? activeTopTabClass : inactiveTopTabClass, 'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
+        :class="[tab === 'mycourse' ? activeTopTabClass : inactiveTopTabClass, 'tab-button text-2xl px-12 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
         我的課程
       </button>
 
       <button @click="tab = 'purchaserecord'"
-        :class="[tab === 'purchaserecord' ? activeTopTabClass : inactiveTopTabClass, 'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
+        :class="[tab === 'purchaserecord' ? activeTopTabClass : inactiveTopTabClass, 'tab-button text-2xl px-12 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
         購買記錄
       </button>
 
       <button @click="tab = 'logout'"
-        :class="[tab === 'logout' ? activeTopTabClass : inactiveTopTabClass, 'text-2xl px-10 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
+        :class="[tab === 'logout' ? activeTopTabClass : inactiveTopTabClass, 'tab-button text-2xl px-12 py-3 rounded-md focus:outline-none transition-colors duration-300 whitespace-nowrap']">
         登出
       </button>
     </div>
   </header>
 
   <!-- 主要內容區 -->
-  <div class="bg-white min-h-screen my-20">
-    <div class="container mx-auto w-full">
+  <div class="bg-white min-h-screen my-20 overflow-x-hidden">
+    <div class="mx-auto w-full max-w-[95%] px-4">
       <Header />
 
       <!-- 個人資料 -->
@@ -246,13 +246,14 @@ function formatStatus(status) {
         <!-- 修改密碼區塊結束 -->
       </div>
 
-      <!-- 我的課程卡 -->
-      <div v-else-if="tab === 'mycourse'" class="w-full px-4 py-8">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-screen-xl mx-auto">
-          <div v-for="(course, index) in courses" :key="index"
-            class="border border-gray-200 rounded-lg p-6 shadow-sm bg-white">
-            <h3 class="text-lg sm:text-xl md:text-2xl font-bold mb-2">{{ course.title }}</h3>
-            <p class="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
+      <!-- 我的課程區塊 -->
+      <div v-else-if="tab === 'mycourse'" class="w-full py-8 px-4">
+        <div class="course-grid">
+          <div v-for="(course, index) in courses" :key="index" class="course-card">
+            <h3 class="text-xl font-bold mb-2 break-words">
+              {{ course.title }}
+            </h3>
+            <p class="text-base text-gray-700 leading-relaxed break-words mb-4">
               {{ course.description }}
             </p>
             <div class="flex justify-between items-center">
@@ -270,10 +271,10 @@ function formatStatus(status) {
       <!-- 購買記錄 -->
       <div v-else-if="tab === 'purchaserecord'" class="w-full px-4 py-8 text-gray-800">
         <div class="max-w-3xl mx-auto border border-gray-400 rounded-md p-6">
-        <div class="flex justify-between">
-          <h2 class="text-2xl font-bold mb-6">購買紀錄</h2>
-          <h1 class="text-md font-bold mb-0 text-gray-500">僅保留6個月內資料</h1>
-        </div>
+          <div class="flex justify-between">
+            <h2 class="text-2xl font-bold mb-6">購買紀錄</h2>
+            <h1 class="text-md font-bold mb-0 text-gray-500">僅保留6個月內資料</h1>
+          </div>
 
           <div class="overflow-x-auto">
             <table class="min-w-full border border-gray-200">
@@ -310,17 +311,21 @@ function formatStatus(status) {
 
           <!-- 分頁控制 -->
           <div class="mt-6 flex justify-center items-center gap-2 text-sm">
-            <button @click="currentPage--" :disabled="currentPage === 1" class="px-3 py-1 border rounded bg-gray-100 hover:bg-gray-200 disabled:opacity-50">
+            <!-- 上一頁箭頭 -->
+            <button @click="currentPage > 1 && currentPage--" :class="[
+              'text-gray-800 hover:text-black',
+              currentPage === 1 ? 'cursor-not-allowed' : ''
+            ]">
+              &lt;
             </button>
 
             <!-- 數字分頁 -->
             <button v-for="page in totalPages" :key="page" @click="currentPage = page" :class="[
               'px-3 py-1 border rounded',
-              page === currentPage ? 'bg-[#518C95] text-white' : 'bg-gray-100 hover:bg-gray-200'
+              page === currentPage ? 'bg-[#518C95] text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
             ]">
               {{ page }}
             </button>
-
           </div>
         </div>
       </div>
@@ -330,17 +335,12 @@ function formatStatus(status) {
           確認登出
         </button>
       </div>
-
-
     </div>
   </div>
-
-
-
   <Footer />
 </template>
 
-<style>
+<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 body {
@@ -354,4 +354,56 @@ input[type="date"]::-webkit-datetime-edit {
 input[type="date"]:focus::-webkit-datetime-edit {
   color: black;
 }
+
+.course-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+}
+
+.course-card {
+  border: 1px solid #e5e7eb;
+  /* gray-200 */
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: white;
+}
+
+/* 當畫面寬度 >= 600px，顯示 2 欄 */
+@media (min-width: 600px) {
+  .course-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 當畫面寬度 >= 1270px，顯示 3 欄 */
+@media (min-width: 1270px) {
+  .course-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 自定義斷點：畫面寬度 < 1000px 時縮小按鈕 */
+@media (max-width: 1000px) {
+  .tab-button {
+    padding: 0.75rem 2rem; /* 等於 py-3 px-8 */
+    font-size: 1.25rem;     /* text-xl */
+  }
+}
+
+@media (max-width: 700px) {
+  .tab-button {
+    padding: 0.5rem 1.25rem; /* py-2 px-5 */
+    font-size: 1rem;         /* text-base */
+  }
+}
+
+@media (max-width: 500px) {
+  .tab-button {
+    padding: 0.25rem 0.75rem; /* py-1 px-3 */
+    font-size: 0.875rem;      /* text-sm */
+  }
+}
+
 </style>
