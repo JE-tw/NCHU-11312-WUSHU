@@ -3,6 +3,7 @@
 import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import Header from '../../components/Header.vue';
+import Swal from 'sweetalert2';
 import Footer from '../../components/Footer.vue';
 
 const item = ref({
@@ -21,14 +22,42 @@ const title = ref(''); // 輸入時label往上方移動
 console.log(item.value);
 
 // 送出
-const submit = () => {
-    router.post(route('wushu.store'),item.value); // 從這裡開始
-    console.log('成功送出');
-};
 
 // const submit = () => {
 //   console.log('成功');
 // };
+
+const handleSubmit = () => {
+  // 這裡先做格式驗證（可額外寫邏輯）
+  if (!item.value.name || !item.value.email) {
+    Swal.fire('請填寫所有欄位');
+    return;
+  }
+
+  // 然後跑確認對話框
+  Swal.fire({
+    title: '是否確認送出?',
+    showCancelButton: true,
+    cancelButtonText: '取消',
+    confirmButtonText: '確定',
+    customClass: {
+      confirmButton: 'my-confirm-btn',
+      cancelButton: 'my-cancel-btn',
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // 這裡才送出，例如發 API
+      Swal.fire({
+        title: '送出成功!',
+        text: '我們將盡速回覆至您的信箱，請耐心等候。',
+        icon: 'success',
+        customClass:{
+          confirmButton: 'my-confirm-btn2',
+        }
+      });
+    }
+  });
+};
 </script>
 
 <template>
@@ -48,7 +77,7 @@ const submit = () => {
     <main>
       <!-- 聯絡我們表單 -->
       <section class="pb-[120px] pt-[30px] sm:pt-[60px]">
-        <form action="" class="mb-[24px] flex flex-col items-center px-[24px]">
+        <form @submit.prevent="handleSubmit" action="" class="mb-[24px] flex flex-col items-center px-[24px]">
           <!-- 姓名 -->
           <div class="relative w-[360px] sm:w-[438px]">
             <input
@@ -148,7 +177,7 @@ const submit = () => {
           </p>
           <!-- 送出按鈕 -->
           <button
-            type=""
+            type="submit"
             @click="submit"
             class="h-[36px] w-[360px] rounded-sm bg-blueGreen text-[16px]/[28px] tracking-tight text-white sm:h-[48px] sm:w-[438px] sm:text-[24px]/[40px]"
           >
@@ -160,3 +189,21 @@ const submit = () => {
   </div>
   <Footer />
 </template>
+<style>
+.my-confirm-btn {
+  background-color: #1F9C95;
+  color: white;
+  border: 1px solid #1F9C95;
+}
+
+.my-cancel-btn {
+  background-color: white;
+  color: #1F9C95;
+  border: 1px solid #1F9C95;
+}
+.my-confirm-btn2 {
+  background-color: #1F9C95;
+  color: white;
+  border: 1px solid #1F9C95;
+}
+</style>

@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 
 class WushuController extends Controller
 {
-    // 服務與課程頁
+    // 查 服務與課程頁 課程、服務
     public function list()
     {
         $categories = Category::with('courses')->get();
@@ -24,7 +24,7 @@ class WushuController extends Controller
         ]);
     }
 
-    // 課程介紹頁
+    // 查 課程介紹頁 課程關聯章節
     public function intro($id)
     {
         $course = Course::with(['chapters'])->find($id);
@@ -35,18 +35,17 @@ class WushuController extends Controller
         ]);
     }
 
-    // 🔺聯絡我們頁 ContactUs
+    // 聯絡我們頁 ContactUs
     function contact()
     {
         return Inertia::render('frontend/ContactUs');
     }
 
-    // 🔺新增 聯絡我們資料
+    // 新增 聯絡我們資料 -> ContactRecord
     function store(Request $request)
     {
         $item = $request->all();
-        // 1. 資料個別填寫
-        // dd($item);
+        // 資料
         ContactRecord::create([
             "name" => $item['name'],
             "phone" => $item['phone'],
