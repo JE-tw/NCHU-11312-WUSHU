@@ -449,7 +449,7 @@ onBeforeUnmount(() => {
                 <div class="max-w-[1903px] mx-auto px-5 py-10 sm:px-8 sm:py-16 xl:px-0 xl:py-12">
 
                     <!--手機 & 平板版專用標題：在最上方 -->
-                    <h2 class="text-3xl sm:text-4xl xl:hidden font-bold text-center mb-8 font-serif">
+                    <h2 class="text-[36px] sm:text-[48px] xl:hidden font-bold text-center mb-8 font-serif">
                         <span
                             class="relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-full after:h-[2px] after:bg-black">
                             學會創立沿革
@@ -460,13 +460,13 @@ onBeforeUnmount(() => {
                     <div class="flex flex-col xl:flex-row items-start">
 
 
-                        <div class="w-full xl:w-1/2 overflow-hidden">
+                        <div class="w-full xl:w-[55%] overflow-hidden">
                             <img :src="masterImg2" alt="中藥櫃" class="w-full h-auto object-contain" />
                         </div>
 
 
                         <div
-                            class="w-full xl:w-1/2 bg-transparent sm:bg-lightGray px-5 py-8 sm:px-8 flex flex-col items-center mt-8 xl:mt-60 relative">
+                            class="w-full xl:w-[45%] bg-transparent sm:bg-lightGray px-5 py-8 sm:px-8 flex flex-col items-center mt-8 xl:mt-60 relative">
 
 
                             <h2

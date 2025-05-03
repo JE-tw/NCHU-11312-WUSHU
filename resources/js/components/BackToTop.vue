@@ -5,7 +5,7 @@ import btnTopImg from '@/images/btn-top.webp'
 const props = defineProps({
     position: {
         type: String,
-        default: 'bottom-6 right-6' 
+        default: 'bottom-6 right-6'
     },
     threshold: {
         type: Number,
@@ -13,18 +13,14 @@ const props = defineProps({
     }
 })
 
-const showButton = ref(false)
+const showButton = ref(true)
 
-const handleScroll = () => {
-    showButton.value = window.scrollY > props.threshold
-}
 
 const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-onMounted(() => window.addEventListener('scroll', handleScroll))
-onUnmounted(() => window.removeEventListener('scroll', handleScroll))
+
 </script>
 
 <template>
