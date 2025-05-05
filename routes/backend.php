@@ -55,8 +55,8 @@ Route::prefix('wushu/admin/course')->group(function () {
     Route::get('/', [CourseController::class, 'index'])->name('admin.course.list');
 });
 
-//登入頁
-Route::get('wushu/admin/login', [LoginController::class, 'loginPage'])->name('admin.login');
+// //登入頁
+// Route::get('wushu/admin/login', [LoginController::class, 'loginPage'])->name('admin.login');
 
 
 
