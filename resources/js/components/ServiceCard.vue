@@ -51,7 +51,7 @@ const toggleDescription = () => {
       <!-- 購物車按鈕 -->
       <!-- <CartButton /> -->
       <CartButton 
-        :productId="item.id" 
+        :productId="item.id.toString()" 
         :productName="item.name" 
         :price="item.price"
         :productType="1"

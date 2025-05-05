@@ -6,6 +6,14 @@ import { router } from '@inertiajs/vue3';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 
+import deleteIcon from '@/images/f-delete.png';
+
+import { useCartStore } from '@/stores/cart';
+const cartStore = useCartStore();
+function remove(productId) {
+  cartStore.removeFromCart(productId);
+}
+
 // 購物車步驟
 const step = ref(1);
 
@@ -69,13 +77,46 @@ onMounted(() => {
 // 計算總金額
 const totalAmount = computed(() => {
   // 服務的總金額
-  const serviceTotal = serviceItems.value.reduce((total, item) => total + parseFloat(item.price), 0);
+  const serviceTotal = serviceItems.value.reduce((total, item) => total + item.price, 0);
 
   // 課程的總金額
   const courseTotal = courseItems.value.reduce((total, item) => total + item.price, 0);
 
   return serviceTotal + courseTotal; // 返回總金額
 });
+
+// 刪除功能
+// 控制彈窗顯示與隱藏的狀態
+const showDeleteConfirmation = ref(false);
+
+// 新增變數儲存要刪除的項目
+const deleteTarget = ref({ id: null, type: null });
+
+// 刪除方法
+function removeItem(id, type) {
+  // 刪除
+  cartItems.value = cartItems.value.filter((item) => item.product_type !== type || item.id !== id);
+  // 寫入 localStorage
+  localStorage.setItem('cart', JSON.stringify(cartItems.value));
+  showDeleteConfirmation.value = false; // 隱藏彈窗
+}
+
+// 先抓到儲存要刪除項目的變數
+const confirmDelete = (id, type) => {
+  deleteTarget.value = { id, type };
+  showDeleteConfirmation.value = true; // 顯示彈窗
+};
+
+// 確定刪除
+const deleteItem = () => {
+  removeItem(deleteTarget.value.id, deleteTarget.value.type);
+  console.log(`刪除：類別${deleteTarget.value.type} , id ${deleteTarget.value.id}`);
+};
+
+// 取消刪除
+const cancelDelete = () => {
+  showDeleteConfirmation.value = false; // 隱藏彈窗
+};
 </script>
 
 <template>
@@ -108,7 +149,7 @@ const totalAmount = computed(() => {
       <!-- 購物車商品列表 -->
       <div class="flex w-full flex-col items-center px-[32px] pb-[76px] sm:mx-[216px] sm:px-[48px]">
         <!-- 服務 -->
-        <div class="mb-8 max-w-[311px] sm:max-w-[672px] xl:w-full xl:max-w-[1020px]">
+        <div class="w-full mb-8 max-w-[311px] sm:max-w-[672px] xl:w-full xl:max-w-[1020px]">
           <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[28px]/[37px] xl:text-[32px]/[43px]">服務</p>
           <!-- 列表title -->
           <div class="hidden sm:block">
@@ -129,13 +170,18 @@ const totalAmount = computed(() => {
             </div> -->
             <!-- 服務 -->
             <div v-for="(item, index) in serviceItems" :key="index">
-              <ProductCard :id="index + 1" :title="item.name" :price="item.price.toLocaleString()" />
+              <ProductCard :id="index + 1" :title="item.name" :price="item.price.toLocaleString()">
+                <button @click="confirmDelete(item.id, item.product_type)" type="button" class="">
+                  <img :src="deleteIcon" alt="" class="h-[28px] sm:h-[35px]" />
+                </button>
+                <!-- @click="removeItem(item.id, 1)" -->
+              </ProductCard>
             </div>
           </div>
         </div>
 
         <!-- 課程 -->
-        <div class="max-w-[311px] sm:max-w-[672px] xl:w-full xl:max-w-[1020px]">
+        <div class="w-full max-w-[311px] sm:max-w-[672px] xl:w-full xl:max-w-[1020px]">
           <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[28px]/[37px] xl:text-[32px]/[43px]">課程</p>
           <!-- 列表title -->
           <div class="hidden sm:block">
@@ -156,7 +202,11 @@ const totalAmount = computed(() => {
             </div> -->
             <!-- 課程 -->
             <div v-for="(item, index) in courseItems" :key="index">
-              <ProductCard :id="index + 1" :title="item.name" :price="item.price.toLocaleString()" />
+              <ProductCard :id="index + 1" :title="item.name" :price="item.price.toLocaleString()">
+                <button @click="confirmDelete(item.id, item.product_type)" type="button" class="">
+                  <img :src="deleteIcon" alt="" class="h-[28px] sm:h-[35px]" />
+                </button>
+              </ProductCard>
             </div>
           </div>
         </div>
@@ -186,6 +236,16 @@ const totalAmount = computed(() => {
           >
             匯款去
           </button>
+        </div>
+      </div>
+    </div>
+    <!-- 確認刪除彈窗 -->
+    <div v-if="showDeleteConfirmation" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div class="w-[300px] rounded-lg bg-white p-6 text-center">
+        <p class="mb-4">確定要刪除這個項目嗎？</p>
+        <div class="flex justify-between">
+          <button @click="cancelDelete" class="rounded-lg bg-gray-300 px-4 py-2">取消</button>
+          <button @click="deleteItem" class="rounded-lg bg-red-500 px-4 py-2 text-white">確認刪除</button>
         </div>
       </div>
     </div>

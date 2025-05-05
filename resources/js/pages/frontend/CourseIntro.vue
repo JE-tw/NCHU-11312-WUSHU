@@ -16,7 +16,7 @@ const hasPurchased = false;
 // 按鈕點擊功能 CardButton
 function handleClick(item) {
   if (!hasPurchased) return; // 沒買就直接什麼都不做！
-  console.log('✅ 播放影片：', item.title); // 有買，才執行下面功能
+  console.log('✅ 播放影片：', item.name); // 有買，才執行下面功能
 }
 
 // 假資料：課程卡
@@ -66,7 +66,20 @@ console.log(props.course);
           NT$ {{ course.price }}
         </p>
         <!-- 加入購物車案紐 -->
-        <CartButton :hideText="false" :cartShorter="false" class="h-[32px] w-[120px]" />
+        <!-- <CartButton 
+          :hideText="false" 
+          :cartShorter="false" 
+          class="h-[32px] w-[120px]" /> -->
+
+        <CartButton
+          :hideText="false"
+          :cartShorter="false"
+          :productId="course.id"
+          :productName="course.name"
+          :price="course.price"
+          :productType="2"
+          class="h-[32px] w-[120px]"
+        />
       </div>
       <p class="mb-[24px] mt-[32px] text-[20px]/[26.6px] font-bold text-blueGreen sm:my-[24px] sm:text-[36px]/[44px]">課程介紹:</p>
       <!-- 課程介紹 -->
@@ -78,22 +91,19 @@ console.log(props.course);
       </p>
       <!-- 課程列表 -->
       <!-- 傳入插槽 ExpandCard.vue 並傳入插槽中的插槽CardBtn-->
-      <ExpandCard 
-        v-for="item in course.chapters"
-        :key="item.id" :name="item.name"
-        :introduction="item.introduction">
-            <!-- 傳入插槽 CardButton 插槽放 -->
-            <div @click="handleClick(item)" class="rounded-full" :class="hasPurchased ? 'bg-blueGreen' : 'bg-darkGray'">
-              <CardButton :hideText="false" :cartShorter="false">
-                <!-- 按鈕icon -->
-                <template #icon>
-                  <!-- 播放 -->
-                  <img v-if="hasPurchased" :src="play" alt="play" class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
+      <ExpandCard v-for="item in course.chapters" :key="item.id" :name="item.name" :introduction="item.introduction">
+        <!-- 傳入插槽 CardButton 插槽放 -->
+        <div @click="handleClick(item)" class="rounded-full" :class="hasPurchased ? 'bg-blueGreen' : 'bg-darkGray'">
+          <CardButton :hideText="false" :cartShorter="false">
+            <!-- 按鈕icon -->
+            <template #icon>
+              <!-- 播放 -->
+              <img v-if="hasPurchased" :src="play" alt="play" class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
 
-                  <img v-if="!hasPurchased" :src="lock" alt="lock" class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
-                </template>
-              </CardButton>
-            </div>
+              <img v-if="!hasPurchased" :src="lock" alt="lock" class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
+            </template>
+          </CardButton>
+        </div>
       </ExpandCard>
     </main>
     <Footer class="mt-[80px]" />

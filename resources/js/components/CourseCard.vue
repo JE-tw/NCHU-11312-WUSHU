@@ -11,8 +11,6 @@ defineProps({
   categoryTitle: String, // tag
 });
 
-// console.log('課程資料:', name, price, introduction, categoryTitle);
-
 // 點擊跳轉 詳細資訊頁
 function goToIntro(id) {
   router.visit(route('wushu.intro', id));
@@ -40,7 +38,7 @@ function goToIntro(id) {
           <!-- <div><CartButton :hideText="false" :cartShorter="false" /></div> -->
           <div>
             <CartButton 
-                :productId="id" 
+                :productId="id.toString()" 
                 :productName="name" 
                 :price="price" 
                 :productType="2" 

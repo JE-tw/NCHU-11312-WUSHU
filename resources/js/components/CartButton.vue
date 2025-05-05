@@ -1,6 +1,13 @@
 <!-- CartButton.vue -->
 <script setup>
+import { useCartStore } from '@/stores/cart';
+import { onMounted, computed } from 'vue';
 import smallcart from '@/images/f-smallCart.png';
+
+const cartStore = useCartStore();
+onMounted(() => {
+  cartStore.loadCartFromLocalStorage();
+});
 
 const props = defineProps({
   hideText: {
@@ -11,23 +18,20 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-  productId: String,
+  productId: Number,
   productName: String,
   price: Number,
   productType: Number, // 1=服務, 2=課程
 });
 
+// 是否已加入購物車
+const isInCart = computed(() => cartStore.isInCart(props.productId, props.productType));
+
+// 加至購物車
 function addToCart() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  if (isInCart.value) return;
 
-  const exists = cart.find((item) => item.id === props.productId && item.product_type === props.productType);
-
-  if (exists) {
-    alert(`「${props.productName}」已在購物車，無法重複加入`);
-    return;
-  }
-
-  cart.push({
+  cartStore.addToCart({
     id: props.productId,
     name: props.productName,
     price: props.price,
@@ -35,9 +39,7 @@ function addToCart() {
     product_type: props.productType,
   });
 
-  localStorage.setItem('cart', JSON.stringify(cart));
   alert(`已加入「${props.productName}」至購物車`);
-  console.log(`已加入購物車  id:${props.productId},品項：${props.productName},金額：${props.price}`);
 }
 </script>
 
@@ -45,8 +47,10 @@ function addToCart() {
   <button
     type="button"
     @click="addToCart"
+    :disabled="isInCart"
     :class="[
-      'flex items-center justify-center rounded-full bg-blueGreen',
+      'flex items-center justify-center rounded-full',
+      isInCart ? 'cursor-not-allowed bg-gray-400' : 'bg-blueGreen',
       cartShorter ? 'h-[32px] w-[32px] sm:h-[40px] sm:w-[178px]' : 'h-[32px] w-[120px] sm:h-[40px] sm:w-[178px]',
     ]"
   >

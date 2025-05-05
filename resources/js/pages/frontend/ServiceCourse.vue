@@ -49,14 +49,6 @@ const breakpoints = {
   },
 };
 
-// //
-// function scrollTo(index) {
-//   const el = document.getElementById(`section-${index}`);
-//   if (el) {
-//     el.scrollIntoView({ behavior: 'smooth' });
-//   }
-// }
-
 const sections = [
   { id: 'vedic', title: '吠陀占星', img: swiper2 },
   { id: 'chinese', title: '中醫', img: swiper3 },

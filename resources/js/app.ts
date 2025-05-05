@@ -6,7 +6,9 @@ import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { initializeTheme } from './composables/useAppearance';
+import { createPinia } from 'pinia'
 
+const pinia = createPinia()
 //  Font Awesome 套件引入
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -35,6 +37,7 @@ createInertiaApp({
     createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(ZiggyVue)
+      .use(pinia) // pinia
       .component('Link', Link)
       .component('Head', Head)
       .component('font-awesome-icon', FontAwesomeIcon) //  註冊font awesome元件
