@@ -1,20 +1,44 @@
-<script setup lang="ts">
+<script setup>
+import { ref, computed, watchEffect } from 'vue';
+import ServiceFormModal from '@/Components/ServiceFormModal.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { usePage, router } from '@inertiajs/vue3';
-import type { PageProps } from '@/types'; // 如果有 type 設定，依照情況調整
 import Swal from 'sweetalert2';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
+import TableWithPagination from '@/Components/TableWithPagination.vue';
+import { useTableController } from '@/composables/useTableController';
 
-const page = usePage<{ services: any[] }>();
+// // Inertia 資料
+const page = usePage();
+const showModal = ref(false);
+const currentService = ref(null);
 
-const services = page.props.services;
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: '五術研究社 後臺管理',
-    href: '/dashboard',
-  },
+const openCreateModal = () => {
+  currentService.value = null;
+  showModal.value = true;
+};
+
+const openEditModal = (service) => {
+  currentService.value = { ...service };
+  showModal.value = true;
+};
+
+const closeModal = () => {
+  currentService.value = null;
+  showModal.value = false;
+};
+
+const { items, currentPage, totalPages, searchQuery, currentSortKey, currentSortDirection, handleSearch, handlePageChange, handleSortChange } =
+  useTableController('services', 'admin.service.list'); // 名稱依照你 controller 傳的變數與 route 命名來
+
+const columns = [
+  { label: '服務名稱', key: 'name' },
+  { label: '金額', key: 'price' },
+  { label: '服務介紹', key: 'introduction' },
+  { label: '操作', key: 'actions' },
 ];
 
+// 顯示 flash 訊息
 watchEffect(() => {
   const success = page.props.flash?.success;
   const error = page.props.flash?.error;
@@ -51,29 +75,30 @@ const deleteBtn = async (id) => {
   <AppLayout :breadcrumbs="breadcrumbs">
     <div>
       <h1 class="mb-4 text-2xl font-bold">服務內容管理</h1>
-      <table class="min-w-full bg-white">
-        <thead>
-          <tr>
-            <th class="border px-4 py-2">服務名稱</th>
-            <th class="border px-4 py-2">金額</th>
-            <th class="border px-4 py-2">服務介紹</th>
-            <th class="border px-4 py-2">操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="service in services" :key="service.id">
-            <td class="border px-4 py-2">{{ service.name }}</td>
-            <td class="border px-4 py-2">{{ service.price }}</td>
-            <td class="border px-4 py-2">{{ service.introduction }}</td>
-            <td class="border px-4 py-2">
-              <div class="flex gap-2 justify-center">
-                <button type="button" class="border px-2 cursor-pointer" @click="deleteBtn(service.id)">刪除</button>
-                <button type="button" class="border px-2 cursor-pointer">編輯</button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <button type="button" class="mb-4 border p-2" @click="openCreateModal">新增服務內容</button>
+      <TableWithPagination
+        :columns="columns"
+        :items="items"
+        :current-page="currentPage"
+        :total-pages="totalPages"
+        :sort-key="currentSortKey"
+        :sort-direction="currentSortDirection"
+        :showSearch="false"
+        @search="handleSearch"
+        @page-change="handlePageChange"
+        @sort-change="handleSortChange"
+      >
+        <!-- Slot: actions 按鈕 -->
+        <template #cell(actions)="{ item }">
+          <div class="flex justify-center gap-2">
+            <button type="button" class="cursor-pointer border px-2" @click="deleteBtn(item.id)">刪除</button>
+            <button type="button" class="cursor-pointer border px-2" @click="openEditModal(item)">編輯</button>
+          </div>
+        </template>
+        <ServiceEditModal v-if="showEditModal" :service="editingService" @close="closeEditModal" />
+      </TableWithPagination>
+      <!-- 新增/編輯 共用 Modal -->
+      <ServiceFormModal v-if="showModal" :service="currentService" @close="closeModal" />
     </div>
   </AppLayout>
 </template>

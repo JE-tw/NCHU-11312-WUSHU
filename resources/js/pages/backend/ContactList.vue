@@ -1,4 +1,4 @@
-<script setup lang>
+<script setup>
 import { ref, computed, watchEffect } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { usePage, router } from '@inertiajs/vue3';
@@ -21,7 +21,7 @@ const {
   handleSearch,
   handlePageChange,
   handleSortChange,
-} = useTableController('contacts', 'admin.contact.list'); // 名稱依照你 controller 傳的變數與 route 命名來
+} = useTableController('contacts', 'admin.contact.list'); // 名稱依照 controller 傳的變數與 route 命名
 
 const columns = [
   { label: '日期', key: 'formatted_date', sortable: true },

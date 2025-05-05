@@ -34,7 +34,7 @@ class UserInfoController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function create(Request $request)
     {
         try {
             // 資料驗證（會自動擲出 ValidationException）
