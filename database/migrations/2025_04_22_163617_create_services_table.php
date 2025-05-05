@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name', 50)->comment('服務名稱');
             $table->integer('price')->comment('金額');
             $table->string('introduction', 100)->comment('介紹');
-
+            $table->softDeletes();
             $table->timestamps(); // 建立/更新時間
         });
     }

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->id()->comment('課程編號');
 
-            $table->string('name', 10)->comment('課程名稱');
+            $table->string('name', 30)->comment('課程名稱');
 
             $table->unsignedBigInteger('category_id')->comment('課程類別編號');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

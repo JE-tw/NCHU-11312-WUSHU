@@ -32,7 +32,16 @@ trait HandlesTableFilters
         if ($search && isset($config['search'])) {
             $query->where(function ($q) use ($search, $config) {
                 foreach ($config['search'] as $field) {
+                    if (str_contains($field, '.')) {
+                    // 關聯欄位搜尋，例如 user.name
+                    [$relation, $column] = explode('.', $field, 2);
+                    $q->orWhereHas($relation, function ($subQuery) use ($column, $search) {
+                        $subQuery->where($column, 'like', "%{$search}%");
+                    });
+                } else {
+                    // 一般欄位搜尋
                     $q->orWhere($field, 'like', "%{$search}%");
+                }
                 }
             });
         }
