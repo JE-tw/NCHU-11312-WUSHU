@@ -51,7 +51,7 @@ class CourseSeeder extends Seeder
         
         Course::create([
             'name' => '紫微斗數入門班',
-            'category_id' => 1,
+            'category_id' => 4,
             'price' => 28000,
             'introduction' => '透過命盤掌握人生趨勢與潛力方向。',
             'detail' => '紫微斗數為東方命理瑰寶，其命盤能揭示一個人的性格、運勢與人際關係。本課程教授命宮、身宮、十四主星的意義與相互作用，學員將能解析自己的命盤並初步解讀他人命盤走勢。課程採用大量範例，從實戰中學習。',
@@ -60,7 +60,7 @@ class CourseSeeder extends Seeder
         
         Course::create([
             'name' => '水晶能量與脈輪療癒',
-            'category_id' => 2,
+            'category_id' => 4,
             'price' => 27000,
             'introduction' => '認識七大脈輪與對應水晶能量，進行內在平衡與淨化。',
             'detail' => '課程中將介紹七大脈輪的功能與失衡狀態，並教導如何使用不同水晶進行脈輪療癒與個人能量調整。學員將學會擺放、清理與充電水晶的方法，並能依照自身狀況搭配適合的療癒石。',
