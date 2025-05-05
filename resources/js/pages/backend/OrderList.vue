@@ -4,9 +4,6 @@ import { usePage, router } from '@inertiajs/vue3';
 import TableWithPagination from '@/Components/TableWithPagination.vue';
 import { useTableController } from '@/composables/useTableController';
 
-// const page = usePage<{ orders: any[] }>();
-
-// const orders = page.props.orders;
 const { items, currentPage, totalPages, searchQuery, currentSortKey, currentSortDirection, handleSearch, handlePageChange, handleSortChange } =
   useTableController('orders', 'admin.order.list'); // 名稱依照 controller 傳的變數與 route 命名
 const columns = [
@@ -70,40 +67,6 @@ const columns = [
           </div>
         </template>
       </TableWithPagination>
-      <!-- <table class="min-w-full bg-white">
-        <thead>
-          <tr>
-            <th class="border px-4 py-2">日期</th>
-            <th class="border px-4 py-2">購買項目</th>
-            <th class="border px-4 py-2">會員名稱</th>
-            <th class="border px-4 py-2">信箱</th>
-            <th class="border px-4 py-2">價格</th>
-            <th class="border px-4 py-2">付款方式</th>
-            <th class="border px-4 py-2">訂單狀態</th>
-            <th class="border px-4 py-2">操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="order in orders" :key="order.id">
-            <td class="border px-4 py-2">{{ order.created_at.slice(0, 10) }}</td>
-            <td class="border px-4 py-2">
-              <div v-for="item in order.order_items" :key="item.id" class="border-b py-1 last:border-0">
-                {{ item.product?.name || '未找到商品' }}
-              </div>
-            </td>
-            <td class="border px-4 py-2">{{ order.user.name }}</td>
-            <td class="border px-4 py-2">{{ order.user.email }}</td>
-            <td class="border px-4 py-2">{{ order.total_amount }}</td>
-            <td class="border px-4 py-2">匯款</td>
-            <td class="border px-4 py-2">{{ order.status_text }}</td>
-            <td class="border px-4 py-2">
-              <div class="flex gap-2 justify-center">
-                <button type="button" class="border px-2 cursor-pointer">編輯</button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
     </div>
   </AppLayout>
 </template>
