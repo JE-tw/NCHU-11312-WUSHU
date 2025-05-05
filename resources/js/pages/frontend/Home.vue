@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { usePage } from '@inertiajs/vue3'  
+import { usePage } from '@inertiajs/vue3'
 
 import Header from '../../components/Header.vue'
 import Footer from '../../components/Footer.vue'
@@ -45,7 +45,7 @@ const handleResize = () => {
 // ====== Tabs 資料 ======
 
 const tabs = computed(() => {
-   
+
     const categoryImages = {
         '吠陀占星': tarotImg,
         '中醫': tcmImg,
@@ -55,9 +55,9 @@ const tabs = computed(() => {
 
     return categories.value.map(category => {
         return {
-            name: category.slug || category.id.toString(), 
+            name: category.slug || category.id.toString(),
             label: category.name,
-            image: categoryImages[category.name] || othersImg 
+            image: categoryImages[category.name] || othersImg
         }
     })
 })
@@ -74,7 +74,7 @@ const coursesPerPage = 6
 const currentPage = ref(1)
 
 const getCoursesForTab = (tabName) => {
-    
+
     const category = categories.value.find(c => c.slug === tabName || c.id.toString() === tabName)
     if (category && coursesByCategory.value[category.name]) {
         return coursesByCategory.value[category.name]
@@ -110,7 +110,7 @@ onMounted(() => {
     window.addEventListener('resize', handleResize)
     handleResize()
 
-    
+
     if (tabs.value.length > 0 && !activeTab.value) {
         activeTab.value = tabs.value[0].name
     }
@@ -151,20 +151,19 @@ onBeforeUnmount(() => {
                         <div class="h-0.5 bg-black mt-2 mx-auto w-[180px] md:w-[200px] xl:w-[220px]"></div>
                     </div>
 
-                    <!-- Cards container - flex-col for mobile & tablet, flex-row for desktop -->
+                    <!-- Cards container -->
                     <div class="flex flex-col xl:flex-row gap-6 md:gap-8 justify-center items-center">
                         <!-- Card 1 -->
-                        <div class="bg-white overflow-hidden w-full xl:w-1/2">
+                        <div class="bg-white overflow-hidden w-full xl:w-1/2 cursor-pointer"
+                            @click="$inertia.visit('/wushu/CourseIntro/1')">
                             <img :src="courseImg1" alt="蔣氏玄空風水執業班"
                                 class="w-full h-[240px] sm:h-[280px] md:h-[320px] xl:h-[360px] object-cover" />
                             <div class="p-4 md:p-5 xl:p-6">
-                                <p class="text-2xl sm:text-3xl md:text-4xl xl:text-[48px] leading-tight xl:leading-[100%] font-bold text-black font-serif text-left"
-                                    style="letter-spacing: 2%;">
+                                <p
+                                    class="text-2xl sm:text-3xl md:text-4xl xl:text-[48px] font-bold text-black font-serif text-left">
                                     蔣氏玄空風水執業班
                                 </p>
-
-                                <div
-                                    class="mt-4 md:mt-5 xl:mt-6 flex flex-wrap sm:flex-nowrap items-center gap-3 md:gap-4">
+                                <div class="mt-4 flex items-center gap-3">
                                     <button
                                         class="px-4 md:px-5 xl:px-6 py-1.5 md:py-2 bg-alertRed text-white rounded-full text-base md:text-lg hover:bg-gray-800 transition duration-300">
                                         其他術數
@@ -175,17 +174,16 @@ onBeforeUnmount(() => {
                         </div>
 
                         <!-- Card 2 -->
-                        <div class="bg-white overflow-hidden w-full xl:w-1/2 mt-6 xl:mt-0">
+                        <div class="bg-white overflow-hidden w-full xl:w-1/2 mt-6 xl:mt-0 cursor-pointer"
+                            @click="$inertia.visit('/wushu/CourseIntro/2')">
                             <img :src="courseImg2" alt="康治本傷寒論"
                                 class="w-full h-[240px] sm:h-[280px] md:h-[320px] xl:h-[360px] object-cover" />
                             <div class="p-4 md:p-5 xl:p-6">
-                                <p class="text-2xl sm:text-3xl md:text-4xl xl:text-[48px] leading-tight xl:leading-[100%] font-bold text-black font-serif text-left"
-                                    style="letter-spacing: 2%;">
+                                <p
+                                    class="text-2xl sm:text-3xl md:text-4xl xl:text-[48px] font-bold text-black font-serif text-left">
                                     康治本傷寒論
                                 </p>
-
-                                <div
-                                    class="mt-4 md:mt-5 xl:mt-6 flex flex-wrap sm:flex-nowrap items-center gap-3 md:gap-4">
+                                <div class="mt-4 flex items-center gap-3">
                                     <button
                                         class="px-4 md:px-5 xl:px-6 py-1.5 md:py-2 bg-alertRed text-white rounded-full text-base md:text-lg hover:bg-gray-800 transition duration-300">
                                         中醫
@@ -199,7 +197,8 @@ onBeforeUnmount(() => {
             </section>
 
 
-            <!-- Courses offered -->            
+
+            <!-- Courses offered -->
             <section class="relative w-full bg-black text-white overflow-hidden min-h-[858px]">
                 <!-- 背景圖片、添加遮罩 -->
                 <div class="absolute inset-0 z-0 overflow-hidden">
@@ -325,7 +324,7 @@ onBeforeUnmount(() => {
                                     <span class="text-gray-300 text-xl text-center whitespace-nowrap">{{ course.duration
                                         || '2小時/堂' }}</span>
                                     <span class="text-deepTeal font-bold text-xl text-right">NT${{ course.price
-                                        }}</span>
+                                    }}</span>
                                 </div>
                             </div>
                         </div>
