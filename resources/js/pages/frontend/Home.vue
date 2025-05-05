@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import axios from 'axios'
 
 import Header from '../../components/Header.vue'
 import Footer from '../../components/Footer.vue'
@@ -21,15 +22,15 @@ const bgImage = imgSrc
 
 // ====== 響應式裝置判斷 ======
 const screens = {
-    sm: '600px',
-    xl: '1270px'
+    sm: 600,
+    xl: 1270
 }
 
 const windowWidth = ref(window.innerWidth)
 
-const isDesktop = computed(() => windowWidth.value >= parseInt(screens.xl))
-const isTablet = computed(() => windowWidth.value < parseInt(screens.xl) && windowWidth.value >= parseInt(screens.sm))
-const isMobile = computed(() => windowWidth.value < parseInt(screens.sm))
+const isDesktop = computed(() => windowWidth.value >= screens.xl)
+const isTablet = computed(() => windowWidth.value < screens.xl && windowWidth.value >= screens.sm)
+const isMobile = computed(() => windowWidth.value < screens.sm)
 
 const handleResize = () => {
     windowWidth.value = window.innerWidth
@@ -50,46 +51,30 @@ const currentImage = computed(() => {
     return tab ? tab.image : ''
 })
 
-// ====== 課程資料 ======
-const courses = ref({
-    astrology: [
-        { name: '初階班', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
-        { name: '中階班', lessons: '16', duration: '3小時/堂', price: 'NT$28,000' },
-        { name: '高階班', lessons: '20', duration: '2小時/堂', price: 'NT$36,000' },
-        { name: '楊特拉(需有初階班基礎)', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
-        { name: '擇日', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
-        { name: '金融占星(需有中階班基礎)', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' },
-        { name: '咒陀占星進階班', lessons: '24', duration: '3小時/堂', price: 'NT$40,000' }
-    ],
-    medicine: [
-        { name: '中醫入門', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
-        { name: '中醫進階', lessons: '20', duration: '3小時/堂', price: 'NT$36,000' }
-    ],
-    magic: [
-        { name: '魔法入門', lessons: '16', duration: '2小時/堂', price: 'NT$28,000' },
-        { name: '古典儀式魔法', lessons: '20', duration: '3小時/堂', price: 'NT$36,000' }
-    ],
-    others: [
-        { name: '卜卦基礎', lessons: '12', duration: '2小時/堂', price: 'NT$22,000' },
-        { name: '風水學', lessons: '16', duration: '3小時/堂', price: 'NT$28,000' }
-    ]
-})
+// ====== 從後端抓取課程資料 ======
+const courses = ref({})
+
+// 從 API 抓取課程資料
+const fetchCourses = async () => {
+    try {
+        const response = await axios.get('/api/courses')  // 假設 API 路徑是這樣
+        courses.value = response.data
+    } catch (error) {
+        console.error('Error fetching courses:', error)
+    }
+}
 
 // ====== 分頁設定 ======
 const coursesPerPage = 6
 const currentPage = ref(1)
 
-const getCoursesForTab = (tabName) => {
-    return courses.value[tabName] || []
-}
-
 const totalPages = computed(() => {
-    const coursesForActiveTab = getCoursesForTab(activeTab.value)
+    const coursesForActiveTab = courses.value[activeTab.value] || []
     return Math.ceil(coursesForActiveTab.length / coursesPerPage)
 })
 
 const paginatedCourses = computed(() => {
-    const coursesForActiveTab = getCoursesForTab(activeTab.value)
+    const coursesForActiveTab = courses.value[activeTab.value] || []
     const start = (currentPage.value - 1) * coursesPerPage
     const end = start + coursesPerPage
     return coursesForActiveTab.slice(start, end)
@@ -106,22 +91,31 @@ const changeTab = (tabName) => {
     currentPage.value = 1
 }
 
+// ====== 預載所有圖片 ======
+const preloadImages = computed(() => {
+    tabs.value.forEach(tab => {
+        const img = new Image()
+        img.src = tab.image
+    })
+    return tabs.value
+})
+
 // ====== LifeCycle Hooks ======
 onMounted(() => {
     window.addEventListener('resize', handleResize)
     handleResize()
 
-    // 預載所有圖片
-    tabs.value.forEach(tab => {
-        const img = new Image()
-        img.src = tab.image
-    })
+    // 預載圖片並從後端抓取課程資料
+    preloadImages.value
+    fetchCourses()
 })
 
 onBeforeUnmount(() => {
     window.removeEventListener('resize', handleResize)
 })
 </script>
+
+
 
 
 
@@ -250,7 +244,7 @@ onBeforeUnmount(() => {
                                                 {{ course.lessons }}堂課
                                             </span>
                                             <span class="text-gray-300 w-24 text-[24px] text-center">{{ course.duration
-                                            }}</span>
+                                                }}</span>
                                             <span class="text-deepTeal font-bold text-[24px] w-28 text-right">{{
                                                 course.price }}</span>
                                         </div>
@@ -317,7 +311,7 @@ onBeforeUnmount(() => {
                                         {{ course.lessons }}堂課
                                     </span>
                                     <span class="text-gray-300 text-xl text-center whitespace-nowrap">{{ course.duration
-                                    }}</span>
+                                        }}</span>
                                     <span class="text-deepTeal font-bold text-xl text-right">{{ course.price }}</span>
                                 </div>
                             </div>
