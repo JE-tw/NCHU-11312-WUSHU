@@ -113,12 +113,11 @@ const submit = () => {
 
         <!-- 介紹欄位 -->
         <div class="relative w-full">
-          <input
-            type="text"
+          <textarea
             id="introduction"
             v-model="form.introduction"
             placeholder=" "
-            class="peer mt-4 block w-full rounded-md border border-gray-300 px-3 pb-2 pt-4 text-sm text-gray-900"
+            class="peer mt-4 block w-full rounded-md border border-gray-300 px-3 pb-2 pt-4 text-sm text-gray-900 resize-none h-[200px] overflow-auto"
           />
           <label for="introduction" class="absolute left-3 top-[-10px] bg-white px-1 text-sm text-gray-500">介紹(100字內)</label>
         </div>
