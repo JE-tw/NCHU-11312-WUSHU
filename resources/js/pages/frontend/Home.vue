@@ -1,10 +1,16 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import axios from 'axios'
+import { usePage } from '@inertiajs/vue3'  
 
 import Header from '../../components/Header.vue'
 import Footer from '../../components/Footer.vue'
 import BackToTop from '../../components/BackToTop.vue'
+
+
+const page = usePage()
+const categories = computed(() => page.props.categories || [])
+const coursesByCategory = computed(() => page.props.coursesByCategory || {})
+const featuredCourses = computed(() => page.props.featuredCourses || [])
 
 // ====== 載入圖片資源 ======
 import imgSrc from '@/images/藥材aocax-ufyt5.webp'
@@ -22,59 +28,67 @@ const bgImage = imgSrc
 
 // ====== 響應式裝置判斷 ======
 const screens = {
-    sm: 600,
-    xl: 1270
+    sm: '600px',
+    xl: '1270px'
 }
 
 const windowWidth = ref(window.innerWidth)
 
-const isDesktop = computed(() => windowWidth.value >= screens.xl)
-const isTablet = computed(() => windowWidth.value < screens.xl && windowWidth.value >= screens.sm)
-const isMobile = computed(() => windowWidth.value < screens.sm)
+const isDesktop = computed(() => windowWidth.value >= parseInt(screens.xl))
+const isTablet = computed(() => windowWidth.value < parseInt(screens.xl) && windowWidth.value >= parseInt(screens.sm))
+const isMobile = computed(() => windowWidth.value < parseInt(screens.sm))
 
 const handleResize = () => {
     windowWidth.value = window.innerWidth
 }
 
 // ====== Tabs 資料 ======
-const tabs = ref([
-    { name: 'astrology', label: '吠陀占星', image: tarotImg },
-    { name: 'medicine', label: '中醫', image: tcmImg },
-    { name: 'magic', label: '古典魔法', image: magicImg },
-    { name: 'others', label: '其它術數', image: othersImg }
-])
 
-const activeTab = ref('astrology')
+const tabs = computed(() => {
+   
+    const categoryImages = {
+        '吠陀占星': tarotImg,
+        '中醫': tcmImg,
+        '古典魔法': magicImg,
+        '其它術數': othersImg
+    }
+
+    return categories.value.map(category => {
+        return {
+            name: category.slug || category.id.toString(), 
+            label: category.name,
+            image: categoryImages[category.name] || othersImg 
+        }
+    })
+})
+
+const activeTab = ref(tabs.value.length > 0 ? tabs.value[0].name : '')
 
 const currentImage = computed(() => {
     const tab = tabs.value.find(t => t.name === activeTab.value)
     return tab ? tab.image : ''
 })
 
-// ====== 從後端抓取課程資料 ======
-const courses = ref({})
-
-// 從 API 抓取課程資料
-const fetchCourses = async () => {
-    try {
-        const response = await axios.get('/api/courses')  // 假設 API 路徑是這樣
-        courses.value = response.data
-    } catch (error) {
-        console.error('Error fetching courses:', error)
-    }
-}
-
 // ====== 分頁設定 ======
 const coursesPerPage = 6
 const currentPage = ref(1)
 
+const getCoursesForTab = (tabName) => {
+    
+    const category = categories.value.find(c => c.slug === tabName || c.id.toString() === tabName)
+    if (category && coursesByCategory.value[category.name]) {
+        return coursesByCategory.value[category.name]
+    }
+    return []
+}
+
 const totalPages = computed(() => {
-    const coursesForActiveTab = courses.value[activeTab.value] || []
+    const coursesForActiveTab = getCoursesForTab(activeTab.value)
     return Math.ceil(coursesForActiveTab.length / coursesPerPage)
 })
 
 const paginatedCourses = computed(() => {
-    const coursesForActiveTab = courses.value[activeTab.value] || []
+    const coursesForActiveTab = getCoursesForTab(activeTab.value)
     const start = (currentPage.value - 1) * coursesPerPage
     const end = start + coursesPerPage
     return coursesForActiveTab.slice(start, end)
@@ -91,23 +105,21 @@ const changeTab = (tabName) => {
     currentPage.value = 1
 }
 
-// ====== 預載所有圖片 ======
-const preloadImages = computed(() => {
-    tabs.value.forEach(tab => {
-        const img = new Image()
-        img.src = tab.image
-    })
-    return tabs.value
-})
-
 // ====== LifeCycle Hooks ======
 onMounted(() => {
     window.addEventListener('resize', handleResize)
     handleResize()
 
-    // 預載圖片並從後端抓取課程資料
-    preloadImages.value
-    fetchCourses()
+    
+    if (tabs.value.length > 0 && !activeTab.value) {
+        activeTab.value = tabs.value[0].name
+    }
+
+    // 預載所有圖片
+    tabs.value.forEach(tab => {
+        const img = new Image()
+        img.src = tab.image
+    })
 })
 
 onBeforeUnmount(() => {
@@ -187,7 +199,7 @@ onBeforeUnmount(() => {
             </section>
 
 
-            <!-- Courses offered -->
+            <!-- Courses offered -->            
             <section class="relative w-full bg-black text-white overflow-hidden min-h-[858px]">
                 <!-- 背景圖片、添加遮罩 -->
                 <div class="absolute inset-0 z-0 overflow-hidden">
@@ -211,7 +223,7 @@ onBeforeUnmount(() => {
                                 <div class="relative z-10 px-6">
                                     <h2 class="text-[64px] font-serif font-bold">開立課程</h2>
                                     <div class="h-0.5 bg-white mt-2 w-60"></div>
-                                    <a href="http://127.0.0.1:8000/wushu/ServiceCourse">
+                                    <a href="/wushu/ServiceCourse">
                                         <button
                                             class="w-36 h-14 mt-6 px-6 py-2 bg-deepTeal text-white rounded text-[24px] hover:bg-teal-700 transition duration-300">
                                             了解更多
@@ -234,18 +246,18 @@ onBeforeUnmount(() => {
 
                                 <!-- 課程清單 -->
                                 <div class="flex-1 py-6 space-y-0">
-                                    <div v-for="course in paginatedCourses" :key="course.name"
+                                    <div v-for="course in paginatedCourses" :key="course.id"
                                         class="flex items-center justify-between py-3.5 border-b border-dotted border-gray-600">
                                         <div class="text-[32px] font-medium w-2/5 truncate pr-4">
                                             {{ course.name }}
                                         </div>
                                         <div class="flex items-center justify-end space-x-4 w-3/5">
                                             <span class="bg-deepTeal text-white text-[24px] px-5 py-2 rounded-full">
-                                                {{ course.lessons }}堂課
+                                                {{ course.lessons || 0 }}堂課
                                             </span>
                                             <span class="text-gray-300 w-24 text-[24px] text-center">{{ course.duration
-                                                }}</span>
-                                            <span class="text-deepTeal font-bold text-[24px] w-28 text-right">{{
+                                                || '2小時/堂' }}</span>
+                                            <span class="text-deepTeal font-bold text-[24px] w-28 text-right">NT${{
                                                 course.price }}</span>
                                         </div>
                                     </div>
@@ -280,7 +292,7 @@ onBeforeUnmount(() => {
                         <div class="text-center pt-10 pb-6">
                             <h2 class="text-[48px] font-serif font-bold">開立課程</h2>
                             <div class="h-0.5 bg-white mt-2 w-60 mx-auto"></div>
-                            <a href="http://127.0.0.1:8000/wushu/ServiceCourse" class="block mt-6">
+                            <a href="/wushu/ServiceCourse" class="block mt-6">
                                 <button
                                     class="w-36 h-14 px-6 py-2 bg-deepTeal text-white rounded text-[24px] hover:bg-teal-700 transition duration-300">
                                     了解更多
@@ -300,7 +312,7 @@ onBeforeUnmount(() => {
 
                         <!-- 課程清單 -->
                         <div class="py-6 px-6">
-                            <div v-for="course in paginatedCourses" :key="course.name"
+                            <div v-for="course in paginatedCourses" :key="course.id"
                                 class="flex items-center justify-between py-3.5 border-b border-dotted border-gray-600">
                                 <div class="text-2xl font-medium w-1/3 truncate pr-2">
                                     {{ course.name }}
@@ -308,11 +320,12 @@ onBeforeUnmount(() => {
                                 <div class="flex items-center justify-end gap-2 w-2/3">
                                     <span
                                         class="bg-deepTeal text-white text-xl px-4 py-1 rounded-full whitespace-nowrap">
-                                        {{ course.lessons }}堂課
+                                        {{ course.lessons || 0 }}堂課
                                     </span>
                                     <span class="text-gray-300 text-xl text-center whitespace-nowrap">{{ course.duration
+                                        || '2小時/堂' }}</span>
+                                    <span class="text-deepTeal font-bold text-xl text-right">NT${{ course.price
                                         }}</span>
-                                    <span class="text-deepTeal font-bold text-xl text-right">{{ course.price }}</span>
                                 </div>
                             </div>
                         </div>
@@ -344,7 +357,7 @@ onBeforeUnmount(() => {
                         <div class="text-center pt-10 pb-6">
                             <h2 class="text-4xl font-serif font-bold">開立課程</h2>
                             <div class="h-0.5 bg-white mt-2 w-40 mx-auto"></div>
-                            <a href="http://127.0.0.1:8000/wushu/ServiceCourse" class="block mt-4">
+                            <a href="/wushu/ServiceCourse" class="block mt-4">
                                 <button
                                     class="w-32 h-12 px-5 py-2 bg-deepTeal text-white rounded text-xl hover:bg-teal-700 transition duration-300">
                                     了解更多
@@ -364,16 +377,16 @@ onBeforeUnmount(() => {
 
                         <!-- 課程清單 -->
                         <div class="px-4 py-4">
-                            <div v-for="course in paginatedCourses" :key="course.name"
+                            <div v-for="course in paginatedCourses" :key="course.id"
                                 class="border-b border-dotted border-gray-600 py-4">
                                 <div class="text-xl font-medium mb-2">{{ course.name }}</div>
                                 <div class="flex justify-between items-center">
                                     <div class="flex items-center gap-2">
                                         <span class="bg-deepTeal text-white text-sm px-3 py-1 rounded-full">{{
-                                            course.lessons }}堂課</span>
-                                        <span class="text-gray-300 text-sm">{{ course.duration }}</span>
+                                            course.lessons || 0 }}堂課</span>
+                                        <span class="text-gray-300 text-sm">{{ course.duration || '2小時/堂' }}</span>
                                     </div>
-                                    <span class="text-deepTeal font-bold text-lg">{{ course.price }}</span>
+                                    <span class="text-deepTeal font-bold text-lg">NT${{ course.price }}</span>
                                 </div>
                             </div>
                         </div>
@@ -400,6 +413,7 @@ onBeforeUnmount(() => {
                     </template>
                 </div>
             </section>
+
 
 
 

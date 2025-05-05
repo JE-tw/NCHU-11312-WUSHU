@@ -17,9 +17,7 @@ Route::get('dashboard', function () {
 
 Route::prefix('wushu')->group(function () {
     // 首頁
-    Route::get('/', function () {
-        return Inertia::render('frontend/Home'); // vue檔案路徑
-    });
+    Route::get('/', [WushuController::class, 'home'])->name('wushu.home');
 
     // 服務與課程頁 (代表/ServiceCourse會連到wushuController裡面的list)
     Route::get('/ServiceCourse', [WushuController::class, 'list'])->name('wushu.list');

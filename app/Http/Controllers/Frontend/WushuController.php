@@ -12,6 +12,25 @@ use App\Http\Controllers\Controller;
 
 class WushuController extends Controller
 {
+    // 首頁 - 獲取課程資料
+    public function home()
+    {
+        $categories = Category::with('courses')->get();
+        $featuredCourses = Course::where('is_featured', true)->take(2)->get(); // 主打課程
+        
+        // 將課程按類別分組
+        $coursesByCategory = [];
+        foreach ($categories as $category) {
+            $coursesByCategory[$category->name] = $category->courses;
+        }
+
+        return Inertia::render('frontend/Home', [
+            'categories' => $categories,
+            'coursesByCategory' => $coursesByCategory,
+            'featuredCourses' => $featuredCourses,
+        ]);
+    }
+    
     // 查 服務與課程頁 課程、服務
     public function list()
     {
