@@ -24,12 +24,14 @@ const scrollToTop = () => {
 </script>
 
 <template>
-    <button v-show="showButton" @click="scrollToTop"
-        :class="['fixed z-[9999] w-[80px] h-[80px] rounded-full shadow-md bottom-6 right-6 bg-transparent']">
+    <button v-show="showButton" @click="scrollToTop" :class="[
+        'fixed z-[9999] rounded-full shadow-md bg-transparent',
+        'w-[80px] h-[80px] bottom-6 right-6',           
+        'sm:w-[80px] sm:h-[80px] sm:bottom-6 sm:right-6', 
+        'w-[50px] h-[50px] bottom-4 right-4'             
+    ]">
         <img :src="btnTopImg" alt="回到頂部" class="w-full h-full object-contain" />
     </button>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

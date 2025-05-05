@@ -131,8 +131,9 @@ onBeforeUnmount(() => {
 
         <main>
             <!-- banner -->
-            <section class="bg-cover bg-center bg-no-repeat w-[1903px] h-[920px]"
-                :style="`background-image: url(${bgImage})`"></section>
+            <section class="bg-cover bg-center bg-no-repeat w-full h-[60vh] sm:h-[70vh] xl:h-[920px]"
+                :style="`background-image: url(${bgImage})`">
+            </section>
 
             <section id="intro" class="bg-white py-12 md:py-16 xl:py-20">
                 <div class="max-w-7xl mx-auto px-4">
@@ -249,7 +250,7 @@ onBeforeUnmount(() => {
                                                 {{ course.lessons }}堂課
                                             </span>
                                             <span class="text-gray-300 w-24 text-[24px] text-center">{{ course.duration
-                                                }}</span>
+                                            }}</span>
                                             <span class="text-deepTeal font-bold text-[24px] w-28 text-right">{{
                                                 course.price }}</span>
                                         </div>
@@ -316,7 +317,7 @@ onBeforeUnmount(() => {
                                         {{ course.lessons }}堂課
                                     </span>
                                     <span class="text-gray-300 text-xl text-center whitespace-nowrap">{{ course.duration
-                                        }}</span>
+                                    }}</span>
                                     <span class="text-deepTeal font-bold text-xl text-right">{{ course.price }}</span>
                                 </div>
                             </div>
@@ -448,7 +449,7 @@ onBeforeUnmount(() => {
             <section id="history-section" class="relative bg-white pb-14">
                 <div class="max-w-[1903px] mx-auto px-5 py-10 sm:px-8 sm:py-16 xl:px-0 xl:py-12">
 
-                    <!--手機 & 平板版專用標題：在最上方 -->
+
                     <h2 class="text-[36px] sm:text-[48px] xl:hidden font-bold text-center mb-8 font-serif">
                         <span
                             class="relative inline-block after:content-[''] after:absolute after:bottom-[-8px] after:left-0 after:w-full after:h-[2px] after:bg-black">
