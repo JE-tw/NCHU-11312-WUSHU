@@ -18,12 +18,10 @@ const showDescription = ref(false);
 const toggleDescription = () => {
   showDescription.value = !showDescription.value;
 };
-
-
 </script>
 
 <template>
-    <!-- test -->
+  <!-- test -->
   <!-- <div 
       v-for="service in props.services"
       :key="service.id">
@@ -51,7 +49,13 @@ const toggleDescription = () => {
         </div>
       </div>
       <!-- 購物車按鈕 -->
-      <CartButton />
+      <!-- <CartButton /> -->
+      <CartButton 
+        :productId="item.id" 
+        :productName="item.name" 
+        :price="item.price"
+        :productType="1"
+         />
     </div>
 
     <!-- 描述文字 -->

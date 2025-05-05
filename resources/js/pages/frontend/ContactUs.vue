@@ -21,18 +21,32 @@ const title = ref(''); // 輸入時label往上方移動
 
 console.log(item.value);
 
-// 送出
-
-// const submit = () => {
-//   console.log('成功');
-// };
-
-const handleSubmit = () => {
-  // 這裡先做格式驗證（可額外寫邏輯）
-  if (!item.value.name || !item.value.email) {
-    Swal.fire('請填寫所有欄位');
-    return;
+// 表單格式驗證 → 彈窗 → 送出彈窗 → 成功提示彈窗
+// 表單格式驗證
+const validateForm = () => {
+  if (!item.value.name.trim()) {
+    Swal.fire('錯誤', '請輸入姓名', 'error');
+    return false;
   }
+  if (!/^09\d{8}$/.test(item.value.phone)) {
+    Swal.fire('錯誤', '請輸入正確手機號碼', 'error');
+    return false;
+  }
+  if (!/^[\w.-]+@[\w.-]+\.\w+$/.test(item.value.email)) {
+    Swal.fire('錯誤', '請輸入正確的 Email 格式', 'error');
+    return false;
+  }
+  if (!item.value.title.trim() || !item.value.content.trim()) {
+    Swal.fire('錯誤', '請完整填寫所有欄位', 'error');
+    return false;
+  }
+  return true;
+};
+
+// 送出+彈窗
+const handleSubmit = () => {
+  // 先格式驗證
+  if (!validateForm()) return;
 
   // 然後跑確認對話框
   Swal.fire({
@@ -40,20 +54,34 @@ const handleSubmit = () => {
     showCancelButton: true,
     cancelButtonText: '取消',
     confirmButtonText: '確定',
+    reverseButtons: true,
     customClass: {
       confirmButton: 'my-confirm-btn',
       cancelButton: 'my-cancel-btn',
     },
   }).then((result) => {
     if (result.isConfirmed) {
-      // 這裡才送出，例如發 API
-      Swal.fire({
-        title: '送出成功!',
-        text: '我們將盡速回覆至您的信箱，請耐心等候。',
-        icon: 'success',
-        customClass:{
-          confirmButton: 'my-confirm-btn2',
-        }
+      router.post(route('wushu.store'), item.value, {
+        onSuccess: () => {
+          Swal.fire({
+            title: '送出成功!',
+            text: '我們將盡速回覆至您的信箱，請耐心等候。',
+            icon: 'success',
+            customClass: {
+              confirmButton: 'my-confirm-btn2',
+            },
+          });
+          console.log('成功送出');
+
+          // 清空欄位（可選）
+          item.value = {
+            name: '',
+            phone: '',
+            email: '',
+            title: '',
+            content: '',
+          };
+        },
       });
     }
   });
@@ -178,7 +206,6 @@ const handleSubmit = () => {
           <!-- 送出按鈕 -->
           <button
             type="submit"
-            @click="submit"
             class="h-[36px] w-[360px] rounded-sm bg-blueGreen text-[16px]/[28px] tracking-tight text-white sm:h-[48px] sm:w-[438px] sm:text-[24px]/[40px]"
           >
             送出
@@ -191,19 +218,19 @@ const handleSubmit = () => {
 </template>
 <style>
 .my-confirm-btn {
-  background-color: #1F9C95;
+  background-color: #1f9c95;
   color: white;
-  border: 1px solid #1F9C95;
+  border: 1px solid #1f9c95;
 }
 
 .my-cancel-btn {
   background-color: white;
-  color: #1F9C95;
-  border: 1px solid #1F9C95;
+  color: #1f9c95;
+  border: 1px solid #1f9c95;
 }
 .my-confirm-btn2 {
-  background-color: #1F9C95;
+  background-color: #1f9c95;
   color: white;
-  border: 1px solid #1F9C95;
+  border: 1px solid #1f9c95;
 }
 </style>

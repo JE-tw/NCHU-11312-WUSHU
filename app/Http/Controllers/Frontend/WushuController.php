@@ -53,6 +53,6 @@ class WushuController extends Controller
             "title" => $item['title'],
             "content" => $item['content'],
         ]);
-        return redirect(route('frontend.list'));
+        return redirect(route('wushu.contact'));
     }
 }

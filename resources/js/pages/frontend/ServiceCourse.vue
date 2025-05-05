@@ -70,6 +70,8 @@ function scrollTo(targetId) {
     el.scrollIntoView({ behavior: 'smooth' });
   }
 }
+
+
 </script>
 
 <template>

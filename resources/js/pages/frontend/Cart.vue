@@ -1,7 +1,7 @@
-<!-- 購物車 引入heading作為購買商品列表 -->
+<!-- 購物車 引入 ProductCard 作為購買商品列表 -->
 <script setup>
-import { ref } from 'vue';
-import Heading from '@/components/ProductCard.vue';
+import { ref, onMounted } from 'vue';
+import ProductCard from '@/components/ProductCard.vue';
 import { router } from '@inertiajs/vue3';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
@@ -22,7 +22,7 @@ const paidPrice = ref(''); // 輸入時label往上方移動
 const accountNumber = ref(''); // 輸入時label往上方移動
 const paidDate = ref('');
 
-// 測試假資料-服務
+// 測試假資料-服務（可刪）
 const fakeServices = [
   {
     id: 1,
@@ -35,7 +35,7 @@ const fakeServices = [
     price: '36,200',
   },
 ];
-// 測試假資料-課程
+// 測試假資料-課程（可刪）
 const fakeCourses = [
   {
     id: 1,
@@ -49,16 +49,37 @@ const fakeCourses = [
   },
 ];
 
-// test
+// 繼續觀看課程
 const goList = () => {
-    router.get('/wushu/ServiceCourse');
+  router.get('/wushu/ServiceCourse');
 };
+
+// 拿出localStorage儲存的商品
+const cartItems = ref([]); // 儲存從 localStorage 拿到的商品
+const serviceItems = computed(() => cartItems.value.filter((item) => item.product_type === 1));
+const courseItems = computed(() => cartItems.value.filter((item) => item.product_type === 2));
+
+onMounted(() => {
+  const storedCart = localStorage.getItem('cart'); // 從 localStorage 讀取資料
+  if (storedCart) {
+    cartItems.value = JSON.parse(storedCart);
+  }
+});
+
+// 計算總金額
+const totalAmount = computed(() => {
+  // 服務的總金額
+  const serviceTotal = serviceItems.value.reduce((total, item) => total + parseFloat(item.price), 0);
+
+  // 課程的總金額
+  const courseTotal = courseItems.value.reduce((total, item) => total + item.price, 0);
+
+  return serviceTotal + courseTotal; // 返回總金額
+});
 </script>
 
 <template>
-  
   <Header />
-
 
   <div class="bg-softGray pb-[120px] text-black">
     <!-- step1 購物車 -->
@@ -71,6 +92,7 @@ const goList = () => {
         </p>
         <span class="w-[100px] border-b-2 border-black sm:w-[150px]"></span>
       </header>
+
       <!-- 會員資料卡 -->
       <section class="w-[343px] sm:mx-auto sm:mb-[60px] sm:w-full sm:max-w-[720px] sm:px-[24px] xl:max-w-[1020px] xl:px-0">
         <div class="mb-10 px-[32px] py-[24px] text-[20px]/[26.6px] shadow-custom">
@@ -101,12 +123,17 @@ const goList = () => {
           <!-- 列表 -->
           <hr class="border-0.5 border-mediumGray" />
           <div>
-            <!-- 引入Heading 並用測試假資料 -->
+            <!-- 引入ProductCard 並用測試假資料
             <div v-for="item in fakeServices" :key="item.id">
-              <Heading :id="item.id" :title="item.title" :price="item.price" />
+              <ProductCard :id="item.id" :title="item.title" :price="item.price" />
+            </div> -->
+            <!-- 服務 -->
+            <div v-for="(item, index) in serviceItems" :key="index">
+              <ProductCard :id="index + 1" :title="item.name" :price="item.price.toLocaleString()" />
             </div>
           </div>
         </div>
+
         <!-- 課程 -->
         <div class="max-w-[311px] sm:max-w-[672px] xl:w-full xl:max-w-[1020px]">
           <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[28px]/[37px] xl:text-[32px]/[43px]">課程</p>
@@ -123,9 +150,13 @@ const goList = () => {
           <!-- 列表 -->
           <hr class="border-0.5 border-mediumGray" />
           <div>
-            <!-- 引入Heading 並用測試假資料 -->
-            <div v-for="item in fakeCourses" :key="item.id">
-              <Heading :id="item.id" :title="item.title" :price="item.price" />
+            <!-- 引入ProductCard 並用測試假資料 -->
+            <!-- <div v-for="item in fakeCourses" :key="item.id">
+              <ProductCard :id="item.id" :title="item.title" :price="item.price" />
+            </div> -->
+            <!-- 課程 -->
+            <div v-for="(item, index) in courseItems" :key="index">
+              <ProductCard :id="index + 1" :title="item.name" :price="item.price.toLocaleString()" />
             </div>
           </div>
         </div>
@@ -133,10 +164,10 @@ const goList = () => {
         <div
           class="flex w-full max-w-[311px] flex-wrap justify-between px-[10px] py-[16px] text-[16px]/[21px] font-bold sm:max-w-[672px] sm:text-[24px]/[32px] xl:max-w-[1020px] xl:pl-[5px] xl:pr-[110px]"
         >
-          <div class="text-darkGray">共計 3 項</div>
+          <div class="text-darkGray">共計 {{ serviceItems.length + courseItems.length }} 項</div>
           <div>
             <span class="text-darkGray">合計</span>
-            <span class="ml-[34px] text-blueGreen"> NT$35,000</span>
+            <span class="ml-[34px] text-blueGreen"> NT$ {{ totalAmount.toLocaleString() }}</span>
           </div>
         </div>
       </div>
@@ -144,7 +175,7 @@ const goList = () => {
       <div class="sm:w-[100%] sm:max-w-[672px] sm:px-3 xl:max-w-[760px] xl:px-0">
         <div class="flex flex-wrap justify-center gap-4 sm:justify-between">
           <button
-          @click="goList"
+            @click="goList"
             class="h-[44px] w-[147.5px] rounded-sm border border-blueGreen text-[16px]/[28px] text-blueGreen hover:bg-blueGreen hover:text-white sm:mr-0 sm:h-[56px] sm:w-[276px] sm:text-[24px]/[40px] xl:w-[320px]"
           >
             繼續看課程
@@ -175,7 +206,7 @@ const goList = () => {
           <p class="mb-[24px] font-bold text-blueGreen sm:text-[32px]/[42px]">付款說明</p>
           <p class="mb-[30px] sm:text-[24px]/[32px] sm:font-bold">我們唯一的付款方式為「轉帳」，恕不提供信用卡的選項。</p>
           <div class="font-bold sm:text-[28px]/[38px] sm:font-normal xl:bg-white xl:px-[84px] xl:py-[24px] xl:text-[24px]/[40px] xl:shadow-custom">
-            您須匯款的金額為<span class="text-blueGreen xl:text-[32px]/[42px]">NT$48,000 </span>
+            您須匯款的金額為<span class="text-blueGreen xl:text-[32px]/[42px]">NT$ {{ totalAmount.toLocaleString() }} </span>
             <br />
             請匯款至台新銀行812（內湖分行0481）
             <br />
