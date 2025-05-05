@@ -7,9 +7,12 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\UserInfoController;
+use App\Http\Controllers\Admin\LoginController;
 use App\Models\Service;
 
 // 後端頁面
+
+
 // 付款紀錄管理
 Route::prefix('wushu/admin/order')->group(function () {
     Route::get('/', [OrderController::class, 'index'])->name('admin.order.list');
@@ -51,3 +54,13 @@ Route::prefix('wushu/admin/service')->group(function () {
 Route::prefix('wushu/admin/course')->group(function () {
     Route::get('/', [CourseController::class, 'index'])->name('admin.course.list');
 });
+<<<<<<< Updated upstream
+=======
+
+//登入頁
+Route::get('wushu/admin/login', [LoginController::class, 'loginPage'])->name('admin.login');
+
+
+
+
+>>>>>>> Stashed changes
