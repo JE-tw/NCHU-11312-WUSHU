@@ -22,7 +22,7 @@ class UserInfoController extends Controller
         $query = UserInfo::with('user');
 
         $userInfos = $this->applyFiltersAndPaginate($request, $query, [
-            'search' => ['name', 'phone'],        // 支援搜尋的欄位
+            'search' => ['name', 'phone'],// 支援搜尋的欄位
             'allowedSorts' => ['id', 'birth_date'],
             'defaultSort' => 'id',
             'defaultDirection' => 'asc',
