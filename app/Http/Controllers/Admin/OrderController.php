@@ -37,4 +37,44 @@ class OrderController extends Controller
             'orders' => $orders,
         ]);
     }
+
+    public function edit(Order $order)
+    {
+        // 使用 optional() 來避免 userInfo 不存在時報錯
+        $order->load([
+            'user.userInfo',       // 取得會員信箱 + 詳細資料，若不存在則為 null
+            'orderItems.product',  // 取得購買項目（包含課程等）
+        ]);
+
+        // 在這裡手動處理 userInfo
+        $userInfo = optional($order->user)->userInfo;  // 如果不存在，則為 null
+
+        return Inertia::render('backend/OrderEdit', [
+            'order' => $order,
+            'userInfo' => $userInfo, // 傳遞給前端
+        ]);
+    }
+
+    public function update(Request $request, Order $order)
+    {
+        $data = $request->validate([
+            'remittance_date' => 'nullable|date',
+            'remittance_amount' => 'nullable|numeric',
+            'remittance_last5' => 'nullable|string|max:5',
+            'status' => 'required|in:paid,unpaid,cancelled',
+            'course_permissions' => 'array',
+        ]);
+
+        $order->update([
+            'remittance_date' => $data['remittance_date'],
+            'remittance_amount' => $data['remittance_amount'],
+            'remittance_last5' => $data['remittance_last5'],
+            'status' => $data['status'],
+        ]);
+
+        // 更新課程權限邏輯 (視你的資料表設計可能會用 pivot table 或其他方式)
+        // 例如: OrderItem::where('order_id', $order->id)->each(...)
+
+        return redirect()->route('admin.order.list')->with('success', '訂單已更新');
+    }
 }

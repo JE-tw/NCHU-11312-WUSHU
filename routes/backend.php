@@ -16,6 +16,8 @@ use App\Models\Service;
 // 付款紀錄管理
 Route::prefix('wushu/admin/order')->group(function () {
     Route::get('/', [OrderController::class, 'index'])->name('admin.order.list');
+    Route::get('/{order}/edit', [OrderController::class, 'edit'])->name('admin.order.edit');
+    Route::get('/{order}', [OrderController::class, 'update'])->name('admin.order.update');
 });
 
 // 會員管理

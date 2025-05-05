@@ -13,9 +13,12 @@ const columns = [
   { label: '信箱', key: 'user_email' },
   { label: '價格', key: 'total_amount', sortable: true },
   { label: '付款方式', key: 'payment_method' },
-  { label: '訂單狀態', key: 'status_text'},
+  { label: '訂單狀態', key: 'status_text' },
   { label: '操作', key: 'actions' },
 ];
+const editOrder = (orderId) => {
+  router.visit(route('admin.order.edit', orderId));
+};
 </script>
 
 <template>
@@ -63,7 +66,7 @@ const columns = [
         <!-- 操作欄插槽 -->
         <template #cell(actions)="{ item }">
           <div class="flex justify-center gap-2">
-            <button type="button" class="border px-2 py-1 text-sm">編輯</button>
+            <button type="button" class="border px-2 py-1 text-sm" @click="editOrder(item.id)">編輯</button>
           </div>
         </template>
       </TableWithPagination>

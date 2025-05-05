@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    // 用 hasOne 關聯來表示用戶有一個可能存在的資料
+    public function userInfo()
+    {
+        return $this->hasOne(UserInfo::class);
+    }
 }
