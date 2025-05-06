@@ -30,7 +30,7 @@ class CourseSeeder extends Seeder
             'introduction' => '塔羅牌是連接潛意識與宇宙訊息的重要工具。',
             'detail' => '塔羅的圖像象徵與直覺密切相關，透過本課程的基礎訓練，學員將能解讀牌義、掌握牌陣，進一步協助自我探索與他人諮詢。課程中不僅涵蓋大阿爾克那與小阿爾克那的結構，亦融入實務演練與心靈對話，幫助你建立個人風格的牌卡解讀能力。',
             'is_featured' => 1,
-            'featured_image' => '主打課程1a2axq-d0uqq.webp',
+            'featured_image' => '主打課程2a1t2a-q5lk4.webp',
         ]);
         
         Course::create([
