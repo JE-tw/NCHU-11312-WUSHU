@@ -19,18 +19,19 @@ use Illuminate\Support\Facades\DB;
 
 class WushuController extends Controller
 {
-    // 首頁 - 獲取課程資料
     public function home()
     {
-        // 取得所有課程類別與其關聯課程
         $categories = Category::with('courses')->get();
-        $featuredCourses = Course::where('is_featured', true)->take(2)->get(); // 主打課程
 
-        // 將課程按類別分組
+        $featuredCourses = Course::with('category') 
+            ->where('is_featured', true)
+            ->take(2)
+            ->get();
+
         $coursesByCategory = [];
         foreach ($categories as $category) {
             $coursesByCategory[$category->name] = $category->courses->map(function ($course) {
-                $lessons = $course->chapters()->count(); // 取得章節數量
+                $lessons = $course->chapters()->count();
 
                 return [
                     'id' => $course->id,
@@ -38,7 +39,7 @@ class WushuController extends Controller
                     'price' => $course->price,
                     'introduction' => $course->introduction,
                     'lessons' => $lessons,
-                    'duration' => '2小時/堂', // 假設固定時長
+                    'duration' => '2小時/堂',
                 ];
             });
         }
