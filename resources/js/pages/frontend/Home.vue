@@ -169,7 +169,7 @@ onBeforeUnmount(() => {
                                     <button
                                         class="px-4 md:px-5 xl:px-6 py-1.5 md:py-2 bg-alertRed text-white rounded-full text-base md:text-lg hover:bg-gray-800 transition duration-300">
                                         {{ course.category.name }}
-                                    </button> 
+                                    </button>
                                     <p class="text-xl md:text-2xl xl:text-3xl font-bold text-black">NT${{ course.price
                                     }}</p>
                                 </div>
@@ -221,7 +221,6 @@ onBeforeUnmount(() => {
                     </div>
                 </div>
             </section>
-
 
             <!-- Courses offered -->
             <section class="relative w-full bg-black text-white overflow-hidden min-h-[858px]">
