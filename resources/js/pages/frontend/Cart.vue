@@ -2,17 +2,16 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import ProductCard from '@/components/ProductCard.vue';
+import { usePage } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import axios from 'axios';
 
 import deleteIcon from '@/images/f-delete.png';
 
 import { useCartStore } from '@/stores/cart';
 const cartStore = useCartStore();
-// function remove(productId) {
-//   cartStore.removeFromCart(productId, productType);
-// }
 
 // 購物車步驟
 const step = ref(1);
@@ -30,33 +29,6 @@ const paidPrice = ref(''); // 輸入時label往上方移動
 const accountNumber = ref(''); // 輸入時label往上方移動
 const paidDate = ref('');
 
-// 測試假資料-服務（可刪）
-const fakeServices = [
-  {
-    id: 1,
-    title: '服務服務服務服務服務服務',
-    price: '14,000',
-  },
-  {
-    id: 2,
-    title: '服務服務服務服務服務服務服務服務',
-    price: '36,200',
-  },
-];
-// 測試假資料-課程（可刪）
-const fakeCourses = [
-  {
-    id: 1,
-    title: '購買課程購買課程購買課程',
-    price: '14,000',
-  },
-  {
-    id: 2,
-    title: '購買課程購買課程購買課程購買課程',
-    price: '36,200',
-  },
-];
-
 // 繼續觀看課程
 const goList = () => {
   router.get('/wushu/ServiceCourse');
@@ -71,8 +43,13 @@ onMounted(() => {
   const storedCart = localStorage.getItem('cart'); // 從 localStorage 讀取資料
   if (storedCart) {
     cartItems.value = JSON.parse(storedCart);
+
+    // ✅ Log 所有商品
+    console.log('購物車商品：', cartItems.value);
   }
 });
+
+
 
 // 計算總金額
 const totalAmount = computed(() => {
@@ -119,6 +96,46 @@ const cancelDelete = () => {
 };
 
 // 獲取會員資料
+const page = usePage();
+const userInfo = computed(() => page.props.userInfo);
+const email = computed(() => userInfo.value?.email || '');
+const name = computed(() => userInfo.value?.name || '');
+const phone = computed(() => userInfo.value.user_info?.phone || '');
+
+// 購物車送出
+const submitOrder = async () => {
+  try {
+    // 準備送出的資料格式
+    const payload = {
+      user: {
+        name: 'alyson', // 未來可以從使用者狀態動態取得
+        phone: '0909-123-234',
+        email: 'He11oWorld@gmail.com',
+      },
+      remittance: {
+        remittance_date: paidDate.value,
+        remittance_amount: totalAmount.value,
+        remittance_account_last5: accountNumber.value,
+      },
+      items: cartItems.value.map((item) => ({
+        product_id: item.id,
+        product_type: item.product_type, // 1=服務，2=課程
+        price_at_order_time: item.price,
+      })),
+    };
+    console.log(paidDate.value);
+
+    // 發送 POST 請求到 Laravel 後端的 API 路由（路徑請依實際情況修改）
+    await axios.post('/orders', payload);
+
+    alert('訂單送出成功！');
+    localStorage.removeItem('cart'); // 清空購物車
+    router.get('/order/success'); // 導向成功頁面（視情況修改）
+  } catch (error) {
+    console.error('送出訂單失敗', error);
+    alert('送出訂單失敗，請稍後再試。');
+  }
+};
 
 </script>
 
@@ -143,9 +160,9 @@ const cancelDelete = () => {
           <p class="pb-[12px]/[16px] pb-2 text-[20px] font-bold sm:text-[32px]/[42px]">會員資料</p>
           <hr class="" />
           <div class="text-[12px] sm:text-[18px]/[24px]">
-            <p class="mt-[12px]">alyson</p>
-            <p class="my-[8px]">0909-123-234</p>
-            <p>He11oWorld@gmail.com</p>
+            <p class="mt-[12px]">{{ name }}</p>
+            <p class="my-[8px]">{{ phone }}</p>
+            <p>{{ email }}</p>
           </div>
         </div>
       </section>
@@ -167,10 +184,6 @@ const cancelDelete = () => {
           <!-- 列表 -->
           <hr class="border-0.5 border-mediumGray" />
           <div>
-            <!-- 引入ProductCard 並用測試假資料
-            <div v-for="item in fakeServices" :key="item.id">
-              <ProductCard :id="item.id" :title="item.title" :price="item.price" />
-            </div> -->
             <!-- 服務 -->
             <div v-for="(item, index) in serviceItems" :key="index">
               <ProductCard :id="index + 1" :title="item.name" :price="item.price.toLocaleString()">
@@ -353,6 +366,7 @@ const cancelDelete = () => {
             返回購物車
           </button>
           <button
+            @click="submitOrder"
             class="h-[44px] w-[147.5px] rounded-sm border border-blueGreen text-[16px]/[28px] text-blueGreen hover:bg-blueGreen hover:text-white sm:h-[56px] sm:w-[320px] sm:text-[24px]/[40px]"
           >
             送出匯款資料

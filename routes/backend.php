@@ -1,14 +1,14 @@
 <?php
 
 use Inertia\Inertia;
+use App\Models\Service;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\UserInfoController;
-use App\Http\Controllers\Admin\LoginController;
-use App\Models\Service;
 
 // 後端頁面
 
@@ -69,3 +69,14 @@ Route::prefix('wushu/admin')->middleware(['auth'])->group(function () {
 
 // //登入頁
 // Route::get('wushu/admin/login', [LoginController::class, 'loginPage'])->name('admin.login');
+<<<<<<< Updated upstream
+=======
+
+
+
+
+
+
+
+
+>>>>>>> Stashed changes

@@ -94,7 +94,7 @@ class WushuController extends Controller
     // 查 購物車會員資料
     public function cart()
     {
-        $userId = 1; // 固定使用者編號
+        $userId = 2; // 固定使用者編號
         $userInfo = User::with('userInfo')->find($userId);
 
         return Inertia::render('frontend/Cart', [
@@ -105,14 +105,18 @@ class WushuController extends Controller
     // 購物車送出訂單
     public function storeOrder(Request $request)
     {
-        $userId = 1; // 固定會員
+        $userId = 2; // 固定會員
 
         // 建立訂單
         $order = Order::create([
             'user_id' => $userId,
             'total_amount' => $request->total_amount,
-            'status' => 'pending', // 或其他初始狀態
-            // 其他欄位（如匯款資訊）可先放空
+            'status' => '1', // 送出後，預設1-等待客服確認款項
+            // 其他欄位（如匯款資訊）
+            'remittance_date' => '',
+            'remittance_amount' => '',
+            'remittance_account_last5' => ''
+
         ]);
 
         // 建立每一筆訂單項目
