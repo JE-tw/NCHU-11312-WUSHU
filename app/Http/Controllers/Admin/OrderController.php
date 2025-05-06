@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Admin;
 use Inertia\Inertia;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Traits\HandlesTableFilters;
 use App\Models\User;
+use App\Http\Controllers\Controller;
 
 // 購物車
 use App\Models\OrderItem;
-use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -62,24 +62,24 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $data = $request->validate([
-            'remittance_date' => 'nullable|date',
-            'remittance_amount' => 'nullable|numeric',
-            'remittance_last5' => 'nullable|string|max:5',
-            'status' => 'required|in:paid,unpaid,cancelled',
+            'status' => 'required|integer',
             'course_permissions' => 'array',
+            'course_permissions.*' => 'boolean',
         ]);
-
+    
         $order->update([
-            'remittance_date' => $data['remittance_date'],
-            'remittance_amount' => $data['remittance_amount'],
-            'remittance_last5' => $data['remittance_last5'],
             'status' => $data['status'],
         ]);
-
-        // 更新課程權限邏輯 (視你的資料表設計可能會用 pivot table 或其他方式)
-        // 例如: OrderItem::where('order_id', $order->id)->each(...)
-
-        return redirect()->route('admin.order.list')->with('success', '訂單已更新');
+    
+        // 更新每筆課程權限
+        foreach ($data['course_permissions'] as $itemId => $isAccessible) {
+            DB::table('order_items')
+                ->where('id', $itemId)
+                ->where('order_id', $order->id)
+                ->update(['is_accessible' => $isAccessible]);
+        }
+    
+        return redirect()->back()->with('success', '訂單已成功更新！');
     }
 
 
