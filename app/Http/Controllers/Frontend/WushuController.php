@@ -15,13 +15,30 @@ class WushuController extends Controller
     // 首頁 - 獲取課程資料
     public function home()
     {
+        // 取得所有課程類別與其關聯課程
         $categories = Category::with('courses')->get();
-        $featuredCourses = Course::where('is_featured', true)->take(2)->get(); // 主打課程
-        
+
+        // 取得主打課程（is_featured = true）
+        $featuredCourses = Course::where('is_featured', true)
+            ->with('category')
+            ->take(2)
+            ->get();
+
         // 將課程按類別分組
         $coursesByCategory = [];
         foreach ($categories as $category) {
-            $coursesByCategory[$category->name] = $category->courses;
+            $coursesByCategory[$category->name] = $category->courses->map(function ($course) {
+                $lessons = $course->chapters()->count(); // 取得章節數量
+
+                return [
+                    'id' => $course->id,
+                    'name' => $course->name,
+                    'price' => $course->price,
+                    'introduction' => $course->introduction,
+                    'lessons' => $lessons,
+                    'duration' => '2小時/堂', // 假設固定時長
+                ];
+            });
         }
 
         return Inertia::render('frontend/Home', [
@@ -30,7 +47,7 @@ class WushuController extends Controller
             'featuredCourses' => $featuredCourses,
         ]);
     }
-    
+
     // 查 服務與課程頁 課程、服務
     public function list()
     {
