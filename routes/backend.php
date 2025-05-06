@@ -64,19 +64,3 @@ Route::prefix('wushu/admin')->middleware(['auth'])->group(function () {
 
 
 });
-
-
-
-// //登入頁
-// Route::get('wushu/admin/login', [LoginController::class, 'loginPage'])->name('admin.login');
-<<<<<<< Updated upstream
-=======
-
-
-
-
-
-
-
-
->>>>>>> Stashed changes
