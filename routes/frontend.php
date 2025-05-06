@@ -26,6 +26,12 @@ Route::prefix('wushu')->group(function () {
     // 課程介紹頁(未解鎖、解鎖)
     Route::get('/CourseIntro/{id}', [WushuController::class, 'intro'])->name('wushu.intro');
 
+    // 購物車
+    Route::get('/Cart', [WushuController::class, 'cart']);
+
+    // 購物車 新增資料
+    Route::post('/order/store', [WushuController::class, 'storeOrder']);
+
     // 付款與退款政策頁
     Route::get('/Policy', function () {
         return Inertia::render('frontend/Policy');
@@ -41,10 +47,6 @@ Route::prefix('wushu')->group(function () {
     Route::get('/LoginSignup', function () {
         return Inertia::render('frontend/LoginSignup');
     });
-    // 購物車
-    Route::get('/Cart', function () {
-        return Inertia::render('frontend/Cart');
-    });
 
     // 隱私權政策
     Route::get('/Privacy', function () {
@@ -54,6 +56,4 @@ Route::prefix('wushu')->group(function () {
     Route::get('/MemberCenter', function () {
         return Inertia::render('frontend/MemberCenter');
     });
-
-
 });

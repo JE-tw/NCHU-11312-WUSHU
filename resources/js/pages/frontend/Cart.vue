@@ -136,11 +136,7 @@ const cancelDelete = () => {
         </p>
         <span class="w-[100px] border-b-2 border-black sm:w-[150px]"></span>
       </header>
-      <div>
-        <p v-if="user">姓名: {{ user.name }}</p>
-        <p v-if="user">電子信箱: {{ user.email }}</p>
-        <p v-if="user">電話: {{ user.phone }}</p>
-      </div>
+
       <!-- 會員資料卡 -->
       <section class="w-[343px] sm:mx-auto sm:mb-[60px] sm:w-full sm:max-w-[720px] sm:px-[24px] xl:max-w-[1020px] xl:px-0">
         <div class="mb-10 px-[32px] py-[24px] text-[20px]/[26.6px] shadow-custom">
