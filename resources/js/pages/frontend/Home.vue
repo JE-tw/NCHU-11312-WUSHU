@@ -150,10 +150,10 @@ onBeforeUnmount(() => {
                         </h2>
                         <div class="h-0.5 bg-black mt-2 mx-auto w-[180px] md:w-[200px] xl:w-[220px]"></div>
                     </div>
-
                     <!-- Cards container -->
                     <div class="flex flex-col xl:flex-row gap-6 md:gap-8 justify-center items-center">
                         <!-- 使用 v-for 動態生成主打課程卡片 -->
+                        
                         <div v-for="(course, index) in featuredCourses" :key="course.id"
                             class="bg-white overflow-hidden w-full xl:w-1/2" :class="{ 'mt-6 xl:mt-0': index > 0 }"
                             style="cursor: pointer;" @click="$inertia.visit(`/wushu/CourseIntro/${course.id}`)">

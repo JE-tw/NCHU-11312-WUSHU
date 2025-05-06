@@ -29,21 +29,21 @@
       <!-- 電腦版右側 -->
       <div v-if="!isTablet && !isMobile" class="flex items-center gap-4 text-black">
         <!-- 搜尋功能 -->
-        <div class="group relative flex h-8 items-center">
+        <!-- <div class="group relative flex h-8 items-center">
           <button v-if="!isSearchActive" @click="toggleSearch" aria-label="搜尋" class="relative flex h-8 w-8 items-center justify-center">
             <img src="@/images/search.png" alt="搜尋" class="absolute inset-0 h-8 w-8 group-hover:hidden" />
             <img src="@/images/g1search.svg" alt="搜尋懸停" class="absolute inset-0 hidden h-8 w-8 group-hover:block" />
           </button>
 
           <!-- 搜尋列 -->
-          <div v-if="isSearchActive" class="absolute right-0 top-1/2 flex -translate-y-1/2 items-center rounded-full bg-white shadow-md">
+          <!-- <div v-if="isSearchActive" class="absolute right-0 top-1/2 flex -translate-y-1/2 items-center rounded-full bg-white shadow-md">
             <input type="text" placeholder="關鍵字" class="w-[200px] rounded-full bg-white py-2 pl-8 pr-3 outline-none" />
             <img src="@/images/g2search.svg" alt="搜尋" class="absolute left-2 h-5 w-5" />
             <button @click="toggleSearch" class="px-3 hover:text-[#1f9c95]">
               <span class="text-lg">×</span>
             </button>
           </div>
-        </div>
+        </div> --> 
 
         <!-- 購物車 -->
         <div class="relative">
@@ -79,19 +79,19 @@
         <div class="flex items-center gap-3">
           <!-- 搜尋 -->
           <div class="group relative flex h-7 items-center">
-            <button v-if="!isSearchActive" @click="toggleSearch" aria-label="搜尋" class="relative flex h-7 w-7 items-center justify-center">
+            <!-- <button v-if="!isSearchActive" @click="toggleSearch" aria-label="搜尋" class="relative flex h-7 w-7 items-center justify-center">
               <img src="@/images/search.png" alt="搜尋" class="absolute inset-0 h-7 w-7 group-hover:hidden" />
               <img src="@/images/g1search.svg" alt="搜尋懸停" class="absolute inset-0 hidden h-7 w-7 group-hover:block" />
-            </button>
+            </button> -->
 
             <!-- 平板搜尋列 -->
-            <div v-if="isSearchActive" class="absolute right-0 top-1/2 flex -translate-y-1/2 items-center rounded-full bg-white shadow-md">
+            <!-- <div v-if="isSearchActive" class="absolute right-0 top-1/2 flex -translate-y-1/2 items-center rounded-full bg-white shadow-md">
               <input type="text" placeholder="關鍵字" class="w-[200px] rounded-full bg-white py-2 pl-8 pr-3 outline-none" />
               <img src="@/images/g2search.svg" alt="搜尋" class="absolute left-2 h-5 w-5" />
               <button @click="toggleSearch" class="px-3 hover:text-[#1f9c95]">
                 <span class="text-lg">×</span>
               </button>
-            </div>
+            </div> -->
           </div>
 
           <!-- 購物車 -->
@@ -118,10 +118,10 @@
 
       <!-- 手機版 -->
       <div v-if="isMobile" class="flex items-center gap-3">
-        <div class="relative flex items-center">
+        <!-- <div class="relative flex items-center">
           <input type="text" placeholder="關鍵字" class="w-[160px] rounded-full bg-white py-1 pl-8 pr-3 text-sm outline-none" />
           <img src="@/images/g2search.svg" alt="搜尋" class="absolute left-2 h-4 w-4" />
-        </div>
+        </div> -->
         <div class="flex items-center gap-2">
           <!-- 購物車 -->
           <div class="relative">
