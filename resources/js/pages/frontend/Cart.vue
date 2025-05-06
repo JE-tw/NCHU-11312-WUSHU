@@ -10,9 +10,9 @@ import deleteIcon from '@/images/f-delete.png';
 
 import { useCartStore } from '@/stores/cart';
 const cartStore = useCartStore();
-function remove(productId) {
-  cartStore.removeFromCart(productId);
-}
+// function remove(productId) {
+//   cartStore.removeFromCart(productId, productType);
+// }
 
 // 購物車步驟
 const step = ref(1);
@@ -89,9 +89,6 @@ const totalAmount = computed(() => {
 // 控制彈窗顯示與隱藏的狀態
 const showDeleteConfirmation = ref(false);
 
-// 新增變數儲存要刪除的項目
-const deleteTarget = ref({ id: null, type: null });
-
 // 刪除方法
 function removeItem(id, type) {
   // 刪除
@@ -100,6 +97,9 @@ function removeItem(id, type) {
   localStorage.setItem('cart', JSON.stringify(cartItems.value));
   showDeleteConfirmation.value = false; // 隱藏彈窗
 }
+
+// 新增變數儲存要刪除的項目
+const deleteTarget = ref({ id: null, type: null });
 
 // 先抓到儲存要刪除項目的變數
 const confirmDelete = (id, type) => {
@@ -117,6 +117,9 @@ const deleteItem = () => {
 const cancelDelete = () => {
   showDeleteConfirmation.value = false; // 隱藏彈窗
 };
+
+// 獲取會員資料
+
 </script>
 
 <template>
@@ -133,7 +136,11 @@ const cancelDelete = () => {
         </p>
         <span class="w-[100px] border-b-2 border-black sm:w-[150px]"></span>
       </header>
-
+      <div>
+        <p v-if="user">姓名: {{ user.name }}</p>
+        <p v-if="user">電子信箱: {{ user.email }}</p>
+        <p v-if="user">電話: {{ user.phone }}</p>
+      </div>
       <!-- 會員資料卡 -->
       <section class="w-[343px] sm:mx-auto sm:mb-[60px] sm:w-full sm:max-w-[720px] sm:px-[24px] xl:max-w-[1020px] xl:px-0">
         <div class="mb-10 px-[32px] py-[24px] text-[20px]/[26.6px] shadow-custom">
@@ -149,7 +156,7 @@ const cancelDelete = () => {
       <!-- 購物車商品列表 -->
       <div class="flex w-full flex-col items-center px-[32px] pb-[76px] sm:mx-[216px] sm:px-[48px]">
         <!-- 服務 -->
-        <div class="w-full mb-8 max-w-[311px] sm:max-w-[672px] xl:w-full xl:max-w-[1020px]">
+        <div class="mb-8 w-full max-w-[311px] sm:max-w-[672px] xl:w-full xl:max-w-[1020px]">
           <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[28px]/[37px] xl:text-[32px]/[43px]">服務</p>
           <!-- 列表title -->
           <div class="hidden sm:block">
