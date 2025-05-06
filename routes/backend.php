@@ -61,6 +61,11 @@ Route::prefix('wushu/admin')->middleware(['auth'])->group(function () {
     Route::prefix('course')->group(function () {
         Route::get('/', [CourseController::class, 'index'])->name('admin.course.list');
     });
-
-
 });
+
+// 購物車訂單
+Route::post('/orders', [OrderController::class, 'store'])->name('wushu.storeOrder');
+
+
+// //登入頁
+// Route::get('wushu/admin/login', [LoginController::class, 'loginPage'])->name('admin.login');

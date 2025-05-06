@@ -30,7 +30,7 @@ Route::prefix('wushu')->group(function () {
     Route::get('/Cart', [WushuController::class, 'cart']);
 
     // 購物車 新增資料
-    Route::post('/order/store', [WushuController::class, 'storeOrder']);
+    Route::post('/Cart', [WushuController::class, 'storeOrder'])->name('wushu.storeOrder');
 
     // 付款與退款政策頁
     Route::get('/Policy', function () {

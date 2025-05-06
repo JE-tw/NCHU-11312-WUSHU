@@ -12,7 +12,10 @@ use App\Models\UserInfo;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use App\Models\ContactRecord;
+
+// 購物車
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class WushuController extends Controller
 {
@@ -105,31 +108,56 @@ class WushuController extends Controller
     // 購物車送出訂單
     public function storeOrder(Request $request)
     {
-        $userId = 2; // 固定會員
+        DB::beginTransaction();
 
-        // 建立訂單
-        $order = Order::create([
-            'user_id' => $userId,
-            'total_amount' => $request->total_amount,
-            'status' => '1', // 送出後，預設1-等待客服確認款項
-            // 其他欄位（如匯款資訊）
-            'remittance_date' => '',
-            'remittance_amount' => '',
-            'remittance_account_last5' => ''
+        try {
+            // 1. 建立/查詢使用者
+            $userData = $request->input('user');
+            $user = User::firstOrCreate(
+                ['email' => $userData['email']],
+                ['name' => $userData['name'], 'phone' => $userData['phone']]
+            );
 
-        ]);
+            // 2. 建立訂單
+            $remittance = $request->input('remittance');
+            $items = $request->input('items');
 
-        // 建立每一筆訂單項目
-        foreach ($request->items as $item) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_type' => $item['product_type'],
-                'product_id' => $item['product_id'],
-                'price_at_order_time' => $item['price'],
-                'is_accessible' => false,
+            $totalAmount = collect($items)->sum('price_at_order_time');
+
+            $order = Order::create([
+                'user_id' => $user->id,
+                'total_amount' => $totalAmount,
+                'status' => 0, // 初始狀態，代表「尚未付款」
+                'remittance_date' => $remittance['remittance_date'],
+                'remittance_amount' => $remittance['remittance_amount'],
+                'remittance_account_last5' => $remittance['remittance_account_last5'],
             ]);
-        }
 
-        return response()->json(['message' => '訂單已送出成功']);
+            // 3. 建立 order_items
+            foreach ($items as $item) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_type' => $item['product_type'],
+                    'product_id' => $item['product_id'],
+                    'price_at_order_time' => $item['price_at_order_time'],
+                    'is_accessible' => false, // 預設未開通
+                ]);
+            }
+
+            DB::commit();
+
+            // return response()->json([
+            //     'message' => '訂單建立成功！',
+            //     'order_id' => $order->id,
+            // ]);
+            return redirect()->route('order.success')->with('message', '訂單建立成功！');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'message' => '訂單建立失敗！',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

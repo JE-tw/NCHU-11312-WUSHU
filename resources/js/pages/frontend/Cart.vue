@@ -6,7 +6,7 @@ import { usePage } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import axios from 'axios';
+import Swal from 'sweetalert2';
 
 import deleteIcon from '@/images/f-delete.png';
 
@@ -23,11 +23,6 @@ const nextStep = () => {
 const prevStep = () => {
   step.value--;
 };
-
-// 付款input
-const paidPrice = ref(''); // 輸入時label往上方移動
-const accountNumber = ref(''); // 輸入時label往上方移動
-const paidDate = ref('');
 
 // 繼續觀看課程
 const goList = () => {
@@ -48,8 +43,6 @@ onMounted(() => {
     console.log('購物車商品：', cartItems.value);
   }
 });
-
-
 
 // 計算總金額
 const totalAmount = computed(() => {
@@ -102,41 +95,75 @@ const email = computed(() => userInfo.value?.email || '');
 const name = computed(() => userInfo.value?.name || '');
 const phone = computed(() => userInfo.value.user_info?.phone || '');
 
-// 購物車送出
-const submitOrder = async () => {
-  try {
-    // 準備送出的資料格式
-    const payload = {
-      user: {
-        name: 'alyson', // 未來可以從使用者狀態動態取得
-        phone: '0909-123-234',
-        email: 'He11oWorld@gmail.com',
-      },
-      remittance: {
-        remittance_date: paidDate.value,
-        remittance_amount: totalAmount.value,
-        remittance_account_last5: accountNumber.value,
-      },
-      items: cartItems.value.map((item) => ({
-        product_id: item.id,
-        product_type: item.product_type, // 1=服務，2=課程
-        price_at_order_time: item.price,
-      })),
-    };
-    console.log(paidDate.value);
+// 匯款資料
+const order = ref({
+  remittance_date: '',
+  remittance_amount: '',
+  remittance_account_last5: '',
+});
+console.log(order.value);
+const handleSubmit = () => {
+  Swal.fire({
+    title: '是否確認送出?',
+    showCancelButton: true,
+    cancelButtonText: '取消',
+    confirmButtonText: '確定',
+    reverseButtons: true,
+    customClass: {
+      confirmButton: 'my-confirm-btn',
+      cancelButton: 'my-cancel-btn',
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const payload = {
+        user: {
+          name: name.value,
+          phone: phone.value,
+          email: email.value,
+        },
+        remittance: {
+          remittance_date: order.value.remittance_date,
+          remittance_amount: order.value.remittance_amount,
+          remittance_account_last5: order.value.remittance_account_last5,
+        },
+        items: cartItems.value.map((item) => ({
+          product_id: item.id,
+          product_type: item.product_type,
+          price_at_order_time: item.price,
+        })),
+      };
 
-    // 發送 POST 請求到 Laravel 後端的 API 路由（路徑請依實際情況修改）
-    await axios.post('/orders', payload);
+      router.post('/orders', payload, {
+        onSuccess: () => {
+          Swal.fire({
+            title: '送出訂單成功!',
+            text: '我們將盡速審核您的訂單，請耐心等候。',
+            icon: 'success',
+            customClass: {
+              confirmButton: 'my-confirm-btn2',
+            },
+          });
 
-    alert('訂單送出成功！');
-    localStorage.removeItem('cart'); // 清空購物車
-    router.get('/order/success'); // 導向成功頁面（視情況修改）
-  } catch (error) {
-    console.error('送出訂單失敗', error);
-    alert('送出訂單失敗，請稍後再試。');
-  }
+          localStorage.removeItem('cart');
+          cartItems.value = [];
+          order.value = {
+            remittance_date: '',
+            remittance_amount: '',
+            remittance_account_last5: '',
+            totalAmount: 0,
+          };
+
+          router.get('/order/success');
+        },
+        onError: (errors) => {
+          console.error('後端錯誤:', errors);
+          Swal.fire('送出訂單失敗', '請確認資料或稍後再試。', 'error');
+        },
+      });
+    }
+  });
 };
-
+// 購物車送出
 </script>
 
 <template>
@@ -300,14 +327,17 @@ const submitOrder = async () => {
           <div class="relative">
             <label
               for="date"
-              :class="['absolute left-0 top-[50%] ml-[16px] -translate-y-[80%] bg-white text-[18px] text-darkGray', paidDate ? 'hidden' : 'block']"
+              :class="[
+                'absolute left-0 top-[50%] ml-[16px] -translate-y-[80%] bg-white text-[18px] text-darkGray',
+                order.remittance_date ? 'hidden' : 'block',
+              ]"
               >匯款日期</label
             >
             <input
               type="date"
               id="date"
               name="paid_date"
-              v-model="paidDate"
+              v-model="order.remittance_date"
               class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white p-4 text-[18px]/[24px] font-normal text-black outline-none sm:w-[300px]"
               required
             />
@@ -318,7 +348,7 @@ const submitOrder = async () => {
               id="price"
               type="number"
               name="paid_price"
-              v-model="paidPrice"
+              v-model="order.remittance_amount"
               min="1"
               class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white p-4 text-[18px]/[24px] font-normal text-black outline-none sm:w-[300px]"
               required
@@ -327,7 +357,9 @@ const submitOrder = async () => {
               for="price"
               :class="[
                 'absolute left-0 text-darkGray',
-                paidPrice ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
+                order.remittance_amount
+                  ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light'
+                  : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
               ]"
               >匯款金額</label
             >
@@ -338,7 +370,7 @@ const submitOrder = async () => {
               id="accountNumber"
               type="text"
               name="paid_account"
-              v-model="accountNumber"
+              v-model="order.remittance_account_last5"
               minlength="5"
               maxlength="5"
               class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white p-4 text-[18px]/[24px] font-normal text-black outline-none sm:w-[300px]"
@@ -348,7 +380,9 @@ const submitOrder = async () => {
               for="accountNumber"
               :class="[
                 'absolute left-0 text-darkGray',
-                accountNumber ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light' : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
+                order.remittance_account_last5
+                  ? 'ml-4 -translate-y-2 bg-white p-0 text-[12px]/[16px] font-light'
+                  : 'py-[11.5px] pl-[18px] text-[18px] font-normal',
               ]"
               >匯款帳號後五碼</label
             >
@@ -366,7 +400,7 @@ const submitOrder = async () => {
             返回購物車
           </button>
           <button
-            @click="submitOrder"
+            @click="handleSubmit"
             class="h-[44px] w-[147.5px] rounded-sm border border-blueGreen text-[16px]/[28px] text-blueGreen hover:bg-blueGreen hover:text-white sm:h-[56px] sm:w-[320px] sm:text-[24px]/[40px]"
           >
             送出匯款資料

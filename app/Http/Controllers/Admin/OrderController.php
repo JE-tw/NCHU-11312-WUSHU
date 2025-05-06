@@ -7,7 +7,11 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\HandlesTableFilters;
+use App\Models\User;
 
+// 購物車
+use App\Models\OrderItem;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -76,5 +80,65 @@ class OrderController extends Controller
         // 例如: OrderItem::where('order_id', $order->id)->each(...)
 
         return redirect()->route('admin.order.list')->with('success', '訂單已更新');
+    }
+
+
+    // 購物車
+    public function store(Request $request)
+    {
+        DB::beginTransaction();
+
+        try {
+            // 1. 取得使用者資料並建立使用者（或查詢現有的）
+            $userData = $request->input('user');
+            $user = User::firstOrCreate(
+                ['email' => $userData['email']],
+                ['name' => $userData['name'], 'phone' => $userData['phone']]
+            );
+
+            // 2. 取得匯款資訊與商品項目
+            $remittance = $request->input('remittance');
+            $items = $request->input('items');
+
+            // 3. 計算總金額
+            $totalAmount = collect($items)->sum('price_at_order_time');
+
+            // 4. 建立訂單
+            $order = Order::create([
+                'user_id' => $user->id,
+                'total_amount' => $totalAmount,
+                'status' => 0, // 初始狀態可改成你想要的
+                'remittance_date' => $remittance['remittance_date'],
+                'remittance_amount' => $remittance['remittance_amount'],
+                'remittance_account_last5' => $remittance['remittance_account_last5'],
+            ]);
+
+            // 5. 建立每筆訂單項目
+            foreach ($items as $item) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_type' => $item['product_type'],
+                    'product_id' => $item['product_id'],
+                    'price_at_order_time' => $item['price_at_order_time'],
+                    'is_accessible' => false, // 預設未開通
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'message' => '訂單已成功建立',
+                'order_id' => $order->id,
+            ]);
+            // return redirect()->route('order.success')->with('message', '訂單建立成功！');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'message' => '訂單建立失敗',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }
