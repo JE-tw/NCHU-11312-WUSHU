@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Frontend\WushuController;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Frontend\WushuController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -21,33 +22,32 @@ Route::prefix('wushu')->group(function () {
 
     // 服務與課程頁 (代表/ServiceCourse會連到wushuController裡面的list)
     Route::get('/ServiceCourse', [WushuController::class, 'list'])->name('wushu.list');
-    
+
     // 課程介紹頁(未解鎖、解鎖)
     Route::get('/CourseIntro/{id}', [WushuController::class, 'intro'])->name('wushu.intro');
-    
+
+    // 購物車
+    Route::get('/Cart', [WushuController::class, 'cart']);
+
+    // 購物車 新增資料
+    Route::post('/order/store', [WushuController::class, 'storeOrder']);
+
     // 付款與退款政策頁
     Route::get('/Policy', function () {
         return Inertia::render('frontend/Policy');
     });
-    // 聯絡我們頁
-    Route::get('/ContactUs', function () {
-        return Inertia::render('frontend/ContactUs');
-    });
-    // 🔺新增頁 TidingCrete
-    Route::get('/ContactUs',[WushuController::class,'contact'])->name('wushu.contact');
-    
-    // 🔺新增資料 新增要帶值的方法
-    Route::post('/ContactUs',[WushuController::class,'store'])->name('wushu.store');
 
+    // 🔺聯絡我們頁 新增頁 ContactUs
+    Route::get('/ContactUs', [WushuController::class, 'contact'])->name('wushu.contact');
+
+    // 🔺聯絡我們頁 新增資料 新增要帶值的方法
+    Route::post('/ContactUs', [WushuController::class, 'store'])->name('wushu.store');
 
     // 登入註冊頁
     Route::get('/LoginSignup', function () {
         return Inertia::render('frontend/LoginSignup');
     });
-    // 購物車
-    Route::get('/Cart', function () {
-        return Inertia::render('frontend/Cart');
-    });
+
     // 隱私權政策
     Route::get('/Privacy', function () {
         return Inertia::render('frontend/Privacy');

@@ -153,49 +153,74 @@ onBeforeUnmount(() => {
 
                     <!-- Cards container -->
                     <div class="flex flex-col xl:flex-row gap-6 md:gap-8 justify-center items-center">
-                        <!-- Card 1 -->
-                        <div class="bg-white overflow-hidden w-full xl:w-1/2 cursor-pointer"
-                            @click="$inertia.visit('/wushu/CourseIntro/1')">
-                            <img :src="courseImg1" alt="蔣氏玄空風水執業班"
+                        <!-- 使用 v-for 動態生成主打課程卡片 -->
+                        <div v-for="(course, index) in featuredCourses" :key="course.id"
+                            class="bg-white overflow-hidden w-full xl:w-1/2" :class="{ 'mt-6 xl:mt-0': index > 0 }"
+                            style="cursor: pointer;" @click="$inertia.visit(`/wushu/CourseIntro/${course.id}`)">
+                            <img :src="course.featured_image || (index === 0 ? courseImg1 : courseImg2)"
+                                :alt="course.name"
                                 class="w-full h-[240px] sm:h-[280px] md:h-[320px] xl:h-[360px] object-cover" />
                             <div class="p-4 md:p-5 xl:p-6">
                                 <p
                                     class="text-2xl sm:text-3xl md:text-4xl xl:text-[48px] font-bold text-black font-serif text-left">
-                                    蔣氏玄空風水執業班
+                                    {{ course.name }}
                                 </p>
                                 <div class="mt-4 flex items-center gap-3">
                                     <button
                                         class="px-4 md:px-5 xl:px-6 py-1.5 md:py-2 bg-alertRed text-white rounded-full text-base md:text-lg hover:bg-gray-800 transition duration-300">
-                                        其他術數
-                                    </button>
-                                    <p class="text-xl md:text-2xl xl:text-3xl font-bold text-black">NT$5,000</p>
+                                        {{ course.category.name }}
+                                    </button> 
+                                    <p class="text-xl md:text-2xl xl:text-3xl font-bold text-black">NT${{ course.price
+                                    }}</p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Card 2 -->
-                        <div class="bg-white overflow-hidden w-full xl:w-1/2 mt-6 xl:mt-0 cursor-pointer"
-                            @click="$inertia.visit('/wushu/CourseIntro/2')">
-                            <img :src="courseImg2" alt="康治本傷寒論"
-                                class="w-full h-[240px] sm:h-[280px] md:h-[320px] xl:h-[360px] object-cover" />
-                            <div class="p-4 md:p-5 xl:p-6">
-                                <p
-                                    class="text-2xl sm:text-3xl md:text-4xl xl:text-[48px] font-bold text-black font-serif text-left">
-                                    康治本傷寒論
-                                </p>
-                                <div class="mt-4 flex items-center gap-3">
-                                    <button
-                                        class="px-4 md:px-5 xl:px-6 py-1.5 md:py-2 bg-alertRed text-white rounded-full text-base md:text-lg hover:bg-gray-800 transition duration-300">
-                                        中醫
-                                    </button>
-                                    <p class="text-xl md:text-2xl xl:text-3xl font-bold text-black">NT$5,000</p>
+                        <!-- 如果沒有主打課程，則顯示原始硬編碼的內容 -->
+                        <template v-if="!featuredCourses || featuredCourses.length === 0">
+                            <!-- Card 1 -->
+                            <div class="bg-white overflow-hidden w-full xl:w-1/2 cursor-pointer"
+                                @click="$inertia.visit('/wushu/CourseIntro/1')">
+                                <img :src="courseImg1" alt="蔣氏玄空風水執業班"
+                                    class="w-full h-[240px] sm:h-[280px] md:h-[320px] xl:h-[360px] object-cover" />
+                                <div class="p-4 md:p-5 xl:p-6">
+                                    <p
+                                        class="text-2xl sm:text-3xl md:text-4xl xl:text-[48px] font-bold text-black font-serif text-left">
+                                        蔣氏玄空風水執業班
+                                    </p>
+                                    <div class="mt-4 flex items-center gap-3">
+                                        <button
+                                            class="px-4 md:px-5 xl:px-6 py-1.5 md:py-2 bg-alertRed text-white rounded-full text-base md:text-lg hover:bg-gray-800 transition duration-300">
+                                            其他術數
+                                        </button>
+                                        <p class="text-xl md:text-2xl xl:text-3xl font-bold text-black">NT$5,000</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+
+                            <!-- Card 2 -->
+                            <div class="bg-white overflow-hidden w-full xl:w-1/2 mt-6 xl:mt-0 cursor-pointer"
+                                @click="$inertia.visit('/wushu/CourseIntro/2')">
+                                <img :src="courseImg2" alt="康治本傷寒論"
+                                    class="w-full h-[240px] sm:h-[280px] md:h-[320px] xl:h-[360px] object-cover" />
+                                <div class="p-4 md:p-5 xl:p-6">
+                                    <p
+                                        class="text-2xl sm:text-3xl md:text-4xl xl:text-[48px] font-bold text-black font-serif text-left">
+                                        康治本傷寒論
+                                    </p>
+                                    <div class="mt-4 flex items-center gap-3">
+                                        <button
+                                            class="px-4 md:px-5 xl:px-6 py-1.5 md:py-2 bg-alertRed text-white rounded-full text-base md:text-lg hover:bg-gray-800 transition duration-300">
+                                            中醫
+                                        </button>
+                                        <p class="text-xl md:text-2xl xl:text-3xl font-bold text-black">NT$5,000</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </section>
-
 
 
             <!-- Courses offered -->

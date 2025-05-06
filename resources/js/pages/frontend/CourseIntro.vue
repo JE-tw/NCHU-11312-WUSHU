@@ -36,7 +36,7 @@ function handleClick(item) {
 // 也是全台第一個教 Panchang（吠陀曆）的吠陀占星課。有任何問題可以聯繫助教 Line id: joe9718`,
 // };
 
-// test
+// 獲取資料
 const props = defineProps({
   course: Array | Object,
 });
