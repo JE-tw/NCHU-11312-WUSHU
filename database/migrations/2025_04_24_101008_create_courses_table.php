@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('detail', 500)->comment('詳細介紹');
 
             $table->tinyInteger('is_featured')->default(0)->comment('主打課程：0-否、1-是');
+            $table->string('featured_image')->nullable()->comment('主打課程圖片');
+
 
             $table->timestamps(); // 建立/更新時間
         });

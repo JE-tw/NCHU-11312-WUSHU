@@ -35,7 +35,7 @@ class Course extends Model
 	protected $casts = [
 		'category_id' => 'int',
 		'price' => 'int',
-		'is_featured' => 'int'
+		'is_featured' => 'boolean'
 	];
 
 	protected $fillable = [
@@ -44,7 +44,8 @@ class Course extends Model
 		'price',
 		'introduction',
 		'detail',
-		'is_featured'
+		'is_featured',
+		'featured_image'
 	];
 
 	public function category()

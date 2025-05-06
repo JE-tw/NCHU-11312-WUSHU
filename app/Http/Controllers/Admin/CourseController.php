@@ -60,8 +60,28 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 驗證請求
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|integer',
+            'category_id' => 'required|exists:categories,id',
+            'is_featured' => 'required|boolean',
+            'featured_image' => 'nullable|image|max:2048', // 最大檔案大小 2MB
+        ]);
+
+        // 處理圖片上傳
+        if ($request->hasFile('featured_image')) {
+            $imagePath = $request->file('featured_image')->store('course_images', 'public'); // 儲存在 public 目錄
+            $validated['featured_image'] = $imagePath;
+        }
+
+        // 儲存課程資料
+        Course::create($validated);
+
+        return redirect()->route('admin.course.list')->with('success', '課程已成功新增');
     }
+
+
 
     /**
      * Display the specified resource.
