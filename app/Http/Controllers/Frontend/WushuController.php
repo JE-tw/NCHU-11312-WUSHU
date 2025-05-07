@@ -98,7 +98,7 @@ class WushuController extends Controller
     // 查 購物車會員資料
     public function cart()
     {
-        $userId = 3; // 固定使用者編號
+        $userId = 1; // 固定使用者編號
         $userInfo = User::with('userInfo')->find($userId);
 
         return Inertia::render('frontend/Cart', [

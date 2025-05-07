@@ -36,14 +36,14 @@
           </button>
 
           <!-- 搜尋列 -->
-          <!-- <div v-if="isSearchActive" class="absolute right-0 top-1/2 flex -translate-y-1/2 items-center rounded-full bg-white shadow-md">
+        <!-- <div v-if="isSearchActive" class="absolute right-0 top-1/2 flex -translate-y-1/2 items-center rounded-full bg-white shadow-md">
             <input type="text" placeholder="關鍵字" class="w-[200px] rounded-full bg-white py-2 pl-8 pr-3 outline-none" />
             <img src="@/images/g2search.svg" alt="搜尋" class="absolute left-2 h-5 w-5" />
             <button @click="toggleSearch" class="px-3 hover:text-[#1f9c95]">
               <span class="text-lg">×</span>
             </button>
           </div>
-        </div> --> 
+        </div> -->
 
         <!-- 購物車 -->
         <div class="relative">
@@ -61,7 +61,7 @@
         </div>
 
         <!-- 登入註冊 -->
-        <a href="http://127.0.0.1:8000/wushu/LoginSignup" class="group flex h-8 items-center gap-1">
+        <a href="http://127.0.0.1:8000/wushu/MemberCenter" class="group flex h-8 items-center gap-1">
           <div class="relative h-8 w-8">
             <img src="@/images/user.svg" alt="登入" class="absolute inset-0 h-8 w-8 group-hover:hidden" />
             <img src="@/images/guser.svg" alt="登入懸停" class="absolute inset-0 hidden h-8 w-8 group-hover:block" />
@@ -69,7 +69,8 @@
           <span
             class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]"
           >
-            登入註冊
+            <!-- 登入註冊 -->
+            會員中心
           </span>
         </a>
       </div>
@@ -172,11 +173,12 @@
       </a>
 
       <a
-        href="http://127.0.0.1:8000/wushu/LoginSignup"
+        href="http://127.0.0.1:8000/wushu/MemberCenter"
         class="flex items-center gap-2 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
         :class="isMobile ? 'justify-center' : 'justify-start'"
       >
-        登入註冊
+        <!-- 登入註冊 -->
+        會員中心
       </a>
     </nav>
   </div>
