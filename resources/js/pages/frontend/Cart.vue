@@ -93,7 +93,7 @@ const page = usePage();
 const userInfo = computed(() => page.props.userInfo);
 const email = computed(() => userInfo.value?.email || '');
 const name = computed(() => userInfo.value?.name || '');
-const phone = computed(() => userInfo.value.user_info?.phone || '');
+const phone = computed(() => userInfo.value?.user_info?.phone || '');
 
 // 匯款資料
 const order = ref({
@@ -102,7 +102,22 @@ const order = ref({
   remittance_account_last5: '',
 });
 console.log(order.value);
+
+// 購物車送出
 const handleSubmit = () => {
+  // 檢查必填欄位是否為空
+  if (!order.value.remittance_date || !order.value.remittance_amount || !order.value.remittance_account_last5) {
+    Swal.fire({
+      title: '請填寫所有欄位',
+      text: '匯款日期、匯款金額和帳號末五碼是必填欄位，請檢查並補充資料。',
+      icon: 'error',
+      customClass: {
+        confirmButton: 'my-confirm-btn2',
+      },
+    });
+    return; // 退出函式，不繼續執行後續程式
+  }
+
   Swal.fire({
     title: '是否確認送出?',
     showCancelButton: true,
@@ -128,7 +143,7 @@ const handleSubmit = () => {
         },
         items: cartItems.value.map((item) => ({
           product_id: item.id,
-          product_type: item.product_type,
+          product_type: item.product_type === 1 ? 'App\\Models\\Service' : 'App\\Models\\Course',
           price_at_order_time: item.price,
         })),
       };
@@ -153,17 +168,22 @@ const handleSubmit = () => {
             totalAmount: 0,
           };
 
-          router.get('/order/success');
+          router.get('/wushu');
         },
         onError: (errors) => {
           console.error('後端錯誤:', errors);
-          Swal.fire('送出訂單失敗', '請確認資料或稍後再試。', 'error');
+          Swal.fire({
+            title: '送出訂單失敗',
+            text: '請確認資料或稍後再試。',
+            customClass: {
+              confirmButton: 'my-confirm-btn2',
+            },
+          });
         },
       });
     }
   });
 };
-// 購物車送出
 </script>
 
 <template>
@@ -408,12 +428,25 @@ const handleSubmit = () => {
         </div>
       </div>
     </div>
-
-    <!-- <div v-else-if="step === 3">
-      訂單完成畫面
-    </div> -->
-
-    <!-- 控制按鈕 -->
   </div>
   <Footer />
 </template>
+
+<style>
+.my-confirm-btn {
+  background-color: #1f9c95;
+  color: white;
+  border: 1px solid #1f9c95;
+}
+
+.my-cancel-btn {
+  background-color: white;
+  color: #1f9c95;
+  border: 1px solid #1f9c95;
+}
+.my-confirm-btn2 {
+  background-color: #1f9c95;
+  color: white;
+  border: 1px solid #1f9c95;
+}
+</style>

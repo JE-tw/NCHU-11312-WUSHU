@@ -41,7 +41,7 @@ function goToIntro(id) {
                 :productId="id.toString()" 
                 :productName="name" 
                 :price="price" 
-                :productType="2" 
+                :productType=2
                 :cartShorter="false" 
                 :hideText="false" />
           </div>

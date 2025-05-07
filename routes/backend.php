@@ -67,9 +67,10 @@ Route::prefix('wushu/admin')->middleware(['auth'])->group(function () {
     });
 });
 
-// 購物車訂單
-Route::post('/orders', [OrderController::class, 'store'])->name('wushu.storeOrder');
-
-
 // //登入頁
 // Route::get('wushu/admin/login', [LoginController::class, 'loginPage'])->name('admin.login');
+
+
+/////////////////////////////
+// 購物車訂單
+Route::post('/orders', [OrderController::class, 'store'])->name('wushu.storeOrder');

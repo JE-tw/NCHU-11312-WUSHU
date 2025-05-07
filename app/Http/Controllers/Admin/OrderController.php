@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Order;
+use App\Models\Course;
+use App\Models\Service;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Traits\HandlesTableFilters;
-use App\Models\User;
-use App\Http\Controllers\Controller;
 
 // 購物車
-use App\Models\OrderItem;
+use Illuminate\Support\Facades\DB;
+use App\Traits\HandlesTableFilters;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
@@ -66,11 +69,11 @@ class OrderController extends Controller
             'course_permissions' => 'array',
             'course_permissions.*' => 'boolean',
         ]);
-    
+
         $order->update([
             'status' => $data['status'],
         ]);
-    
+
         // 更新每筆課程權限
         foreach ($data['course_permissions'] as $itemId => $isAccessible) {
             DB::table('order_items')
@@ -78,15 +81,17 @@ class OrderController extends Controller
                 ->where('order_id', $order->id)
                 ->update(['is_accessible' => $isAccessible]);
         }
-    
+
         return redirect()->back()->with('success', '訂單已成功更新！');
     }
 
 
+
+    /////////////////////////////////////////////
     // 購物車
     public function store(Request $request)
     {
-        DB::beginTransaction();
+        DB::beginTransaction(); // 	開始一個資料庫交易
 
         try {
             // 1. 取得使用者資料並建立使用者（或查詢現有的）
@@ -113,8 +118,27 @@ class OrderController extends Controller
                 'remittance_account_last5' => $remittance['remittance_account_last5'],
             ]);
 
-            // 5. 建立每筆訂單項目
+            // 5. 處理訂單項目
             foreach ($items as $item) {
+
+                $modelClass = $item['product_type'];
+
+                if (!class_exists($modelClass)) {
+                    Log::error("Unknown product_type class: " . $modelClass);
+                    continue;
+                }
+
+                // 可選：確認產品是否存在
+                $product = $modelClass::find($item['product_id']);
+                if (!$product) {
+                    Log::warning("找不到產品 ID: {$item['product_id']} for class: {$modelClass}");
+                    continue;
+                }
+
+                // 根據模型名稱進行處理
+                // try {
+                // 這裡你不需要直接使用 `$model` 去創建 `OrderItem`
+                // 只需要確保創建 `OrderItem` 的字段是正確的
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_type' => $item['product_type'],
@@ -124,18 +148,19 @@ class OrderController extends Controller
                 ]);
             }
 
-            DB::commit();
+            DB::commit(); // 提交交易，資料正式寫入
 
-            return response()->json([
-                'message' => '訂單已成功建立',
-                'order_id' => $order->id,
-            ]);
-            // return redirect()->route('order.success')->with('message', '訂單建立成功！');
+            // return response()->json([
+            //     'status' => 'success',  // 成功
+            //     'message' => '訂單已成功建立',
+            //     'order_id' => $order->id,
+            // ]);
 
         } catch (\Exception $e) {
-            DB::rollBack();
+            DB::rollBack(); // 有錯 → 回滾交易，資料不會寫入
 
             return response()->json([
+                'status' => 'error', // 失敗
                 'message' => '訂單建立失敗',
                 'error' => $e->getMessage(),
             ], 500);

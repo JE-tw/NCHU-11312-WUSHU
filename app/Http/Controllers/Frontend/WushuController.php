@@ -98,7 +98,7 @@ class WushuController extends Controller
     // 查 購物車會員資料
     public function cart()
     {
-        $userId = 2; // 固定使用者編號
+        $userId = 3; // 固定使用者編號
         $userInfo = User::with('userInfo')->find($userId);
 
         return Inertia::render('frontend/Cart', [
@@ -147,11 +147,11 @@ class WushuController extends Controller
 
             DB::commit();
 
-            // return response()->json([
-            //     'message' => '訂單建立成功！',
-            //     'order_id' => $order->id,
-            // ]);
-            return redirect()->route('order.success')->with('message', '訂單建立成功！');
+            return response()->json([
+                'message' => '訂單建立成功！',
+                'order_id' => $order->id,
+            ]);
+            // return redirect()->route('order.success')->with('message', '訂單建立成功！');
         } catch (\Exception $e) {
             DB::rollBack();
 
