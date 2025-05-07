@@ -23,7 +23,7 @@ class WushuController extends Controller
     {
         $categories = Category::with('courses')->get();
 
-        $featuredCourses = Course::with('category') 
+        $featuredCourses = Course::with('category')
             ->where('is_featured', true)
             ->take(2)
             ->get();
@@ -160,5 +160,40 @@ class WushuController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
+    }
+
+
+    // ==================
+    // 查 會員資料
+
+    // public function userInfo()
+    // {
+    //     $userId = 1;
+    //     $userInfo = User::with('userInfo')->find($userId);
+
+    //     return Inertia::render('frontend/MemberCenter', [
+    //         'userInfo' => $userInfo,
+    //     ]);
+    //     // return Inertia::render('frontend/MemberCenter', [
+    //     //     'userInfo' => [
+    //     //         'name' => '測試名字',
+    //     //         'email' => 'test@example.com',
+    //     //         'user_info' => [
+    //     //             'phone' => '0912345678'
+    //     //         ]
+    //     //     ]
+    //     // ]);
+    // }
+    public function userInfo()
+    {
+        $userId = 1;
+        $user = User::with('userInfo')->find($userId);
+        
+        // 把資料轉成純陣列
+        $userInfo = $user ? $user->toArray() : null;
+    
+        return Inertia::render('frontend/MemberCenter', [
+            'userInfo' => $userInfo,
+        ]);
     }
 }
