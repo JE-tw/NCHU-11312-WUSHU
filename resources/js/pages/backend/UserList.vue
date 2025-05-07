@@ -36,6 +36,10 @@ const deleteBtn = async (id) => {
     router.get(route('admin.user.delete', id));
   }
 };
+// 編輯/查看按鈕
+const editUser = (userId) => {
+  router.visit(route('admin.user.edit', userId));
+};
 // 顯示 flash 訊息
 watchEffect(() => {
   const success = page.props.flash?.success;
@@ -84,7 +88,7 @@ watchEffect(() => {
         <template #cell(actions)="{ item }">
           <div class="flex justify-center gap-2">
             <button type="button" class="cursor-pointer border border-red-500 px-2 text-red-500" @click="deleteBtn(item.id)">刪除</button>
-            <button type="button" class="cursor-pointer border bg-deepTeal px-2 text-white">查看/編輯</button>
+            <button type="button" class="cursor-pointer border bg-deepTeal px-2 text-white" @click="editUser(item.id)">查看/編輯</button>
           </div>
         </template>
       </TableWithPagination>

@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // 開發用帳號
-        User::firstOrCreate(
+        $user = User::firstOrCreate(
             ['email' => 'admin@example.com'],
             [
                 'name' => '五術大師',
@@ -36,6 +36,18 @@ class DatabaseSeeder extends Seeder
                 'is_admin' => true,
             ]
         );
+        // 為該帳號建立對應的 user_info，如果尚未存在
+        if (!$user->userInfo) {
+            UserInfo::create([
+                'user_id' => $user->id,
+                'name' => '五術大師',
+                'phone' => '0912345678',
+                'birth_date' => '1990-01-01',
+                'birth_time' => '08:00',
+                'birth_city' => '台北市',
+                'address' => '中正區仁愛路一段1號',
+            ]);
+        }
 
         $this->call([
             UserInfoSeeder::class,

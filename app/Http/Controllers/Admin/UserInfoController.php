@@ -22,7 +22,7 @@ class UserInfoController extends Controller
         $query = UserInfo::with('user');
 
         $userInfos = $this->applyFiltersAndPaginate($request, $query, [
-            'search' => ['name', 'phone'],// 支援搜尋的欄位
+            'search' => ['name', 'phone'], // 支援搜尋的欄位
             'allowedSorts' => ['id', 'birth_date'],
             'defaultSort' => 'id',
             'defaultDirection' => 'asc',
@@ -80,6 +80,76 @@ class UserInfoController extends Controller
             Log::error($e);
             return back()->with('error', '會員新增失敗，請稍後再試');
         }
+    }
+
+    public function update(Request $request, User $user)
+    {
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'phone' => 'nullable|string|max:20',
+                'birth_date' => 'nullable|date',
+                'birth_time' => 'nullable|string',
+                'birth_city' => 'nullable|string|max:100',
+                'address' => 'nullable|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'password' => 'nullable|min:6|confirmed',
+            ]);
+
+            // 將空字串轉為 null，避免寫入資料庫錯誤
+            $validated['birth_date'] = $validated['birth_date'] ?: null;
+            $validated['birth_time'] = $validated['birth_time'] ?: null;
+
+            // 更新 users 資料表
+            $user->update([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => $validated['password']
+                    ? Hash::make($validated['password'])
+                    : $user->password,
+            ]);
+
+            // 如果沒有 user_info 就建立
+            if (!$user->userInfo) {
+                $user->userInfo()->create([
+                    'name' => $validated['name'],
+                    'phone' => $validated['phone'],
+                    'birth_date' => $validated['birth_date'],
+                    'birth_time' => $validated['birth_time'],
+                    'birth_city' => $validated['birth_city'],
+                    'address' => $validated['address'],
+                ]);
+            } else {
+                // 否則就更新原有 userInfo
+                $user->userInfo()->update([
+                    'name' => $validated['name'],
+                    'phone' => $validated['phone'],
+                    'birth_date' => $validated['birth_date'],
+                    'birth_time' => $validated['birth_time'],
+                    'birth_city' => $validated['birth_city'],
+                    'address' => $validated['address'],
+                ]);
+            }
+
+            return redirect()->back()->with('success', '會員資料更新成功');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->withErrors($e->errors())->withInput();
+        } catch (\Throwable $e) {
+            Log::error($e);
+            return back()->with('error', '會員資料更新失敗，請稍後再試');
+        }
+    }
+
+
+    public function edit(User $user)
+    {
+
+        $user->loadMissing('userInfo');
+
+        return Inertia::render('backend/UserEdit', [
+            'user' => $user,
+            'userInfo' => $user->userInfo,
+        ]);
     }
 
 

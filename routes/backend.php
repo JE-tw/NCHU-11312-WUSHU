@@ -30,6 +30,10 @@ Route::prefix('wushu/admin')->middleware(['auth'])->group(function () {
         Route::get('/', [UserInfoController::class, 'index'])->name('admin.user.list');
         // 新增
         Route::post('/', [UserInfoController::class, 'create'])->name('admin.user.create');
+        // 編輯（
+        Route::get('/{user}/edit', [UserInfoController::class, 'edit'])->name('admin.user.edit');
+        // 更新
+        Route::put('/{user}', [UserInfoController::class, 'update'])->name('admin.user.update');
 
         // 刪除
         Route::get('/delete/{id}', [UserInfoController::class, 'delete'])->name('admin.user.delete');

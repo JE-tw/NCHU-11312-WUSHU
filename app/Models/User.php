@@ -50,4 +50,18 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserInfo::class);
     }
+
+    public function getFullNameAttribute()
+    {
+        return $this->name; // 直接返回 users 表格中的 name
+    }
+    protected static function booted()
+    {
+        static::updated(function ($user) {
+            // 當用戶資料更新時，同步更新 user_infos 表格中的 name
+            if ($user->userInfo) {
+                $user->userInfo->update(['name' => $user->name]);
+            }
+        });
+    }
 }
