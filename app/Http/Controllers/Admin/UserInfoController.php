@@ -84,6 +84,8 @@ class UserInfoController extends Controller
 
     public function update(Request $request, User $user)
     {
+        // 檢查收到的所有資料
+        Log::debug('Received payload: ', $request->all());
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
@@ -94,42 +96,32 @@ class UserInfoController extends Controller
                 'address' => 'nullable|string|max:255',
                 'email' => 'required|email|unique:users,email,' . $user->id,
                 'password' => 'nullable|min:6|confirmed',
+                'status' => 'nullable|in:0,1',
             ]);
 
             // 將空字串轉為 null，避免寫入資料庫錯誤
             $validated['birth_date'] = $validated['birth_date'] ?: null;
             $validated['birth_time'] = $validated['birth_time'] ?: null;
+            // 如果有傳遞 status，則轉為數字；若沒有，則預設為 1 (啟用)
+            $validated['status'] = $validated['status'] !== null ? (int) $validated['status'] : 1;
 
             // 更新 users 資料表
             $user->update([
                 'name' => $validated['name'],
-                'email' => $validated['email'],
-                'password' => $validated['password']
-                    ? Hash::make($validated['password'])
-                    : $user->password,
             ]);
 
-            // 如果沒有 user_info 就建立
-            if (!$user->userInfo) {
-                $user->userInfo()->create([
-                    'name' => $validated['name'],
-                    'phone' => $validated['phone'],
-                    'birth_date' => $validated['birth_date'],
-                    'birth_time' => $validated['birth_time'],
-                    'birth_city' => $validated['birth_city'],
-                    'address' => $validated['address'],
-                ]);
-            } else {
-                // 否則就更新原有 userInfo
-                $user->userInfo()->update([
-                    'name' => $validated['name'],
-                    'phone' => $validated['phone'],
-                    'birth_date' => $validated['birth_date'],
-                    'birth_time' => $validated['birth_time'],
-                    'birth_city' => $validated['birth_city'],
-                    'address' => $validated['address'],
-                ]);
-            }
+             // 更新 user_info 資料
+        $user->userInfo()->updateOrCreate(
+            [], // 可以用來找到存在的 user_info (例如可以依 id 或關聯條件)
+            [
+                'phone' => $validated['phone'],
+                'birth_date' => $validated['birth_date'],
+                'birth_time' => $validated['birth_time'],
+                'birth_city' => $validated['birth_city'],
+                'address' => $validated['address'],
+                'status' => $validated['status'],
+            ]
+        );
 
             return redirect()->back()->with('success', '會員資料更新成功');
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -143,7 +135,6 @@ class UserInfoController extends Controller
 
     public function edit(User $user)
     {
-
         $user->loadMissing('userInfo');
 
         return Inertia::render('backend/UserEdit', [

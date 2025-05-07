@@ -21,6 +21,7 @@ declare module 'vue' {
     AvatarImage: typeof import('./resources/js/Components/ui/avatar/AvatarImage.vue')['default']
     BackendHeader: typeof import('./resources/js/Components/BackendHeader.vue')['default']
     BackToTop: typeof import('./resources/js/Components/BackToTop.vue')['default']
+    BaseInput: typeof import('./resources/js/Components/BaseInput.vue')['default']
     Breadcrumb: typeof import('./resources/js/Components/ui/breadcrumb/Breadcrumb.vue')['default']
     BreadcrumbEllipsis: typeof import('./resources/js/Components/ui/breadcrumb/BreadcrumbEllipsis.vue')['default']
     BreadcrumbItem: typeof import('./resources/js/Components/ui/breadcrumb/BreadcrumbItem.vue')['default']
@@ -136,6 +137,7 @@ declare module 'vue' {
     TooltipProvider: typeof import('./resources/js/Components/ui/tooltip/TooltipProvider.vue')['default']
     TooltipTrigger: typeof import('./resources/js/Components/ui/tooltip/TooltipTrigger.vue')['default']
     UserCreateModal: typeof import('./resources/js/Components/UserCreateModal.vue')['default']
+    UserForm: typeof import('./resources/js/Components/UserForm.vue')['default']
     UserInfo: typeof import('./resources/js/Components/UserInfo.vue')['default']
     UserMenuContent: typeof import('./resources/js/Components/UserMenuContent.vue')['default']
   }
