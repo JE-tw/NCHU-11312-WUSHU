@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use id;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Order;
@@ -11,11 +12,12 @@ use App\Models\Category;
 use App\Models\UserInfo;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
-use App\Models\ContactRecord;
 
 // 購物車
+use App\Models\ContactRecord;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use auth;
 
 class WushuController extends Controller
 {
@@ -84,10 +86,27 @@ class WushuController extends Controller
         return redirect(route('wushu.contact'));
     }
 
+    // // 查 購物車會員資料
+    // public function cart()
+    // {
+    //     $userId = 1; // 固定使用者編號
+    //     $userInfo = User::with('userInfo')->find($userId);
+
+    //     return Inertia::render('frontend/Cart', [
+    //         'userInfo' => $userInfo,
+    //     ]);
+    // }
+
     // 查 購物車會員資料
     public function cart()
     {
-        $userId = 1; // 固定使用者編號
+        $userId = auth()->id(); // 抓取登入的使用者 ID
+
+        // 若未登入，$userId 為 null，可導向登入頁或給予其他處理
+        if (!$userId) {
+            return redirect()->route('login'); // 或 return redirect('/login');
+        }
+
         $userInfo = User::with('userInfo')->find($userId);
 
         return Inertia::render('frontend/Cart', [
@@ -163,12 +182,37 @@ class WushuController extends Controller
     //     ]);
     // }
 
+    // public function intro($id)
+    // {
+    //     $course = Course::with(['chapters'])->find($id);
+    //     if ($course == null) return redirect('/wushu/ServiceCourse');
+
+    //     $userId = 1; // 寫死
+    //     $isAccessible = OrderItem::where('product_id', $id)
+    //         ->where('product_type', 'App\\Models\\Course')
+    //         ->where('is_accessible', true)
+    //         ->whereHas('order', function ($query) use ($userId) {
+    //             $query->where('user_id', $userId);
+    //         })
+    //         ->exists();
+
+    //     return Inertia::render('frontend/CourseIntro', [
+    //         'course' => $course,
+    //         'isAccessible' => $isAccessible,
+    //     ]);
+    // }
     public function intro($id)
 {
     $course = Course::with(['chapters'])->find($id);
     if ($course == null) return redirect('/wushu/ServiceCourse');
 
-    $userId = 1; // 寫死
+    $userId = auth()->id(); // 抓取登入使用者 ID
+
+    // 若未登入，則導向登入頁（你也可以選擇傳 null 給前端）
+    if (!$userId) {
+        return redirect()->route('login'); // 或 return redirect('/login');
+    }
+
     $isAccessible = OrderItem::where('product_id', $id)
         ->where('product_type', 'App\\Models\\Course')
         ->where('is_accessible', true)
@@ -183,49 +227,100 @@ class WushuController extends Controller
     ]);
 }
 
-    // // 會員中心 會員資料
+
+    // // // 會員中心 會員資料
+    // public function userInfo(Request $request)
+    // {
+    //     $userId = 1; // 寫死 user_id
+
+    //     // 會員資料
+    //     $user = User::with('userInfo')->find($userId);
+    //     $userInfo = $user ? $user->toArray() : null;
+
+    //     // 訂單與課程資料
+    //     $query = Order::with(['user', 'orderItems.product'])
+    //         ->where('user_id', $userId);
+
+    //     $orders = $query->latest()->paginate(10);
+
+    //     // 處理訂單資料格式
+    //     $orders->getCollection()->transform(function ($order) {
+    //         $order->formatted_date = $order->created_at->format('Y-m-d');
+    //         $order->status_text = $order->status_text;
+    //         return $order;
+    //     });
+    //     // 額外處理：我的課程
+    //     // 找出所有訂單中的課程項目（Course）
+    //     $courses = $query->get()
+    //         ->flatMap(function ($order) {
+    //             return $order->orderItems->filter(function ($item) {
+    //                 return $item->product_type === 'App\\Models\\Course' && $item->is_accessible == 'true';
+    //             });
+    //         })
+    //         ->map(function ($item) {
+    //             return [
+    //                 'name' => $item->product->name ?? '未找到課程',
+    //                 'id' => $item->product->id ?? null,
+    //                 'introduction' => $item->product->introduction ?? '',
+    //                 'price' => $item->product->price ?? 0,
+    //             ];
+    //         })
+    //         ->values();
+
+    //     return Inertia::render('frontend/MemberCenter', [
+    //         'userInfo' => $userInfo,
+    //         'orders' => $orders,
+    //         'courses' => $courses,
+    //     ]);
+    // }
     public function userInfo(Request $request)
-    {
-        $userId = 1; // 寫死 user_id
+{
+    $userId = auth()->id(); // 抓取登入會員 ID
 
-        // 會員資料
-        $user = User::with('userInfo')->find($userId);
-        $userInfo = $user ? $user->toArray() : null;
-
-        // 訂單與課程資料
-        $query = Order::with(['user', 'orderItems.product'])
-            ->where('user_id', $userId);
-
-        $orders = $query->latest()->paginate(10);
-
-        // 處理訂單資料格式
-        $orders->getCollection()->transform(function ($order) {
-            $order->formatted_date = $order->created_at->format('Y-m-d');
-            $order->status_text = $order->status_text;
-            return $order;
-        });
-        // 額外處理：我的課程
-        // 找出所有訂單中的課程項目（Course）
-        $courses = $query->get()
-            ->flatMap(function ($order) {
-                return $order->orderItems->filter(function ($item) {
-                    return $item->product_type === 'App\\Models\\Course' && $item->is_accessible == 'true';
-                });
-            })
-            ->map(function ($item) {
-                return [
-                    'name' => $item->product->name ?? '未找到課程',
-                    'id' => $item->product->id ?? null,
-                    'introduction' => $item->product->introduction ?? '',
-                    'price' => $item->product->price ?? 0,
-                ];
-            })
-            ->values();
-
-        return Inertia::render('frontend/MemberCenter', [
-            'userInfo' => $userInfo,
-            'orders' => $orders,
-            'courses' => $courses,
-        ]);
+    // 未登入時導向登入頁面
+    if (!$userId) {
+        return redirect()->route('login'); // 或其他你定義的登入路徑
     }
+
+    // 會員資料
+    $user = User::with('userInfo')->find($userId);
+    $userInfo = $user ? $user->toArray() : null;
+
+    // 訂單與課程資料
+    $query = Order::with(['user', 'orderItems.product'])
+        ->where('user_id', $userId);
+
+    $orders = $query->latest()->paginate(10);
+
+    // 處理訂單資料格式
+    $orders->getCollection()->transform(function ($order) {
+        $order->formatted_date = $order->created_at->format('Y-m-d');
+        $order->status_text = $order->status_text;
+        return $order;
+    });
+
+    // 我的課程
+    $courses = $query->get()
+        ->flatMap(function ($order) {
+            return $order->orderItems->filter(function ($item) {
+                return $item->product_type === 'App\\Models\\Course' && $item->is_accessible == true;
+            });
+        })
+        ->map(function ($item) {
+            return [
+                'name' => $item->product->name ?? '未找到課程',
+                'id' => $item->product->id ?? null,
+                'introduction' => $item->product->introduction ?? '',
+                'price' => $item->product->price ?? 0,
+            ];
+        })
+        ->values();
+
+    return Inertia::render('frontend/MemberCenter', [
+        'userInfo' => $userInfo,
+        'orders' => $orders,
+        'courses' => $courses,
+    ]);
+}
+
 }
