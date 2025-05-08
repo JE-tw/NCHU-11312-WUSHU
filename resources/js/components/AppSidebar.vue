@@ -33,9 +33,9 @@ const mainNavItems: NavItem[] = [
 </script>
 
 <template>
-  <Sidebar collapsible="none" variant="inset" class="bg-lightGray">
+  <Sidebar collapsible="none" variant="inset" class="bg-lightGray w-[247px]">
     <SidebarContent>
-      <NavMain :items="mainNavItems" />
+      <NavMain :items="mainNavItems" class=""/>
     </SidebarContent>
   </Sidebar>
   <slot />
