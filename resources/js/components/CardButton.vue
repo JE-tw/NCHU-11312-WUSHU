@@ -18,6 +18,7 @@ defineProps({
 <template>
   <a
     href="https://youtu.be/aHuItwXi4bw?si=vMMXTnslt9j9szTg"
+    target="_blank"
     :class="[
       'flex items-center justify-center',
       cartShorter ? 'h-[32px] w-[32px] sm:h-[40px] sm:w-[178px]' : 'h-[32px] w-[120px] sm:h-[40px] sm:w-[178px]',

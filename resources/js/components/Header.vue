@@ -174,7 +174,7 @@ watch([isMobile, isTablet], () => {
               <Link
                 href="/login"
                 class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]"
-                >登入註冊</Link
+                >會員登入</Link
               >
             </template>
           </span>
@@ -299,7 +299,7 @@ watch([isMobile, isTablet], () => {
           href="/login"
           class="flex items-center gap-2 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
           :class="isMobile ? 'justify-center' : 'justify-start'"
-          >登入註冊</Link
+          >會員登入</Link
         >
       </template>
     </nav>

@@ -4,7 +4,7 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import MemberOrder from '../../components/MemberOrder.vue';
 import { router } from '@inertiajs/vue3';
-
+import Swal from 'sweetalert2';
 
 import CourseCard from '@/components/CourseCard.vue';
 import UserForm from '@/components/UserForm.vue';
@@ -12,7 +12,7 @@ import UserForm from '@/components/UserForm.vue';
 const tab = ref('personalinfo'); // 初始預設在個人資料
 
 const activeTopTabClass = 'bg-white border border-white';
-const inactiveTopTabClass = 'text-white border border-white';
+const inactiveTopTabClass = 'text-white border border-white hover:bg-stone-300 hover:text-black';
 
 // 課程購買紀錄假資料
 const courses = ref([
@@ -72,24 +72,6 @@ const purchaseRecords = ref([
 
 const totalPages = computed(() => Math.ceil(purchaseRecords.value.length / perPage));
 
-// 格式化工具
-// function formatDate(dateStr) {
-//   return new Date(dateStr).toLocaleDateString('zh-TW');
-// }
-
-// function formatAmount(num) {
-//   return num.toLocaleString();
-// }
-
-// function formatPayment(method) {
-//   return method === 'bank_transfer' ? '匯款' : '信用卡';
-// }
-
-// function formatStatus(status) {
-//   return status === 'paid' ? '收到款項：課程已解鎖' : '待客服確認款項';
-// }
-
-//
 const props = defineProps({
   userInfo: Object,
   orders: Object, // 含 data, meta, links 等
@@ -139,11 +121,45 @@ const columns = [
 ];
 
 // 我的課程
-
 // 點擊跳轉 詳細資訊頁
 function goToIntro(id) {
   router.visit(route('wushu.intro', id));
 }
+
+// 登出sweet alert
+const logOut = () => {
+  Swal.fire({
+    title: '確定要登出嗎?',
+    text: '五術研究社',
+    icon: 'warning',
+    showCancelButton: true,
+    reverseButtons: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#B5B5B5',
+    confirmButtonText: '我要登出!',
+    cancelButtonText: '取消',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      router.post('/logout');
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: '登出成功',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  });
+};
+// .then((result) => {
+//     if (result.isConfirmed) {
+//       Swal.fire({
+//         title: 'Deleted!',
+//         text: 'Your file has been deleted.',
+//         icon: 'success',
+//       });
+//     }
+//   });
 </script>
 <template>
   <!-- 頁首 Banner -->
@@ -189,12 +205,19 @@ function goToIntro(id) {
 
       <div class="mx-2 h-10 w-px bg-gray-300"></div>
 
-      <button
+      <!-- <button
         @click="tab = 'logout'"
         :class="[
           tab === 'logout' ? activeTopTabClass : inactiveTopTabClass,
           'tab-button whitespace-nowrap rounded-md px-12 py-3 text-2xl transition-colors duration-300 focus:outline-none',
         ]"
+      >
+        登出
+      </button> -->
+      <button
+        @click="logOut"
+        type="button"
+        class="rounded-md border border-white px-12 py-3 text-2xl text-white transition-colors duration-300 hover:bg-red-600"
       >
         登出
       </button>
@@ -348,9 +371,10 @@ function goToIntro(id) {
             <!-- 修改密碼表單 -->
             <form class="space-y-6">
               <!-- 新密碼 -->
+              <!-- 真正的input type應為password -->
               <div class="relative">
                 <input
-                  type="password"
+                  type="text"
                   id="new-password"
                   placeholder=" "
                   class="peer w-full rounded-md border border-gray-400 px-4 py-3 focus:outline-none"
@@ -365,8 +389,9 @@ function goToIntro(id) {
 
               <!-- 確認新密碼 -->
               <div class="relative">
+                <!-- 真正的input type應為password -->
                 <input
-                  type="password"
+                  type="text"
                   id="confirm-new-password"
                   placeholder=" "
                   class="peer w-full rounded-md border border-gray-400 px-4 py-3 focus:outline-none"
@@ -437,9 +462,9 @@ function goToIntro(id) {
       <!-- 登出 -->
       <div v-else-if="tab === 'logout'" class="flex items-center justify-center py-20">
         <!-- 登出 -->
-    <Link href="/logout" method="post" as="button" class="rounded-md bg-red-600 px-6 py-3 text-white transition hover:bg-red-700">
-      確認登出
-  </Link>
+        <Link href="/logout" method="post" as="button" class="rounded-md bg-red-600 px-6 py-3 text-white transition hover:bg-red-700">
+          確認登出
+        </Link>
         <!-- <button class="rounded-md bg-red-600 px-6 py-3 text-white transition hover:bg-red-700">確認登出</button> -->
       </div>
     </div>
@@ -471,7 +496,7 @@ input[type='date']:focus::-webkit-datetime-edit {
 .course-card {
   border: 1px solid #e5e7eb;
   /* gray-200 */
-  border-radius: 1rem;
+
   padding: 1.25rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   background-color: white;
