@@ -256,7 +256,7 @@ onBeforeUnmount(() => {
                             </div>
 
                             <!-- 右區：課程列表 -->
-                            <div class="w-2/3 flex flex-col pt-10 pr-6 pl-10">
+                            <div class="w-2/3 flex flex-col pt-14 pr-6 pl-10">
                                 <!-- 課程類型選項卡 -->
                                 <div class="flex space-x-6 pb-4 border-b border-gray-700 overflow-x-auto">
                                     <button v-for="tab in tabs" :key="tab.name" class="py-2.5 px-6 font-medium 
