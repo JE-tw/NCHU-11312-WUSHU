@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\UserInfoController;
 
 // 後端頁面
 
-Route::prefix('wushu/admin')->middleware(['auth'])->group(function () {
+Route::prefix('wushu/admin')->middleware(['auth','admin_only'])->group(function () {
     // 後台首頁
     Route::get('/', function () {
         return Inertia::render('Dashboard');

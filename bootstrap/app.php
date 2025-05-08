@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AdminOnly;
 use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
@@ -25,6 +26,10 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->remove([
             ConvertEmptyStringsToNull::class,
+        ]);
+
+        $middleware->alias([
+            'admin_only' =>AdminOnly::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

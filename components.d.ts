@@ -141,5 +141,6 @@ declare module 'vue' {
     UserForm: typeof import('./resources/js/Components/UserForm.vue')['default']
     UserInfo: typeof import('./resources/js/Components/UserInfo.vue')['default']
     UserMenuContent: typeof import('./resources/js/Components/UserMenuContent.vue')['default']
+    UserOrdersTable: typeof import('./resources/js/Components/UserOrdersTable.vue')['default']
   }
 }
