@@ -2,6 +2,8 @@
 import { ref, computed } from 'vue';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import MemberOrder from '../../components/MemberOrder.vue';
+
 import CourseCard from '@/components/CourseCard.vue';
 import UserForm from '@/components/UserForm.vue';
 
@@ -10,6 +12,7 @@ const tab = ref('personalinfo'); // 初始預設在個人資料
 const activeTopTabClass = 'bg-white border border-white';
 const inactiveTopTabClass = 'text-white border border-white';
 
+// 課程購買紀錄假資料
 const courses = ref([
   {
     title: '基礎班',
@@ -32,7 +35,6 @@ const courses = ref([
     category: '靈性課程',
   },
 ]);
-
 const purchaseRecords = ref([
   {
     date: '2025-01-01T12:00:00Z',
@@ -58,35 +60,40 @@ const purchaseRecords = ref([
 ]);
 
 // 分頁控制
-const currentPage = ref(1);
-const perPage = 2;
+// const currentPage = ref(1);
+// const perPage = 2;
 
-const paginatedRecords = computed(() => {
-  const start = (currentPage.value - 1) * perPage;
-  return purchaseRecords.value.slice(start, start + perPage);
-});
+// const paginatedRecords = computed(() => {
+//   const start = (currentPage.value - 1) * perPage;
+//   return purchaseRecords.value.slice(start, start + perPage);
+// });
 
 const totalPages = computed(() => Math.ceil(purchaseRecords.value.length / perPage));
 
 // 格式化工具
-function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleDateString('zh-TW');
-}
+// function formatDate(dateStr) {
+//   return new Date(dateStr).toLocaleDateString('zh-TW');
+// }
 
-function formatAmount(num) {
-  return num.toLocaleString();
-}
+// function formatAmount(num) {
+//   return num.toLocaleString();
+// }
 
-function formatPayment(method) {
-  return method === 'bank_transfer' ? '匯款' : '信用卡';
-}
+// function formatPayment(method) {
+//   return method === 'bank_transfer' ? '匯款' : '信用卡';
+// }
 
-function formatStatus(status) {
-  return status === 'paid' ? '收到款項：課程已解鎖' : '待客服確認款項';
-}
+// function formatStatus(status) {
+//   return status === 'paid' ? '收到款項：課程已解鎖' : '待客服確認款項';
+// }
 
+// 
+const props = defineProps({
+  userInfo: Object,
+  orders: Object, // 含 data, meta, links 等
+});
 // ====================
-// 獲取會員資料
+// 會員資料頁
 import { usePage } from '@inertiajs/vue3';
 
 const page = usePage();
@@ -114,6 +121,18 @@ const timeOptions = {
   time_24hr: true,
   allowInput: true,
 };
+
+// 購買紀錄頁
+import { useTableController } from '@/composables/useTableController';
+
+const { items, currentPage2, totalPages2, handlePageChange } = useTableController('orders', 'admin.order.list'); // 名稱依照 controller 傳的變數與 route 命名
+const columns = [
+  { label: '日期', key: 'created_at' },
+  { label: '購買項目', key: 'order_items' },
+  { label: '價格', key: 'total_amount' },
+  { label: '付款方式', key: 'payment_method' },
+  { label: '訂單狀態', key: 'status_text' },
+];
 </script>
 <template>
   <!-- 頁首 Banner -->
@@ -380,66 +399,23 @@ const timeOptions = {
 
       <!-- 購買記錄 -->
       <div v-else-if="tab === 'purchaserecord'" class="w-full px-4 py-8 text-gray-800">
-        <div class="mx-auto max-w-3xl rounded-md border border-gray-400 p-6">
-          <div class="flex justify-between">
-            <h2 class="mb-6 text-2xl font-bold">購買紀錄</h2>
-            <h1 class="text-md mb-0 font-bold text-gray-500">僅保留6個月內資料</h1>
-          </div>
+        <!-- 組件 購買紀錄表格 -->
+        <MemberOrder :columns="columns" :items="items" :current-page="currentPage2" :total-pages="totalPages2" @pageChange="handlePageChange">
+          <!-- 購買項目插槽 -->
+          <template #cell(order_items)="{ item }">
+            <div v-for="i in item.order_items" :key="i.id" class="border-b border-gray-300 py-1 last:border-0">
+              {{ i.product?.name || '未找到商品' }}
+            </div>
+          </template>
 
-          <div class="overflow-x-auto">
-            <table class="min-w-full border border-gray-200">
-              <thead class="bg-gray-100">
-                <tr class="text-center text-sm font-medium text-gray-700">
-                  <th class="border bg-[#518C95] px-4 py-3 text-white">日期</th>
-                  <th class="border bg-[#518C95] px-4 py-3 text-white">購買項目</th>
-                  <th class="border bg-[#518C95] px-4 py-3 text-white">價格</th>
-                  <th class="border bg-[#518C95] px-4 py-3 text-white">付款方式</th>
-                  <th class="border bg-[rgb(81,140,149)] px-4 py-3 text-white">訂單狀態</th>
-                </tr>
-              </thead>
-              <tbody class="text-sm">
-                <tr v-for="(record, index) in paginatedRecords" :key="index" class="border-t bg-white">
-                  <td class="whitespace-nowrap border px-4 py-3 align-top">
-                    {{ formatDate(record.date) }}
-                  </td>
-                  <td class="border px-4 py-3">
-                    <div class="flex flex-col gap-1">
-                      <span v-for="(item, i) in record.items" :key="i">{{ item }}</span>
-                    </div>
-                  </td>
-                  <td class="whitespace-nowrap border px-4 py-3 align-top">
-                    {{ formatAmount(record.amount) }}
-                  </td>
-                  <td class="border px-4 py-3 align-top">{{ formatPayment(record.payment) }}</td>
-                  <td class="whitespace-nowrap border px-4 py-3 align-top">
-                    {{ formatStatus(record.status) }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <!-- 日期格式化 -->
+          <template #cell(created_at)="{ item }">
+            {{ item.created_at?.slice(0, 10) }}
+          </template>
 
-          <!-- 分頁控制 -->
-          <div class="mt-6 flex items-center justify-center gap-2 text-sm">
-            <!-- 上一頁箭頭 -->
-            <button
-              @click="currentPage > 1 && currentPage--"
-              :class="['text-gray-800 hover:text-black', currentPage === 1 ? 'cursor-not-allowed' : '']"
-            >
-              &lt;
-            </button>
-
-            <!-- 數字分頁 -->
-            <button
-              v-for="page in totalPages"
-              :key="page"
-              @click="currentPage = page"
-              :class="['rounded border px-3 py-1', page === currentPage ? 'bg-[#518C95] text-white' : 'bg-gray-100 text-gray-800 hover:bg-gray-200']"
-            >
-              {{ page }}
-            </button>
-          </div>
-        </div>
+          <!-- 付款方式固定為匯款 -->
+          <template #cell(payment_method)> 匯款 </template>
+        </MemberOrder>
       </div>
       <!-- 登出 -->
       <div v-else-if="tab === 'logout'" class="flex items-center justify-center py-20">

@@ -52,16 +52,12 @@ Route::prefix('wushu')->group(function () {
     Route::get('/Privacy', function () {
         return Inertia::render('frontend/Privacy');
     });
-    // // 會員中心頁
-    // Route::get('/MemberCenter', function () {
-    //     return Inertia::render('frontend/MemberCenter');
-    // });
 
-    // 購物車
+    // =============================
+    // // 會員中心 
+    // Route::get('/MemberCenter', [WushuController::class, 'userInfo']);
+    // // 會員中心 購買紀錄
+    // Route::get('/MemberCenter', [WushuController::class, 'order']);
+
     Route::get('/MemberCenter', [WushuController::class, 'userInfo']);
-
 });
-
-// ==============================
-// // 會員編輯頁
-// Route::get('/MemberCenter', [WushuController::class, 'memberInfo']);

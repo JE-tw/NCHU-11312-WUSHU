@@ -163,37 +163,64 @@ class WushuController extends Controller
     }
 
 
-    // ==================
-    // 查 會員資料
-
+    // // 會員中心 會員資料
     // public function userInfo()
     // {
-    //     $userId = 1;
-    //     $userInfo = User::with('userInfo')->find($userId);
+    //     $userId = 1; // 寫死 user_id = 1
+    //     $user = User::with('userInfo')->find($userId);
+
+    //     // 把資料轉成純陣列
+    //     $userInfo = $user ? $user->toArray() : null;
 
     //     return Inertia::render('frontend/MemberCenter', [
     //         'userInfo' => $userInfo,
     //     ]);
-    //     // return Inertia::render('frontend/MemberCenter', [
-    //     //     'userInfo' => [
-    //     //         'name' => '測試名字',
-    //     //         'email' => 'test@example.com',
-    //     //         'user_info' => [
-    //     //             'phone' => '0912345678'
-    //     //         ]
-    //     //     ]
-    //     // ]);
     // }
-    public function userInfo()
+
+
+    // // 會員中心 購買紀錄
+    // public function order(Request $request)
+    // {
+    //     $userId = 1; //寫死 user_id = 1
+    //     $query = Order::with(['user', 'orderItems.product'])
+    //         ->where('user_id', $userId);
+
+    //     $orders = $query->latest()->paginate(10);
+
+    //     $orders->getCollection()->transform(function ($order) {
+    //         $order->formatted_date = $order->created_at->format('Y-m-d');
+    //         $order->status_text = $order->status_text; // 如果有轉換文字功能
+    //         return $order;
+    //     });
+
+    //     return Inertia::render('frontend/MemberCenter', [
+    //         'orders' => $orders,
+    //     ]);
+    // }
+
+    public function userInfo(Request $request)
     {
-        $userId = 1;
+        $userId = 1; // 寫死 user_id
+
+        // 會員資料
         $user = User::with('userInfo')->find($userId);
-        
-        // 把資料轉成純陣列
         $userInfo = $user ? $user->toArray() : null;
-    
+
+        // 訂單資料
+        $query = Order::with(['user', 'orderItems.product'])
+            ->where('user_id', $userId);
+
+        $orders = $query->latest()->paginate(10);
+
+        $orders->getCollection()->transform(function ($order) {
+            $order->formatted_date = $order->created_at->format('Y-m-d');
+            $order->status_text = $order->status_text;
+            return $order;
+        });
+
         return Inertia::render('frontend/MemberCenter', [
             'userInfo' => $userInfo,
+            'orders' => $orders,
         ]);
     }
 }
