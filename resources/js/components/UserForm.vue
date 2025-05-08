@@ -147,18 +147,26 @@ const formattedCreatedAt = computed(() => formatDate(props.user?.created_at));
 
     <!-- 出生日期與時間 -->
     <div class="flex gap-2">
-      <input
-        v-model="form.birth_date"
-        type="date"
-        placeholder="出生日期"
-        class="input mt-4 block w-full rounded-md border border-gray-300 bg-transparent px-3 py-3 text-sm"
-      />
-      <input
-        v-model="form.birth_time"
-        type="time"
-        placeholder="出生時間"
-        class="input mt-4 block w-full rounded-md border border-gray-300 bg-transparent px-3 py-3 text-sm"
-      />
+      <div class="relative w-full">
+        <label for="birth_date" class="absolute left-4 top-2 bg-white text-sm text-gray-500"> 出生日期 </label>
+        <input
+          id="birth_date"
+          v-model="form.birth_date"
+          type="date"
+          placeholder="出生日期"
+          class="input mt-4 block w-full rounded-md border border-gray-300 bg-transparent px-3 py-3 text-sm"
+        />
+      </div>
+      <div class="relative w-full">
+        <label for="birth_time" class="absolute left-4 top-2 bg-white text-sm text-gray-500"> 出生時間 </label>
+        <input
+          id="birth_time"
+          v-model="form.birth_time"
+          type="time"
+          placeholder="出生時間"
+          class="input mt-4 block w-full rounded-md border border-gray-300 bg-transparent px-3 py-3 text-sm"
+        />
+      </div>
     </div>
 
     <!-- 出生城市與地址 -->
