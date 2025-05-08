@@ -9,7 +9,7 @@ import { usePage, router } from '@inertiajs/vue3';
 
 export function useTableController(resourceName, routeName) {
   const page = usePage(); // Inertia 頁面物件
-  console.log('useTable props :',page.props);
+  // console.log('useTable props :',page.props);
   const resource = computed(() => page.props[resourceName]); // 從 props 中取得指定名稱的資料集
   
   const items = computed(() => resource.value.data ?? []); // 解析資料內容（每頁的資料陣列）
