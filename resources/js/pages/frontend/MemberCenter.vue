@@ -14,53 +14,6 @@ const tab = ref('personalinfo'); // 初始預設在個人資料
 const activeTopTabClass = 'bg-white border border-white';
 const inactiveTopTabClass = 'text-white border border-white hover:bg-stone-300 hover:text-black';
 
-// 課程購買紀錄假資料
-const courses = ref([
-  {
-    title: '基礎班',
-    description: '良好的風水可以使家庭收入增加，人才健康。在選擇居家風水，實在不可不慎。',
-    category: '吠陀占星',
-  },
-  {
-    title: '進階班',
-    description: '掌握行星能量與相位的精細解析，深入理解星盤奧秘。',
-    category: '吠陀占星',
-  },
-  {
-    title: '塔羅入門',
-    description: '學習塔羅基礎牌意與解牌技巧，適合初學者。',
-    category: '塔羅牌',
-  },
-  {
-    title: '能量療癒課',
-    description: '探索氣場與脈輪，啟動身心靈療癒力。',
-    category: '靈性課程',
-  },
-]);
-const purchaseRecords = ref([
-  {
-    date: '2025-01-01T12:00:00Z',
-    items: ['古典針灸基礎班', '古典針灸進階班'],
-    amount: 360000,
-    payment: 'bank_transfer',
-    status: 'pending',
-  },
-  {
-    date: '2025-03-15T08:00:00Z',
-    items: ['塔羅入門', '風水基礎'],
-    amount: 120000,
-    payment: 'credit_card',
-    status: 'paid',
-  },
-  {
-    date: '2025-04-20T18:30:00Z',
-    items: ['金融占星', '靈性療癒'],
-    amount: 160000,
-    payment: 'bank_transfer',
-    status: 'paid',
-  },
-]);
-
 // 分頁控制
 // const currentPage = ref(1);
 // const perPage = 2;
@@ -126,7 +79,7 @@ function goToIntro(id) {
   router.visit(route('wushu.intro', id));
 }
 
-// 登出sweet alert
+// 登出彈窗 sweet alert
 const logOut = () => {
   Swal.fire({
     title: '確定要登出嗎?',
@@ -217,7 +170,7 @@ const logOut = () => {
       <button
         @click="logOut"
         type="button"
-        class="rounded-md border border-white px-12 py-3 text-2xl text-white transition-colors duration-300 hover:bg-red-600"
+        class="tab-button whitespace-nowrap rounded-md border border-white px-12 py-3 text-2xl text-white transition-colors duration-300 hover:bg-red-600"
       >
         登出
       </button>
@@ -295,13 +248,6 @@ const logOut = () => {
                 </div>
 
                 <div class="relative mt-4 flex-1 sm:mt-0">
-                  <!-- <input
-                    v-model="birth_time"
-                    type="time"
-                    id="birth-time"
-                    placeholder=" "
-                    class="peer w-full rounded-md border border-gray-400 px-4 py-3 focus:outline-none"
-                  /> -->
                   <Flatpickr
                     v-model="birth_time"
                     :config="timeOptions"
@@ -419,21 +365,29 @@ const logOut = () => {
 
       <!-- 我的課程區塊 -->
       <div v-else-if="tab === 'mycourse'" class="w-full px-4 py-8">
-        <div class="course-grid">
-          <div v-for="course in props.courses" :key="course.id" class="course-card">
-            <h3 class="mb-2 break-words text-xl font-bold">
-              {{ course.name }}
-            </h3>
-            <p class="mb-4 break-words text-base leading-relaxed text-gray-700">
-              {{ course.introduction }}
-            </p>
-            <div class="flex items-center justify-between">
-              <span class="rounded-full bg-purple-200 px-3 py-1 text-sm text-purple-800">
-                {{ course.id }}
-              </span>
-              <button @click="goToIntro(course.id)" class="rounded bg-teal-600 px-4 py-2 text-sm text-white transition hover:bg-teal-700">
-                前往課程
-              </button>
+        <div
+          v-if="props.courses.length === 0"
+          class="bg-white px-2 py-16 text-center text-[14px] text-gray-600 shadow-custom sm:px-32 sm:text-[20px] xl:text-[24px]"
+        >
+            若您已購買課程，我們將儘速為您開通權限！ 🫶 
+        </div>
+        <div v-else class="course-grid">
+          <div class="course-grid">
+            <div v-for="course in props.courses" :key="course.id" class="course-card">
+              <h3 class="mb-2 break-words text-xl font-bold">
+                {{ course.name }}
+              </h3>
+              <p class="mb-4 break-words text-base leading-relaxed text-gray-700">
+                {{ course.introduction }}
+              </p>
+              <div class="flex items-center justify-between">
+                <span class="rounded-full bg-purple-200 px-3 py-1 text-sm text-purple-800">
+                  {{ course.id }}
+                </span>
+                <button @click="goToIntro(course.id)" class="rounded bg-teal-600 px-4 py-2 text-sm text-white transition hover:bg-teal-700">
+                  前往課程
+                </button>
+              </div>
             </div>
           </div>
         </div>
