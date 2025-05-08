@@ -176,6 +176,9 @@ const columns = [
         購買記錄
       </button>
 
+      <div class="mx-2 h-10 w-px bg-gray-300"></div>
+
+
       <button
         @click="tab = 'logout'"
         :class="[
