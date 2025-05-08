@@ -14,8 +14,8 @@ use Illuminate\Http\Request;
 use App\Models\ContactRecord;
 
 // 購物車
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class WushuController extends Controller
 {
@@ -60,17 +60,6 @@ class WushuController extends Controller
         return Inertia::render('frontend/ServiceCourse', [
             'categories' => $categories,
             'services' => $services,
-        ]);
-    }
-
-    // 查 課程介紹頁 課程關聯章節
-    public function intro($id)
-    {
-        $course = Course::with(['chapters'])->find($id);
-        if ($course == null) return redirect('/wushu/ServiceCourse');
-
-        return Inertia::render('frontend/CourseIntro', [
-            'course' => $course,
         ]);
     }
 
@@ -162,51 +151,81 @@ class WushuController extends Controller
         }
     }
 
+    // 查 課程介紹頁 課程關聯章節
+    // public function intro($id)
+    // {
+    //     // 以下不可刪除
+    //     $course = Course::with(['chapters'])->find($id);
+    //     if ($course == null) return redirect('/wushu/ServiceCourse');
 
-    // // 會員中心 會員資料
-    public function userInfo(Request $request)
+    //     return Inertia::render('frontend/CourseIntro', [
+    //         'course' => $course,
+    //     ]);
+    // }
+
+    public function intro($id)
 {
-    $userId = 1; // 寫死 user_id
+    $course = Course::with(['chapters'])->find($id);
+    if ($course == null) return redirect('/wushu/ServiceCourse');
 
-    // 會員資料
-    $user = User::with('userInfo')->find($userId);
-    $userInfo = $user ? $user->toArray() : null;
-
-    // 訂單與課程資料
-    $query = Order::with(['user', 'orderItems.product'])
-        ->where('user_id', $userId);
-
-    $orders = $query->latest()->paginate(10);
-
-    // 處理訂單資料格式
-    $orders->getCollection()->transform(function ($order) {
-        $order->formatted_date = $order->created_at->format('Y-m-d');
-        $order->status_text = $order->status_text;
-        return $order;
-    });
-    // 額外處理：我的課程
-    // 找出所有訂單中的課程項目（Course）
-    $courses = $query->get()
-        ->flatMap(function ($order) {
-            return $order->orderItems->filter(function ($item) {
-                return $item->product_type === 'App\\Models\\Course' && $item->is_accessible == 'true';
-            });
+    $userId = 1; // 寫死
+    $isAccessible = OrderItem::where('product_id', $id)
+        ->where('product_type', 'App\\Models\\Course')
+        ->where('is_accessible', true)
+        ->whereHas('order', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
         })
-        ->map(function ($item) {
-            return [
-                'name' => $item->product->name ?? '未找到課程',
-                'id' => $item->product->id ?? null,
-                'introduction' => $item->product->introduction ?? '',
-                'price' => $item->product->price ?? 0,
-            ];
-        })
-        ->values();
+        ->exists();
 
-    return Inertia::render('frontend/MemberCenter', [
-        'userInfo' => $userInfo,
-        'orders' => $orders,
-        'courses' => $courses,
+    return Inertia::render('frontend/CourseIntro', [
+        'course' => $course,
+        'isAccessible' => $isAccessible,
     ]);
 }
 
+    // // 會員中心 會員資料
+    public function userInfo(Request $request)
+    {
+        $userId = 1; // 寫死 user_id
+
+        // 會員資料
+        $user = User::with('userInfo')->find($userId);
+        $userInfo = $user ? $user->toArray() : null;
+
+        // 訂單與課程資料
+        $query = Order::with(['user', 'orderItems.product'])
+            ->where('user_id', $userId);
+
+        $orders = $query->latest()->paginate(10);
+
+        // 處理訂單資料格式
+        $orders->getCollection()->transform(function ($order) {
+            $order->formatted_date = $order->created_at->format('Y-m-d');
+            $order->status_text = $order->status_text;
+            return $order;
+        });
+        // 額外處理：我的課程
+        // 找出所有訂單中的課程項目（Course）
+        $courses = $query->get()
+            ->flatMap(function ($order) {
+                return $order->orderItems->filter(function ($item) {
+                    return $item->product_type === 'App\\Models\\Course' && $item->is_accessible == 'true';
+                });
+            })
+            ->map(function ($item) {
+                return [
+                    'name' => $item->product->name ?? '未找到課程',
+                    'id' => $item->product->id ?? null,
+                    'introduction' => $item->product->introduction ?? '',
+                    'price' => $item->product->price ?? 0,
+                ];
+            })
+            ->values();
+
+        return Inertia::render('frontend/MemberCenter', [
+            'userInfo' => $userInfo,
+            'orders' => $orders,
+            'courses' => $courses,
+        ]);
+    }
 }

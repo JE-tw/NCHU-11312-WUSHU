@@ -10,37 +10,29 @@ import Footer from '../../components/Footer.vue';
 // 引入展開卡片 - 影片卡片
 import ExpandCard from '@/components/ExpandCard.vue';
 
-// 判斷是否購買了，假資料：實際上會由後端提供
-const hasPurchased = false;
+
 
 // 按鈕點擊功能 CardButton
 function handleClick(item) {
   if (!hasPurchased) return; // 沒買就直接什麼都不做！
   console.log('✅ 播放影片：', item.name); // 有買，才執行下面功能
 }
+// ========
 
-// 假資料：課程卡
-// const courses = [
-//   { title: '1-1(29:00)', description: '1-1' },
-//   { title: '1-2(20:31)', description: '1-2' },
-//   { title: '1-3(29:00)', description: '1-3' },
-//   { title: '1-4(23:18)', description: '1-4' },
-// ];
+const props = defineProps({
+  course:  Array | Object,
+  isAccessible: Boolean,
+});
+// 判斷是否購買了，假資料：實際上會由後端提供
+// const hasPurchased = false;
+const hasPurchased = computed(() => props.isAccessible);
 
-// 假資料：課程資訊（未來將由後端提供）
-// const courseInfo = {
-//   title: '吠陀占星基礎',
-//   price: 4800,
-//   description: `（購買課程後，助教會聯繫您提供課程講義檔案。如課程有任何問題都可以和助教提問！）
-// 傳授吠陀占星的必備知識和文化源流。包含吠陀九星詳述；各星 namah mantra 的傳授以及格局（瑜珈）與各宮位的解釋和預測方法，
-// 也是全台第一個教 Panchang（吠陀曆）的吠陀占星課。有任何問題可以聯繫助教 Line id: joe9718`,
-// };
 
 // 獲取資料
-const props = defineProps({
-  course: Array | Object,
-});
-console.log(props.course);
+// const props = defineProps({
+//   course: Array | Object,
+// });
+// console.log(props.course);
 </script>
 
 <template>
