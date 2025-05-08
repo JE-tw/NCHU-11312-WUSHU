@@ -28,9 +28,9 @@ const props = defineProps({
 const isInCart = computed(() => cartStore.isInCart(props.productId, props.productType));
 
 // 加至購物車
-function addToCart() {
+function addToCart(event) {
   if (isInCart.value) return;
-
+  event.stopPropagation(); //按鈕防穿透
   cartStore.addToCart({
     id: props.productId,
     name: props.productName,

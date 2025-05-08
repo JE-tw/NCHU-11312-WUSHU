@@ -10,12 +10,12 @@ import Footer from '../../components/Footer.vue';
 // 引入展開卡片 - 影片卡片
 import ExpandCard from '@/components/ExpandCard.vue';
 
-
-
+// 判斷是否購買了，假資料：實際上會由後端提供
+// const hasPurchased = false;
 // 按鈕點擊功能 CardButton
 function handleClick(item) {
   if (!hasPurchased) return; // 沒買就直接什麼都不做！
-  console.log('✅ 播放影片：', item.name); // 有買，才執行下面功能
+  // console.log('✅ 播放影片：', item.name); // 有買，才執行下面功能
 }
 // ========
 
@@ -23,16 +23,8 @@ const props = defineProps({
   course:  Array | Object,
   isAccessible: Boolean,
 });
-// 判斷是否購買了，假資料：實際上會由後端提供
-// const hasPurchased = false;
+
 const hasPurchased = computed(() => props.isAccessible);
-
-
-// 獲取資料
-// const props = defineProps({
-//   course: Array | Object,
-// });
-// console.log(props.course);
 </script>
 
 <template>

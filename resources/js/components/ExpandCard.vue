@@ -6,7 +6,6 @@
 import { ref } from 'vue';
 import dashIcon from '@/images/f-dash.png';
 import plusIcon from '@/images/f-plus.png';
-import LockButton from '@/components/CardButton.vue';
 
 // 傳入 item 物件
 const props = defineProps({

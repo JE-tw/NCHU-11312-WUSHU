@@ -95,7 +95,6 @@ const props = defineProps({
   orders: Object, // 含 data, meta, links 等
   courses: Array,
 });
-console.log(props.courses[0].id);
 
 // ====================
 // 會員資料頁

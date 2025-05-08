@@ -15,6 +15,9 @@ defineProps({
 function goToIntro(id) {
   router.visit(route('wushu.intro', id));
 }
+
+// 購物車按鈕阻止跳轉
+
 </script>
 
 <template>
@@ -35,15 +38,8 @@ function goToIntro(id) {
           <!-- 類別標籤 -->
           <div class="flex items-center rounded-full bg-blue-900 px-[16px] py-[8px] text-[12px] text-white sm:text-[18px]">{{ categoryTitle }}</div>
           <!-- 購物車按鈕（變版不會隱藏文字） -->
-          <!-- <div><CartButton :hideText="false" :cartShorter="false" /></div> -->
           <div>
-            <CartButton 
-                :productId="id.toString()" 
-                :productName="name" 
-                :price="price" 
-                :productType=2
-                :cartShorter="false" 
-                :hideText="false" />
+            <CartButton :productId="id.toString()" :productName="name" :price="price" :productType="2" :cartShorter="false" :hideText="false" />
           </div>
         </div>
       </div>

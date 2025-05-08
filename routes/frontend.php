@@ -53,7 +53,6 @@ Route::prefix('wushu')->group(function () {
         return Inertia::render('frontend/Privacy');
     });
 
-    // =============================
     // 會員中心 
     Route::get('/MemberCenter', [WushuController::class, 'userInfo']);
 });
