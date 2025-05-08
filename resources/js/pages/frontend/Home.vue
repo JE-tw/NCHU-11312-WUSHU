@@ -13,14 +13,14 @@ const coursesByCategory = computed(() => page.props.coursesByCategory || {})
 const featuredCourses = computed(() => page.props.featuredCourses || [])
 
 // ====== 載入圖片資源 ======
-import imgSrc from '@/images/藥材aocax-ufyt5.webp'
+import imgSrc from '@/images/homem.webp'
 import courseImg1 from '@/images/主打課程1a2axq-d0uqq.webp'
 import courseImg2 from '@/images/主打課程2a1t2a-q5lk4.webp'
-import masterImg1 from '@/images/關於站主a8k69-ybprq.webp'
-import masterImg2 from '@/images/學會創立研革ay2gj-8gn6h.webp'
-import tarotImg from '@/images/a1tgu3-dqrfv.webp'
+import masterImg1 from '@/images/homes.webp'
+import masterImg2 from '@/images/homel.webp'
+import tarotImg from '@/images/home-dqrfv.webp'
 import tcmImg from '@/images/ay1lo-pmcep.webp'
-import magicImg from '@/images/a1tgu3-dqrfv.webp'
+import magicImg from '@/images/home-dqrfv.webp'
 import othersImg from '@/images/FengShui.webp'
 
 // ====== 背景圖 ======
