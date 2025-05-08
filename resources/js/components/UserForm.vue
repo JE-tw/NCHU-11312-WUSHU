@@ -42,7 +42,7 @@ const formatDate = (dateStr) => {
   const d = String(date.getDate()).padStart(2, '0');
   return `${y}/${m}/${d}`;
 };
-console.log(props.user);
+// console.log(props.user);
 
 // 初始化表單（編輯模式）
 watch(

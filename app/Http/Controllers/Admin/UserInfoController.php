@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Order;
 use App\Models\UserInfo;
 use Illuminate\Http\Request;
+use App\Traits\HandlesTableFilters;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use App\Traits\HandlesTableFilters;
 
 class UserInfoController extends Controller
 {
@@ -146,13 +147,24 @@ class UserInfoController extends Controller
         if ($user->userInfo && $user->userInfo->birth_time) {
             $user->userInfo->birth_time = \Carbon\Carbon::parse($user->userInfo->birth_time)->format('H:i');
         }
-        // dd($user->userInfo->birth_time);
+        // 取得該會員的訂單（含關聯項目）
+        $orders = Order::with(['orderItems.product'])
+            ->where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        // 格式化資料（加上 formatted_date、status_text）
+        $orders->getCollection()->transform(function ($order) {
+            $order->formatted_date = $order->created_at->format('Y-m-d');
+            $order->status_text = $order->status_text;
+            return $order;
+        });
         return Inertia::render('backend/UserEdit', [
             'user' => $user,
             'userInfo' => $user->userInfo,
+            'orders' => $orders,
         ]);
     }
-
 
     public function delete($id)
     {
