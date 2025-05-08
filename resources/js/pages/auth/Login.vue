@@ -8,6 +8,8 @@ import { Label } from '@/components/ui/label';
 import AuthBase from '@/layouts/AuthLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
 
 defineProps<{
   status?: string;
@@ -28,7 +30,19 @@ const submit = () => {
 </script>
 
 <template>
-  <div class="flex min-h-screen items-center justify-center bg-white">
+  <Header />
+  <header class="flex h-[234px] w-full flex-col items-center bg-black sm:h-[303px] xl:h-[444px] mb-16">
+    <p
+      class="pt-[120px] font-serif text-[32px]/[46px] font-bold text-grayWhite sm:pt-[160px] sm:text-[52px]/[75px] xl:pt-[224px] xl:text-[64px]/[92px]"
+    >
+      會員登入
+    </p>
+    <span class="w-[90px] border-b-2 border-grayWhite sm:w-[200px]"></span>
+  </header>
+  
+
+  <!-- 下方不要動到 -->
+  <div class="flex items-center justify-center bg-white">
     <div class="h-min-[400px] w-[468px] rounded-lg bg-grayWhite p-8 shadow-lg">
       <form @submit.prevent="submit">
         <div class="grid gap-5">
@@ -80,4 +94,7 @@ const submit = () => {
       </form>
     </div>
   </div>
+  <!-- 上方不要動到 -->
+
+  <Footer class="mt-16" />
 </template>
