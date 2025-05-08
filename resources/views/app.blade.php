@@ -32,11 +32,13 @@
         </style>
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <link rel="icon" href="{{ asset('new-logo.png') }}" type="image/png">
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+CJK+TC:wght@400;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
                 
 
 
