@@ -54,10 +54,6 @@ Route::prefix('wushu')->group(function () {
     });
 
     // =============================
-    // // 會員中心 
-    // Route::get('/MemberCenter', [WushuController::class, 'userInfo']);
-    // // 會員中心 購買紀錄
-    // Route::get('/MemberCenter', [WushuController::class, 'order']);
-
+    // 會員中心 
     Route::get('/MemberCenter', [WushuController::class, 'userInfo']);
 });

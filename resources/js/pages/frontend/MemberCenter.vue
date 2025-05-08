@@ -87,11 +87,14 @@ const totalPages = computed(() => Math.ceil(purchaseRecords.value.length / perPa
 //   return status === 'paid' ? '收到款項：課程已解鎖' : '待客服確認款項';
 // }
 
-// 
+//
 const props = defineProps({
   userInfo: Object,
   orders: Object, // 含 data, meta, links 等
+  courses: Array,
 });
+console.log(props.courses);
+
 // ====================
 // 會員資料頁
 import { usePage } from '@inertiajs/vue3';
@@ -133,6 +136,12 @@ const columns = [
   { label: '付款方式', key: 'payment_method' },
   { label: '訂單狀態', key: 'status_text' },
 ];
+
+// 我的課程
+// 點擊跳轉 詳細資訊頁
+function goToIntro(id) {
+  router.visit(route('wushu.intro', id));
+}
 </script>
 <template>
   <!-- 頁首 Banner -->
@@ -383,18 +392,18 @@ const columns = [
       <!-- 我的課程區塊 -->
       <div v-else-if="tab === 'mycourse'" class="w-full px-4 py-8">
         <div class="course-grid">
-          <div v-for="(course, index) in courses" :key="index" class="course-card">
+          <div v-for="course in props.courses" :key="course.id" class="course-card">
             <h3 class="mb-2 break-words text-xl font-bold">
-              {{ course.title }}
+              {{ course.name }}
             </h3>
             <p class="mb-4 break-words text-base leading-relaxed text-gray-700">
-              {{ course.description }}
+              {{ course.introduction }}
             </p>
             <div class="flex items-center justify-between">
               <span class="rounded-full bg-purple-200 px-3 py-1 text-sm text-purple-800">
-                {{ course.category }}
+                {{ course.id }}
               </span>
-              <button class="rounded bg-teal-600 px-4 py-2 text-sm text-white transition hover:bg-teal-700">前往課程</button>
+              <button @click="goToIntro(course.id)" class="rounded bg-teal-600 px-4 py-2 text-sm text-white transition hover:bg-teal-700">前往課程</button>
             </div>
           </div>
         </div>

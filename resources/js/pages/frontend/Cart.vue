@@ -168,7 +168,7 @@ const handleSubmit = () => {
             totalAmount: 0,
           };
 
-          router.get('/wushu');
+          router.get('/wushu/MemberCenter');
         },
         onError: (errors) => {
           console.error('後端錯誤:', errors);
