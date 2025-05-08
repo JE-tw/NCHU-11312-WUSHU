@@ -3,6 +3,8 @@ import { ref, computed } from 'vue';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import MemberOrder from '../../components/MemberOrder.vue';
+import { router } from '@inertiajs/vue3';
+
 
 import CourseCard from '@/components/CourseCard.vue';
 import UserForm from '@/components/UserForm.vue';
@@ -93,7 +95,7 @@ const props = defineProps({
   orders: Object, // 含 data, meta, links 等
   courses: Array,
 });
-console.log(props.courses);
+console.log(props.courses[0].id);
 
 // ====================
 // 會員資料頁
@@ -138,6 +140,7 @@ const columns = [
 ];
 
 // 我的課程
+
 // 點擊跳轉 詳細資訊頁
 function goToIntro(id) {
   router.visit(route('wushu.intro', id));
@@ -186,7 +189,6 @@ function goToIntro(id) {
       </button>
 
       <div class="mx-2 h-10 w-px bg-gray-300"></div>
-
 
       <button
         @click="tab = 'logout'"
@@ -329,6 +331,7 @@ function goToIntro(id) {
 
               <!-- 儲存按鈕 -->
               <button
+                type="button"
                 class="mt-6 w-full transform rounded-md bg-[#518C95] py-3 text-xl text-white transition-opacity duration-300 hover:scale-105 hover:opacity-90"
               >
                 儲存
@@ -379,6 +382,7 @@ function goToIntro(id) {
 
               <!-- 修改密碼按鈕 -->
               <button
+                type="button"
                 class="mt-6 w-full transform rounded-md bg-[#518C95] py-3 text-xl text-white transition-opacity duration-300 hover:scale-105 hover:opacity-90"
               >
                 確定修改
@@ -403,7 +407,9 @@ function goToIntro(id) {
               <span class="rounded-full bg-purple-200 px-3 py-1 text-sm text-purple-800">
                 {{ course.id }}
               </span>
-              <button @click="goToIntro(course.id)" class="rounded bg-teal-600 px-4 py-2 text-sm text-white transition hover:bg-teal-700">前往課程</button>
+              <button @click="goToIntro(course.id)" class="rounded bg-teal-600 px-4 py-2 text-sm text-white transition hover:bg-teal-700">
+                前往課程
+              </button>
             </div>
           </div>
         </div>

@@ -184,7 +184,6 @@ class WushuController extends Controller
         $order->status_text = $order->status_text;
         return $order;
     });
-
     // 額外處理：我的課程
     // 找出所有訂單中的課程項目（Course）
     $courses = $query->get()
