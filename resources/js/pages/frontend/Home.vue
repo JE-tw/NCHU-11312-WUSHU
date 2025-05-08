@@ -141,7 +141,7 @@ onBeforeUnmount(() => {
                 :style="`background-image: url(${bgImage})`">
             </section>
 
-            <section id="intro" class="bg-white py-12 md:py-16 xl:py-20">
+            <section id="intro" class="bg-white py-12 md:py-16 xl:py-36">
                 <div class="max-w-7xl mx-auto px-4">
                     <!-- 主打課程標題 -->
                     <div class="text-center mb-8 md:mb-10 xl:mb-12">
@@ -498,7 +498,7 @@ onBeforeUnmount(() => {
 
 
                         <div
-                            class="w-full xl:w-[45%] bg-transparent sm:bg-lightGray px-5 py-8 sm:px-8 flex flex-col items-center mt-8 xl:mt-60 relative">
+                            class="w-full xl:w-[45%] bg-transparent sm:bg-lightGray px-5 py-24 sm:px-8 flex flex-col items-center mt-8 xl:mt-60 relative">
 
 
                             <h2
@@ -514,7 +514,7 @@ onBeforeUnmount(() => {
                             <div class="max-w-[800px] w-full">
                                 <p class="text-lg sm:text-xl xl:text-2xl leading-[1.8] mb-5">
                                     <span
-                                        class="text-3xl sm:text-4xl xl:text-4xl font-bold text-black">2008</span>年，當時文老師在內湖高中任教，
+                                        class="text-3xl sm:text-4xl xl:text-4xl font-bold font-inter text-black">2008</span>年，當時文老師在內湖高中任教，
                                     部分同事和學生知曉文老師傳承自古老的醫術，便欲向其學習，但老師當時並未想開課授徒，一方面是其老師們尚在世，
                                     二方面是覺得自己尚未成熟，故以五術研究社這種讀書會模式帶領眾人學習，不收學費為眾人解惑。
                                 </p>

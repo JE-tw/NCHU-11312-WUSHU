@@ -21,6 +21,7 @@ export default {
         instrument: ['Instrument Sans', ...defaultTheme.fontFamily.sans],
         jhenghei: ['"Microsoft JhengHei"', '微軟正黑體', 'sans-serif'],
         serif: ['"Noto Serif CJK TC"', 'serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',
