@@ -1,3 +1,95 @@
+<script setup>
+import { useCartStore } from '@/stores/cart'; //cart
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+
+import { usePage, Link } from '@inertiajs/vue3';
+const page = usePage();
+const user = computed(() => page.props.auth.user);
+
+const isMobileMenuOpen = ref(false);
+const isSearchActive = ref(false);
+
+// cart 數量顯示
+const cartStore = useCartStore();
+
+const cartCount = computed(() => cartStore.cartCount);
+
+// 追蹤視窗寬度
+const windowWidth = ref(window.innerWidth);
+
+// 裝置判斷 - 使用 tailwindcss 的斷點
+const isMobile = computed(() => windowWidth.value <= 600); // sm: 600px
+const isTablet = computed(() => windowWidth.value > 600 && windowWidth.value <= 1270); // xl: 1270px
+const isDesktop = computed(() => windowWidth.value > 1270); // 桌面版判斷
+
+// 開關手機版選單
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value;
+  // 如果開啟選單，則關閉搜尋
+  if (isMobileMenuOpen.value) {
+    isSearchActive.value = false;
+  }
+};
+
+// 開關搜尋功能
+const toggleSearch = () => {
+  isSearchActive.value = !isSearchActive.value;
+};
+
+// 視窗縮放時更新
+const handleResize = () => {
+  windowWidth.value = window.innerWidth;
+
+  // 超過平板版，關閉手機選單
+  if (windowWidth.value > 1270) {
+    isMobileMenuOpen.value = false;
+  }
+};
+
+// 點擊外面關閉手機選單和搜尋
+const handleClickOutside = (event) => {
+  const header = document.querySelector('header');
+  const menu = document.querySelector('.menu-dropdown');
+  const searchBtn = event.target.closest('button[aria-label="搜尋"]');
+  const searchInput = event.target.closest('input[placeholder="關鍵字"]');
+
+  // 關閉選單
+  if (isMobileMenuOpen.value && header && !header.contains(event.target) && menu && !menu.contains(event.target)) {
+    isMobileMenuOpen.value = false;
+  }
+
+  // 關閉搜尋 (但不包括點擊搜尋按鈕或搜尋框的情況)
+  if (isSearchActive.value && !searchBtn && !searchInput) {
+    const isClickInsideSearch = event.target.closest('.relative') !== null;
+    if (!isClickInsideSearch) {
+      isSearchActive.value = false;
+    }
+  }
+};
+
+// 生命週期
+onMounted(() => {
+  // 監聽視窗變動
+  window.addEventListener('resize', handleResize);
+  document.addEventListener('click', handleClickOutside);
+
+  handleResize();
+
+  cartStore.loadCartFromLocalStorage(); // 確保頁面刷新後還是有資料
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
+  document.removeEventListener('click', handleClickOutside);
+});
+
+watch([isMobile, isTablet], () => {
+  // 如果裝置類型改變，關閉搜尋和選單
+  isMobileMenuOpen.value = false;
+  isSearchActive.value = false;
+});
+</script>
+
 <template>
   <header class="fixed left-0 right-0 top-0 z-50 w-full shadow-md">
     <div
@@ -61,7 +153,8 @@
         </div>
 
         <!-- 登入註冊 -->
-        <a href="http://127.0.0.1:8000/wushu/MemberCenter" class="group flex h-8 items-center gap-1">
+        <!-- <a href="http://127.0.0.1:8000/wushu/MemberCenter" class="group flex h-8 items-center gap-1"> -->
+        <a href="" class="group flex h-8 items-center gap-1">
           <div class="relative h-8 w-8">
             <img src="@/images/user.svg" alt="登入" class="absolute inset-0 h-8 w-8 group-hover:hidden" />
             <img src="@/images/guser.svg" alt="登入懸停" class="absolute inset-0 hidden h-8 w-8 group-hover:block" />
@@ -69,8 +162,21 @@
           <span
             class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]"
           >
-            <!-- 登入註冊 -->
-            會員中心
+            <!-- 登入註冊 或是 會員中心 -->
+            <template v-if="user">
+              <Link
+                href="/wushu/MemberCenter"
+                class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]"
+                >會員中心</Link
+              >
+            </template>
+            <template v-else>
+              <Link
+                href="/login"
+                class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]"
+                >登入註冊</Link
+              >
+            </template>
           </span>
         </a>
       </div>
@@ -172,114 +278,33 @@
         服務與課程
       </a>
 
-      <a
+      <!-- <a
         href="http://127.0.0.1:8000/wushu/MemberCenter"
         class="flex items-center gap-2 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
         :class="isMobile ? 'justify-center' : 'justify-start'"
       >
-        <!-- 登入註冊 -->
-        會員中心
-      </a>
+      登入註冊
+    </a> -->
+      <!-- 登入註冊 -->
+      <template v-if="user">
+        <Link
+          href="/wushu/MemberCenter"
+          class="flex items-center gap-2 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
+          :class="isMobile ? 'justify-center' : 'justify-start'"
+          >會員中心</Link
+        >
+      </template>
+      <template v-else>
+        <Link
+          href="/login"
+          class="flex items-center gap-2 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
+          :class="isMobile ? 'justify-center' : 'justify-start'"
+          >登入註冊</Link
+        >
+      </template>
     </nav>
   </div>
 </template>
-
-<script setup>
-import { useCartStore } from '@/stores/cart'; //cart
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
-
-const isMobileMenuOpen = ref(false);
-const isSearchActive = ref(false);
-
-// cart 數量顯示
-const cartStore = useCartStore();
-
-const cartCount = computed(() => cartStore.cartCount);
-
-// 追蹤視窗寬度
-const windowWidth = ref(window.innerWidth);
-
-// 裝置判斷 - 使用 tailwindcss 的斷點
-const isMobile = computed(() => windowWidth.value <= 600); // sm: 600px
-const isTablet = computed(() => windowWidth.value > 600 && windowWidth.value <= 1270); // xl: 1270px
-const isDesktop = computed(() => windowWidth.value > 1270); // 桌面版判斷
-
-// 開關手機版選單
-const toggleMobileMenu = () => {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value;
-  // 如果開啟選單，則關閉搜尋
-  if (isMobileMenuOpen.value) {
-    isSearchActive.value = false;
-  }
-};
-
-// 開關搜尋功能
-const toggleSearch = () => {
-  isSearchActive.value = !isSearchActive.value;
-};
-
-// 視窗縮放時更新
-const handleResize = () => {
-  windowWidth.value = window.innerWidth;
-
-  // 超過平板版，關閉手機選單
-  if (windowWidth.value > 1270) {
-    isMobileMenuOpen.value = false;
-  }
-};
-
-// 點擊外面關閉手機選單和搜尋
-const handleClickOutside = (event) => {
-  const header = document.querySelector('header');
-  const menu = document.querySelector('.menu-dropdown');
-  const searchBtn = event.target.closest('button[aria-label="搜尋"]');
-  const searchInput = event.target.closest('input[placeholder="關鍵字"]');
-
-  // 關閉選單
-  if (isMobileMenuOpen.value && header && !header.contains(event.target) && menu && !menu.contains(event.target)) {
-    isMobileMenuOpen.value = false;
-  }
-
-  // 關閉搜尋 (但不包括點擊搜尋按鈕或搜尋框的情況)
-  if (isSearchActive.value && !searchBtn && !searchInput) {
-    const isClickInsideSearch = event.target.closest('.relative') !== null;
-    if (!isClickInsideSearch) {
-      isSearchActive.value = false;
-    }
-  }
-};
-
-// 生命週期
-onMounted(() => {
-  // 監聽視窗變動
-  window.addEventListener('resize', handleResize);
-  document.addEventListener('click', handleClickOutside);
-
-  handleResize();
-
-  cartStore.loadCartFromLocalStorage(); // 確保頁面刷新後還是有資料
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize);
-  document.removeEventListener('click', handleClickOutside);
-});
-
-watch([isMobile, isTablet], () => {
-  // 如果裝置類型改變，關閉搜尋和選單
-  isMobileMenuOpen.value = false;
-  isSearchActive.value = false;
-});
-
-// // cart 數量顯示
-// const cartStore = useCartStore();
-
-// const cartCount = computed(() => cartStore.cartCount);
-
-// onMounted(() => {
-//   cartStore.loadCartFromLocalStorage(); // 確保頁面刷新後還是有資料
-// });
-</script>
 
 <style scoped>
 .font-MicrosoftJhengHei {

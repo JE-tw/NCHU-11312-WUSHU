@@ -30,7 +30,7 @@ const submit = () => {
 <template>
   <div class="flex min-h-screen items-center justify-center bg-white">
     <div class="h-min-[400px] w-[468px] rounded-lg bg-grayWhite p-8 shadow-lg">
-      <form @submit.prevent="submit" >
+      <form @submit.prevent="submit">
         <div class="grid gap-5">
           <!-- 帳號 -->
           <div class="grid gap-2">
@@ -80,5 +80,4 @@ const submit = () => {
       </form>
     </div>
   </div>
-
 </template>
