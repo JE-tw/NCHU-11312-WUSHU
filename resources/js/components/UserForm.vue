@@ -42,6 +42,7 @@ const formatDate = (dateStr) => {
   const d = String(date.getDate()).padStart(2, '0');
   return `${y}/${m}/${d}`;
 };
+console.log(props.user);
 
 // 初始化表單（編輯模式）
 watch(
@@ -92,29 +93,30 @@ const submit = () => {
     preserveScroll: true,
     preserveState: true,
     onSuccess: () => {
-      errors.value = {}
-      emit('submitted')
+      errors.value = {};
+      emit('submitted');
     },
     onError: (err) => {
-      errors.value = err
-    }
-  })
+      errors.value = err;
+    },
+  });
 };
 // 顯示建立時間
 const formattedCreatedAt = computed(() => formatDate(props.user?.created_at));
 
-// flatpickr 設定
-const dateOptions = {
-  dateFormat: 'Y-m-d',
-  allowInput: true,
-};
-const timeOptions = {
-  enableTime: true,
-  noCalendar: true,
-  dateFormat: 'H:i',
-  time_24hr: true,
-  allowInput: true,
-};
+// // flatpickr 設定
+// const dateOptions = {
+//   dateFormat: 'Y-m-d',
+//   allowInput: true,
+// };
+// const timeOptions = {
+//   enableTime: true,
+//   noCalendar: true,
+//   dateFormat: 'H:i',
+//   time_24hr: true,
+//   defaultDate: null, // 不自動套預設時間
+//   allowInput: true,
+// };
 </script>
 
 <template>
@@ -145,15 +147,15 @@ const timeOptions = {
 
     <!-- 出生日期與時間 -->
     <div class="flex gap-2">
-      <Flatpickr
+      <input
         v-model="form.birth_date"
-        :config="dateOptions"
+        type="date"
         placeholder="出生日期"
         class="input mt-4 block w-full rounded-md border border-gray-300 bg-transparent px-3 py-3 text-sm"
       />
-      <Flatpickr
+      <input
         v-model="form.birth_time"
-        :config="timeOptions"
+        type="time"
         placeholder="出生時間"
         class="input mt-4 block w-full rounded-md border border-gray-300 bg-transparent px-3 py-3 text-sm"
       />

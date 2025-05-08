@@ -85,7 +85,7 @@ class UserInfoController extends Controller
     public function update(Request $request, User $user)
     {
         // 檢查收到的所有資料
-        Log::debug('Received payload: ', $request->all());
+        // dd($request->all());
         try {
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
@@ -102,26 +102,31 @@ class UserInfoController extends Controller
             // 將空字串轉為 null，避免寫入資料庫錯誤
             $validated['birth_date'] = $validated['birth_date'] ?: null;
             $validated['birth_time'] = $validated['birth_time'] ?: null;
+            // 格式化 birth_time，將時間轉換為 HH:mm:ss 格式
+            if ($validated['birth_time']) {
+                $validated['birth_time'] = date('H:i:s', strtotime($validated['birth_time']));
+            }
             // 如果有傳遞 status，則轉為數字；若沒有，則預設為 1 (啟用)
             $validated['status'] = $validated['status'] !== null ? (int) $validated['status'] : 1;
+            // dd($validated); // 在這裡查看經過驗證後的資料是否正確
 
             // 更新 users 資料表
             $user->update([
                 'name' => $validated['name'],
             ]);
 
-             // 更新 user_info 資料
-        $user->userInfo()->updateOrCreate(
-            [], // 可以用來找到存在的 user_info (例如可以依 id 或關聯條件)
-            [
-                'phone' => $validated['phone'],
-                'birth_date' => $validated['birth_date'],
-                'birth_time' => $validated['birth_time'],
-                'birth_city' => $validated['birth_city'],
-                'address' => $validated['address'],
-                'status' => $validated['status'],
-            ]
-        );
+            // 更新 user_info 資料
+            $user->userInfo()->updateOrCreate(
+                [], // 可以用來找到存在的 user_info (例如可以依 id 或關聯條件)
+                [
+                    'phone' => $validated['phone'],
+                    'birth_date' => $validated['birth_date'],
+                    'birth_time' => $validated['birth_time'],
+                    'birth_city' => $validated['birth_city'],
+                    'address' => $validated['address'],
+                    'status' => $validated['status'],
+                ]
+            );
 
             return redirect()->back()->with('success', '會員資料更新成功');
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -137,6 +142,11 @@ class UserInfoController extends Controller
     {
         $user->loadMissing('userInfo');
 
+        // 處理 birth_time 顯示格式為 HH:mm
+        if ($user->userInfo && $user->userInfo->birth_time) {
+            $user->userInfo->birth_time = \Carbon\Carbon::parse($user->userInfo->birth_time)->format('H:i');
+        }
+        // dd($user->userInfo->birth_time);
         return Inertia::render('backend/UserEdit', [
             'user' => $user,
             'userInfo' => $user->userInfo,

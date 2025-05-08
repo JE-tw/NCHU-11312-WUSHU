@@ -37,7 +37,7 @@ class UserInfo extends Model
 
 	protected $casts = [
 		'birth_date' => 'date:Y-m-d',
-		'birth_time' => 'datetime',
+		// 'birth_time' => 'datetime',
 		'status' => 'int',
 		'user_id' => 'int'
 	];
