@@ -436,7 +436,11 @@ function goToIntro(id) {
       </div>
       <!-- 登出 -->
       <div v-else-if="tab === 'logout'" class="flex items-center justify-center py-20">
-        <button class="rounded-md bg-red-600 px-6 py-3 text-white transition hover:bg-red-700">確認登出</button>
+        <!-- 登出 -->
+    <Link href="/logout" method="post" as="button" class="rounded-md bg-red-600 px-6 py-3 text-white transition hover:bg-red-700">
+      確認登出
+  </Link>
+        <!-- <button class="rounded-md bg-red-600 px-6 py-3 text-white transition hover:bg-red-700">確認登出</button> -->
       </div>
     </div>
   </div>
