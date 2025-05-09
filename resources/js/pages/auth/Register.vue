@@ -5,10 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthBase from '@/layouts/AuthLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, router } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import Swal from 'sweetalert2';
 
 const form = useForm({
   name: '',
@@ -22,12 +23,43 @@ const form = useForm({
   password_confirmation: '',
 });
 
+// 送出按鈕
+// const submit = () => {
+//   form.post(route('register'), {
+//     onFinish: () => form.reset('password', 'password_confirmation'),
+//   });
+// };
 const submit = () => {
-  form.post(route('register'), {
-    onFinish: () => form.reset('password', 'password_confirmation'),
+  Swal.fire({
+    title: '確定要送出註冊申請嗎？',
+    text: '建立帳號後即可加入武術研究社會員中心，享有完整會員功能。',
+    icon: 'warning',
+    showCancelButton: true,
+    reverseButtons: true,
+    confirmButtonColor: '#1F9C95',
+    cancelButtonColor: '#B5B5B5',
+    confirmButtonText: '確定送出',
+    cancelButtonText: '取消',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      form.post(route('register'), {
+        onSuccess: () => {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '恭喜！您已註冊成功！',
+            text:"已為您登入會員 🎉",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        },
+        onFinish: () => form.reset('password', 'password_confirmation'),
+      });
+    }
   });
 };
 
+// 跳轉註冊頁
 const goLogin = () => {
   router.get('/login');
 };
@@ -65,7 +97,7 @@ const goLogin = () => {
       </button>
     </div>
     <!-- 註冊表單 -->
-    <form @submit.prevent="submit" class="flex w-[468px] flex-col gap-6 bg-grayWhite p-8">
+    <form @submit.prevent="submit" class="flex w-[468px] flex-col rounded-lg bg-grayWhite p-8 shadow-lg">
       <div class="grid gap-6">
         <div class="grid gap-2">
           <Label for="name">姓名</Label>
@@ -128,7 +160,7 @@ const goLogin = () => {
           <InputError :message="form.errors.password_confirmation" />
         </div>
 
-        <Button type="submit" class="mt-2 w-full bg-blueGreen" :disabled="form.processing">
+        <Button type="submit" class="mb-4 mt-2 w-full bg-blueGreen" :disabled="form.processing">
           <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
           建立帳號
         </Button>

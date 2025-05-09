@@ -19,7 +19,7 @@ const changePage = (page) => {
 </script>
 
 <template>
-  <div class="mx-auto max-w-3xl bg-white rounded  border border-gray-200 p-6">
+  <div class="mx-auto max-w-3xl bg-white  border border-gray-200 p-6">
     <div class="flex justify-between">
       <h2 class="mb-6 text-2xl font-bold">購買紀錄</h2>
       <h1 class="text-md mb-0 font-bold text-gray-500">僅保留6個月內資料</h1>

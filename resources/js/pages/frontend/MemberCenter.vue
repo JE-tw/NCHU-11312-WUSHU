@@ -83,7 +83,7 @@ function goToIntro(id) {
 const logOut = () => {
   Swal.fire({
     title: '確定要登出嗎?',
-    text: '五術研究社',
+    text: '練功不打卡，會退步喔！下次記得再回來！',
     icon: 'warning',
     showCancelButton: true,
     reverseButtons: true,
@@ -94,13 +94,13 @@ const logOut = () => {
   }).then((result) => {
     if (result.isConfirmed) {
       router.post('/logout');
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: '登出成功',
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      // Swal.fire({
+      //   position: 'top-end',
+      //   // icon: 'success',
+      //   title: '登出成功',
+      //   showConfirmButton: false,
+      //   timer: 1500,
+      // });
     }
   });
 };
@@ -155,18 +155,7 @@ const logOut = () => {
       >
         購買記錄
       </button>
-
       <div class="mx-2 h-10 w-px bg-gray-300"></div>
-
-      <!-- <button
-        @click="tab = 'logout'"
-        :class="[
-          tab === 'logout' ? activeTopTabClass : inactiveTopTabClass,
-          'tab-button whitespace-nowrap rounded-md px-12 py-3 text-2xl transition-colors duration-300 focus:outline-none',
-        ]"
-      >
-        登出
-      </button> -->
       <button
         @click="logOut"
         type="button"
@@ -184,7 +173,7 @@ const logOut = () => {
 
       <!-- 個人資料 -->
       <div v-if="tab === 'personalinfo'" class="flex flex-col items-center gap-4">
-        <div class="w-full max-w-md overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
+        <div class="w-full max-w-md overflow-hidden  border border-gray-200 bg-white shadow-custom">
           <div class="p-8">
             <!-- 個人資料表單 -->
             <form class="space-y-6">
@@ -309,7 +298,7 @@ const logOut = () => {
         </div>
 
         <!-- 修改密碼區塊開始 -->
-        <div class="w-full max-w-md overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
+        <div class="w-full max-w-md overflow-hidden  border border-gray-200 bg-white shadow-custom">
           <div class="p-8">
             <h3 class="mb-6 text-2xl font-bold">修改密碼</h3>
             <p class="mb-4 text-gray-400">至少6個字元，不可有空白與特殊符號。需英數混合</p>
@@ -373,7 +362,7 @@ const logOut = () => {
         </div>
         <div v-else>
           <div class="course-grid">
-            <div v-for="course in props.courses" :key="course.id" class="course-card">
+            <div v-for="course in props.courses" :key="course.id" class="course-card shadow-custom">
               <h3 class="mb-2 break-words text-xl font-bold">
                 {{ course.name }}
               </h3>
@@ -384,7 +373,7 @@ const logOut = () => {
                 <span class="rounded-full bg-purple-200 px-3 py-1 text-sm text-purple-800">
                   {{ course.category_name }}
                 </span>
-                <button @click="goToIntro(course.id)" class="rounded bg-teal-600 px-4 py-2 text-sm text-white transition hover:bg-teal-700">
+                <button @click="goToIntro(course.id)" class="rounded bg-teal-600 px-4 py-2 text-sm text-white transition hover:bg-teal-500 hover:scale-125 duration-300">
                   前往課程
                 </button>
               </div>
@@ -396,7 +385,7 @@ const logOut = () => {
       <!-- 購買記錄 -->
       <div v-else-if="tab === 'purchaserecord'" class="w-full px-4 py-8 text-gray-800">
         <!-- 組件 購買紀錄表格 -->
-        <MemberOrder :columns="columns" :items="items" :current-page="currentPage2" :total-pages="totalPages2" @pageChange="handlePageChange">
+        <MemberOrder class="shadow-custom" :columns="columns" :items="items" :current-page="currentPage2" :total-pages="totalPages2" @pageChange="handlePageChange">
           <!-- 購買項目插槽 -->
           <template #cell(order_items)="{ item }">
             <div v-for="i in item.order_items" :key="i.id" class="border-b border-gray-300 py-1 last:border-0">
@@ -449,10 +438,7 @@ input[type='date']:focus::-webkit-datetime-edit {
 
 .course-card {
   border: 1px solid #e5e7eb;
-  /* gray-200 */
-
   padding: 1.25rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   background-color: white;
 }
 
