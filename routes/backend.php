@@ -6,13 +6,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\ChapterController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\UserInfoController;
 
 // 後端頁面
 
-Route::prefix('wushu/admin')->middleware(['auth','admin_only'])->group(function () {
+Route::prefix('wushu/admin')->middleware(['auth', 'admin_only'])->group(function () {
     // 後台首頁
     Route::get('/', function () {
         return Inertia::render('Dashboard');
@@ -30,7 +31,7 @@ Route::prefix('wushu/admin')->middleware(['auth','admin_only'])->group(function 
         Route::get('/', [UserInfoController::class, 'index'])->name('admin.user.list');
         // 新增
         Route::post('/', [UserInfoController::class, 'create'])->name('admin.user.create');
-        // 編輯（
+        // 編輯
         Route::get('/{user}/edit', [UserInfoController::class, 'edit'])->name('admin.user.edit');
         // 更新
         Route::put('/{user}', [UserInfoController::class, 'update'])->name('admin.user.update');
@@ -64,7 +65,12 @@ Route::prefix('wushu/admin')->middleware(['auth','admin_only'])->group(function 
     // 子課程管理
     Route::prefix('course')->group(function () {
         Route::get('/', [CourseController::class, 'index'])->name('admin.course.list');
+        Route::get('/{course}/edit', [CourseController::class, 'edit'])->name('admin.course.edit');
+        Route::put('/{course}', [CourseController::class, 'update'])->name('admin.course.update');
     });
+
+    Route::put('/admin/chapters/{chapter}', [ChapterController::class, 'update']);
+    Route::delete('/admin/chapters/{chapter}', [ChapterController::class, 'destroy']);
 });
 
 // //登入頁

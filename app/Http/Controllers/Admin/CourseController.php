@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Inertia\Inertia;
 use App\Models\Course;
+use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Traits\HandlesTableFilters;
+use App\Http\Controllers\Controller;
 
 
 class CourseController extends Controller
@@ -21,7 +22,7 @@ class CourseController extends Controller
         $query = Course::with('category');
         // 動態處理 sortKey，如果前端傳 category.name，就改成 category_id 排序
         $sortKey = $request->input('sort');
-        $sortDirection = $request->input('direction', 'asc');
+        $sortDirection = $request->input('direction', 'desc');
         if ($sortKey === 'category_name') {
             // 用 category_id 排序
             $request->merge([
@@ -33,7 +34,7 @@ class CourseController extends Controller
         $courses = $this->applyFiltersAndPaginate($request, $query, [
             'allowedSorts' => ['is_featured', 'price', 'category_id'],
             'defaultSort' => 'is_featured',
-            'defaultDirection' => 'asc',
+            'defaultDirection' => 'desc',
             'perPage' => 10,
         ]);
         // 在資料集合中添加 category_name 欄位，並避免在 SQL 排序中使用該欄位
@@ -47,71 +48,81 @@ class CourseController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        // 驗證請求
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|integer',
+        $data = $request->validate([
+            'title' => 'required|string|max:30',
             'category_id' => 'required|exists:categories,id',
-            'is_featured' => 'required|boolean',
-            'featured_image' => 'nullable|image|max:2048', // 最大檔案大小 2MB
+            'price' => 'required|integer|min:0',
+            'list_intro' => 'required|string|max:36',
+            'detail_intro' => 'required|string|max:500',
+            'is_featured' => 'boolean',
         ]);
 
-        // 處理圖片上傳
-        if ($request->hasFile('featured_image')) {
-            $imagePath = $request->file('featured_image')->store('course_images', 'public'); // 儲存在 public 目錄
-            $validated['featured_image'] = $imagePath;
+        // 如果要設為主打課程，確認目前主打課程數量
+        if (!empty($data['is_featured'])) {
+            $featuredCount = Course::where('is_featured', 1)->count();
+            if ($featuredCount >= 2) {
+                return redirect()->back()->withErrors([
+                    'is_featured' => '主打課程最多只能有兩堂',
+                ]);
+            }
         }
 
-        // 儲存課程資料
-        Course::create($validated);
+        Course::create([
+            'name' => $data['title'],
+            'category_id' => $data['category_id'],
+            'price' => $data['price'],
+            'introduction' => $data['list_intro'],
+            'detail' => $data['detail_intro'],
+            'is_featured' => $data['is_featured'] ? 1 : 0,
+        ]);
 
-        return redirect()->route('admin.course.list')->with('success', '課程已成功新增');
+        return redirect()->route('admin.course.list')->with('success', '課程已成功新增！');
     }
 
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Course $course)
     {
-        //
-    }
+        $categories = Category::all();
+         $chapters = $course->chapters;
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return Inertia::render('backend/CourseEdit', [
+            'course' => $course,
+            'categories' => $categories,
+            'chapters' => $chapters,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Course $course)
     {
-        //
-    }
+        $data = $request->validate([
+            'name' => 'required|string|max:30',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|integer|min:0',
+            'list_intro' => 'required|string|max:36',
+            'detail_intro' => 'required|string|max:500',
+            'is_featured' => 'boolean',
+        ]);
+        // 如果即將標記為主打課程，且原本不是主打，才進行檢查
+        if ($data['is_featured'] && !$course->is_featured) {
+            $featuredCount = Course::where('is_featured', 1)->count();
+            if ($featuredCount >= 2) {
+                return redirect()->back()->withErrors(['is_featured' => '主打課程最多只能有兩堂']);
+            }
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $course->update([
+            'name' => $data['name'],
+            'category_id' => $data['category_id'],
+            'price' => $data['price'],
+            'introduction' => $data['list_intro'],
+            'detail' => $data['detail_intro'],
+            'is_featured' => $data['is_featured'] ? 1 : 0,
+        ]);
+
+        return redirect()->back()->with('success', '課程已成功更新！');
     }
 }

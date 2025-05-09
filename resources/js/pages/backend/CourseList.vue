@@ -15,6 +15,9 @@ const columns = [
   { label: '簡介', key: 'introduction' },
   { label: '操作', key: 'actions' },
 ];
+const editCourse = (courseId) => {
+  router.visit(route('admin.course.edit', courseId));
+};
 </script>
 
 <template>
@@ -34,11 +37,15 @@ const columns = [
         @pageChange="handlePageChange"
         @sortChange="handleSortChange"
       >
+        <!-- 主打課程欄位插槽 -->
+        <template #cell(is_featured)="{ item }">
+          <span>{{ item.is_featured ? '是' : '否' }}</span>
+        </template>
         <!-- 操作欄插槽 -->
         <template #cell(actions)="{ item }">
           <div class="flex justify-center gap-2">
-            <button type="button" class="cursor-pointer border px-2" @click="deleteBtn(item.id)">刪除</button>
-            <button type="button" class="cursor-pointer border px-2" @click="openEditModal(item)">編輯</button>
+            <!-- <button type="button" class="cursor-pointer border px-2" @click="deleteBtn(item.id)">刪除</button> -->
+            <button type="button" class="cursor-pointer border px-2" @click="editCourse(item.id)">編輯</button>
           </div>
         </template>
       </TableWithPagination>
