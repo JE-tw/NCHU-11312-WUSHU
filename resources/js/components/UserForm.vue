@@ -218,7 +218,7 @@ const formattedCreatedAt = computed(() => formatDate(props.user?.created_at));
     </div>
 
     <div class="mt-4 flex justify-end gap-2">
-      <button @click="$emit('close')" class="rounded border border-gray-300 px-4 py-2">取消</button>
+      <!-- <button @click="$emit('close')" class="rounded border border-gray-300 px-4 py-2">取消</button> -->
       <button @click="submit" class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
         {{ user ? '更新' : '新增' }}
       </button>
