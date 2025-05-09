@@ -1,11 +1,11 @@
 <script setup>
 import { ref, computed, watchEffect } from 'vue';
-import UserCreateModal from '@/Components/UserCreateModal.vue';
+import UserCreateModal from '@/components/UserCreateModal.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { usePage, router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
-import TableWithPagination from '@/Components/TableWithPagination.vue';
+import TableWithPagination from '@/components/TableWithPagination.vue';
 import { useTableController } from '@/composables/useTableController';
 
 // // Inertia 資料

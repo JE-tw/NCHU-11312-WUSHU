@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/layouts/AppLayout.vue';
 import { usePage, router } from '@inertiajs/vue3';
-import TableWithPagination from '@/Components/TableWithPagination.vue';
+import TableWithPagination from '@/components/TableWithPagination.vue';
 import { useTableController } from '@/composables/useTableController';
 
 // const courses = page.props.courses;

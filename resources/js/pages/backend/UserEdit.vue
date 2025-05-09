@@ -8,7 +8,7 @@ import BaseInput from '@/components/BaseInput.vue';
 import UserOrdersTable from '@/components/UserOrdersTable.vue';
 
 import { computed } from 'vue';
-import TableWithPagination from '@/Components/TableWithPagination.vue';
+import TableWithPagination from '@/components/TableWithPagination.vue';
 import { useTableController } from '@/composables/useTableController';
 
 // 接收 props

@@ -11,7 +11,7 @@ defineProps({
   onSortChange: Function,
 });
 
-import TableWithPagination from '@/Components/TableWithPagination.vue';
+import TableWithPagination from '@/components/TableWithPagination.vue';
 
 const columns = [
   { label: '日期', key: 'created_at', sortable: true },

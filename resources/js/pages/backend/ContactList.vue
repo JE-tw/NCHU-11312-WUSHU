@@ -2,9 +2,9 @@
 import { ref, computed, watchEffect } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { usePage, router } from '@inertiajs/vue3';
-import ContactDetailModal from '@/Components/ContactDetailModal.vue';
+import ContactDetailModal from '@/components/ContactDetailModal.vue';
 import { useConfirmDialog } from '@/composables/useConfirmDialog';
-import TableWithPagination from '@/Components/TableWithPagination.vue';
+import TableWithPagination from '@/components/TableWithPagination.vue';
 import { useTableController } from '@/composables/useTableController';
 
 // const contacts = page.props.contacts;
