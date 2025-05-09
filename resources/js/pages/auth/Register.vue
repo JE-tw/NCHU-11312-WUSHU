@@ -113,25 +113,25 @@ const goLogin = () => {
 
         <div class="grid gap-2">
           <Label for="birth_date">出生日期</Label>
-          <Input id="birth_date" type="date" v-model="form.birth_date" />
+          <Input id="birth_date" type="date" v-model="form.birth_date" required/>
           <InputError :message="form.errors.birth_date" />
         </div>
 
         <div class="grid gap-2">
           <Label for="birth_time">出生時間</Label>
-          <Input id="birth_time" type="time" v-model="form.birth_time" />
+          <Input id="birth_time" type="time" v-model="form.birth_time" required />
           <InputError :message="form.errors.birth_time" />
         </div>
 
         <div class="grid gap-2">
           <Label for="birth_city">出生城市</Label>
-          <Input id="birth_city" type="text" v-model="form.birth_city" placeholder="出生城市" />
+          <Input id="birth_city" type="text" v-model="form.birth_city" placeholder="出生城市" required/>
           <InputError :message="form.errors.birth_city" />
         </div>
 
         <div class="grid gap-2">
           <Label for="address">地址</Label>
-          <Input id="address" type="text" v-model="form.address" placeholder="地址" />
+          <Input id="address" type="text" v-model="form.address" placeholder="地址" required/>
           <InputError :message="form.errors.address" />
         </div>
 
