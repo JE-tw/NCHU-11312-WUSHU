@@ -100,7 +100,7 @@ const goRegister = () => {
                 placeholder="輸入密碼"
               />
               <InputError :message="form.errors.password" />
-              <TextLink v-if="canResetPassword" :href="route('password.request')" class="text-sm" :tabindex="5"> 忘記密碼? </TextLink>
+              <!-- <TextLink v-if="canResetPassword" :href="route('password.request')" class="text-sm" :tabindex="5"> 忘記密碼? </TextLink> -->
             </div>
 
             <!-- <div class="flex items-center justify-between" :tabindex="3">
