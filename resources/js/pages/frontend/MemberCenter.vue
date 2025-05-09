@@ -369,9 +369,9 @@ const logOut = () => {
           v-if="props.courses.length === 0"
           class="bg-white px-2 py-16 text-center text-[14px] text-gray-600 shadow-custom sm:px-32 sm:text-[20px] xl:text-[24px]"
         >
-            若您已購買課程，我們將儘速為您開通權限！ 🫶 
+          若您已購買課程，我們將儘速為您開通權限！ 🫶
         </div>
-        <div v-else class="course-grid">
+        <div v-else>
           <div class="course-grid">
             <div v-for="course in props.courses" :key="course.id" class="course-card">
               <h3 class="mb-2 break-words text-xl font-bold">
@@ -382,7 +382,7 @@ const logOut = () => {
               </p>
               <div class="flex items-center justify-between">
                 <span class="rounded-full bg-purple-200 px-3 py-1 text-sm text-purple-800">
-                  {{ course.id }}
+                  {{ course.category_name }}
                 </span>
                 <button @click="goToIntro(course.id)" class="rounded bg-teal-600 px-4 py-2 text-sm text-white transition hover:bg-teal-700">
                   前往課程

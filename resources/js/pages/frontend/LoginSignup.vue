@@ -9,6 +9,8 @@ const tab = ref('signup')
 const activeTabClass = 'bg-[#1F9C95] text-white border border-[#1F9C95]'
 // 沒選到的按鈕樣式
 const inactiveTabClass = 'bg-white text-[#1F9C95] border border-[#1F9C95]'
+
+
 </script>
 
 
@@ -16,7 +18,7 @@ const inactiveTabClass = 'bg-white text-[#1F9C95] border border-[#1F9C95]'
   <header class="flex h-[234px] w-full flex-col items-center bg-black sm:h-[303px] xl:h-[444px]">
     <p
       class="pt-[120px] font-serif text-[32px]/[46px] font-bold text-grayWhite sm:pt-[160px] sm:text-[52px]/[75px] xl:pt-[224px] xl:text-[64px]/[92px]">
-      登入註冊
+      會員登入
     </p>
     <span class="w-[120px] border-b-2 border-grayWhite sm:w-[300px]"></span>
   </header>
