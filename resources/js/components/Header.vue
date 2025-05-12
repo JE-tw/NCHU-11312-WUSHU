@@ -113,7 +113,7 @@ watch([isMobile, isTablet], () => {
       <!-- 電腦版選單 -->
       <div v-if="!isTablet && !isMobile" class="flex justify-center">
         <nav class="flex cursor-pointer items-center gap-4 font-['Microsoft_JhengHei'] text-[24px] font-bold leading-[1] tracking-normal text-black">
-          <a href="http://127.0.0.1:8000/wushu#about-section" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]"> 關於站主 </a>
+          <a href="http://127.0.0.1:8000/#about-section" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]"> 關於站主 </a>
           <a href="http://127.0.0.1:8000/wushu/ServiceCourse" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]"> 服務與課程 </a>
         </nav>
       </div>

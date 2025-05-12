@@ -5,20 +5,20 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\WushuController;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome');
-})->name('home');
+// Route::get('/', function () {
+//     return Inertia::render('Welcome');
+// })->name('home');
 
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+// 首頁
+Route::get('/', [WushuController::class, 'home'])->name('wushu.home');
 
 
 Route::prefix('wushu')->group(function () {
-    // 首頁
-    Route::get('/', [WushuController::class, 'home'])->name('wushu.home');
 
     // 服務與課程頁 (代表/ServiceCourse會連到wushuController裡面的list)
     Route::get('/ServiceCourse', [WushuController::class, 'list'])->name('wushu.list');
