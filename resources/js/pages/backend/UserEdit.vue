@@ -70,7 +70,7 @@ const columns = [
 
 <template>
   <AppLayout title="會員管理">
-    <nav class="buserInfo-b mb-5 flex w-full items-center gap-3 border-b border-darkGray py-2 px-12">
+    <nav class="buserInfo-b mb-5 flex w-full items-center gap-3 border-b  py-2 px-12">
       <button type="button" class="rounded-sm bg-darkGray px-4 py-2 text-white hover:bg-stone-600" @click="goBack">返回</button>
       <h1 class="text-2xl font-bold">會員管理 > {{ user.name }}</h1>
     </nav>

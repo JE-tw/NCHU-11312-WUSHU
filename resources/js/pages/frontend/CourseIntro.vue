@@ -20,7 +20,7 @@ function handleClick(item) {
 // ========
 
 const props = defineProps({
-  course:  Array | Object,
+  course: Array | Object,
   isAccessible: Boolean,
 });
 
@@ -70,7 +70,7 @@ const hasPurchased = computed(() => props.isAccessible);
       <p class="text-[16px] text-black sm:text-[24px]">
         {{ course.detail }}
       </p>
-      <p class="mb-[20px] mt-[30px] text-[16px]/[28px] font-bold text-blueGreen sm:mb-[24px] sm:mt-[40px] sm:text-[24px]/[32px]">
+      <p v-if="!hasPurchased" class="mb-[20px] mt-[30px] text-[16px]/[28px] font-bold text-blueGreen sm:mb-[24px] sm:mt-[40px] sm:text-[24px]/[32px]">
         付費課程，將於購買後解鎖。
       </p>
       <!-- 課程列表 -->
@@ -78,25 +78,13 @@ const hasPurchased = computed(() => props.isAccessible);
       <ExpandCard v-for="item in course.chapters" :key="item.id" :name="item.name" :introduction="item.introduction">
         <!-- 傳入插槽 CardButton 插槽放 -->
         <div @click="handleClick(item)" class="rounded-full" :class="hasPurchased ? 'bg-blueGreen' : 'bg-darkGray'">
-          <CardButton 
-          :hideText="false" 
-          :cartShorter="false"
-          :isUnlocked="hasPurchased"
-          >
+          <CardButton :hideText="false" :cartShorter="false" :isUnlocked="hasPurchased">
             <!-- 按鈕icon -->
             <template #icon>
               <!-- 播放 -->
-              <img 
-                v-if="hasPurchased" 
-                :src="play" 
-                alt="play" 
-                class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
+              <img v-if="hasPurchased" :src="play" alt="play" class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
 
-              <img 
-                v-if="!hasPurchased" 
-                :src="lock" 
-                alt="lock" 
-                class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
+              <img v-if="!hasPurchased" :src="lock" alt="lock" class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
             </template>
           </CardButton>
         </div>

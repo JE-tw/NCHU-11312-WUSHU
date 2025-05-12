@@ -96,7 +96,7 @@ const submit = () => {
 </script>
 
 <template>
-  <div class="w-full space-y-4">
+  <div class="w-full space-y-4 px-12">
     <!-- 標題與類別 -->
     <div class="flex gap-2">
       <BaseInput id="name" label="課程標題" class="flex-1" v-model="form.name" />
@@ -153,7 +153,7 @@ const submit = () => {
     </div>
 
     <div class="flex justify-end gap-2">
-      <button class="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700" @click="submit">
+      <button class="rounded bg-blueGreen px-4 py-2 text-white hover:bg-teal-600" @click="submit">
         {{ course ? '更新' : '新增' }}
       </button>
     </div>

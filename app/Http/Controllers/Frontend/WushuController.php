@@ -136,7 +136,7 @@ class WushuController extends Controller
             $order = Order::create([
                 'user_id' => $user->id,
                 'total_amount' => $totalAmount,
-                'status' => 0, // 初始狀態，代表「尚未付款」
+                'status' => 1, // 初始狀態，代表「等待客服確認款項」
                 'remittance_date' => $remittance['remittance_date'],
                 'remittance_amount' => $remittance['remittance_amount'],
                 'remittance_account_last5' => $remittance['remittance_account_last5'],

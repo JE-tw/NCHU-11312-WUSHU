@@ -76,11 +76,11 @@ function goBack() {
 
 <template>
   <AppLayout title="新增子課程">
-    <nav class="mb-4 flex w-full items-center gap-3 border-b p-2">
+    <nav class="mb-4 flex w-full items-center gap-3 border-b py-2  px-12">
       <button type="button" class="rounded-sm bg-darkGray px-4 py-2 text-white" @click="goBack">返回</button>
       <h1 class="text-2xl font-bold">新增子課程</h1>
     </nav>
-    <div class="p-5">
+    <div class="py-5">
       <CourseForm :course="course" :categories="categories" />
     </div>
   </AppLayout>

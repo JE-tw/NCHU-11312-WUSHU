@@ -126,8 +126,8 @@ const submit = () => {
 
       <!-- 按鈕 -->
       <div class="flex justify-end gap-2 border-t p-2">
-        <button type="button" @click="$emit('close')" class="rounded border bg-white px-4 py-2 text-gray-700">取消</button>
-        <button type="button" @click="submit" class="rounded bg-blue-600 px-4 py-2 text-white">{{ props.service ? '儲存' : '新增' }}</button>
+        <button type="button" @click="$emit('close')" class="rounded border bg-white px-4 py-2 text-gray-700 hover:bg-gray-300">取消</button>
+        <button type="button" @click="submit" class="rounded bg-blueGreen hover:bg-teal-600 px-4 py-2 text-white">{{ props.service ? '儲存' : '新增' }}</button>
       </div>
     </div>
   </div>

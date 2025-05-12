@@ -54,18 +54,18 @@ const toggleSort = (key) => {
 </script>
 
 <template>
-  <div class="pb-8">
+  <div>
     <!-- 搜尋框 -->
     <div v-if="showSearch" class="mb-4">
       <input v-model="search" :placeholder="searchPlaceholder || '搜尋...'" class="rounded-md border px-3 py-1" />
-      <button @click="onSearch" class="ml-2 rounded bg-gray-700 px-2 py-1 text-white hover:bg-gray-900">搜尋</button>
+      <button @click="onSearch" class="ml-2 rounded bg-gray-700 px-2 py-1 text-white">搜尋</button>
     </div>
 
     <!-- 表格 -->
-    <table class="w-full table-auto border">
+    <table class="w-full table-auto border ">
       <thead class="bg-gray-100">
         <tr>
-          <th v-for="col in columns" :key="col.key" class="cursor-pointer border p-2" @click="col.sortable && toggleSort(col.key)">
+          <th v-for="col in columns" :key="col.key" class="bg-darkGray text-white cursor-pointer border p-2" @click="col.sortable && toggleSort(col.key)">
             {{ col.label }}
             <span v-if="col.sortable">
               <span v-if="currentSortKey === col.key">

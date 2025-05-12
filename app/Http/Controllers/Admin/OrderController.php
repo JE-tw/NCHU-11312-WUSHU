@@ -112,7 +112,7 @@ class OrderController extends Controller
             $order = Order::create([
                 'user_id' => $user->id,
                 'total_amount' => $totalAmount,
-                'status' => 0, // 初始狀態可改成你想要的
+                'status' => 1, // 初始狀態可改成你想要的
                 'remittance_date' => $remittance['remittance_date'],
                 'remittance_amount' => $remittance['remittance_amount'],
                 'remittance_account_last5' => $remittance['remittance_account_last5'],

@@ -349,7 +349,7 @@ const handleSubmit = () => {
             <label
               for="date"
               :class="[
-                'absolute left-0 top-[50%] ml-[16px] -translate-y-[80%] bg-white text-[18px] text-darkGray',
+                'absolute pr-5 left-0 top-[50%] ml-[16px] -translate-y-[80%] bg-white text-[18px] text-darkGray',
                 order.remittance_date ? 'hidden' : 'block',
               ]"
               >匯款日期</label

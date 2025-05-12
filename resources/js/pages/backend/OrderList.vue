@@ -24,7 +24,7 @@ const editOrder = (orderId) => {
 <template>
   <AppLayout :breadcrumbs="breadcrumbs">
     <h1 class="mb-12 text-2xl font-bold py-4 px-12 shadow fixed bg-white w-full">付款記錄管理</h1>
-    <div class=" px-12 mt-20">
+    <div class=" px-12 mt-20  mb-8">
       <TableWithPagination
         :columns="columns"
         :items="items"

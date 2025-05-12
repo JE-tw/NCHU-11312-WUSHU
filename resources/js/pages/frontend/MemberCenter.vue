@@ -349,7 +349,7 @@ const logOut = () => {
           v-if="props.courses.length === 0"
           class="bg-white px-2 py-16 text-center text-[14px] text-gray-600 shadow-custom sm:px-32 sm:text-[20px] xl:text-[24px]"
         >
-          若您已購買課程，我們將儘速為您開通權限！ 🫶
+          若您已購買課程，我們將儘速為您開通權限！ 
         </div>
         <div v-else>
           <div class="course-grid">

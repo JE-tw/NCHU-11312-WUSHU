@@ -68,7 +68,7 @@ watchEffect(() => {
   <AppLayout :breadcrumbs="breadcrumbs">
     <h1 class="fixed mb-12 w-full bg-white px-12 py-4 text-2xl font-bold shadow">會員管理</h1>
     <div class="mt-20 px-12">
-      <button type="button" class="mb-4 rounded border bg-gray-100 border-stone-400 px-4 py-2 hover:bg-darkGray hover:text-white" @click="openModal">新增會員</button>
+      <button type="button" class="mb-4 rounded border  hover:bg-stone-700 border-stone-400 px-4 py-2 bg-darkGray text-white" @click="openModal">新增會員</button>
       <UserCreateModal v-if="showModal" @close="closeModal" />
       <!-- 表格 -->
       <TableWithPagination

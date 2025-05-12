@@ -48,7 +48,7 @@ const submit = () => {
             position: 'top-end',
             icon: 'success',
             title: '恭喜您！會員註冊成功！',
-            text:"已為您登入會員 🎉",
+            text:"已為您登入會員",
             showConfirmButton: false,
             timer: 3000,
           });

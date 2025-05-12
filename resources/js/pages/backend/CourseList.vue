@@ -63,7 +63,7 @@ watchEffect(() => {
   <AppLayout :breadcrumbs="breadcrumbs">
     <h1 class="fixed mb-12 w-full bg-white px-12 py-4 text-2xl font-bold shadow">子課程列表</h1>
     <div class="mt-20 px-12">
-      <button type="button" class="mb-4 border p-2" @click="createCourse">新增課程</button>
+      <button type="button" class="mb-4 rounded border  hover:bg-stone-700 border-stone-400 px-4 py-2 bg-darkGray text-white" @click="createCourse">新增課程</button>
       <TableWithPagination
         :columns="columns"
         :items="items"
@@ -82,9 +82,9 @@ watchEffect(() => {
         </template>
         <!-- 操作欄插槽 -->
         <template #cell(actions)="{ item }">
-          <div class="flex justify-center gap-2">
-            <button type="button" class="cursor-pointer border px-2" @click="deleteBtn(item.id)">刪除</button>
-            <button type="button" class="cursor-pointer border px-2" @click="editCourse(item.id)">編輯</button>
+          <div class="flex justify-center gap-2 min-w-[140px]">
+            <button type="button" class="cursor-pointer rounded border border-red-500 px-2 text-red-500 hover:bg-red-500 hover:text-white" @click="deleteBtn(item.id)">刪除</button>
+            <button type="button" class="cursor-pointer rounded border bg-deepTeal px-2 text-white hover:bg-teal-700" @click="editCourse(item.id)">編輯</button>
           </div>
         </template>
       </TableWithPagination>

@@ -73,17 +73,17 @@ function goBack() {
 
 <template>
   <AppLayout title="編輯子課程">
-    <nav class="mb-4 flex w-full items-center gap-3 border-b p-2">
-      <button type="button" class="rounded-sm bg-darkGray px-4 py-2 text-white" @click="goBack">返回</button>
+    <nav class="mb-4 flex w-full items-center gap-3 border-b py-2 px-12 ">
+      <button type="button" class="rounded-sm bg-darkGray px-4 py-2 text-white hover:bg-stone-600" @click="goBack">返回</button>
       <h1 class="text-2xl font-bold">編輯子課程</h1>
     </nav>
-    <div class="p-5">
+    <div class="py-5 px-12 ">
       <CourseForm :course="course" :categories="categories" />
     </div>
     <hr />
-    <div class="space-y-3 p-5">
+    <div class="space-y-3 py-5 px-12 ">
       <!-- 課程章節列表 -->
-      <button type="button" class="border p-2" @click="openCreateModal">新增課程章節</button>
+      <button type="button" class="mb-4 rounded border  hover:bg-stone-700 border-stone-400 px-4 py-2 bg-darkGray text-white" @click="openCreateModal">新增課程章節</button>
       <table class="min-w-full table-auto border-collapse">
         <thead class="bg-darkGray text-white">
           <tr>
@@ -106,8 +106,8 @@ function goBack() {
             <td class="border px-4 py-2">{{ chapter.video_url }}</td>
             <td class="flex flex-wrap gap-2 border px-4 py-2">
               <!-- 編輯與刪除按鈕 -->
-              <button @click="deleteBtn(chapter.id)" class="rounded-md bg-red-500 px-4 py-2 text-white">刪除</button>
-              <button @click="openEditModal(chapter)" class="rounded-md border px-4 py-2">編輯</button>
+              <button @click="deleteBtn(chapter.id)" class="cursor-pointer rounded border border-red-500 px-2 text-red-500 hover:bg-red-500 hover:text-white">刪除</button>
+              <button @click="openEditModal(chapter)" class="cursor-pointer rounded border bg-deepTeal px-2 text-white hover:bg-teal-700">編輯</button>
             </td>
           </tr>
         </tbody>

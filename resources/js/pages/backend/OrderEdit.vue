@@ -220,7 +220,7 @@ function goBack() {
 
         <!-- 儲存按鈕 -->
         <div class="text-right">
-          <button @click="submit" class="rounded bg-green-600 px-4 py-2 text-white">儲存變更</button>
+          <button @click="submit" class="rounded bg-blueGreen hover:bg-teal-600 px-4 py-2 text-white">儲存變更</button>
         </div>
       </div>
     </div>
