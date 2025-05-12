@@ -341,8 +341,6 @@ class WushuController extends Controller
             'birth_time' => 'nullable',
         ]);
 
-
-
         $data->update([
             'name' => $validate['name'],
             'phone' => $validate['phone'],
@@ -350,6 +348,10 @@ class WushuController extends Controller
             'birth_time' => $validate['birth_time'],
             'birth_city' => $validate['birth_city'],
             'address' => $validate['address'],
+        ]);
+
+        User::find($data['user_id'])->update([
+            'name' => $validate['name'],
         ]);
 
         return back()->with('success', '資料已更新');
