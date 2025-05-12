@@ -55,8 +55,8 @@ const deleteBtn = async (id) => {
         <!-- Slot: actions 按鈕 -->
         <template #cell(actions)="{ item }">
           <div class="flex justify-center gap-2">
-            <button type="button" class="cursor-pointer border px-2" @click="deleteBtn(item.id)">刪除</button>
-            <button type="button" class="cursor-pointer border px-2" @click="openDetail(item)">查看</button>
+            <button type="button" class="rounded cursor-pointer border border-red-500 px-2 text-red-500 hover:bg-red-500 hover:text-white" @click="deleteBtn(item.id)">刪除</button>
+            <button type="button" class="rounded cursor-pointer border bg-deepTeal px-2 text-white hover:bg-teal-700" @click="openDetail(item)">查看</button>
           </div>
         </template>
       </TableWithPagination>

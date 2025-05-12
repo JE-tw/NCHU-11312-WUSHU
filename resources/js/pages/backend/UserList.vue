@@ -68,7 +68,7 @@ watchEffect(() => {
   <AppLayout :breadcrumbs="breadcrumbs">
     <h1 class="fixed mb-12 w-full bg-white px-12 py-4 text-2xl font-bold shadow">會員管理</h1>
     <div class="mt-20 px-12">
-      <button type="button" class="mb-4 border p-2" @click="openModal">新增會員</button>
+      <button type="button" class="mb-4 rounded border border-stone-400 px-4 py-2 hover:bg-darkGray hover:text-white" @click="openModal">新增會員</button>
       <UserCreateModal v-if="showModal" @close="closeModal" />
       <!-- 表格 -->
       <TableWithPagination
@@ -86,8 +86,16 @@ watchEffect(() => {
         <!-- Slot: actions 按鈕 -->
         <template #cell(actions)="{ item }">
           <div class="flex justify-center gap-2">
-            <button type="button" class="cursor-pointer border border-red-500 px-2 text-red-500" @click="deleteBtn(item.id)">刪除</button>
-            <button type="button" class="cursor-pointer border bg-deepTeal px-2 text-white" @click="editUser(item.id)">查看/編輯</button>
+            <button
+              type="button"
+              class="cursor-pointer rounded border border-red-500 px-2 text-red-500 hover:bg-red-500 hover:text-white"
+              @click="deleteBtn(item.id)"
+            >
+              刪除
+            </button>
+            <button type="button" class="cursor-pointer rounded border bg-deepTeal px-2 text-white hover:bg-teal-700" @click="editUser(item.id)">
+              查看/編輯
+            </button>
           </div>
         </template>
       </TableWithPagination>

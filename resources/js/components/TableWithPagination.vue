@@ -58,7 +58,7 @@ const toggleSort = (key) => {
     <!-- 搜尋框 -->
     <div v-if="showSearch" class="mb-4">
       <input v-model="search" :placeholder="searchPlaceholder || '搜尋...'" class="rounded-md border px-3 py-1" />
-      <button @click="onSearch" class="ml-2 rounded bg-gray-700 px-2 py-1 text-white">搜尋</button>
+      <button @click="onSearch" class="ml-2 rounded bg-gray-700 px-2 py-1 text-white hover:bg-gray-900">搜尋</button>
     </div>
 
     <!-- 表格 -->

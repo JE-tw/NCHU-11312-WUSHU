@@ -66,7 +66,7 @@ const editOrder = (orderId) => {
         <!-- 操作欄插槽 -->
         <template #cell(actions)="{ item }">
           <div class="flex justify-center gap-2">
-            <button type="button" class="border px-2 py-1 text-sm bg-blueGreen text-white rounded-sm"  @click="editOrder(item.id)">編輯</button>
+            <button type="button" class="border px-2 py-1 text-sm bg-blueGreen text-white rounded-sm hover:bg-teal-700"  @click="editOrder(item.id)">編輯</button>
           </div>
         </template>
       </TableWithPagination>
