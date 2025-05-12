@@ -95,7 +95,6 @@ const deleteBtn = async (id) => {
             <button type="button" class="cursor-pointer border px-2" @click="openEditModal(item)">編輯</button>
           </div>
         </template>
-        <ServiceEditModal v-if="showEditModal" :service="editingService" @close="closeEditModal" />
       </TableWithPagination>
       <!-- 新增/編輯 共用 Modal -->
       <ServiceFormModal v-if="showModal" :service="currentService" @close="closeModal" />

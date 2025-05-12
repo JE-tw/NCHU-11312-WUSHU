@@ -3,8 +3,11 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { usePage, useForm, router } from '@inertiajs/vue3';
 import CourseForm from '@/components/CourseForm.vue';
 import Swal from 'sweetalert2';
-import { computed, watchEffect } from 'vue';
-// import ChapterEditModal from '@/components/ChapterEditModal.vue';
+import { ref, computed, watchEffect } from 'vue';
+import ChapterFormModal from '@/components/ChapterFormModal.vue';
+import { useConfirmDialog } from '@/composables/useConfirmDialog';
+
+
 
 // 接收 props
 const props = defineProps({
@@ -12,13 +15,34 @@ const props = defineProps({
   categories: Object,
   chapters: Object,
 });
-console.log(props.chapters);
 
-// 從 usePage 取出最新頁面資料（包含 flash）
 const page = usePage();
+const showModal = ref(false);
+const currentChapter = ref(null);
 const course = computed(() => page.props.course);
 const categories = computed(() => page.props.categories);
 const chapters = computed(() => page.props.chapters);
+
+const openCreateModal = () => {
+  currentChapter.value = null;
+  showModal.value = true;
+};
+
+const openEditModal = (chapter) => {
+  currentChapter.value = { ...chapter };
+  showModal.value = true;
+};
+
+const closeModal = () => {
+  currentChapter.value = null;
+  showModal.value = false;
+};
+const deleteBtn = async (id) => {
+  const confirmed = await useConfirmDialog();
+  if (confirmed) {
+    router.get(route('admin.chapter.delete', id));
+  }
+};
 // 顯示 flash 訊息
 watchEffect(() => {
   const success = page.props.flash?.success;
@@ -61,7 +85,7 @@ function goBack() {
     <hr />
     <div class="p-5 space-y-3">
       <!-- 課程章節列表 -->
-       <button type="button" class="border p-2">新增課程章節</button>
+       <button type="button" class="border p-2" @click="openCreateModal">新增課程章節</button>
       <table class="min-w-full table-auto border-collapse">
         <thead class=" bg-darkGray text-white">
           <tr>
@@ -81,12 +105,14 @@ function goBack() {
             <td class="border px-4 py-2">{{ chapter.video_url }}</td>
             <td class="border px-4 py-2 flex gap-2 flex-wrap">
               <!-- 編輯與刪除按鈕 -->
-              <button @click="deleteChapter(chapter.id)" class="rounded-md bg-red-500 px-4 py-2 text-white">刪除</button>
-              <button @click="editChapter(chapter)" class="rounded-md border px-4 py-2">編輯</button>
+              <button @click="deleteBtn(chapter.id)" class="rounded-md bg-red-500 px-4 py-2 text-white">刪除</button>
+              <button @click="openEditModal(chapter)" class="rounded-md border px-4 py-2">編輯</button>
             </td>
           </tr>
         </tbody>
       </table>
+      <!-- 新增/編輯 共用 Modal -->
+      <ChapterFormModal v-if="showModal" :chapter="currentChapter" :course_id="course.id" @close="closeModal" />
     </div>
   </AppLayout>
 </template>

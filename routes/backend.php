@@ -56,7 +56,7 @@ Route::prefix('wushu/admin')->middleware(['auth', 'admin_only'])->group(function
         Route::post('/', [ServiceController::class, 'create'])->name('admin.service.create');
 
         // 更新
-        Route::put('/admin/service/{service}', [ServiceController::class, 'update'])->name('admin.service.update');
+        Route::put('/{service}', [ServiceController::class, 'update'])->name('admin.service.update');
 
         // 刪除
         Route::get('/delete/{id}', [ServiceController::class, 'delete'])->name('admin.service.delete');
@@ -69,8 +69,12 @@ Route::prefix('wushu/admin')->middleware(['auth', 'admin_only'])->group(function
         Route::put('/{course}', [CourseController::class, 'update'])->name('admin.course.update');
     });
 
-    Route::put('/admin/chapters/{chapter}', [ChapterController::class, 'update']);
-    Route::delete('/admin/chapters/{chapter}', [ChapterController::class, 'destroy']);
+    // 章節管理
+    Route::prefix('chapter')->group(function () {
+        Route::post('/', [ChapterController::class, 'store'])->name('admin.chapter.store');
+        Route::put('/{chapter}', [ChapterController::class, 'update'])->name('admin.chapter.update');
+        Route::get('/delete/{id}', [ChapterController::class, 'delete'])->name('admin.chapter.delete');
+    });
 });
 
 // //登入頁
