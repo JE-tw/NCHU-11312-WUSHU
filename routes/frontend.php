@@ -55,4 +55,6 @@ Route::prefix('wushu')->group(function () {
 
     // 會員中心 
     Route::get('/MemberCenter', [WushuController::class, 'userInfo']);
+    // 更新個人資料
+    Route::post('/MemberCenter/update/{id}', [WushuController::class, 'userInfoUpdate'])->name('Member.update');
 });

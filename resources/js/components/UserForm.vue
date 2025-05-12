@@ -104,19 +104,6 @@ const submit = () => {
 // 顯示建立時間
 const formattedCreatedAt = computed(() => formatDate(props.user?.created_at));
 
-// // flatpickr 設定
-// const dateOptions = {
-//   dateFormat: 'Y-m-d',
-//   allowInput: true,
-// };
-// const timeOptions = {
-//   enableTime: true,
-//   noCalendar: true,
-//   dateFormat: 'H:i',
-//   time_24hr: true,
-//   defaultDate: null, // 不自動套預設時間
-//   allowInput: true,
-// };
 </script>
 
 <template>

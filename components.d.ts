@@ -41,6 +41,7 @@ declare module 'vue' {
     CartButton: typeof import('./resources/js/Components/CartButton.vue')['default']
     ChapterEditModal: typeof import('./resources/js/Components/ChapterEditModal.vue')['default']
     ChapterForm: typeof import('./resources/js/Components/ChapterForm.vue')['default']
+    ChapterFormModal: typeof import('./resources/js/Components/ChapterFormModal.vue')['default']
     Checkbox: typeof import('./resources/js/Components/ui/checkbox/Checkbox.vue')['default']
     Collapsible: typeof import('./resources/js/Components/ui/collapsible/Collapsible.vue')['default']
     CollapsibleContent: typeof import('./resources/js/Components/ui/collapsible/CollapsibleContent.vue')['default']

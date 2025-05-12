@@ -327,4 +327,31 @@ class WushuController extends Controller
             'courses' => $courses,
         ]);
     }
+
+    public function userInfoUpdate(Request $request, $id)
+    {
+        $data = UserInfo::find($id);
+        // dd($data);
+        $validate = $request->validate([
+            'name' => 'required|string|max:30',
+            'phone' => 'nullable|string|max:20',
+            'birth_city' => 'nullable|string|max:50',
+            'address' => 'nullable|string|max:100',
+            'birth_date' => 'nullable|date',
+            'birth_time' => 'nullable',
+        ]);
+
+
+
+        $data->update([
+            'name' => $validate['name'],
+            'phone' => $validate['phone'],
+            'birth_date' => $validate['birth_date'],
+            'birth_time' => $validate['birth_time'],
+            'birth_city' => $validate['birth_city'],
+            'address' => $validate['address'],
+        ]);
+
+        return back()->with('success', '資料已更新');
+    }
 }

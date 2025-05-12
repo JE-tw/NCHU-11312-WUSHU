@@ -1,11 +1,15 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import MemberOrder from '../../components/MemberOrder.vue';
 import { router } from '@inertiajs/vue3';
 import Swal from 'sweetalert2';
 
+// :config="dateOptions"
+import Flatpickr from 'vue-flatpickr-component';
+import 'flatpickr/dist/flatpickr.css';
 import CourseCard from '@/components/CourseCard.vue';
 import UserForm from '@/components/UserForm.vue';
 
@@ -33,20 +37,16 @@ const props = defineProps({
 
 // ====================
 // 會員資料頁
-import { usePage } from '@inertiajs/vue3';
-
 const page = usePage();
-const userInfo = computed(() => page.props.userInfo);
-const name = computed(() => userInfo.value?.name || '');
-const phone = computed(() => userInfo.value?.user_info?.phone || '');
-const birth_city = computed(() => userInfo.value?.user_info?.birth_city || '');
-const address = computed(() => userInfo.value?.user_info?.address || '');
-const birth_date = computed(() => userInfo.value?.user_info?.birth_date || '');
-const birth_time = computed(() => userInfo.value?.user_info?.birth_time || '');
-
-// :config="dateOptions"
-import Flatpickr from 'vue-flatpickr-component';
-import 'flatpickr/dist/flatpickr.css';
+const userInfo = ref(page.props.userInfo);
+const form = ref({
+  name: userInfo.value?.name || '',
+  phone: userInfo.value?.user_info?.phone || '',
+  birth_city: userInfo.value?.user_info?.birth_city || '',
+  address: userInfo.value?.user_info?.address || '',
+  birth_date: userInfo.value?.user_info?.birth_date || '',
+  birth_time: userInfo.value?.user_info?.birth_time || '',
+});
 
 // flatpickr 設定
 const dateOptions = {
@@ -59,6 +59,44 @@ const timeOptions = {
   dateFormat: 'H:i',
   time_24hr: true,
   allowInput: true,
+};
+const errors = ref({});
+// 表單驗證
+const validateUserForm = () => {
+  const newErrors = {};
+
+  if (!form.value.name) newErrors.name = '請輸入姓名';
+  if (!form.value.phone) newErrors.phone = '請輸入手機號碼';
+
+  errors.value = newErrors;
+  return Object.keys(newErrors).length === 0;
+};
+// 表單送出
+const submitUserForm = () => {
+  if (!validateUserForm()) return;
+
+  router.post(route('Member.update', { id: userInfo.value.id }), form.value, {
+    preserveScroll: true,
+    onSuccess: () => {
+      errors.value = {};
+      Swal.fire({
+        title: '資料已更新',
+        icon: 'success',
+        confirmButtonText: '確定',
+      }).then(() => {
+        window.location.reload();
+      });
+    },
+    onError: (err) => {
+      errors.value = err;
+      Swal.fire({
+        title: '錯誤',
+        text: err,
+        icon: 'error',
+        confirmButtonText: '確定',
+      });
+    },
+  });
 };
 
 // 購買紀錄頁
@@ -164,16 +202,16 @@ const logOut = () => {
 
       <!-- 個人資料 -->
       <div v-if="tab === 'personalinfo'" class="flex flex-col items-center gap-4">
-        <div class="w-full max-w-md overflow-hidden  border border-gray-200 bg-white shadow-custom">
+        <div class="w-full max-w-md overflow-hidden border border-gray-200 bg-white shadow-custom">
           <div class="p-8">
             <!-- 個人資料表單 -->
-            <form class="space-y-6">
+            <div class="space-y-6">
               <h2 class="mb-6 text-3xl font-bold">個人資料</h2>
 
               <!-- 姓名 -->
               <div class="relative">
                 <input
-                  v-model="name"
+                  v-model="form.name"
                   type="text"
                   id="name"
                   placeholder=" "
@@ -190,7 +228,7 @@ const logOut = () => {
               <!-- 手機 -->
               <div class="relative">
                 <input
-                  v-model="phone"
+                  v-model="form.phone"
                   type="tel"
                   id="phone"
                   placeholder=" "
@@ -208,17 +246,11 @@ const logOut = () => {
               <div class="flex flex-col sm:flex-row sm:space-x-4">
                 <div class="relative flex-1">
                   <Flatpickr
-                    v-model="birth_date"
+                    v-model="form.birth_date"
                     :config="dateOptions"
                     placeholder="出生日期"
                     class="peer w-full rounded-md border border-gray-400 px-4 py-3 focus:outline-none"
                   />
-                  <!-- <input
-                    v-model="birth_date"
-                    type="date"
-                    id="birth-date"
-                    class="peer w-full rounded-md border border-gray-400 px-4 py-3 focus:outline-none"
-                  /> -->
                   <label
                     for="birth-date"
                     class="absolute left-3 top-[-10px] bg-white px-1 text-sm text-gray-500 transition-all duration-200 peer-placeholder-shown:text-gray-400 peer-focus:text-blue-600"
@@ -229,7 +261,7 @@ const logOut = () => {
 
                 <div class="relative mt-4 flex-1 sm:mt-0">
                   <Flatpickr
-                    v-model="birth_time"
+                    v-model="form.birth_time"
                     :config="timeOptions"
                     placeholder="出生時間"
                     class="peer w-full rounded-md border border-gray-400 px-4 py-3 focus:outline-none"
@@ -246,7 +278,7 @@ const logOut = () => {
               <!-- 出生城市 -->
               <div class="relative">
                 <input
-                  v-model="birth_city"
+                  v-model="form.birth_city"
                   type="text"
                   id="birth-city"
                   placeholder=" "
@@ -263,7 +295,7 @@ const logOut = () => {
               <!-- 地址 -->
               <div class="relative">
                 <input
-                  v-model="address"
+                  v-model="form.address"
                   type="text"
                   id="address"
                   placeholder=" "
@@ -281,15 +313,16 @@ const logOut = () => {
               <button
                 type="button"
                 class="mt-6 w-full transform rounded-md bg-[#518C95] py-3 text-xl text-white transition-opacity duration-300 hover:scale-105 hover:opacity-90"
+                @click="submitUserForm"
               >
                 儲存
               </button>
-            </form>
+            </div>
           </div>
         </div>
 
         <!-- 修改密碼區塊開始 -->
-        <div class="w-full max-w-md overflow-hidden  border border-gray-200 bg-white shadow-custom">
+        <div class="w-full max-w-md overflow-hidden border border-gray-200 bg-white shadow-custom">
           <div class="p-8">
             <h3 class="mb-6 text-2xl font-bold">修改密碼</h3>
             <p class="mb-4 text-gray-400">至少6個字元，不可有空白與特殊符號。需英數混合</p>
@@ -364,7 +397,10 @@ const logOut = () => {
                 <span class="rounded-full bg-purple-200 px-3 py-1 text-sm text-purple-800">
                   {{ course.category_name }}
                 </span>
-                <button @click="goToIntro(course.id)" class="rounded bg-teal-600 px-4 py-2 text-sm text-white transition hover:bg-teal-500 hover:scale-125 duration-300">
+                <button
+                  @click="goToIntro(course.id)"
+                  class="rounded bg-teal-600 px-4 py-2 text-sm text-white transition duration-300 hover:scale-125 hover:bg-teal-500"
+                >
                   前往課程
                 </button>
               </div>
@@ -376,7 +412,14 @@ const logOut = () => {
       <!-- 購買記錄 -->
       <div v-else-if="tab === 'purchaserecord'" class="w-full px-4 py-8 text-gray-800">
         <!-- 組件 購買紀錄表格 -->
-        <MemberOrder class="shadow-custom" :columns="columns" :items="items" :current-page="currentPage2" :total-pages="totalPages2" @pageChange="handlePageChange">
+        <MemberOrder
+          class="shadow-custom"
+          :columns="columns"
+          :items="items"
+          :current-page="currentPage2"
+          :total-pages="totalPages2"
+          @pageChange="handlePageChange"
+        >
           <!-- 購買項目插槽 -->
           <template #cell(order_items)="{ item }">
             <div v-for="i in item.order_items" :key="i.id" class="border-b border-gray-300 py-1 last:border-0">
