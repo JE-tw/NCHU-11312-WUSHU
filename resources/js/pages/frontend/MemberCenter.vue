@@ -116,12 +116,8 @@ const validatePasswordForm = () => {
   return Object.keys(newErrors).length === 0;
 };
 
-const submitPassword = () => {
-  console.log(passwordForm.value);
-  
+const submitPassword = () => {  
   if (!validatePasswordForm()) {
-    console.log(errors.value);
-
     return;
   }
   router.post(route('Member.updatePassword',userInfo.value.user_info.user_id), passwordForm.value, {
