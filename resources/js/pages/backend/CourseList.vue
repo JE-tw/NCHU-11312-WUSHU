@@ -22,8 +22,8 @@ const editCourse = (courseId) => {
 
 <template>
   <AppLayout :breadcrumbs="breadcrumbs">
-    <div>
-      <h1 class="mb-4 text-2xl font-bold">子課程列表</h1>
+    <h1 class="fixed mb-12 w-full bg-white px-12 py-4 text-2xl font-bold shadow">子課程列表</h1>
+    <div class="mt-20 px-12">
       <button type="button" class="mb-4 border p-2">新增課程</button>
       <TableWithPagination
         :columns="columns"

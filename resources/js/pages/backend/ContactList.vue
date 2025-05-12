@@ -9,19 +9,10 @@ import { useTableController } from '@/composables/useTableController';
 
 // const contacts = page.props.contacts;
 
-// 
+//
 
-const {
-  items,
-  currentPage,
-  totalPages,
-  searchQuery,
-  currentSortKey,
-  currentSortDirection,
-  handleSearch,
-  handlePageChange,
-  handleSortChange,
-} = useTableController('contacts', 'admin.contact.list'); // 名稱依照 controller 傳的變數與 route 命名
+const { items, currentPage, totalPages, searchQuery, currentSortKey, currentSortDirection, handleSearch, handlePageChange, handleSortChange } =
+  useTableController('contacts', 'admin.contact.list'); // 名稱依照 controller 傳的變數與 route 命名
 
 const columns = [
   { label: '日期', key: 'formatted_date', sortable: true },
@@ -47,8 +38,8 @@ const deleteBtn = async (id) => {
 
 <template>
   <AppLayout :breadcrumbs="breadcrumbs">
-    <div>
-      <h1 class="mb-4 text-2xl font-bold">聯絡我們紀錄</h1>
+    <h1 class="fixed mb-12 w-full bg-white px-12 py-4 text-2xl font-bold shadow">聯絡我們紀錄</h1>
+    <div class="mt-20 px-12">
       <TableWithPagination
         :columns="columns"
         :items="items"

@@ -20,7 +20,7 @@ withDefaults(defineProps<Props>(), {
       <AppSidebarHeader :breadcrumbs="breadcrumbs" class=" h-20"/>
       <div class="flex h-[calc(100vh-5rem)]">
         <AppSidebar class="h-full"/>
-        <div class="flex-1 overflow-y-auto p-4">
+        <div class="flex-1 overflow-y-auto">
           <slot />
         </div>
       </div>

@@ -73,8 +73,8 @@ const deleteBtn = async (id) => {
 
 <template>
   <AppLayout :breadcrumbs="breadcrumbs">
-    <div>
-      <h1 class="mb-4 text-2xl font-bold">服務內容管理</h1>
+    <h1 class="fixed mb-12 w-full bg-white px-12 py-4 text-2xl font-bold shadow">服務內容管理</h1>
+    <div class="mt-20 px-12">
       <button type="button" class="mb-4 border p-2" @click="openCreateModal">新增服務內容</button>
       <TableWithPagination
         :columns="columns"

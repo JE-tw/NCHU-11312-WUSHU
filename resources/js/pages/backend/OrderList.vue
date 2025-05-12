@@ -23,8 +23,8 @@ const editOrder = (orderId) => {
 
 <template>
   <AppLayout :breadcrumbs="breadcrumbs">
-    <div>
-      <h1 class="mb-4 text-2xl font-bold">付款記錄管理</h1>
+    <h1 class="mb-12 text-2xl font-bold py-4 px-12 shadow fixed bg-white w-full">付款記錄管理</h1>
+    <div class=" px-12 mt-20">
       <TableWithPagination
         :columns="columns"
         :items="items"
@@ -66,7 +66,7 @@ const editOrder = (orderId) => {
         <!-- 操作欄插槽 -->
         <template #cell(actions)="{ item }">
           <div class="flex justify-center gap-2">
-            <button type="button" class="border px-2 py-1 text-sm" @click="editOrder(item.id)">編輯</button>
+            <button type="button" class="border px-2 py-1 text-sm bg-blueGreen text-white rounded-sm"  @click="editOrder(item.id)">編輯</button>
           </div>
         </template>
       </TableWithPagination>

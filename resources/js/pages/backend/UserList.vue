@@ -11,7 +11,6 @@ import { useTableController } from '@/composables/useTableController';
 // // Inertia 資料
 const page = usePage();
 
-
 // Modal 開關
 const showModal = ref(false);
 const openModal = () => (showModal.value = true);
@@ -67,8 +66,8 @@ watchEffect(() => {
 
 <template>
   <AppLayout :breadcrumbs="breadcrumbs">
-    <div>
-      <h1 class="mb-4 text-2xl font-bold">會員管理</h1>
+    <h1 class="fixed mb-12 w-full bg-white px-12 py-4 text-2xl font-bold shadow">會員管理</h1>
+    <div class="mt-20 px-12">
       <button type="button" class="mb-4 border p-2" @click="openModal">新增會員</button>
       <UserCreateModal v-if="showModal" @close="closeModal" />
       <!-- 表格 -->
