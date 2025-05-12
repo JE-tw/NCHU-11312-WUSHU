@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import btnTopImg from '@/images/btn-top.webp'
+import btnTopImg from '@/images/btn-top-s.png'
 
 const props = defineProps({
     position: {
@@ -24,13 +24,13 @@ const scrollToTop = () => {
 </script>
 
 <template>
-    <button v-show="showButton" @click="scrollToTop" 
-        :class="[
-            'fixed z-[9999] rounded-full shadow-md bg-transparent',
+     <button v-show="showButton" @click="scrollToTop" 
+        :class="[ 
+            'fixed z-[9999] rounded-full bg-transparent overflow-hidden',
             'w-[50px] h-[50px] bottom-4 right-4',
             'sm:w-[80px] sm:h-[80px] sm:bottom-6 sm:right-6'
         ]">
-        <img :src="btnTopImg" alt="回到頂部" class="w-full h-full object-contain" />
+        <img :src="btnTopImg" alt="回到頂部" class="w-full h-full object-cover" />
     </button>
 </template>
 
