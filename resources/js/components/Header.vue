@@ -13,7 +13,8 @@ const isSearchActive = ref(false);
 
 // cart 數量顯示
 const cartStore = useCartStore();
-const cartCount = computed(() => cartStore.cartCount);
+const { cartCount } = storeToRefs(cartStore)
+// const cartCount = computed(() => cartStore.cartCount);
 
 // 追蹤視窗寬度
 const windowWidth = ref(window.innerWidth);

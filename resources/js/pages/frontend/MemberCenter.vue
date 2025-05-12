@@ -1,5 +1,5 @@
 <script setup>
-import { ref,reactive, computed } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
@@ -106,7 +106,7 @@ const passwordForm = ref({
 // 表單驗證
 const validatePasswordForm = () => {
   const newErrors = {};
-  
+
   if (!passwordForm.value.password) newErrors.password = '請輸入密碼';
   else if (passwordForm.value.password.length < 6) newErrors.password = '密碼至少 6 碼';
   if (passwordForm.value.password !== passwordForm.value.password_confirmation) {
@@ -116,11 +116,11 @@ const validatePasswordForm = () => {
   return Object.keys(newErrors).length === 0;
 };
 
-const submitPassword = () => {  
+const submitPassword = () => {
   if (!validatePasswordForm()) {
     return;
   }
-  router.post(route('Member.updatePassword',userInfo.value.user_info.user_id), passwordForm.value, {
+  router.post(route('Member.updatePassword', userInfo.value.user_info.user_id), passwordForm.value, {
     preserveScroll: true,
     onSuccess: () => {
       errors.value = {};
@@ -169,11 +169,15 @@ const logOut = () => {
     text: '練功不打卡，會退步喔！下次記得再回來！',
     icon: 'warning',
     showCancelButton: true,
-    reverseButtons: true,
+    reverseButtons: false,
     confirmButtonColor: '#d33',
-    cancelButtonColor: '#B5B5B5',
-    confirmButtonText: '我要登出!',
+    // cancelButtonColor: '#B5B5B5',
+    confirmButtonText: '登出',
     cancelButtonText: '取消',
+    customClass: {
+      confirmButton: 'bg-teal-600 text-white font-bold rounded',
+      cancelButton:'bg-gray-100 text-teal-600 border border-black rounded'
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       router.post('/logout');
@@ -382,12 +386,7 @@ const logOut = () => {
                   placeholder=" "
                   class="w-full rounded-md border border-gray-400 px-4 py-3 focus:outline-none"
                 />
-                <label
-                  for="new-password"
-                  class="absolute left-3 bg-white px-1 text-gray-400 transition-all top-[-8px] text-xs"
-                >
-                  輸入新密碼
-                </label>
+                <label for="new-password" class="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray-400 transition-all"> 輸入新密碼 </label>
               </div>
 
               <!-- 確認新密碼 -->
@@ -399,10 +398,7 @@ const logOut = () => {
                   placeholder=" "
                   class="w-full rounded-md border border-gray-400 px-4 py-3 focus:outline-none"
                 />
-                <label
-                  for="confirm-new-password"
-                  class="absolute left-3 bg-white px-1 text-gray-400 transition-all top-[-8px] text-xs"
-                >
+                <label for="confirm-new-password" class="absolute left-3 top-[-8px] bg-white px-1 text-xs text-gray-400 transition-all">
                   再次輸入新密碼
                 </label>
               </div>
@@ -500,6 +496,9 @@ const logOut = () => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
+
+
+
 body {
   font-family: 'Poppins', sans-serif;
 }
@@ -559,4 +558,6 @@ input[type='date']:focus::-webkit-datetime-edit {
     font-size: 0.875rem; /* text-sm */
   }
 }
+
+
 </style>

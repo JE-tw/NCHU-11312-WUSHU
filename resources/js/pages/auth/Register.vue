@@ -10,6 +10,7 @@ import { LoaderCircle } from 'lucide-vue-next';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Swal from 'sweetalert2';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 const form = useForm({
   name: '',
@@ -35,20 +36,20 @@ const submit = () => {
     text: '建立帳號後即可加入武術研究社會員中心，享有完整會員功能。',
     icon: 'warning',
     showCancelButton: true,
-    reverseButtons: true,
+    reverseButtons: false,
     confirmButtonColor: '#1F9C95',
-    cancelButtonColor: '#B5B5B5',
+    // cancelButtonColor: '#B5B5B5',
     confirmButtonText: '確定送出',
     cancelButtonText: '取消',
+
   }).then((result) => {
     if (result.isConfirmed) {
       form.post(route('register'), {
         onSuccess: () => {
           Swal.fire({
-            position: 'top-end',
             icon: 'success',
             title: '恭喜您！會員註冊成功！',
-            text:"已為您登入會員",
+            text: '已為您登入會員',
             showConfirmButton: false,
             timer: 3000,
           });
@@ -113,7 +114,7 @@ const goLogin = () => {
 
         <div class="grid gap-2">
           <Label for="birth_date">出生日期</Label>
-          <Input id="birth_date" type="date" v-model="form.birth_date" required/>
+          <Input id="birth_date" type="date" v-model="form.birth_date" required />
           <InputError :message="form.errors.birth_date" />
         </div>
 
@@ -125,13 +126,13 @@ const goLogin = () => {
 
         <div class="grid gap-2">
           <Label for="birth_city">出生城市</Label>
-          <Input id="birth_city" type="text" v-model="form.birth_city" placeholder="出生城市" required/>
+          <Input id="birth_city" type="text" v-model="form.birth_city" placeholder="出生城市" required />
           <InputError :message="form.errors.birth_city" />
         </div>
 
         <div class="grid gap-2">
           <Label for="address">地址</Label>
-          <Input id="address" type="text" v-model="form.address" placeholder="地址" required/>
+          <Input id="address" type="text" v-model="form.address" placeholder="地址" required />
           <InputError :message="form.errors.address" />
         </div>
 

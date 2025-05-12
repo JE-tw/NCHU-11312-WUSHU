@@ -119,7 +119,7 @@ const handleSubmit = () => {
     showCancelButton: true,
     cancelButtonText: '取消',
     confirmButtonText: '確定',
-    reverseButtons: true,
+    reverseButtons: false,
     customClass: {
       confirmButton: 'my-confirm-btn',
       cancelButton: 'my-cancel-btn',
@@ -302,9 +302,9 @@ const handleSubmit = () => {
     <div v-if="showDeleteConfirmation" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div class="w-[300px] rounded-lg bg-white p-6 text-center">
         <p class="mb-4">確定要刪除這個項目嗎？</p>
-        <div class="flex justify-between">
-          <button @click="cancelDelete" class="rounded-lg bg-gray-300 px-4 py-2">取消</button>
-          <button @click="deleteItem" class="rounded-lg bg-red-500 px-4 py-2 text-white">確認刪除</button>
+        <div class="flex justify-around">
+          <button @click="deleteItem" class="rounded-lg text-white bg-red-500 hover:bg-red-600 px-4 py-2">確認刪除</button>
+          <button @click="cancelDelete" class="rounded-lg  text-blueGreen border border-blueGreen hover:bg-gray-100  px-4 py-2">取消</button>
         </div>
       </div>
     </div>

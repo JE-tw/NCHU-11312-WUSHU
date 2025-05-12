@@ -16,11 +16,15 @@ const logOut = () => {
     text: ' 您將登出後台系統！',
     icon: 'warning',
     showCancelButton: true,
-    reverseButtons: true,
+    reverseButtons: false,
     confirmButtonColor: '#d33',
     cancelButtonColor: '#B5B5B5',
     confirmButtonText: '確定登出!',
     cancelButtonText: '取消',
+    customClass: {
+      confirmButton: 'bg-teal-600 text-white font-bold rounded',
+       cancelButton:'bg-gray-100 text-teal-600 border border-black rounded'
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       router.post('/logout');
@@ -48,6 +52,6 @@ const logOut = () => {
       </template>
     </div>
     <!-- 登出 -->
-    <Link @click="logOut" class="text-2xl font-bold"> 登出 </Link>
+    <Link @click="logOut" class="rounded-xl px-4 py-2 text-2xl font-bold hover:text-teal-700 hover:scale-110"> 登出 </Link>
   </header>
 </template>

@@ -3,6 +3,7 @@
 import { useCartStore } from '@/stores/cart';
 import { onMounted, computed } from 'vue';
 import smallcart from '@/images/f-smallCart.png';
+import Swal from 'sweetalert2';
 
 const cartStore = useCartStore();
 onMounted(() => {
@@ -39,7 +40,13 @@ function addToCart(event) {
     product_type: props.productType,
   });
 
-  alert(`已加入「${props.productName}」至購物車`);
+  Swal.fire({
+  // position: "top-end",
+  icon: "success",
+  title: `已加入「${props.productName}」至購物車`,
+  showConfirmButton: false,
+  timer: 1500
+});
 }
 </script>
 
