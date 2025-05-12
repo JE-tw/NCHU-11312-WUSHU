@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use id;
+use auth;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Order;
@@ -11,13 +12,13 @@ use App\Models\Service;
 use App\Models\Category;
 use App\Models\UserInfo;
 use App\Models\OrderItem;
-use Illuminate\Http\Request;
 
 // 購物車
+use Illuminate\Http\Request;
 use App\Models\ContactRecord;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use auth;
+use Illuminate\Support\Facades\Hash;
 
 class WushuController extends Controller
 {
@@ -324,5 +325,21 @@ class WushuController extends Controller
         ]);
 
         return back()->with('success', '資料已更新');
+    }
+    
+    public function passwordUpdate(Request $request, $id)
+    {
+        // dd($request->all());
+        $data = User::find($id);
+        // dd($data);
+        $validate = $request->validate([
+            'password' => 'nullable|min:6|confirmed',
+        ]);
+        $data->update([
+            'password' => Hash::make($validate['password']),
+        ]);
+
+
+        return back()->with('success', '密碼已更新');
     }
 }

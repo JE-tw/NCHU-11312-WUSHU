@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref,reactive, computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
@@ -81,6 +81,55 @@ const submitUserForm = () => {
       errors.value = {};
       Swal.fire({
         title: '資料已更新',
+        icon: 'success',
+        confirmButtonText: '確定',
+      }).then(() => {
+        window.location.reload();
+      });
+    },
+    onError: (err) => {
+      errors.value = err;
+      Swal.fire({
+        title: '錯誤',
+        text: err,
+        icon: 'error',
+        confirmButtonText: '確定',
+      });
+    },
+  });
+};
+// 修改密碼
+const passwordForm = ref({
+  password: '',
+  password_confirmation: '',
+});
+// 表單驗證
+const validatePasswordForm = () => {
+  const newErrors = {};
+  
+  if (!passwordForm.value.password) newErrors.password = '請輸入密碼';
+  else if (passwordForm.value.password.length < 6) newErrors.password = '密碼至少 6 碼';
+  if (passwordForm.value.password !== passwordForm.value.password_confirmation) {
+    newErrors.password_confirmation = '密碼不一致';
+  }
+  errors.value = newErrors;
+  return Object.keys(newErrors).length === 0;
+};
+
+const submitPassword = () => {
+  console.log(passwordForm.value);
+  
+  if (!validatePasswordForm()) {
+    console.log(errors.value);
+
+    return;
+  }
+  router.post(route('Member.updatePassword',userInfo.value.user_info.user_id), passwordForm.value, {
+    preserveScroll: true,
+    onSuccess: () => {
+      errors.value = {};
+      Swal.fire({
+        title: '密碼已更新',
         icon: 'success',
         confirmButtonText: '確定',
       }).then(() => {
@@ -329,18 +378,17 @@ const logOut = () => {
 
             <!-- 修改密碼表單 -->
             <form class="space-y-6">
-              <!-- 新密碼 -->
-              <!-- 真正的input type應為password -->
               <div class="relative">
                 <input
-                  type="text"
+                  v-model="passwordForm.password"
+                  type="password"
                   id="new-password"
                   placeholder=" "
-                  class="peer w-full rounded-md border border-gray-400 px-4 py-3 focus:outline-none"
+                  class="w-full rounded-md border border-gray-400 px-4 py-3 focus:outline-none"
                 />
                 <label
                   for="new-password"
-                  class="absolute left-3 top-3 bg-white px-1 text-sm text-gray-400 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-[-8px] peer-focus:text-xs"
+                  class="absolute left-3 bg-white px-1 text-gray-400 transition-all top-[-8px] text-xs"
                 >
                   輸入新密碼
                 </label>
@@ -348,25 +396,29 @@ const logOut = () => {
 
               <!-- 確認新密碼 -->
               <div class="relative">
-                <!-- 真正的input type應為password -->
                 <input
-                  type="text"
+                  v-model="passwordForm.password_confirmation"
+                  type="password"
                   id="confirm-new-password"
                   placeholder=" "
-                  class="peer w-full rounded-md border border-gray-400 px-4 py-3 focus:outline-none"
+                  class="w-full rounded-md border border-gray-400 px-4 py-3 focus:outline-none"
                 />
                 <label
                   for="confirm-new-password"
-                  class="absolute left-3 top-3 bg-white px-1 text-sm text-gray-400 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-[-8px] peer-focus:text-xs"
+                  class="absolute left-3 bg-white px-1 text-gray-400 transition-all top-[-8px] text-xs"
                 >
                   再次輸入新密碼
                 </label>
+              </div>
+              <div v-if="Object.keys(errors).length" class="mt-2 text-sm text-red-500">
+                {{ Object.values(errors)[0] }}
               </div>
 
               <!-- 修改密碼按鈕 -->
               <button
                 type="button"
                 class="mt-6 w-full transform rounded-md bg-[#518C95] py-3 text-xl text-white transition-opacity duration-300 hover:scale-105 hover:opacity-90"
+                @click="submitPassword"
               >
                 確定修改
               </button>
@@ -382,7 +434,7 @@ const logOut = () => {
           v-if="props.courses.length === 0"
           class="bg-white px-2 py-16 text-center text-[14px] text-gray-600 shadow-custom sm:px-32 sm:text-[20px] xl:text-[24px]"
         >
-          若您已購買課程，我們將儘速為您開通權限！ 
+          若您已購買課程，我們將儘速為您開通權限！
         </div>
         <div v-else>
           <div class="course-grid">

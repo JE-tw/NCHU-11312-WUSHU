@@ -54,10 +54,9 @@ Route::prefix('wushu')->group(function () {
 
     // 會員中心 
 
-    Route::get('/MemberCenter', [WushuController::class, 'userInfo']);
-    // 更新個人資料
-    Route::post('/MemberCenter/update/{id}', [WushuController::class, 'userInfoUpdate'])->name('Member.update');
-
     Route::get('/MemberCenter', [WushuController::class, 'userInfo'])->name('wushu.memberCenter');
-
+    
+    // 更新個人資料
+    Route::post('/MemberCenter/update/{id}', [WushuController::class, 'userInfoUpdate'])->name('Member.update')->middleware('auth');
+    Route::post('/MemberCenter/updatePassword/{id}', [WushuController::class, 'passwordUpdate'])->name('Member.updatePassword')->middleware('auth');
 });
