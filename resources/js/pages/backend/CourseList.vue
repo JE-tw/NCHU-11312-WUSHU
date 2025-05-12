@@ -3,6 +3,11 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { usePage, router } from '@inertiajs/vue3';
 import TableWithPagination from '@/components/TableWithPagination.vue';
 import { useTableController } from '@/composables/useTableController';
+import { useConfirmDialog } from '@/composables/useConfirmDialog';
+import Swal from 'sweetalert2';
+
+
+const page = usePage();
 
 // const courses = page.props.courses;
 const { items, currentPage, totalPages, searchQuery, currentSortKey, currentSortDirection, handleSearch, handlePageChange, handleSortChange } =
@@ -18,13 +23,47 @@ const columns = [
 const editCourse = (courseId) => {
   router.visit(route('admin.course.edit', courseId));
 };
+const createCourse = () => {
+  router.visit(route('admin.course.create'));
+};
+// 按鈕事件
+const deleteBtn = async (id) => {
+  const confirmed = await useConfirmDialog();
+  if (confirmed) {
+    router.get(route('admin.course.delete', id));
+  }
+};
+// 顯示 flash 訊息
+watchEffect(() => {
+  const success = page.props.flash?.success;
+  const error = page.props.flash?.error;
+
+  if (success) {
+    Swal.fire({
+      title: success,
+      icon: 'success',
+      confirmButtonText: '確定',
+    }).then(() => {
+      window.location.reload();
+    });
+  }
+
+  if (error) {
+    Swal.fire({
+      title: '錯誤',
+      text: error,
+      icon: 'error',
+      confirmButtonText: '確定',
+    });
+  }
+});
 </script>
 
 <template>
   <AppLayout :breadcrumbs="breadcrumbs">
     <h1 class="fixed mb-12 w-full bg-white px-12 py-4 text-2xl font-bold shadow">子課程列表</h1>
     <div class="mt-20 px-12">
-      <button type="button" class="mb-4 border p-2">新增課程</button>
+      <button type="button" class="mb-4 border p-2" @click="createCourse">新增課程</button>
       <TableWithPagination
         :columns="columns"
         :items="items"
@@ -44,7 +83,7 @@ const editCourse = (courseId) => {
         <!-- 操作欄插槽 -->
         <template #cell(actions)="{ item }">
           <div class="flex justify-center gap-2">
-            <!-- <button type="button" class="cursor-pointer border px-2" @click="deleteBtn(item.id)">刪除</button> -->
+            <button type="button" class="cursor-pointer border px-2" @click="deleteBtn(item.id)">刪除</button>
             <button type="button" class="cursor-pointer border px-2" @click="editCourse(item.id)">編輯</button>
           </div>
         </template>

@@ -48,10 +48,19 @@ class CourseController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        $categories = Category::all();
+
+        return Inertia::render('backend/CourseCreate', [
+            'categories' => $categories,
+        ]);
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => 'required|string|max:30',
+            'name' => 'required|string|max:30',
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|integer|min:0',
             'list_intro' => 'required|string|max:36',
@@ -59,18 +68,16 @@ class CourseController extends Controller
             'is_featured' => 'boolean',
         ]);
 
-        // 如果要設為主打課程，確認目前主打課程數量
-        if (!empty($data['is_featured'])) {
+        // 如果標記為主打課程，檢查數量限制
+        if ($data['is_featured']) {
             $featuredCount = Course::where('is_featured', 1)->count();
             if ($featuredCount >= 2) {
-                return redirect()->back()->withErrors([
-                    'is_featured' => '主打課程最多只能有兩堂',
-                ]);
+                return redirect()->back()->withErrors(['is_featured' => '主打課程最多只能有兩堂']);
             }
         }
 
         Course::create([
-            'name' => $data['title'],
+            'name' => $data['name'],
             'category_id' => $data['category_id'],
             'price' => $data['price'],
             'introduction' => $data['list_intro'],
@@ -78,13 +85,14 @@ class CourseController extends Controller
             'is_featured' => $data['is_featured'] ? 1 : 0,
         ]);
 
-        return redirect()->route('admin.course.list')->with('success', '課程已成功新增！');
+        return redirect()->back()->with('success', '課程已成功新增！');
     }
+
 
     public function edit(Course $course)
     {
         $categories = Category::all();
-         $chapters = $course->chapters;
+        $chapters = $course->chapters;
 
         return Inertia::render('backend/CourseEdit', [
             'course' => $course,
@@ -124,5 +132,12 @@ class CourseController extends Controller
         ]);
 
         return redirect()->back()->with('success', '課程已成功更新！');
+    }
+
+    public function delete($id)
+    {
+        $item = Course::find($id);
+        $item->delete();
+        return back()->with('success', '刪除成功');
     }
 }

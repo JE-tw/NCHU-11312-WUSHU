@@ -4,6 +4,8 @@ import { router } from '@inertiajs/vue3';
 import BaseInput from '@/components/BaseInput.vue';
 import Swal from 'sweetalert2';
 
+const emit = defineEmits(['submitted']);
+
 const props = defineProps({
   course: {
     type: Object,
@@ -68,7 +70,7 @@ const submit = () => {
 
   const url = props.course
     ? route('admin.course.update', props.course.id)
-    : route('admin.course.create');
+    : route('admin.course.store');
 
   const method = props.course ? 'put' : 'post';
 

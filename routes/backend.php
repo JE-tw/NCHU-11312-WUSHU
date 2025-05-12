@@ -65,8 +65,11 @@ Route::prefix('wushu/admin')->middleware(['auth', 'admin_only'])->group(function
     // 子課程管理
     Route::prefix('course')->group(function () {
         Route::get('/', [CourseController::class, 'index'])->name('admin.course.list');
+        Route::get('/create', [CourseController::class, 'create'])->name('admin.course.create');
+        Route::post('/', [CourseController::class, 'store'])->name('admin.course.store');
         Route::get('/{course}/edit', [CourseController::class, 'edit'])->name('admin.course.edit');
         Route::put('/{course}', [CourseController::class, 'update'])->name('admin.course.update');
+        Route::get('/delete/{id}', [CourseController::class, 'delete'])->name('admin.course.delete');
     });
 
     // 章節管理
