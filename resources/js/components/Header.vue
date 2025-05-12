@@ -1,7 +1,7 @@
 <script setup>
-import { useCartStore } from '@/stores/cart'; //cart
+import { useCartStore } from '@/stores/cart'; // cart
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
-import { storeToRefs } from 'pinia'
+import { storeToRefs } from 'pinia';
 
 import { usePage, Link } from '@inertiajs/vue3';
 
@@ -13,41 +13,34 @@ const isSearchActive = ref(false);
 
 // cart 數量顯示
 const cartStore = useCartStore();
-
 const cartCount = computed(() => cartStore.cartCount);
 
 // 追蹤視窗寬度
 const windowWidth = ref(window.innerWidth);
 
 // 裝置判斷 - 使用 tailwindcss 的斷點
-const isMobile = computed(() => windowWidth.value <= 600); 
-const isTablet = computed(() => windowWidth.value > 600 && windowWidth.value <= 1270); 
-const isDesktop = computed(() => windowWidth.value > 1270); 
-
+const isMobile = computed(() => windowWidth.value <= 600);
+const isTablet = computed(() => windowWidth.value > 600 && windowWidth.value <= 1270);
+const isDesktop = computed(() => windowWidth.value > 1270);
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
-  
   if (isMobileMenuOpen.value) {
     isSearchActive.value = false;
   }
 };
 
-
 const toggleSearch = () => {
   isSearchActive.value = !isSearchActive.value;
 };
 
-
 const handleResize = () => {
   windowWidth.value = window.innerWidth;
-
   // 超過平板版，關閉手機選單
   if (windowWidth.value > 1270) {
     isMobileMenuOpen.value = false;
   }
 };
-
 
 const handleClickOutside = (event) => {
   const header = document.querySelector('header');
@@ -55,12 +48,10 @@ const handleClickOutside = (event) => {
   const searchBtn = event.target.closest('button[aria-label="搜尋"]');
   const searchInput = event.target.closest('input[placeholder="關鍵字"]');
 
-  
   if (isMobileMenuOpen.value && header && !header.contains(event.target) && menu && !menu.contains(event.target)) {
     isMobileMenuOpen.value = false;
   }
 
-  
   if (isSearchActive.value && !searchBtn && !searchInput) {
     const isClickInsideSearch = event.target.closest('.relative') !== null;
     if (!isClickInsideSearch) {
@@ -74,10 +65,9 @@ onMounted(() => {
   // 監聽視窗變動
   window.addEventListener('resize', handleResize);
   document.addEventListener('click', handleClickOutside);
-
   handleResize();
 
-  cartStore.loadCartFromLocalStorage(); 
+  cartStore.loadCartFromLocalStorage();
 });
 
 onUnmounted(() => {
@@ -86,24 +76,22 @@ onUnmounted(() => {
 });
 
 watch([isMobile, isTablet], () => {
-  
   isMobileMenuOpen.value = false;
   isSearchActive.value = false;
 });
 
 const scrollToAboutSection = () => {
+  // 如果當前頁面是首頁，滾動到 "關於站主" 區塊
   if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-    const section = document.getElementById('about-section')
+    const section = document.getElementById('about-section');
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' })
+      section.scrollIntoView({ behavior: 'smooth' });
     }
-    isMobileMenuOpen.value = false 
   } else {
-    
-    window.location.href = '/#about-section'
+    // 如果不是首頁，跳轉到首頁並滾動到 "關於站主" 區塊
+    window.location.href = '/#about-section';
   }
-}
-
+};
 </script>
 
 <template>
@@ -227,11 +215,12 @@ const scrollToAboutSection = () => {
     :class="isMobile ? 'top-[60px]' : 'top-[80px]'" :style="{ maxHeight: isMobileMenuOpen ? '300px' : '0' }">
     <nav class="flex flex-col py-2">
       <!-- 關於站主（滾動至區塊） -->
-      <a href="#" @click.prevent="scrollToAboutSection"
+       <Link 
+       :href="route('wushu.home') + '#about-section'"        
         class="flex items-center border-b border-gray-300 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
         :class="isMobile ? 'justify-center' : 'justify-start'">
-        關於站主
-      </a>
+      關於站主
+      </Link>
 
       <!-- 服務與課程 -->
       <Link :href="route('wushu.list')"
@@ -257,6 +246,8 @@ const scrollToAboutSection = () => {
       </template>
     </nav>
   </div>
+
+
 
 </template>
 
