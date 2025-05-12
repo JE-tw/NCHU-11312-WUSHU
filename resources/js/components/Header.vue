@@ -4,6 +4,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { storeToRefs } from 'pinia'
 
 import { usePage, Link } from '@inertiajs/vue3';
+
 const page = usePage();
 const user = computed(() => page.props.auth.user);
 
@@ -19,25 +20,25 @@ const cartCount = computed(() => cartStore.cartCount);
 const windowWidth = ref(window.innerWidth);
 
 // 裝置判斷 - 使用 tailwindcss 的斷點
-const isMobile = computed(() => windowWidth.value <= 600); // sm: 600px
-const isTablet = computed(() => windowWidth.value > 600 && windowWidth.value <= 1270); // xl: 1270px
-const isDesktop = computed(() => windowWidth.value > 1270); // 桌面版判斷
+const isMobile = computed(() => windowWidth.value <= 600); 
+const isTablet = computed(() => windowWidth.value > 600 && windowWidth.value <= 1270); 
+const isDesktop = computed(() => windowWidth.value > 1270); 
 
-// 開關手機版選單
+
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
-  // 如果開啟選單，則關閉搜尋
+  
   if (isMobileMenuOpen.value) {
     isSearchActive.value = false;
   }
 };
 
-// 開關搜尋功能
+
 const toggleSearch = () => {
   isSearchActive.value = !isSearchActive.value;
 };
 
-// 視窗縮放時更新
+
 const handleResize = () => {
   windowWidth.value = window.innerWidth;
 
@@ -47,19 +48,19 @@ const handleResize = () => {
   }
 };
 
-// 點擊外面關閉手機選單和搜尋
+
 const handleClickOutside = (event) => {
   const header = document.querySelector('header');
   const menu = document.querySelector('.menu-dropdown');
   const searchBtn = event.target.closest('button[aria-label="搜尋"]');
   const searchInput = event.target.closest('input[placeholder="關鍵字"]');
 
-  // 關閉選單
+  
   if (isMobileMenuOpen.value && header && !header.contains(event.target) && menu && !menu.contains(event.target)) {
     isMobileMenuOpen.value = false;
   }
 
-  // 關閉搜尋 (但不包括點擊搜尋按鈕或搜尋框的情況)
+  
   if (isSearchActive.value && !searchBtn && !searchInput) {
     const isClickInsideSearch = event.target.closest('.relative') !== null;
     if (!isClickInsideSearch) {
@@ -76,7 +77,7 @@ onMounted(() => {
 
   handleResize();
 
-  cartStore.loadCartFromLocalStorage(); // 確保頁面刷新後還是有資料
+  cartStore.loadCartFromLocalStorage(); 
 });
 
 onUnmounted(() => {
@@ -85,7 +86,7 @@ onUnmounted(() => {
 });
 
 watch([isMobile, isTablet], () => {
-  // 如果裝置類型改變，關閉搜尋和選單
+  
   isMobileMenuOpen.value = false;
   isSearchActive.value = false;
 });
@@ -96,9 +97,9 @@ const scrollToAboutSection = () => {
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' })
     }
-    isMobileMenuOpen.value = false // 可選：點擊後自動關選單
+    isMobileMenuOpen.value = false 
   } else {
-    // 如果不在首頁，導向首頁並帶上 hash
+    
     window.location.href = '/#about-section'
   }
 }
@@ -118,102 +119,65 @@ const scrollToAboutSection = () => {
       <!-- Logo 區塊 -->
       <div class="flex cursor-pointer items-center space-x-1">
         <img src="@/images/logo.svg" alt="Logo" :class="[isMobile ? 'h-[30px] w-[30px]' : 'h-[40px] w-[40px]']" />
-        <a href="/" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]">
-          <span :class="[isMobile ? 'text-xl' : 'text-2xl sm:text-4xl', 'font-bold text-[#0b0b0b]']"> 五術研究社 </span>
-        </a>
+        <Link :href="route('wushu.home')" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]">
+        <span :class="[isMobile ? 'text-xl' : 'text-2xl sm:text-4xl', 'font-bold text-[#0b0b0b]']"> 五術研究社 </span>
+        </Link>
       </div>
 
       <!-- 電腦版選單 -->
       <div v-if="!isTablet && !isMobile" class="flex justify-center">
         <nav
           class="flex cursor-pointer items-center gap-4 font-['Microsoft_JhengHei'] text-[24px] font-bold leading-[1] tracking-normal text-black">
-          <a href="/#about-section" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]"> 關於站主 </a>
-          <a href="/wushu/ServiceCourse" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]"> 服務與課程 </a>
+          <Link :href="route('wushu.home') + '#about-section'" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]">
+          關於站主 </Link>
+          <Link :href="route('wushu.list')" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]"> 服務與課程 </Link>
         </nav>
       </div>
 
       <!-- 電腦版右側 -->
       <div v-if="!isTablet && !isMobile" class="flex items-center gap-4 text-black">
-        <!-- 搜尋功能 -->
-        <!-- <div class="group relative flex h-8 items-center">
-          <button v-if="!isSearchActive" @click="toggleSearch" aria-label="搜尋" class="relative flex h-8 w-8 items-center justify-center">
-            <img src="@/images/search.png" alt="搜尋" class="absolute inset-0 h-8 w-8 group-hover:hidden" />
-            <img src="@/images/g1search.svg" alt="搜尋懸停" class="absolute inset-0 hidden h-8 w-8 group-hover:block" />
-          </button>
-
-          <!-- 搜尋列 -->
-        <!-- <div v-if="isSearchActive" class="absolute right-0 top-1/2 flex -translate-y-1/2 items-center rounded-full bg-white shadow-md">
-            <input type="text" placeholder="關鍵字" class="w-[200px] rounded-full bg-white py-2 pl-8 pr-3 outline-none" />
-            <img src="@/images/g2search.svg" alt="搜尋" class="absolute left-2 h-5 w-5" />
-            <button @click="toggleSearch" class="px-3 hover:text-[#1f9c95]">
-              <span class="text-lg">×</span>
-            </button>
-          </div>
-        </div> -->
-
         <!-- 購物車 -->
         <div class="relative">
-          <a href="/wushu/Cart" aria-label="購物車" class="group relative flex h-8 w-8 items-center justify-center">
-            <img src="@/images/cart.svg" alt="購物車" class="absolute inset-0 h-8 w-8 group-hover:hidden" />
-            <img src="@/images/gcart.svg" alt="購物車懸停" class="absolute inset-0 hidden h-8 w-8 group-hover:block" />
-            <!-- 數量氣泡 -->
-            <span v-if="cartCount > 0"
-              class="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-              {{ cartCount }}
-            </span>
-          </a>
+          <Link :href="route('wushu.cart')" aria-label="購物車"
+            class="group relative flex h-8 w-8 items-center justify-center">
+          <img src="@/images/cart.svg" alt="購物車" class="absolute inset-0 h-8 w-8 group-hover:hidden" />
+          <img src="@/images/gcart.svg" alt="購物車懸停" class="absolute inset-0 hidden h-8 w-8 group-hover:block" />
+          <!-- 數量氣泡 -->
+          <span v-if="cartCount > 0"
+            class="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+            {{ cartCount }}
+          </span>
+          </Link>
         </div>
 
         <!-- 登入註冊 -->
-        <!-- <a href="/wushu/MemberCenter" class="group flex h-8 items-center gap-1"> -->
-        <a href="" class="group flex h-8 items-center gap-1">
-          <div class="relative h-8 w-8">
-            <img src="@/images/user.svg" alt="登入" class="absolute inset-0 h-8 w-8 group-hover:hidden" />
-            <img src="@/images/guser.svg" alt="登入懸停" class="absolute inset-0 hidden h-8 w-8 group-hover:block" />
-          </div>
-          <span
-            class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]">
-            <!-- 登入註冊 或是 會員中心 -->
-            <template v-if="user">
-              <Link href="/wushu/MemberCenter"
-                class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]">
-              會員中心</Link>
-            </template>
-            <template v-else>
-              <Link href="/login"
-                class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]">
-              會員登入</Link>
-            </template>
-          </span>
-        </a>
+        <Link :href="user ? route('wushu.memberCenter') : route('login')" class="group flex h-8 items-center gap-1">
+        <div class="relative h-8 w-8">
+          <img src="@/images/user.svg" alt="登入" class="absolute inset-0 h-8 w-8 group-hover:hidden" />
+          <img src="@/images/guser.svg" alt="登入懸停" class="absolute inset-0 hidden h-8 w-8 group-hover:block" />
+        </div>
+        <span
+          class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]">
+          <template v-if="user">
+            會員中心
+          </template>
+          <template v-else>
+            會員登入
+          </template>
+        </span>
+        </Link>
       </div>
 
       <!-- 平板版 -->
       <div v-if="isTablet && !isMobile" class="flex items-center gap-3">
         <div class="flex items-center gap-3">
-          <!-- 搜尋 -->
-          <div class="group relative flex h-7 items-center">
-            <!-- <button v-if="!isSearchActive" @click="toggleSearch" aria-label="搜尋" class="relative flex h-7 w-7 items-center justify-center">
-              <img src="@/images/search.png" alt="搜尋" class="absolute inset-0 h-7 w-7 group-hover:hidden" />
-              <img src="@/images/g1search.svg" alt="搜尋懸停" class="absolute inset-0 hidden h-7 w-7 group-hover:block" />
-            </button> -->
-
-            <!-- 平板搜尋列 -->
-            <!-- <div v-if="isSearchActive" class="absolute right-0 top-1/2 flex -translate-y-1/2 items-center rounded-full bg-white shadow-md">
-              <input type="text" placeholder="關鍵字" class="w-[200px] rounded-full bg-white py-2 pl-8 pr-3 outline-none" />
-              <img src="@/images/g2search.svg" alt="搜尋" class="absolute left-2 h-5 w-5" />
-              <button @click="toggleSearch" class="px-3 hover:text-[#1f9c95]">
-                <span class="text-lg">×</span>
-              </button>
-            </div> -->
-          </div>
-
           <!-- 購物車 -->
           <div class="relative">
-            <a href="/wushu/Cart" aria-label="購物車" class="group relative flex h-7 w-7 items-center justify-center">
-              <img src="@/images/cart.svg" alt="購物車" class="absolute inset-0 h-7 w-7 group-hover:hidden" />
-              <img src="@/images/gcart.svg" alt="購物車懸停" class="absolute inset-0 hidden h-7 w-7 group-hover:block" />
-            </a>
+            <Link :href="route('wushu.cart')" aria-label="購物車"
+              class="group relative flex h-7 w-7 items-center justify-center">
+            <img src="@/images/cart.svg" alt="購物車" class="absolute inset-0 h-7 w-7 group-hover:hidden" />
+            <img src="@/images/gcart.svg" alt="購物車懸停" class="absolute inset-0 hidden h-7 w-7 group-hover:block" />
+            </Link>
             <!-- 數量氣泡 -->
             <span v-if="cartCount > 0"
               class="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
@@ -231,17 +195,14 @@ const scrollToAboutSection = () => {
 
       <!-- 手機版 -->
       <div v-if="isMobile" class="flex items-center gap-3">
-        <!-- <div class="relative flex items-center">
-          <input type="text" placeholder="關鍵字" class="w-[160px] rounded-full bg-white py-1 pl-8 pr-3 text-sm outline-none" />
-          <img src="@/images/g2search.svg" alt="搜尋" class="absolute left-2 h-4 w-4" />
-        </div> -->
         <div class="flex items-center gap-2">
           <!-- 購物車 -->
           <div class="relative">
-            <a href="/wushu/Cart" aria-label="購物車" class="group relative flex h-6 w-6 items-center justify-center">
-              <img src="@/images/cart.svg" alt="購物車" class="absolute inset-0 h-6 w-6 group-hover:hidden" />
-              <img src="@/images/gcart.svg" alt="購物車懸停" class="absolute inset-0 hidden h-6 w-6 group-hover:block" />
-            </a>
+            <Link :href="route('wushu.cart')" aria-label="購物車"
+              class="group relative flex h-6 w-6 items-center justify-center">
+            <img src="@/images/cart.svg" alt="購物車" class="absolute inset-0 h-6 w-6 group-hover:hidden" />
+            <img src="@/images/gcart.svg" alt="購物車懸停" class="absolute inset-0 hidden h-6 w-6 group-hover:block" />
+            </Link>
             <!-- 數量氣泡 -->
             <span v-if="cartCount > 0"
               class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
@@ -259,46 +220,44 @@ const scrollToAboutSection = () => {
     </div>
   </header>
 
+
   <!-- 展開的選單 (平板和手機版) -->
   <div v-if="(isTablet || isMobile) && isMobileMenuOpen"
     class="fixed left-0 right-0 z-40 w-full overflow-hidden bg-[#F2F2F2] shadow-md transition-all duration-300"
     :class="isMobile ? 'top-[60px]' : 'top-[80px]'" :style="{ maxHeight: isMobileMenuOpen ? '300px' : '0' }">
     <nav class="flex flex-col py-2">
-      <!-- 停用 href，改用 @click -->
+      <!-- 關於站主（滾動至區塊） -->
       <a href="#" @click.prevent="scrollToAboutSection"
         class="flex items-center border-b border-gray-300 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
         :class="isMobile ? 'justify-center' : 'justify-start'">
         關於站主
       </a>
 
-
-
-      <a href="/wushu/ServiceCourse"
+      <!-- 服務與課程 -->
+      <Link :href="route('wushu.list')"
         class="flex items-center border-b border-gray-300 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
         :class="isMobile ? 'justify-center' : 'justify-start'">
-        服務與課程
-      </a>
+      服務與課程
+      </Link>
 
-      <!-- <a
-        href="/wushu/MemberCenter"
-        class="flex items-center gap-2 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
-        :class="isMobile ? 'justify-center' : 'justify-start'"
-      >
-      登入註冊
-    </a> -->
-      <!-- 登入註冊 -->
+      <!-- 登入 / 會員中心 -->
       <template v-if="user">
-        <Link href="/wushu/MemberCenter"
+        <Link :href="route('wushu.memberCenter')"
           class="flex items-center gap-2 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
-          :class="isMobile ? 'justify-center' : 'justify-start'">會員中心</Link>
+          :class="isMobile ? 'justify-center' : 'justify-start'">
+        會員中心
+        </Link>
       </template>
       <template v-else>
-        <Link href="/login"
+        <Link :href="route('login')"
           class="flex items-center gap-2 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
-          :class="isMobile ? 'justify-center' : 'justify-start'">會員登入</Link>
+          :class="isMobile ? 'justify-center' : 'justify-start'">
+        會員登入
+        </Link>
       </template>
     </nav>
   </div>
+
 </template>
 
 <style scoped>

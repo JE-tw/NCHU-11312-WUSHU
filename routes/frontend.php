@@ -27,15 +27,14 @@ Route::prefix('wushu')->group(function () {
     Route::get('/CourseIntro/{id}', [WushuController::class, 'intro'])->name('wushu.intro');
 
     // 購物車
-    Route::get('/Cart', [WushuController::class, 'cart']);
-
+    Route::get('/Cart', [WushuController::class, 'cart'])->name('wushu.cart');
     // 購物車 新增資料
     Route::post('/Cart', [WushuController::class, 'storeOrder'])->name('wushu.storeOrder');
 
     // 付款與退款政策頁
     Route::get('/Policy', function () {
         return Inertia::render('frontend/Policy');
-    });
+    })->name('wushu.policy');
 
     // 🔺聯絡我們頁 新增頁 ContactUs
     Route::get('/ContactUs', [WushuController::class, 'contact'])->name('wushu.contact');
@@ -51,10 +50,14 @@ Route::prefix('wushu')->group(function () {
     // 隱私權政策
     Route::get('/Privacy', function () {
         return Inertia::render('frontend/Privacy');
-    });
+    })->name('wushu.privacy');
 
     // 會員中心 
+
     Route::get('/MemberCenter', [WushuController::class, 'userInfo']);
     // 更新個人資料
     Route::post('/MemberCenter/update/{id}', [WushuController::class, 'userInfoUpdate'])->name('Member.update');
+
+    Route::get('/MemberCenter', [WushuController::class, 'userInfo'])->name('wushu.memberCenter');
+
 });

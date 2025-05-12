@@ -11,15 +11,14 @@
       <div class="flex flex-row justify-center gap-16">
         <!-- 左側鏈接 -->
         <div class="flex flex-col gap-4 font-bold text-[18px] leading-[100%] tracking-[0]">
-          <a href="/wushu/ContactUs" class="hover:text-blueGreen hover:underline py-1">聯絡我們</a>
-          <a href="/wushu/Policy" class="hover:text-blueGreen hover:underline py-1">付款與退款流程</a>
-          <a href="/wushu/Privacy" class="hover:text-blueGreen hover:underline py-1">隱私權政策</a>
+          <Link :href="route('wushu.contact')" class="hover:text-blueGreen hover:underline py-1">聯絡我們</Link>
+          <Link :href="route('wushu.policy')" class="hover:text-blueGreen hover:underline py-1">付款與退款流程</Link>
+          <Link :href="route('wushu.privacy')" class="hover:text-blueGreen hover:underline py-1">隱私權政策</Link> 
         </div>
 
         <!-- 右側社交媒體圖標 -->
         <div class="flex flex-col gap-4">
-          <a href="https://www.facebook.com/?locale=zh_TW" target="_blank" aria-label="Facebook"
-            class="social-icon-link">
+          <a href="https://www.facebook.com/?locale=zh_TW" target="_blank" aria-label="Facebook" class="social-icon-link">
             <img src="@/images/facebook.png" alt="facebook" class="w-8 h-8" />
           </a>
           <a href="https://www.youtube.com/" target="_blank" aria-label="YouTube" class="social-icon-link">
@@ -38,17 +37,13 @@
       </div>
 
       <div class="flex flex-row items-center justify-center gap-6">
-        <a href="/wushu/ContactUs"
-          class="hover:text-blueGreen hover:underline font-bold text-[22px] leading-[100%] tracking-[0]">聯絡我們</a>
+        <Link :href="route('wushu.contact')" class="hover:text-blueGreen hover:underline font-bold text-[22px] leading-[100%] tracking-[0]">聯絡我們</Link>
+        <div class="h-6 border-r border-white"></div><
+        <Link :href="route('wushu.policy')" class="hover:text-blueGreen hover:underline font-bold text-[22px] leading-[100%] tracking-[0]">付款與退款流程</Link>
         <div class="h-6 border-r border-white"></div>
-        <a href="/wushu/Policy"
-          class="hover:text-blueGreen hover:underline font-bold text-[22px] leading-[100%] tracking-[0]">付款與退款流程</a>
-        <div class="h-6 border-r border-white"></div>
-        <a href="/wushu/Privacy"
-          class="hover:text-blueGreen hover:underline font-bold text-[22px] leading-[100%] tracking-[0]">隱私權政策</a>
+        <Link :href="route('wushu.privacy')" class="hover:text-blueGreen hover:underline font-bold text-[22px] leading-[100%] tracking-[0]">隱私權政策</Link>
 
-        <a href="https://www.facebook.com/?locale=zh_TW" target="_blank" aria-label="Facebook"
-          class="social-icon-link ml-4">
+        <a href="https://www.facebook.com/?locale=zh_TW" target="_blank" aria-label="Facebook" class="social-icon-link ml-4">
           <img src="@/images/facebook.png" alt="facebook" class="w-9 h-9" />
         </a>
         <a href="https://www.youtube.com/" target="_blank" aria-label="YouTube" class="social-icon-link">
@@ -66,11 +61,9 @@
       </div>
 
       <div class="flex gap-6 font-bold text-[24px] leading-[100%] tracking-[0]">
-        <a href="/wushu/ContactUs"
-          class="hover:text-blueGreen hover:underline border-r border-white pr-6">聯絡我們</a>
-        <a href="/wushu/Policy"
-          class="hover:text-blueGreen hover:underline border-r border-white pr-6">付款與退款流程</a>
-        <a href="/wushu/Privacy" class="hover:text-blueGreen hover:underline">隱私權政策</a>
+        <Link :href="route('wushu.contact')" class="hover:text-blueGreen hover:underline border-r border-white pr-6">聯絡我們</Link>
+        <Link :href="route('wushu.policy')" class="hover:text-blueGreen hover:underline border-r border-white pr-6">付款與退款流程</Link>
+        <Link :href="route('wushu.privacy')" class="hover:text-blueGreen hover:underline">隱私權政策</Link>
       </div>
 
       <div class="w-[220px] flex items-center justify-end gap-3">
@@ -85,6 +78,9 @@
   </footer>
 </template>
 
-<style scoped>
+<script setup>
+import { Link } from '@inertiajs/vue3'
+</script>
 
+<style scoped>
 </style>
