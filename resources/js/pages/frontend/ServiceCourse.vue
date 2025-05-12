@@ -1,13 +1,11 @@
 <!-- ServiceCourse.vue 複層頁面 -->
 <!-- 服務與課程頁 -->
-
 <script setup>
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import CourseSection from '@/components/CourseSection.vue';
 import ServiceCard from '@/components/ServiceCard.vue';
 import BackToTop from '@/components/BackToTop.vue'
-
 
 import swiper1 from '@/images/swiper1.webp';
 import swiper2 from '@/images/swiper2.webp';
@@ -62,8 +60,6 @@ function scrollTo(targetId) {
     el.scrollIntoView({ behavior: 'smooth' });
   }
 }
-
-
 </script>
 
 <template>

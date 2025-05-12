@@ -15,9 +15,6 @@ defineProps({
 function goToIntro(id) {
   router.visit(route('wushu.intro', id));
 }
-
-// 購物車按鈕阻止跳轉
-
 </script>
 
 <template>

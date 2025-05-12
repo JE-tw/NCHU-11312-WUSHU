@@ -6,7 +6,7 @@ import Footer from '@/components/Footer.vue';
 <!-- 款與退款政策頁 -->
 <template>
   <Header />
-
+  
   <div class="bg-softGray">
     <!-- header -->
     <header class="flex h-[234px] flex-col items-center bg-black sm:h-[303px] xl:h-[444px]">

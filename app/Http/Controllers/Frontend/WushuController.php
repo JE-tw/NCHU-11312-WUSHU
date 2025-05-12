@@ -171,36 +171,6 @@ class WushuController extends Controller
     }
 
     // 查 課程介紹頁 課程關聯章節
-    // public function intro($id)
-    // {
-    //     // 以下不可刪除
-    //     $course = Course::with(['chapters'])->find($id);
-    //     if ($course == null) return redirect('/wushu/ServiceCourse');
-
-    //     return Inertia::render('frontend/CourseIntro', [
-    //         'course' => $course,
-    //     ]);
-    // }
-
-    // public function intro($id)
-    // {
-    //     $course = Course::with(['chapters'])->find($id);
-    //     if ($course == null) return redirect('/wushu/ServiceCourse');
-
-    //     $userId = 1; // 寫死
-    //     $isAccessible = OrderItem::where('product_id', $id)
-    //         ->where('product_type', 'App\\Models\\Course')
-    //         ->where('is_accessible', true)
-    //         ->whereHas('order', function ($query) use ($userId) {
-    //             $query->where('user_id', $userId);
-    //         })
-    //         ->exists();
-
-    //     return Inertia::render('frontend/CourseIntro', [
-    //         'course' => $course,
-    //         'isAccessible' => $isAccessible,
-    //     ]);
-    // }
     public function intro($id)
     {
         $course = Course::with(['chapters'])->find($id);
@@ -208,19 +178,18 @@ class WushuController extends Controller
 
         $userId = auth()->id(); // 抓取登入使用者 ID
 
-        // 若未登入，則導向登入頁（你也可以選擇傳 null 給前端）
-        if (!$userId) {
-            return redirect()->route('login'); // 或 return redirect('/login');
+        $isAccessible = false;
+
+        if($userId){
+            $isAccessible = OrderItem::where('product_id', $id)
+                ->where('product_type', 'App\\Models\\Course')
+                ->where('is_accessible', true)
+                ->whereHas('order', function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                })
+                ->exists();
         }
-
-        $isAccessible = OrderItem::where('product_id', $id)
-            ->where('product_type', 'App\\Models\\Course')
-            ->where('is_accessible', true)
-            ->whereHas('order', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            })
-            ->exists();
-
+        
         return Inertia::render('frontend/CourseIntro', [
             'course' => $course,
             'isAccessible' => $isAccessible,
