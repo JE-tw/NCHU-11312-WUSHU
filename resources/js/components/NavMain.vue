@@ -14,8 +14,8 @@ const page = usePage<SharedData>();
   <SidebarGroup class="px-2 py-0">
     <!-- <SidebarGroupLabel>Platform</SidebarGroupLabel> -->
     <SidebarMenu>
-      <SidebarMenuItem v-for="item in items" :key="item.title" class=" p-4 border-b border-darkGray">
-        <SidebarMenuButton as-child :is-active="item.href === page.url" :tooltip="item.title" class=" text-xl">
+      <SidebarMenuItem v-for="item in items" :key="item.title" class=" p-4 border-b border-darkGray hover:bg-stone-400 ">
+        <SidebarMenuButton as-child :is-active="item.href === page.url" :tooltip="item.title" class=" text-xl ">
           <Link :href="item.href">
             <component :is="item.icon" />
             <span>{{ item.title }}</span>

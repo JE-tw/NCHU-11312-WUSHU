@@ -39,8 +39,6 @@ onMounted(() => {
   if (storedCart) {
     cartItems.value = JSON.parse(storedCart);
 
-    // ✅ Log 所有商品
-    console.log('購物車商品：', cartItems.value);
   }
 });
 
@@ -80,7 +78,6 @@ const confirmDelete = (id, type) => {
 // 確定刪除
 const deleteItem = () => {
   removeItem(deleteTarget.value.id, deleteTarget.value.type);
-  console.log(`刪除：類別${deleteTarget.value.type} , id ${deleteTarget.value.id}`);
 };
 
 // 取消刪除
@@ -101,7 +98,6 @@ const order = ref({
   remittance_amount: '',
   remittance_account_last5: '',
 });
-console.log(order.value);
 
 // 購物車送出
 const handleSubmit = () => {
@@ -171,7 +167,6 @@ const handleSubmit = () => {
           router.get('/wushu/MemberCenter');
         },
         onError: (errors) => {
-          console.error('後端錯誤:', errors);
           Swal.fire({
             title: '送出訂單失敗',
             text: '請確認資料或稍後再試。',

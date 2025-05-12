@@ -15,7 +15,6 @@ import ExpandCard from '@/components/ExpandCard.vue';
 // 按鈕點擊功能 CardButton
 function handleClick(item) {
   if (!hasPurchased) return; // 沒買就直接什麼都不做！
-  // console.log('✅ 播放影片：', item.name); // 有買，才執行下面功能
 }
 // ========
 

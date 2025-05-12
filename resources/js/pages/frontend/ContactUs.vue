@@ -19,8 +19,6 @@ const phone = ref(''); // 輸入時label往上方移動
 const email = ref(''); // 輸入時label往上方移動
 const title = ref(''); // 輸入時label往上方移動
 
-console.log(item.value);
-
 // 表單格式驗證 → 彈窗 → 送出彈窗 → 成功提示彈窗
 // 表單格式驗證
 const validateForm = () => {
@@ -71,7 +69,6 @@ const handleSubmit = () => {
               confirmButton: 'my-confirm-btn2',
             },
           });
-          console.log('成功送出');
 
           // 清空欄位（可選）
           item.value = {

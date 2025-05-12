@@ -1,6 +1,6 @@
 <script>
-import Header from '../../components/Header.vue';
-import Footer from '../../components/Footer.vue';
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 </script>
 
 <!-- 款與退款政策頁 -->
@@ -20,7 +20,7 @@ import Footer from '../../components/Footer.vue';
     <main class="px-[24px] font-['Microsoft_JhengHei'] sm:px-[48px]">
       <div class="mx-auto mb-[60px] mt-[30px] max-w-5xl">
         <div class="mx-auto mb-2 mt-3 max-w-5xl px-4 text-left">
-          <p class="md:text-4xl font-['Microsoft_JhengHei'] text-[32px] font-bold text-deepTeal sm:text-[36px] my-4">付款政策：</p>
+          <p class="md:text-4xl my-4 font-['Microsoft_JhengHei'] text-[32px] font-bold text-deepTeal sm:text-[36px]">付款政策：</p>
           <ul
             class="md:text-[24px] md:leading-[55px] space-y-6 text-left font-['Microsoft_JhengHei'] text-[20px] font-medium leading-[36px] tracking-[0.02em] text-black sm:text-[22px] sm:leading-[44px]"
           >
@@ -36,8 +36,10 @@ import Footer from '../../components/Footer.vue';
           </ul>
         </div>
         <div class="mx-auto mb-2 mt-3 max-w-5xl px-4 text-left">
-          <p class="md:text-4xl font-['Microsoft_JhengHei'] text-[32px] font-bold text-deepTeal sm:text-[36px] my-4">退款政策：</p>
-          <ul class="md:text-[24px] md:leading-[55px] space-y-6 text-left font-['Microsoft_JhengHei'] text-[20px] font-medium leading-[36px] tracking-[0.02em] text-black sm:text-[22px] sm:leading-[44px]">
+          <p class="md:text-4xl my-4 font-['Microsoft_JhengHei'] text-[32px] font-bold text-deepTeal sm:text-[36px]">退款政策：</p>
+          <ul
+            class="md:text-[24px] md:leading-[55px] space-y-6 text-left font-['Microsoft_JhengHei'] text-[20px] font-medium leading-[36px] tracking-[0.02em] text-black sm:text-[22px] sm:leading-[44px]"
+          >
             <li>
               1. 實體或線上直播課程，於開課日前申請退款，將全額退還該課程您所支付之金額；開課日後，則不接受退款申請，該課程您所支付之金額將不予退還。
             </li>

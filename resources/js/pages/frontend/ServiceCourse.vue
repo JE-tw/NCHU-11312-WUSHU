@@ -2,11 +2,11 @@
 <!-- 服務與課程頁 -->
 
 <script setup>
-import Header from '../../components/Header.vue';
-import Footer from '../../components/Footer.vue';
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 import CourseSection from '@/components/CourseSection.vue';
 import ServiceCard from '@/components/ServiceCard.vue';
-import BackToTop from '../../components/BackToTop.vue'
+import BackToTop from '@/components/BackToTop.vue'
 
 
 import swiper1 from '@/images/swiper1.webp';
@@ -21,8 +21,6 @@ const props = defineProps({
   services: Array,
   categories: Array,
 });
-// console.log(props.services);
-// console.log(props.categories);
 
 // 類別英文名稱陣列
 const enTitles = ['Vedic Astrology', 'Chinese Medicine', 'Classical Magic', 'Other'];
