@@ -89,33 +89,46 @@ watch([isMobile, isTablet], () => {
   isMobileMenuOpen.value = false;
   isSearchActive.value = false;
 });
+
+const scrollToAboutSection = () => {
+  if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+    const section = document.getElementById('about-section')
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' })
+    }
+    isMobileMenuOpen.value = false // 可選：點擊後自動關選單
+  } else {
+    // 如果不在首頁，導向首頁並帶上 hash
+    window.location.href = '/#about-section'
+  }
+}
+
 </script>
 
 <template>
   <header class="fixed left-0 right-0 top-0 z-50 w-full shadow-md">
-    <div
-      :class="[
-        'flex w-full items-center',
-        isMobile ? 'h-[60px]' : 'h-[80px]',
-        !isTablet && !isMobile ? 'mt-6 px-4 sm:px-6' : 'mt-0 px-4',
-        isDesktop ? 'mx-auto max-w-[1800px] rounded-full' : '',
-        'bg-white/75',
-        'justify-between xl:justify-around',
-      ]"
-    >
+    <div :class="[
+      'flex w-full items-center',
+      isMobile ? 'h-[60px]' : 'h-[80px]',
+      !isTablet && !isMobile ? 'mt-6 px-4 sm:px-6' : 'mt-0 px-4',
+      isDesktop ? 'mx-auto max-w-[1800px] rounded-full' : '',
+      'bg-white/75',
+      'justify-between xl:justify-around',
+    ]">
       <!-- Logo 區塊 -->
       <div class="flex cursor-pointer items-center space-x-1">
         <img src="@/images/logo.svg" alt="Logo" :class="[isMobile ? 'h-[30px] w-[30px]' : 'h-[40px] w-[40px]']" />
-        <a href="http://127.0.0.1:8000" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]">
+        <a href="/" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]">
           <span :class="[isMobile ? 'text-xl' : 'text-2xl sm:text-4xl', 'font-bold text-[#0b0b0b]']"> 五術研究社 </span>
         </a>
       </div>
 
       <!-- 電腦版選單 -->
       <div v-if="!isTablet && !isMobile" class="flex justify-center">
-        <nav class="flex cursor-pointer items-center gap-4 font-['Microsoft_JhengHei'] text-[24px] font-bold leading-[1] tracking-normal text-black">
-          <a href="http://127.0.0.1:8000/#about-section" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]"> 關於站主 </a>
-          <a href="http://127.0.0.1:8000/wushu/ServiceCourse" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]"> 服務與課程 </a>
+        <nav
+          class="flex cursor-pointer items-center gap-4 font-['Microsoft_JhengHei'] text-[24px] font-bold leading-[1] tracking-normal text-black">
+          <a href="/#about-section" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]"> 關於站主 </a>
+          <a href="/wushu/ServiceCourse" class="whitespace-nowrap px-3 py-2 hover:text-[#1f9c95]"> 服務與課程 </a>
         </nav>
       </div>
 
@@ -140,43 +153,36 @@ watch([isMobile, isTablet], () => {
 
         <!-- 購物車 -->
         <div class="relative">
-          <a href="http://127.0.0.1:8000/wushu/Cart" aria-label="購物車" class="group relative flex h-8 w-8 items-center justify-center">
+          <a href="/wushu/Cart" aria-label="購物車" class="group relative flex h-8 w-8 items-center justify-center">
             <img src="@/images/cart.svg" alt="購物車" class="absolute inset-0 h-8 w-8 group-hover:hidden" />
             <img src="@/images/gcart.svg" alt="購物車懸停" class="absolute inset-0 hidden h-8 w-8 group-hover:block" />
             <!-- 數量氣泡 -->
-            <span
-              v-if="cartCount > 0"
-              class="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white"
-            >
+            <span v-if="cartCount > 0"
+              class="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
               {{ cartCount }}
             </span>
           </a>
         </div>
 
         <!-- 登入註冊 -->
-        <!-- <a href="http://127.0.0.1:8000/wushu/MemberCenter" class="group flex h-8 items-center gap-1"> -->
+        <!-- <a href="/wushu/MemberCenter" class="group flex h-8 items-center gap-1"> -->
         <a href="" class="group flex h-8 items-center gap-1">
           <div class="relative h-8 w-8">
             <img src="@/images/user.svg" alt="登入" class="absolute inset-0 h-8 w-8 group-hover:hidden" />
             <img src="@/images/guser.svg" alt="登入懸停" class="absolute inset-0 hidden h-8 w-8 group-hover:block" />
           </div>
           <span
-            class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]"
-          >
+            class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]">
             <!-- 登入註冊 或是 會員中心 -->
             <template v-if="user">
-              <Link
-                href="/wushu/MemberCenter"
-                class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]"
-                >會員中心</Link
-              >
+              <Link href="/wushu/MemberCenter"
+                class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]">
+              會員中心</Link>
             </template>
             <template v-else>
-              <Link
-                href="/login"
-                class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]"
-                >會員登入</Link
-              >
+              <Link href="/login"
+                class="cursor-pointer whitespace-nowrap font-['Microsoft_JhengHei'] text-[18px] font-normal leading-8 tracking-normal group-hover:text-[#1f9c95]">
+              會員登入</Link>
             </template>
           </span>
         </a>
@@ -204,21 +210,20 @@ watch([isMobile, isTablet], () => {
 
           <!-- 購物車 -->
           <div class="relative">
-            <a href="http://127.0.0.1:8000/wushu/Cart" aria-label="購物車" class="group relative flex h-7 w-7 items-center justify-center">
+            <a href="/wushu/Cart" aria-label="購物車" class="group relative flex h-7 w-7 items-center justify-center">
               <img src="@/images/cart.svg" alt="購物車" class="absolute inset-0 h-7 w-7 group-hover:hidden" />
               <img src="@/images/gcart.svg" alt="購物車懸停" class="absolute inset-0 hidden h-7 w-7 group-hover:block" />
             </a>
             <!-- 數量氣泡 -->
-            <span
-              v-if="cartCount > 0"
-              class="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white"
-            >
+            <span v-if="cartCount > 0"
+              class="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
               {{ cartCount }}
             </span>
           </div>
 
           <!-- 選單 -->
-          <button @click="toggleMobileMenu" aria-label="選單" class="flex h-7 items-center justify-center hover:text-[#1f9c95]">
+          <button @click="toggleMobileMenu" aria-label="選單"
+            class="flex h-7 items-center justify-center hover:text-[#1f9c95]">
             <img src="@/images/menu.svg" alt="選單" class="h-7 w-7" />
           </button>
         </div>
@@ -233,21 +238,20 @@ watch([isMobile, isTablet], () => {
         <div class="flex items-center gap-2">
           <!-- 購物車 -->
           <div class="relative">
-            <a href="http://127.0.0.1:8000/wushu/Cart" aria-label="購物車" class="group relative flex h-6 w-6 items-center justify-center">
+            <a href="/wushu/Cart" aria-label="購物車" class="group relative flex h-6 w-6 items-center justify-center">
               <img src="@/images/cart.svg" alt="購物車" class="absolute inset-0 h-6 w-6 group-hover:hidden" />
               <img src="@/images/gcart.svg" alt="購物車懸停" class="absolute inset-0 hidden h-6 w-6 group-hover:block" />
             </a>
             <!-- 數量氣泡 -->
-            <span
-              v-if="cartCount > 0"
-              class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white"
-            >
+            <span v-if="cartCount > 0"
+              class="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
               {{ cartCount }}
             </span>
           </div>
 
           <!-- 選單 -->
-          <button @click="toggleMobileMenu" aria-label="選單" class="flex h-6 items-center justify-center hover:text-[#1f9c95]">
+          <button @click="toggleMobileMenu" aria-label="選單"
+            class="flex h-6 items-center justify-center hover:text-[#1f9c95]">
             <img src="@/images/menu.svg" alt="選單" class="h-6 w-6" />
           </button>
         </div>
@@ -256,31 +260,27 @@ watch([isMobile, isTablet], () => {
   </header>
 
   <!-- 展開的選單 (平板和手機版) -->
-  <div
-    v-if="(isTablet || isMobile) && isMobileMenuOpen"
+  <div v-if="(isTablet || isMobile) && isMobileMenuOpen"
     class="fixed left-0 right-0 z-40 w-full overflow-hidden bg-[#F2F2F2] shadow-md transition-all duration-300"
-    :class="isMobile ? 'top-[60px]' : 'top-[80px]'"
-    :style="{ maxHeight: isMobileMenuOpen ? '300px' : '0' }"
-  >
+    :class="isMobile ? 'top-[60px]' : 'top-[80px]'" :style="{ maxHeight: isMobileMenuOpen ? '300px' : '0' }">
     <nav class="flex flex-col py-2">
-      <a
-        href="http://127.0.0.1:8000/wushu#about-section"
+      <!-- 停用 href，改用 @click -->
+      <a href="#" @click.prevent="scrollToAboutSection"
         class="flex items-center border-b border-gray-300 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
-        :class="isMobile ? 'justify-center' : 'justify-start'"
-      >
+        :class="isMobile ? 'justify-center' : 'justify-start'">
         關於站主
       </a>
 
-      <a
-        href="http://127.0.0.1:8000/wushu/ServiceCourse"
+
+
+      <a href="/wushu/ServiceCourse"
         class="flex items-center border-b border-gray-300 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
-        :class="isMobile ? 'justify-center' : 'justify-start'"
-      >
+        :class="isMobile ? 'justify-center' : 'justify-start'">
         服務與課程
       </a>
 
       <!-- <a
-        href="http://127.0.0.1:8000/wushu/MemberCenter"
+        href="/wushu/MemberCenter"
         class="flex items-center gap-2 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
         :class="isMobile ? 'justify-center' : 'justify-start'"
       >
@@ -288,20 +288,14 @@ watch([isMobile, isTablet], () => {
     </a> -->
       <!-- 登入註冊 -->
       <template v-if="user">
-        <Link
-          href="/wushu/MemberCenter"
+        <Link href="/wushu/MemberCenter"
           class="flex items-center gap-2 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
-          :class="isMobile ? 'justify-center' : 'justify-start'"
-          >會員中心</Link
-        >
+          :class="isMobile ? 'justify-center' : 'justify-start'">會員中心</Link>
       </template>
       <template v-else>
-        <Link
-          href="/login"
+        <Link href="/login"
           class="flex items-center gap-2 px-6 py-3 font-['Microsoft_JhengHei'] text-[18px] font-bold text-[#0b0b0b] hover:bg-darkGray hover:text-white sm:px-10 sm:text-[22px]"
-          :class="isMobile ? 'justify-center' : 'justify-start'"
-          >會員登入</Link
-        >
+          :class="isMobile ? 'justify-center' : 'justify-start'">會員登入</Link>
       </template>
     </nav>
   </div>

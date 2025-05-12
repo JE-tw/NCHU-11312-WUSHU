@@ -11,9 +11,9 @@
       <div class="flex flex-row justify-center gap-16">
         <!-- 左側鏈接 -->
         <div class="flex flex-col gap-4 font-bold text-[18px] leading-[100%] tracking-[0]">
-          <a href="http://127.0.0.1:8000/wushu/ContactUs" class="hover:text-blueGreen hover:underline py-1">聯絡我們</a>
-          <a href="http://127.0.0.1:8000/wushu/Policy" class="hover:text-blueGreen hover:underline py-1">付款與退款流程</a>
-          <a href="http://127.0.0.1:8000/wushu/Privacy" class="hover:text-blueGreen hover:underline py-1">隱私權政策</a>
+          <a href="/wushu/ContactUs" class="hover:text-blueGreen hover:underline py-1">聯絡我們</a>
+          <a href="/wushu/Policy" class="hover:text-blueGreen hover:underline py-1">付款與退款流程</a>
+          <a href="/wushu/Privacy" class="hover:text-blueGreen hover:underline py-1">隱私權政策</a>
         </div>
 
         <!-- 右側社交媒體圖標 -->
@@ -38,13 +38,13 @@
       </div>
 
       <div class="flex flex-row items-center justify-center gap-6">
-        <a href="http://127.0.0.1:8000/wushu/ContactUs"
+        <a href="/wushu/ContactUs"
           class="hover:text-blueGreen hover:underline font-bold text-[22px] leading-[100%] tracking-[0]">聯絡我們</a>
         <div class="h-6 border-r border-white"></div>
-        <a href="http://127.0.0.1:8000/wushu/Policy"
+        <a href="/wushu/Policy"
           class="hover:text-blueGreen hover:underline font-bold text-[22px] leading-[100%] tracking-[0]">付款與退款流程</a>
         <div class="h-6 border-r border-white"></div>
-        <a href="http://127.0.0.1:8000/wushu/Privacy"
+        <a href="/wushu/Privacy"
           class="hover:text-blueGreen hover:underline font-bold text-[22px] leading-[100%] tracking-[0]">隱私權政策</a>
 
         <a href="https://www.facebook.com/?locale=zh_TW" target="_blank" aria-label="Facebook"
@@ -66,11 +66,11 @@
       </div>
 
       <div class="flex gap-6 font-bold text-[24px] leading-[100%] tracking-[0]">
-        <a href="http://127.0.0.1:8000/wushu/ContactUs"
+        <a href="/wushu/ContactUs"
           class="hover:text-blueGreen hover:underline border-r border-white pr-6">聯絡我們</a>
-        <a href="http://127.0.0.1:8000/wushu/Policy"
+        <a href="/wushu/Policy"
           class="hover:text-blueGreen hover:underline border-r border-white pr-6">付款與退款流程</a>
-        <a href="http://127.0.0.1:8000/wushu/Privacy" class="hover:text-blueGreen hover:underline">隱私權政策</a>
+        <a href="/wushu/Privacy" class="hover:text-blueGreen hover:underline">隱私權政策</a>
       </div>
 
       <div class="w-[220px] flex items-center justify-end gap-3">

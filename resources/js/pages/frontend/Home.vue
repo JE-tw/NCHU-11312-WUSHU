@@ -440,7 +440,7 @@ onBeforeUnmount(() => {
 
 
 
-            <!-- AboutMaster -->
+            
             <!-- 關於站主區塊 -->
             <section id="about-section" class="relative bg-white">
                 <div class="max-w-[1200px] mx-auto px-[20px] py-[40px] sm:px-[30px] sm:py-[60px]">
