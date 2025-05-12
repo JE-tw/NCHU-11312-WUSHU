@@ -1,6 +1,7 @@
 <script setup>
 import { useCartStore } from '@/stores/cart'; //cart
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { storeToRefs } from 'pinia'
 
 import { usePage, Link } from '@inertiajs/vue3';
 const page = usePage();

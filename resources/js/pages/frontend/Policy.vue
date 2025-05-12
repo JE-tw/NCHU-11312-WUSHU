@@ -17,11 +17,13 @@ import Footer from '../../components/Footer.vue';
       </p>
       <span class="w-[120px] border-b-2 border-grayWhite sm:w-[300px]"></span>
     </header>
-    <main class="px-[24px] sm:px-[48px]">
-      <div class="mx-auto mb-[60px] mt-[30px] max-w-2xl xl:w-[672px]">
-        <div class="pb-[24px]">
-          <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[28px]/[37px] xl:text-[32px]/[43px]">付款政策：</p>
-          <ul class="text-[16px]/[28px] tracking-[0.02em] text-black sm:text-[24px]/[40px]">
+    <main class="px-[24px] font-['Microsoft_JhengHei'] sm:px-[48px]">
+      <div class="mx-auto mb-[60px] mt-[30px] max-w-5xl">
+        <div class="mx-auto mb-2 mt-3 max-w-5xl px-4 text-left">
+          <p class="md:text-4xl font-['Microsoft_JhengHei'] text-[32px] font-bold text-deepTeal sm:text-[36px] my-4">付款政策：</p>
+          <ul
+            class="md:text-[24px] md:leading-[55px] space-y-6 text-left font-['Microsoft_JhengHei'] text-[20px] font-medium leading-[36px] tracking-[0.02em] text-black sm:text-[22px] sm:leading-[44px]"
+          >
             <li>1. 所有課程及服務費用均以新台幣計算。</li>
             <li>2. 最終售價將以下單時的顯示為準。</li>
             <li>3. 我們接受匯款、線上轉帳的方式付款，會在下單後提供您匯款帳戶。</li>
@@ -33,9 +35,9 @@ import Footer from '../../components/Footer.vue';
             <li>6. 對有關銀行於處理交易時所發生的故障而導致之損失，本網站將不承擔任何責任。</li>
           </ul>
         </div>
-        <div>
-          <p class="mb-[24px] text-[20px]/[27px] font-bold text-blueGreen sm:text-[28px]/[37px] xl:text-[32px]/[43px]">退款政策：</p>
-          <ul class="text-[16px]/[28px] tracking-[0.02em] text-black sm:text-[24px]/[40px]">
+        <div class="mx-auto mb-2 mt-3 max-w-5xl px-4 text-left">
+          <p class="md:text-4xl font-['Microsoft_JhengHei'] text-[32px] font-bold text-deepTeal sm:text-[36px] my-4">退款政策：</p>
+          <ul class="md:text-[24px] md:leading-[55px] space-y-6 text-left font-['Microsoft_JhengHei'] text-[20px] font-medium leading-[36px] tracking-[0.02em] text-black sm:text-[22px] sm:leading-[44px]">
             <li>
               1. 實體或線上直播課程，於開課日前申請退款，將全額退還該課程您所支付之金額；開課日後，則不接受退款申請，該課程您所支付之金額將不予退還。
             </li>

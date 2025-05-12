@@ -26,7 +26,7 @@ const policyPoints = ref([
                 </h1>
             </div>
 
-            <div class="container mx-auto px-4 py-8">
+            <div class="container mx-auto  px-4 py-8">
 
                 <div class="text-left mt-3 mb-2 max-w-5xl mx-auto px-4">
                     <p

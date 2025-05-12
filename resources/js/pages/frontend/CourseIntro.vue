@@ -78,13 +78,25 @@ const hasPurchased = computed(() => props.isAccessible);
       <ExpandCard v-for="item in course.chapters" :key="item.id" :name="item.name" :introduction="item.introduction">
         <!-- 傳入插槽 CardButton 插槽放 -->
         <div @click="handleClick(item)" class="rounded-full" :class="hasPurchased ? 'bg-blueGreen' : 'bg-darkGray'">
-          <CardButton :hideText="false" :cartShorter="false">
+          <CardButton 
+          :hideText="false" 
+          :cartShorter="false"
+          :isUnlocked="hasPurchased"
+          >
             <!-- 按鈕icon -->
             <template #icon>
               <!-- 播放 -->
-              <img v-if="hasPurchased" :src="play" alt="play" class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
+              <img 
+                v-if="hasPurchased" 
+                :src="play" 
+                alt="play" 
+                class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
 
-              <img v-if="!hasPurchased" :src="lock" alt="lock" class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
+              <img 
+                v-if="!hasPurchased" 
+                :src="lock" 
+                alt="lock" 
+                class="mr-3 h-[16px] w-[16px] sm:mr-4 sm:h-[24px] sm:w-[24px]" />
             </template>
           </CardButton>
         </div>
