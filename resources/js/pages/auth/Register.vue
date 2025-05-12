@@ -47,10 +47,10 @@ const submit = () => {
           Swal.fire({
             position: 'top-end',
             icon: 'success',
-            title: '恭喜！您已註冊成功！',
+            title: '恭喜您！會員註冊成功！',
             text:"已為您登入會員 🎉",
             showConfirmButton: false,
-            timer: 1500,
+            timer: 3000,
           });
         },
         onFinish: () => form.reset('password', 'password_confirmation'),

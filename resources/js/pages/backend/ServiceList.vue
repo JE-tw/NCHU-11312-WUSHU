@@ -75,7 +75,7 @@ const deleteBtn = async (id) => {
   <AppLayout :breadcrumbs="breadcrumbs">
     <h1 class="fixed mb-12 w-full bg-white px-12 py-4 text-2xl font-bold shadow">服務內容管理</h1>
     <div class="mt-20 px-12">
-      <button type="button" class="mb-4  rounded border border-stone-400  px-4 py-2 hover:bg-darkGray hover:text-white" @click="openCreateModal">新增服務內容</button>
+      <button type="button" class="mb-4  rounded border border-stone-400 bg-gray-100  px-4 py-2 hover:bg-darkGray hover:text-white" @click="openCreateModal">新增服務內容</button>
       <TableWithPagination
         :columns="columns"
         :items="items"

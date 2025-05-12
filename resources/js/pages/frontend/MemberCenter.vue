@@ -104,15 +104,6 @@ const logOut = () => {
     }
   });
 };
-// .then((result) => {
-//     if (result.isConfirmed) {
-//       Swal.fire({
-//         title: 'Deleted!',
-//         text: 'Your file has been deleted.',
-//         icon: 'success',
-//       });
-//     }
-//   });
 </script>
 <template>
   <!-- 頁首 Banner -->

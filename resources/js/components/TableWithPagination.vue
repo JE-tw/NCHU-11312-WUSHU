@@ -54,7 +54,7 @@ const toggleSort = (key) => {
 </script>
 
 <template>
-  <div class="">
+  <div class="pb-8">
     <!-- 搜尋框 -->
     <div v-if="showSearch" class="mb-4">
       <input v-model="search" :placeholder="searchPlaceholder || '搜尋...'" class="rounded-md border px-3 py-1" />
