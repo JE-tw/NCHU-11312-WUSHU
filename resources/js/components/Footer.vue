@@ -38,7 +38,7 @@
 
       <div class="flex flex-row items-center justify-center gap-6">
         <Link :href="route('wushu.contact')" class="hover:text-blueGreen hover:underline font-bold text-[22px] leading-[100%] tracking-[0]">聯絡我們</Link>
-        <div class="h-6 border-r border-white"></div><
+        <div class="h-6 border-r border-white"></div>
         <Link :href="route('wushu.policy')" class="hover:text-blueGreen hover:underline font-bold text-[22px] leading-[100%] tracking-[0]">付款與退款流程</Link>
         <div class="h-6 border-r border-white"></div>
         <Link :href="route('wushu.privacy')" class="hover:text-blueGreen hover:underline font-bold text-[22px] leading-[100%] tracking-[0]">隱私權政策</Link>

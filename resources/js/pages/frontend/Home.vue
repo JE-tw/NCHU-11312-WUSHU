@@ -144,7 +144,7 @@ onBeforeUnmount(() => {
 
             <section id="intro" class="bg-white py-12 md:py-16 xl:py-36">
                 <div class="max-w-7xl mx-auto px-4">
-                    
+
                     <div class="text-center mb-8 md:mb-10 xl:mb-12">
                         <h2 class="text-3xl md:text-4xl xl:text-6xl font-bold text-black font-serif inline-block pb-2">
                             主打課程
@@ -153,8 +153,8 @@ onBeforeUnmount(() => {
                     </div>
                     <!-- Cards container -->
                     <div class="flex flex-col xl:flex-row gap-6 md:gap-8 justify-center items-center">
-                        
-                        
+
+
                         <div v-for="(course, index) in featuredCourses" :key="course.id"
                             class="bg-white overflow-hidden w-full xl:w-1/2" :class="{ 'mt-6 xl:mt-0': index > 0 }"
                             style="cursor: pointer;" @click="$inertia.visit(`/wushu/CourseIntro/${course.id}`)">
@@ -225,7 +225,7 @@ onBeforeUnmount(() => {
 
             <!-- Courses offered -->
             <section class="relative w-full bg-black text-white overflow-hidden min-h-[858px]">
-               
+
                 <div class="absolute inset-0 z-0 overflow-hidden">
                     <transition name="fade" mode="out-in">
                         <img :key="activeTab" :src="currentImage" alt="課程背景"
@@ -237,13 +237,13 @@ onBeforeUnmount(() => {
                 </div>
 
                 <div class="container mx-auto relative z-10">
-                   
+
                     <template v-if="isDesktop">
                         <div class="flex">
-                            
+
                             <div class="w-1/3 relative overflow-hidden bg-transparent pt-10"
                                 style="margin-top: 20px; margin-left: 10px;">
-                               
+
                                 <div class="relative z-10 px-6">
                                     <h2 class="text-[64px] font-serif font-bold">開立課程</h2>
                                     <div class="h-0.5 bg-white mt-2 w-60"></div>
@@ -256,9 +256,9 @@ onBeforeUnmount(() => {
                                 </div>
                             </div>
 
-                            
+
                             <div class="w-2/3 flex flex-col pt-14 pr-6 pl-10">
-                                
+
                                 <div class="flex space-x-6 pb-4 border-b border-gray-700 overflow-x-auto">
                                     <button v-for="tab in tabs" :key="tab.name" class="py-2.5 px-6 font-medium 
                 font-[Microsoft JhengHei] transition duration-200 whitespace-nowrap text-[32px]"
@@ -268,7 +268,7 @@ onBeforeUnmount(() => {
                                     </button>
                                 </div>
 
-                                
+
                                 <div class="flex-1 py-6 space-y-0">
                                     <div v-for="course in paginatedCourses" :key="course.id"
                                         class="flex items-center justify-between py-3.5 border-b border-dotted border-gray-600">
@@ -276,7 +276,8 @@ onBeforeUnmount(() => {
                                             {{ course.name }}
                                         </div>
                                         <div class="flex items-center justify-end space-x-4 w-3/5">
-                                            <span class="bg-deepTeal text-white text-[24px] px-5 py-2 rounded-full w-32 flex justify-center items-center text-center">
+                                            <span
+                                                class="bg-deepTeal text-white text-[24px] px-5 py-2 rounded-full w-32 flex justify-center items-center text-center">
                                                 {{ course.lessons || 0 }}堂課
                                             </span>
                                             <span class="text-gray-300 w-24 text-[24px] text-center">{{ course.duration
@@ -312,7 +313,7 @@ onBeforeUnmount(() => {
 
                     <!-- 平板版 -->
                     <template v-else-if="isTablet">
-                        
+
                         <div class="text-center pt-10 pb-6">
                             <h2 class="text-[48px] font-serif font-bold">開立課程</h2>
                             <div class="h-0.5 bg-white mt-2 w-60 mx-auto"></div>
@@ -324,7 +325,7 @@ onBeforeUnmount(() => {
                             </a>
                         </div>
 
-                       
+
                         <div class="flex justify-center space-x-6 pb-4 border-b border-gray-700 overflow-x-auto px-4">
                             <button v-for="tab in tabs" :key="tab.name"
                                 class="py-2 px-4 font-medium text-2xl whitespace-nowrap"
@@ -334,7 +335,7 @@ onBeforeUnmount(() => {
                             </button>
                         </div>
 
-                       
+
                         <div class="py-6 px-6">
                             <div v-for="course in paginatedCourses" :key="course.id"
                                 class="flex items-center justify-between py-3.5 border-b border-dotted border-gray-600">
@@ -343,9 +344,10 @@ onBeforeUnmount(() => {
                                 </div>
                                 <div class="flex items-center justify-end gap-2 w-2/3">
                                     <span
-                                        class="bg-deepTeal text-white text-xl px-4 py-1 rounded-full whitespace-nowrap">
+                                        class="bg-deepTeal text-white text-xl px-4 py-1 rounded-full whitespace-nowrap w-24 flex justify-center items-center text-center">
                                         {{ course.lessons || 0 }}堂課
                                     </span>
+
                                     <span class="text-gray-300 text-xl text-center whitespace-nowrap">{{ course.duration
                                         || '2小時/堂' }}</span>
                                     <span class="text-deepTeal font-bold text-xl text-right">NT${{ course.price
@@ -389,7 +391,7 @@ onBeforeUnmount(() => {
                             </a>
                         </div>
 
-                        
+
                         <div class="flex overflow-x-auto pb-3 border-b border-gray-700 px-4">
                             <button v-for="tab in tabs" :key="tab.name"
                                 class="py-2 px-4 mr-4 font-medium text-lg whitespace-nowrap flex-shrink-0"
@@ -399,15 +401,17 @@ onBeforeUnmount(() => {
                             </button>
                         </div>
 
-                       
+
                         <div class="px-4 py-4">
                             <div v-for="course in paginatedCourses" :key="course.id"
                                 class="border-b border-dotted border-gray-600 py-4">
                                 <div class="text-xl font-medium mb-2">{{ course.name }}</div>
                                 <div class="flex justify-between items-center">
                                     <div class="flex items-center gap-2">
-                                        <span class="bg-deepTeal text-white text-sm px-3 py-1 rounded-full">{{
-                                            course.lessons || 0 }}堂課</span>
+                                        <span
+                                            class="bg-deepTeal text-white text-sm px-3 py-1 rounded-full w-20 flex justify-center items-center text-center">
+                                            {{ course.lessons || 0 }}堂課
+                                        </span>
                                         <span class="text-gray-300 text-sm">{{ course.duration || '2小時/堂' }}</span>
                                     </div>
                                     <span class="text-deepTeal font-bold text-lg">NT${{ course.price }}</span>
@@ -441,7 +445,7 @@ onBeforeUnmount(() => {
 
 
 
-            
+
             <!-- 關於站主區塊 -->
             <section id="about-section" class="relative bg-white">
                 <div class="max-w-[1200px] mx-auto px-[20px] py-[40px] sm:px-[30px] sm:py-[60px]">
@@ -450,9 +454,9 @@ onBeforeUnmount(() => {
                         關於站主
                     </h2>
 
-                   
+
                     <div class="flex flex-col xl:flex-row items-center gap-[30px] sm:gap-[50px] xl:gap-[40px]">
-                       
+
                         <div class="flex-1 text-[18px] sm:text-[20px] xl:text-[24px]">
                             <p class="leading-[1.8] mb-[40px]">
                                 文老師自學生時期便開始學習五術，致力於五術教學十餘年。中醫醫術－針灸傳承自古法針灸、董氏奇穴和山西派鍼法；脈學傳承自萬氏的太素脈學；內科傳承各家如經方、溫病、伏氣學派等多位老師；祝由傳承自西河派和軒轅派。
@@ -467,7 +471,7 @@ onBeforeUnmount(() => {
                             </p>
                         </div>
 
-                       
+
                         <div class="flex-1 w-full xl:w-auto overflow-hidden mt-14">
                             <img :src="masterImg1" alt="禪石圖" class="w-full h-auto block xl:max-w-[741px]" />
                         </div>
@@ -489,7 +493,7 @@ onBeforeUnmount(() => {
                         </span>
                     </h2>
 
-                    
+
                     <div class="flex flex-col xl:flex-row items-start">
 
 
