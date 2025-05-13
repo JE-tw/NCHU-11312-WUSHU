@@ -92,7 +92,7 @@ const deleteBtn = async (id) => {
         <template #cell(actions)="{ item }">
           <div class="flex justify-center gap-2">
             <!-- <button type="button" class="rounded cursor-pointer border border-red-500 px-2 text-red-500 hover:bg-red-500 hover:text-white" @click="deleteBtn(item.id)">刪除</button> -->
-            <button type="button" class="rounded cursor-pointer border bg-deepTeal px-2 text-white hover:bg-teal-700" @click="openEditModal(item)">編輯</button>
+            <button type="button" class="rounded cursor-pointer border bg-deepTeal px-2 whitespace-nowrap text-white hover:bg-teal-700" @click="openEditModal(item)">編輯</button>
           </div>
         </template>
       </TableWithPagination>
