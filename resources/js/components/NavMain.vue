@@ -21,7 +21,6 @@ const page = usePage<SharedData>();
             <span>{{ item.title }}</span>
           </Link>
         </SidebarMenuButton>
-        <hr class="">
       </SidebarMenuItem>
     </SidebarMenu>
   </SidebarGroup>
