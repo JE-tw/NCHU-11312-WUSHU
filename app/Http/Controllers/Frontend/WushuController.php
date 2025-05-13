@@ -87,17 +87,6 @@ class WushuController extends Controller
         return redirect(route('wushu.contact'));
     }
 
-    // // 查 購物車會員資料
-    // public function cart()
-    // {
-    //     $userId = 1; // 固定使用者編號
-    //     $userInfo = User::with('userInfo')->find($userId);
-
-    //     return Inertia::render('frontend/Cart', [
-    //         'userInfo' => $userInfo,
-    //     ]);
-    // }
-
     // 查 購物車會員資料
     public function cart()
     {
@@ -197,52 +186,7 @@ class WushuController extends Controller
         ]);
     }
 
-
-    // // // 會員中心 會員資料
-    // public function userInfo(Request $request)
-    // {
-    //     $userId = 1; // 寫死 user_id
-
-    //     // 會員資料
-    //     $user = User::with('userInfo')->find($userId);
-    //     $userInfo = $user ? $user->toArray() : null;
-
-    //     // 訂單與課程資料
-    //     $query = Order::with(['user', 'orderItems.product'])
-    //         ->where('user_id', $userId);
-
-    //     $orders = $query->latest()->paginate(10);
-
-    //     // 處理訂單資料格式
-    //     $orders->getCollection()->transform(function ($order) {
-    //         $order->formatted_date = $order->created_at->format('Y-m-d');
-    //         $order->status_text = $order->status_text;
-    //         return $order;
-    //     });
-    //     // 額外處理：我的課程
-    //     // 找出所有訂單中的課程項目（Course）
-    //     $courses = $query->get()
-    //         ->flatMap(function ($order) {
-    //             return $order->orderItems->filter(function ($item) {
-    //                 return $item->product_type === 'App\\Models\\Course' && $item->is_accessible == 'true';
-    //             });
-    //         })
-    //         ->map(function ($item) {
-    //             return [
-    //                 'name' => $item->product->name ?? '未找到課程',
-    //                 'id' => $item->product->id ?? null,
-    //                 'introduction' => $item->product->introduction ?? '',
-    //                 'price' => $item->product->price ?? 0,
-    //             ];
-    //         })
-    //         ->values();
-
-    //     return Inertia::render('frontend/MemberCenter', [
-    //         'userInfo' => $userInfo,
-    //         'orders' => $orders,
-    //         'courses' => $courses,
-    //     ]);
-    // }
+    // 會員中心 購買紀錄/我的課程/會員資料
     public function userInfo(Request $request)
     {
         $userId = auth()->id(); // 抓取登入會員 ID
@@ -298,6 +242,7 @@ class WushuController extends Controller
         ]);
     }
 
+    // 會員資料修改
     public function userInfoUpdate(Request $request, $id)
     {
         $data = UserInfo::find($id);

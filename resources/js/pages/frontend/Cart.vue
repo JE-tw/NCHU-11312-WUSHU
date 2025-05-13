@@ -38,7 +38,6 @@ onMounted(() => {
   const storedCart = localStorage.getItem('cart'); // 從 localStorage 讀取資料
   if (storedCart) {
     cartItems.value = JSON.parse(storedCart);
-
   }
 });
 
@@ -113,7 +112,31 @@ const handleSubmit = () => {
     });
     return; // 退出函式，不繼續執行後續程式
   }
-
+  // 檢查匯款金額是否小於等於 0
+  if (Number(order.value.remittance_amount) <= 0) {
+    Swal.fire({
+      title: '金額錯誤',
+      text: '匯款金額不可為 0 或負數，請重新輸入正確金額。',
+      icon: 'error',
+      customClass: {
+        confirmButton: 'my-confirm-btn2',
+      },
+    });
+    return;
+  }
+  // 檢查帳號末五碼是否為五個數字
+  const last5 = order.value.remittance_account_last5;
+  if (!/^\d{5}$/.test(last5)) {
+    Swal.fire({
+      title: '帳號格式錯誤',
+      text: '請輸入正確的帳號末五碼（5 位數字）。',
+      icon: 'error',
+      customClass: {
+        confirmButton: 'my-confirm-btn2',
+      },
+    });
+    return;
+  }
   Swal.fire({
     title: '是否確認送出?',
     showCancelButton: true,
@@ -179,7 +202,6 @@ const handleSubmit = () => {
     }
   });
 };
-
 </script>
 
 <template>
@@ -290,6 +312,7 @@ const handleSubmit = () => {
             繼續看課程
           </button>
           <button
+            v-if="cartItems.length > 0"
             class="h-[44px] w-[147.5px] rounded-sm border border-blueGreen text-[16px]/[28px] text-blueGreen hover:bg-blueGreen hover:text-white sm:h-[56px] sm:w-[276px] sm:text-[24px]/[40px] xl:w-[320px]"
             @click="nextStep"
           >
@@ -303,8 +326,8 @@ const handleSubmit = () => {
       <div class="w-[300px] rounded-lg bg-white p-6 text-center">
         <p class="mb-4">確定要刪除這個項目嗎？</p>
         <div class="flex justify-around">
-          <button @click="deleteItem" class="rounded-lg text-white bg-red-500 hover:bg-red-600 px-4 py-2">確認刪除</button>
-          <button @click="cancelDelete" class="rounded-lg  text-blueGreen border border-blueGreen hover:bg-gray-100  px-4 py-2">取消</button>
+          <button @click="deleteItem" class="rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600">確認刪除</button>
+          <button @click="cancelDelete" class="rounded-lg border border-blueGreen px-4 py-2 text-blueGreen hover:bg-gray-100">取消</button>
         </div>
       </div>
     </div>
@@ -344,7 +367,7 @@ const handleSubmit = () => {
             <label
               for="date"
               :class="[
-                'absolute pr-5 left-0 top-[50%] ml-[16px] -translate-y-[80%] bg-white text-[18px] text-darkGray',
+                'absolute left-0 top-[50%] ml-[16px] -translate-y-[80%] bg-white pr-5 text-[18px] text-darkGray',
                 order.remittance_date ? 'hidden' : 'block',
               ]"
               >匯款日期</label
@@ -365,7 +388,6 @@ const handleSubmit = () => {
               type="number"
               name="paid_price"
               v-model="order.remittance_amount"
-              min="1"
               class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white p-4 text-[18px]/[24px] font-normal text-black outline-none sm:w-[300px]"
               required
             />
