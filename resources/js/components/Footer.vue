@@ -17,7 +17,7 @@
         </div>
 
         <!-- 右側社交媒體圖標 -->
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-4 mt-8">
           <a href="https://www.facebook.com/?locale=zh_TW" target="_blank" aria-label="Facebook" class="social-icon-link">
             <img src="@/images/facebook.png" alt="facebook" class="w-8 h-8" />
           </a>
