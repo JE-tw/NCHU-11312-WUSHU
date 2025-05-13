@@ -11,16 +11,17 @@ const page = usePage<SharedData>();
 </script>
 
 <template>
-  <SidebarGroup class="px-2 py-0">
+  <SidebarGroup>
     <!-- <SidebarGroupLabel>Platform</SidebarGroupLabel> -->
-    <SidebarMenu>
-      <SidebarMenuItem v-for="item in items" :key="item.title" class=" p-4 border-b border-darkGray hover:bg-stone-400 ">
-        <SidebarMenuButton as-child :is-active="item.href === page.url" :tooltip="item.title" class=" text-xl ">
-          <Link :href="item.href">
+    <SidebarMenu class="mt-3 space-y-4">
+      <SidebarMenuItem v-for="item in items" :key="item.title" class="hover:bg-stone-400 ">
+        <SidebarMenuButton as-child :is-active="item.href === page.url" :tooltip="item.title" class="border border-darkGray justify-center text-2xl">
+          <Link :href="item.href" class="py-6">
             <component :is="item.icon" />
             <span>{{ item.title }}</span>
           </Link>
         </SidebarMenuButton>
+        <hr class="">
       </SidebarMenuItem>
     </SidebarMenu>
   </SidebarGroup>
