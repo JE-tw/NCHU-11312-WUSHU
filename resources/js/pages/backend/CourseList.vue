@@ -83,7 +83,7 @@ watchEffect(() => {
         <!-- 操作欄插槽 -->
         <template #cell(actions)="{ item }">
           <div class="flex justify-center gap-2 min-w-[140px]">
-            <button type="button" class="cursor-pointer rounded border border-red-500 px-2 text-red-500 hover:bg-red-500 hover:text-white" @click="deleteBtn(item.id)">刪除</button>
+            <!-- <button type="button" class="cursor-pointer rounded border border-red-500 px-2 text-red-500 hover:bg-red-500 hover:text-white" @click="deleteBtn(item.id)">刪除</button> -->
             <button type="button" class="cursor-pointer rounded border bg-deepTeal px-2 text-white hover:bg-teal-700" @click="editCourse(item.id)">編輯</button>
           </div>
         </template>

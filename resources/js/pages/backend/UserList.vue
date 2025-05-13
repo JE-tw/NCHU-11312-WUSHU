@@ -86,13 +86,13 @@ watchEffect(() => {
         <!-- Slot: actions 按鈕 -->
         <template #cell(actions)="{ item }">
           <div class="flex justify-center gap-2">
-            <button
+            <!-- <button
               type="button"
               class="cursor-pointer rounded border border-red-500 px-2 text-red-500 hover:bg-red-500 hover:text-white"
               @click="deleteBtn(item.id)"
             >
               刪除
-            </button>
+            </button> -->
             <button type="button" class="cursor-pointer rounded border bg-deepTeal px-2 text-white hover:bg-teal-700" @click="editUser(item.id)">
               查看/編輯
             </button>
