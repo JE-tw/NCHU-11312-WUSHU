@@ -84,10 +84,11 @@ watchEffect(() => {
 });
 
 function submit() {
-  router.put(route('admin.order.update', props.order.id), {
-    status: form.status,
-    course_permissions: form.course_permissions,
-  });
+  // router.put(route('admin.order.update', props.order.id), {
+  //   status: form.status,
+  //   course_permissions: form.course_permissions,
+  // });
+    router.put(route('admin.order.update', props.order.id), form);
 }
 
 function goBack() {
@@ -137,15 +138,15 @@ function goBack() {
           <div class="flex justify-between gap-2">
             <div class="w-full">
               <label class="block text-sm font-medium text-gray-700">匯款日期</label>
-              <input v-model="form.remittance_date" type="date" class="input w-full bg-white text-gray-900" disabled />
+              <input v-model="form.remittance_date" type="date" class="input w-full bg-white text-gray-900" />
             </div>
             <div class="w-full">
               <label class="block text-sm font-medium text-gray-700">匯款金額</label>
-              <input v-model="form.remittance_amount" type="number" class="input w-full bg-white text-gray-900" disabled />
+              <input v-model="form.remittance_amount" type="number" class="input w-full bg-white text-gray-900" />
             </div>
             <div class="w-full">
               <label class="block text-sm font-medium text-gray-700">帳號後五碼</label>
-              <input v-model="form.remittance_account_last5" maxlength="5" class="input w-full bg-white text-gray-900" disabled />
+              <input v-model="form.remittance_account_last5" maxlength="5" class="input w-full bg-white text-gray-900" />
             </div>
           </div>
 

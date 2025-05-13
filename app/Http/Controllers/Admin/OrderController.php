@@ -66,12 +66,18 @@ class OrderController extends Controller
     {
         $data = $request->validate([
             'status' => 'required|integer',
+            'remittance_date' => 'nullable|date',
+            'remittance_amount' => 'nullable|numeric',
+            'remittance_account_last5' => 'nullable|string|max:5',
             'course_permissions' => 'array',
             'course_permissions.*' => 'boolean',
         ]);
 
         $order->update([
             'status' => $data['status'],
+            'remittance_date' => $data['remittance_date'] ?? null,
+            'remittance_amount' => $data['remittance_amount'] ?? null,
+            'remittance_account_last5' => $data['remittance_account_last5'] ?? null,
         ]);
 
         // 更新每筆課程權限
