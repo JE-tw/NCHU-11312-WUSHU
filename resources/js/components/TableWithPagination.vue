@@ -65,7 +65,7 @@ const toggleSort = (key) => {
     <table class="w-full table-auto border ">
       <thead class="bg-gray-100">
         <tr>
-          <th v-for="col in columns" :key="col.key" class="bg-darkGray text-white cursor-pointer border p-2" @click="col.sortable && toggleSort(col.key)">
+          <th v-for="col in columns" :key="col.key" class="bg-darkGray text-white text-nowrap cursor-pointer border p-2" @click="col.sortable && toggleSort(col.key)">
             {{ col.label }}
             <span v-if="col.sortable">
               <span v-if="currentSortKey === col.key">
@@ -81,7 +81,7 @@ const toggleSort = (key) => {
           <td :colspan="columns.length" class="border p-4 text-center text-gray-500">查無資料</td>
         </tr>
         <tr v-for="item in items" :key="item.id">
-          <td v-for="col in columns" :key="col.key" class="border p-2">
+          <td v-for="col in columns" :key="col.key" class="border p-2 truncate overflow-hidden whitespace-nowrap">
             <slot v-if="$slots[`cell(${col.key})`]" :name="`cell(${col.key})`" :item="item" />
             <template v-else>
               {{ item[col.key] }}
