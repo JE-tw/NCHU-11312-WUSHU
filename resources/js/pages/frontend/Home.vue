@@ -172,7 +172,7 @@ onBeforeUnmount(() => {
                                         {{ course.category.name }}
                                     </button>
                                     <p class="text-xl md:text-2xl xl:text-3xl font-bold text-black">NT${{ course.price
-                                    }}</p>
+                                        }}</p>
                                 </div>
                             </div>
                         </div>
@@ -319,7 +319,7 @@ onBeforeUnmount(() => {
                             <div class="h-0.5 bg-white mt-2 w-60 mx-auto"></div>
                             <a href="/wushu/ServiceCourse" class="block mt-6">
                                 <button
-                                    class="w-36 h-14 px-6 py-2 bg-deepTeal text-white rounded text-[24px] hover:bg-teal-700 transition duration-300">
+                                    class="w-36 h-14 px-6 py-2 bg-deepTeal text-white text-nowrap rounded text-[24px] hover:bg-teal-700 transition duration-300">
                                     了解更多
                                 </button>
                             </a>
@@ -351,7 +351,7 @@ onBeforeUnmount(() => {
                                     <span class="text-gray-300 text-xl text-center whitespace-nowrap">{{ course.duration
                                         || '2小時/堂' }}</span>
                                     <span class="text-deepTeal font-bold text-xl text-right">NT${{ course.price
-                                    }}</span>
+                                        }}</span>
                                 </div>
                             </div>
                         </div>
@@ -407,12 +407,15 @@ onBeforeUnmount(() => {
                                 class="border-b border-dotted border-gray-600 py-4">
                                 <div class="text-xl font-medium mb-2">{{ course.name }}</div>
                                 <div class="flex justify-between items-center">
-                                    <div class="flex items-center gap-2">
+                                    <div class="flex items-center gap-2 w-full">
                                         <span
                                             class="bg-deepTeal text-white text-sm px-3 py-1 rounded-full w-20 flex justify-center items-center text-center">
                                             {{ course.lessons || 0 }}堂課
                                         </span>
-                                        <span class="text-gray-300 text-sm">{{ course.duration || '2小時/堂' }}</span>
+                                        <span
+                                            class="text-gray-300 text-sm text-center flex-1 sm:flex-none sm:text-left">
+                                            {{ course.duration || '2小時/堂' }}
+                                        </span>
                                     </div>
                                     <span class="text-deepTeal font-bold text-lg">NT${{ course.price }}</span>
                                 </div>
