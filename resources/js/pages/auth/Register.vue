@@ -41,7 +41,6 @@ const submit = () => {
     // cancelButtonColor: '#B5B5B5',
     confirmButtonText: '確定送出',
     cancelButtonText: '取消',
-
   }).then((result) => {
     if (result.isConfirmed) {
       form.post(route('register'), {
@@ -147,17 +146,17 @@ const goLogin = () => {
           <Input id="password" type="password" required autocomplete="new-password" v-model="form.password" placeholder="密碼" />
           <InputError :message="form.errors.password" />
         </div>
-
         <div class="grid gap-2">
           <Label for="password_confirmation">再次輸入密碼</Label>
           <Input
-            id="password_confirmation"
-            type="password"
-            required
-            autocomplete="new-password"
-            v-model="form.password_confirmation"
-            placeholder="確認密碼"
+          id="password_confirmation"
+          type="password"
+          required
+          autocomplete="new-password"
+          v-model="form.password_confirmation"
+          placeholder="確認密碼"
           />
+          <p class="text-gray-400">至少6個字元，不可有空白與特殊符號。需英數混合</p>
           <InputError :message="form.errors.password_confirmation" />
         </div>
 
