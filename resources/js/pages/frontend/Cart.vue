@@ -367,7 +367,7 @@ const handleSubmit = () => {
             <label
               for="date"
               :class="[
-                'absolute left-0 top-[50%] ml-[16px] -translate-y-[80%] bg-white pr-5 text-[18px] text-darkGray',
+                'absolute left-0 top-[50%] ml-[16px] -translate-y-[80%] bg-white pr-8 text-[18px] text-darkGray',
                 order.remittance_date ? 'hidden' : 'block',
               ]"
               >匯款日期</label
@@ -376,8 +376,9 @@ const handleSubmit = () => {
               type="date"
               id="date"
               name="paid_date"
+              
               v-model="order.remittance_date"
-              class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white p-4 text-[18px]/[24px] font-normal text-black outline-none sm:w-[300px]"
+              class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white p-4 text-[18px]/[24px] font-normal outline-none sm:w-[300px]"
               required
             />
           </div>
@@ -388,6 +389,7 @@ const handleSubmit = () => {
               type="number"
               name="paid_price"
               v-model="order.remittance_amount"
+              min="0"
               class="mb-4 h-[48px] w-[100%] rounded-sm border border-mediumGray bg-white p-4 text-[18px]/[24px] font-normal text-black outline-none sm:w-[300px]"
               required
             />

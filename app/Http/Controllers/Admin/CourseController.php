@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Traits\HandlesTableFilters;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
 
@@ -71,8 +72,12 @@ class CourseController extends Controller
         // 如果標記為主打課程，檢查數量限制
         if ($data['is_featured']) {
             $featuredCount = Course::where('is_featured', 1)->count();
+            $featured = Course::where('is_featured', 1)->min();
+            Log::info($featured);
+            dd($featured);
             if ($featuredCount >= 2) {
-                return redirect()->back()->withErrors(['is_featured' => '主打課程最多只能有兩堂']);
+                // return redirect()->back()->withErrors(['is_featured' => '主打課程最多只能有兩堂']);
+
             }
         }
 
@@ -118,7 +123,12 @@ class CourseController extends Controller
         if ($data['is_featured'] && !$course->is_featured) {
             $featuredCount = Course::where('is_featured', 1)->count();
             if ($featuredCount >= 2) {
-                return redirect()->back()->withErrors(['is_featured' => '主打課程最多只能有兩堂']);
+                $featured = Course::where('is_featured', 1)->orderBy('price','asc')->toSql();
+                // dd($featured);
+                $featured->update([
+                    'is_featured' => 0,
+                ]);
+                // return redirect()->back()->withErrors(['is_featured' => '主打課程最多只能有兩堂']);
             }
         }
 

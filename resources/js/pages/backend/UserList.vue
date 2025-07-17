@@ -22,6 +22,7 @@ const { items, currentPage, totalPages, searchQuery, currentSortKey, currentSort
 const columns = [
   { label: '會員編號', key: 'id', sortable: true },
   { label: '姓名', key: 'name' },
+  { label: '帳號', key: 'user_email' },
   { label: '出生日期', key: 'birth_date', sortable: true },
   { label: '出生城市', key: 'birth_city' },
   { label: '電話號碼', key: 'phone' },
@@ -83,6 +84,10 @@ watchEffect(() => {
         @page-change="handlePageChange"
         @sort-change="handleSortChange"
       >
+      <!-- 信箱插槽 -->
+        <template #cell(user_email)="{ item }">
+          {{ item.user?.email }}
+        </template>
         <!-- Slot: actions 按鈕 -->
         <template #cell(actions)="{ item }">
           <div class="flex justify-center gap-2">

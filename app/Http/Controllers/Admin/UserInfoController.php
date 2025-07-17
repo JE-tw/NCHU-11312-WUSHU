@@ -23,7 +23,7 @@ class UserInfoController extends Controller
         $query = UserInfo::with('user');
 
         $userInfos = $this->applyFiltersAndPaginate($request, $query, [
-            'search' => ['name', 'phone'], // 支援搜尋的欄位
+            'search' => ['name', 'phone','user.email'], // 支援搜尋的欄位
             'allowedSorts' => ['id', 'birth_date'],
             'defaultSort' => 'id',
             'defaultDirection' => 'asc',
@@ -95,7 +95,7 @@ class UserInfoController extends Controller
                 'birth_time' => 'nullable|string',
                 'birth_city' => 'nullable|string|max:100',
                 'address' => 'nullable|string|max:255',
-                'email' => 'required|email|unique:users,email,' . $user->id,
+                'email' => 'required|email|unique:users,email,'. $user->id,
                 'password' => 'nullable|min:6|confirmed',
                 'status' => 'nullable|in:0,1',
             ]);

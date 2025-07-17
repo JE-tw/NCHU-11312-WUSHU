@@ -23,7 +23,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $query = Order::with(['user', 'orderItems.product']);
-
+        // dd($query->get()[0]['user_email']);
         /** @var LengthAwarePaginator $orders */
         $orders = $this->applyFiltersAndPaginate($request, $query, [
             'search' => ['user.name', 'user.email'], // 支援搜尋會員名稱與信箱
