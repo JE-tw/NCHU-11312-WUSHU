@@ -39,15 +39,17 @@ watch(
 );
 
 const toggleSort = (key) => {
-  if (currentSortKey.value === key) {
+  const column = props.columns.find(col => col.key === key);
+  const realSortKey = column.sortKey || column.key;
+  if (currentSortKey.value === realSortKey) {
     currentSortDirection.value = currentSortDirection.value === 'asc' ? 'desc' : 'asc';
   } else {
-    currentSortKey.value = key;
+    currentSortKey.value = realSortKey;
     currentSortDirection.value = 'asc';
   }
 
   emit('sortChange', {
-    sortKey: currentSortKey.value,
+    sortKey: realSortKey,
     sortDirection: currentSortDirection.value,
   });
 };

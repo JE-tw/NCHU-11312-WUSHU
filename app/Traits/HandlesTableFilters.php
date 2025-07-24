@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 trait HandlesTableFilters
 {
-     /**
+    /**
      * 套用搜尋、排序與分頁邏輯到查詢中
      *
      * @param Request $request 使用者的 HTTP 請求物件，通常由控制器方法注入
@@ -30,25 +30,30 @@ trait HandlesTableFilters
 
         // 套用模糊搜尋條件（多欄位 OR 搜尋）
         if ($search && isset($config['search'])) {
-            $query->where(function ($q) use ($search, $config) {
-                foreach ($config['search'] as $field) {
-                    if (str_contains($field, '.')) {
-                    // 關聯欄位搜尋，例如 user.name
-                    [$relation, $column] = explode('.', $field, 2);
-                    $q->orWhereHas($relation, function ($subQuery) use ($column, $search) {
-                        $subQuery->where($column, 'like', "%{$search}%");
-                    });
-                } else {
-                    // 一般欄位搜尋
-                    $q->orWhere($field, 'like', "%{$search}%");
-                }
+            $keywords = array_filter(explode(" ", $search));
+            $query->where(function ($q) use ($keywords, $config) {
+                foreach ($keywords as $word) {
+                    foreach ($config['search'] as $field) {
+                        if (str_contains($field, '.')) {
+                            // 關聯欄位搜尋，例如 user.name
+                            [$relation, $column] = explode('.', $field, 2);
+                            $q->orWhereHas($relation, function ($subQuery) use ($column, $word) {
+                                $subQuery->where($column, 'like', "%{$word}%");
+                            });
+                        } else {
+                            // 一般欄位搜尋
+                            $q->orWhere($field, 'like', "%{$word}%");
+                        }
+                    }
                 }
             });
         }
 
         // 套用排序條件（僅允許白名單中的欄位與方向）
-        if (in_array($sortKey, $config['allowedSorts'] ?? []) &&
-            in_array($sortDirection, ['asc', 'desc'])) {
+        if (
+            in_array($sortKey, $config['allowedSorts'] ?? []) &&
+            in_array($sortDirection, ['asc', 'desc'])
+        ) {
             $query->orderBy($sortKey, $sortDirection);
         }
 

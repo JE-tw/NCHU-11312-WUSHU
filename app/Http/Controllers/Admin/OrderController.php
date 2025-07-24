@@ -27,7 +27,7 @@ class OrderController extends Controller
         /** @var LengthAwarePaginator $orders */
         $orders = $this->applyFiltersAndPaginate($request, $query, [
             'search' => ['user.name', 'user.email'], // 支援搜尋會員名稱與信箱
-            'allowedSorts' => ['created_at', 'total_amount'],
+            'allowedSorts' => ['created_at', 'total_amount', 'status'],
             'defaultSort' => 'created_at',
             'defaultDirection' => 'desc',
             'perPage' => 10,

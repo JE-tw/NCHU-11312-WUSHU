@@ -13,7 +13,7 @@ const columns = [
   { label: '信箱', key: 'user_email' },
   { label: '價格', key: 'total_amount', sortable: true },
   { label: '付款方式', key: 'payment_method' },
-  { label: '訂單狀態', key: 'status_text' },
+  { label: '訂單狀態', key: 'status_text' , sortKey:'status', sortable: true },
   { label: '操作', key: 'actions' },
 ];
 const editOrder = (orderId) => {
